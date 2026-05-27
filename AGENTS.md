@@ -12,4 +12,4 @@ Do not load all agents or all templates for a single role task.
 
 `src/agents.ts` is the single owner for generated project `AGENTS.md`.
 
-Direct Codex execution, telemetry, planner/next, ownership enforcement, and parallel orchestration are future-only.
+Direct Codex execution is a first-class path via `open-gamestudio run <agent> --exec`. Telemetry, planner/next, ownership enforcement, and parallel orchestration are future-only.

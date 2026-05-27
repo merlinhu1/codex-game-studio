@@ -12,4 +12,6 @@ Legacy validation depended on Python and shell assumptions. This port is TypeScr
 
 Intentional omissions for the first build: no interactive `menu`, no `startover`, no generated `project_orchestrator.md`, no exact `template_info.md`, no eager competitor reports during init, and no upstream license/authorship/citation parity documents.
 
-Future-only features are not implemented in this build: planner/`next`, telemetry, direct Codex execution, parallel orchestration, changed-file tracking, prompt-size metrics, and hard output-ownership enforcement.
+Codex-native difference: `run --exec` invokes `codex exec` directly against the generated bounded prompt packet instead of requiring a separate manual command.
+
+Future-only features are not implemented in this build: planner/`next`, telemetry, parallel orchestration, changed-file tracking, prompt-size metrics, and hard output-ownership enforcement.

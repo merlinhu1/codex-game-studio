@@ -1,10 +1,10 @@
-import { existsSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, test } from "vitest";
 import { initProject } from "../src/projects.js";
-import { prepareRun } from "../src/runner.js";
+import { codexExecInvocation, executeCodexRun, prepareRun } from "../src/runner.js";
 
 describe("bounded runner", () => {
   test("requires non-empty task", () => {
@@ -72,5 +72,29 @@ describe("bounded runner", () => {
     expect(a).toBe(b);
     expect(a).toContain("# Template: analytics_setup");
     expect(a).toContain("documentation/technical/analytics/analytics-plan.md");
+  });
+
+  test("builds a direct codex exec invocation for prepared prompts", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-run-"));
+    const { projectRoot } = initProject({ name: "Codex Exec Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const result = prepareRun("qa_agent", { project: projectRoot, task: "Review validation readiness", exec: true, codexBin: "codex-test" }, cwd);
+    expect(result.output).toContain("Executing Codex:");
+    expect(result.codexCommand.command).toBe("codex-test");
+    expect(result.codexCommand.args.slice(0, 3)).toEqual(["exec", "--cd", projectRoot]);
+    expect(result.codexCommand.args[3]).toMatch(/Read \.gamestudio\/runs\/.+prompt\.md and perform the requested task\./);
+    expect(codexExecInvocation(projectRoot, result.promptPath, "codex-test").display).toContain("codex-test");
+    expect(() => prepareRun("qa_agent", { project: projectRoot, task: "x", exec: true, dryRun: true }, cwd)).toThrow(/--exec cannot be combined/);
+  });
+
+  test("can execute a codex-compatible binary with argument isolation", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-run-"));
+    const { projectRoot } = initProject({ name: "Stub Codex Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const stub = path.join(cwd, "codex-stub.mjs");
+    writeFileSync(stub, "#!/usr/bin/env node\nconsole.log(JSON.stringify(process.argv.slice(2)));\n");
+    chmodSync(stub, 0o755);
+    const result = prepareRun("qa_agent", { project: projectRoot, task: "Review validation readiness", exec: true, codexBin: stub }, cwd);
+    const execution = executeCodexRun(result);
+    expect(execution.status).toBe(0);
+    expect(JSON.parse(execution.stdout)).toEqual(result.codexCommand.args);
   });
 });

@@ -15,4 +15,4 @@ npm run validate
 
 Keep generated projects under `projects/<slug>/`.
 
-The first build intentionally excludes planner commands, direct Codex execution, telemetry, parallel orchestration, changed-file tracking, and ownership enforcement.
+The first build includes direct Codex execution through `run --exec`. It still intentionally excludes planner commands, telemetry, parallel orchestration, changed-file tracking, and ownership enforcement.

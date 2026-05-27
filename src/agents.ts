@@ -58,7 +58,8 @@ ${config.team.active_agents.map((agent) => `- ${agent}: .gamestudio/agents/${age
 # Rules
 
 Use bounded context. Load the current role prompt, project config, engine overlay, and task-relevant templates only.
-Do not use direct Codex execution, telemetry, planner/next, parallel orchestration, or ownership enforcement in this first build.
+Codex execution is first-class: prefer \`open-gamestudio run <agent> --exec\` when you want the toolkit to invoke Codex directly; use \`--dry-run\` or \`--print-prompt\` only for inspection.
+Do not use telemetry, planner/next, parallel orchestration, or ownership enforcement in this build.
 `;
 }
 

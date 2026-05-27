@@ -98,7 +98,8 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
     }
   }
   const help = readFileSync(path.join(root, "src", "cli.ts"), "utf8");
-  for (const forbidden of ["next", "--exec", "telemetry", "parallel orchestration", "ownership enforcement"]) {
+  checks.push(help.includes('.option("--exec"') ? pass("codex.exec", "direct codex exec option exposed") : fail("codex.exec", "run command must expose --exec for direct Codex integration"));
+  for (const forbidden of ["next", "telemetry", "parallel orchestration", "ownership enforcement"]) {
     checks.push(!help.includes(`command("${forbidden}`) && !help.includes(`option("${forbidden}`) ? pass(`future.absent.${forbidden}`, `${forbidden} not exposed`) : fail(`future.absent.${forbidden}`, `${forbidden} must not be exposed`));
   }
   return checks;

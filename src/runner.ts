@@ -1,3 +1,4 @@
+import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { agentNameSchema, readProjectConfig, type AgentName } from "./config.js";
@@ -11,6 +12,8 @@ export type RunOptions = {
   task: string;
   printPrompt?: boolean;
   dryRun?: boolean;
+  exec?: boolean;
+  codexBin?: string;
   includeArtifact?: string[];
   allowBroadContext?: boolean;
 };
@@ -19,13 +22,44 @@ export type PreparedRun = {
   prompt: string;
   promptPath: string;
   metadataPath: string;
+  projectRoot: string;
   contextFiles: string[];
+  codexCommand: { command: string; args: string[]; display: string };
   output: string;
+};
+
+export type CodexExecutionResult = {
+  status: number | null;
+  signal: NodeJS.Signals | null;
+  stdout: string;
+  stderr: string;
+  error?: Error;
 };
 
 function requireTask(task: string): string {
   if (!task || !task.trim()) throw new Error("--task is required and must be non-empty");
   return task.trim();
+}
+
+export function codexExecInvocation(projectRoot: string, promptPath: string, codexBin = "codex"): { command: string; args: string[]; display: string } {
+  const promptRelative = path.relative(projectRoot, promptPath);
+  const taskPrompt = `Read ${promptRelative} and perform the requested task.`;
+  const args = ["exec", "--cd", projectRoot, taskPrompt];
+  return { command: codexBin, args, display: [codexBin, ...args.map((arg) => JSON.stringify(arg))].join(" ") };
+}
+
+export function executeCodexRun(run: PreparedRun): CodexExecutionResult {
+  const result = spawnSync(run.codexCommand.command, run.codexCommand.args, {
+    cwd: run.projectRoot,
+    encoding: "utf8"
+  });
+  return {
+    status: result.status,
+    signal: result.signal,
+    stdout: result.stdout ?? "",
+    stderr: result.stderr ?? "",
+    error: result.error
+  };
 }
 
 function safeArtifact(projectRoot: string, artifact: string): string {
@@ -41,6 +75,7 @@ function safeArtifact(projectRoot: string, artifact: string): string {
 let runSequence = 0;
 
 export function prepareRun(agentInput: string, options: RunOptions, cwd = process.cwd()): PreparedRun {
+  if (options.exec && (options.printPrompt || options.dryRun)) throw new Error("--exec cannot be combined with --print-prompt or --dry-run");
   const agent = agentNameSchema.parse(agentInput) as AgentName;
   const task = requireTask(options.task);
   const projectRoot = resolveProjectRoot(options.project, cwd);
@@ -112,10 +147,13 @@ export function prepareRun(agentInput: string, options: RunOptions, cwd = proces
       2
     )}\n`
   );
+  const codexCommand = codexExecInvocation(projectRoot, promptPath, options.codexBin ?? process.env.OPEN_GAMESTUDIO_CODEX_BIN ?? "codex");
   const output = options.printPrompt
     ? prompt
     : options.dryRun
       ? `Prompt cache: ${promptPath}\nMetadata: ${metadataPath}\nContext files:\n${contextFiles.map((f) => `- ${f}`).join("\n")}\nValidation: npm run validate -- --project ${path.relative(cwd, projectRoot) || "."}`
-      : `Prompt cache written: ${promptPath}\nNext manual command: codex exec --cd ${projectRoot} "Read ${path.relative(projectRoot, promptPath)} and perform the requested task."`;
-  return { prompt, promptPath, metadataPath, contextFiles, output };
+      : options.exec
+        ? `Prompt cache written: ${promptPath}\nExecuting Codex: ${codexCommand.display}`
+        : `Prompt cache written: ${promptPath}\nNext Codex command: ${codexCommand.display}`;
+  return { prompt, promptPath, metadataPath, projectRoot, contextFiles, codexCommand, output };
 }

@@ -4,7 +4,7 @@ import path from "node:path";
 import { formatTemplateShow, listTemplates, templateRegistry, type TemplateId } from "./templates.js";
 import { freezeProject, initProject, resumeProject, statusProject } from "./projects.js";
 import { runValidation } from "./validation.js";
-import { prepareRun } from "./runner.js";
+import { executeCodexRun, prepareRun } from "./runner.js";
 
 const program = new Command();
 
@@ -84,12 +84,13 @@ templates
 
 program
   .command("run")
-  .description("Prepare one bounded prompt packet for a project agent")
+  .description("Prepare one bounded prompt packet for a project agent, with optional direct Codex execution")
   .argument("<agent>")
   .requiredOption("--project <path>", "project path")
   .requiredOption("--task <text>", "task text")
   .option("--print-prompt", "print deterministic prompt body")
   .option("--dry-run", "print selected context and output paths")
+  .option("--exec", "execute the prompt immediately with codex exec")
   .option("--include-artifact <relative-path>", "include one project artifact", (value, previous: string[] = []) => [...previous, value], [])
   .option("--allow-broad-context", "explicitly allow broader context discovery")
   .action((agent, opts) => {
@@ -98,10 +99,21 @@ program
       task: opts.task,
       printPrompt: opts.printPrompt,
       dryRun: opts.dryRun,
+      exec: opts.exec,
       includeArtifact: opts.includeArtifact,
       allowBroadContext: opts.allowBroadContext
     });
     console.log(result.output);
+    if (!opts.exec) return;
+    const execution = executeCodexRun(result);
+    if (execution.stdout) process.stdout.write(execution.stdout);
+    if (execution.stderr) process.stderr.write(execution.stderr);
+    if (execution.error) {
+      console.error(execution.error.message);
+      process.exitCode = 1;
+      return;
+    }
+    if (execution.status !== 0) process.exitCode = execution.status ?? 1;
   });
 
 program.parseAsync().catch((error: unknown) => {

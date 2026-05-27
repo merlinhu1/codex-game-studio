@@ -2,7 +2,7 @@
 
 Open GameStudio is a Node/TypeScript CLI package for creating and managing local, agent-assisted game projects. It provides project scaffolding, engine-aware configuration, base agent prompts, reusable templates, bounded prompt packets, and validation gates that keep generated project artifacts predictable.
 
-The package is an agent workflow layer for game making. It does not host a service, execute assistants directly, or require a specific model provider. The current CLI prepares the project structure and prompt context that Codex or another agent can use from your own environment.
+The package is a Codex-first agent workflow layer for game making. It keeps project state local and inspectable while integrating directly with `codex exec` for role-specific work. The CLI prepares bounded prompt packets, invokes Codex when requested, and preserves deterministic validation gates around generated artifacts.
 
 ## Why This Exists
 
@@ -11,12 +11,12 @@ Open GameStudio started as a port motivated by a simple need: make the game-stud
 Claude Game Studio deserves real kudos for proving that role-based game-development workflows can be practical and useful. Open GameStudio is inspired by that idea, but it is an independent implementation with different priorities:
 
 - CLI and package first, with deterministic npm scripts for local development.
-- Provider and model agnostic, with no direct Claude, Codex, or assistant lock-in.
+- Codex-native by default, with direct `codex exec` integration for role-specific work.
 - Generated game projects live under `projects/<slug>/`.
 - Engine configs, templates, and base agents are package assets.
 - Validation is explicit and hard-failing instead of advisory.
-- Prompt packets are prepared for external agents instead of spawning a provider process.
-- Direct Codex execution, telemetry, planner/`next`, ownership enforcement, changed-file tracking, and parallel orchestration are future-only.
+- Prompt packets are optimized for Codex and can be executed directly with `--exec`.
+- Telemetry, planner/`next`, ownership enforcement, changed-file tracking, and parallel orchestration are future-only.
 
 The goal is not to clone another tool. The goal is to make the workflow contract inspectable, portable, and easy to run in normal developer tooling.
 
@@ -76,14 +76,20 @@ npm run validate
 npm run validate -- --project projects/my-game
 ```
 
-Prepare a bounded prompt packet for an agent:
+Run a project agent through Codex:
 
 ```sh
 npm run build --silent
+node dist/cli.js run market_analyst --project projects/my-game --task "Create the initial market overview." --exec
+```
+
+Inspect the generated prompt packet without executing Codex:
+
+```sh
 node dist/cli.js run market_analyst --project projects/my-game --task "Create the initial market overview." --dry-run
 ```
 
-The `run` command prepares context and output paths. In this build, you execute Codex or another agent separately and point it at the generated prompt packet.
+The `run` command writes a bounded prompt packet and, with `--exec`, immediately invokes `codex exec` in the project root. Use `--dry-run` or `--print-prompt` when you want to inspect the exact Codex context first.
 
 ## CLI Commands
 
@@ -94,7 +100,7 @@ The `run` command prepares context and output paths. In this build, you execute 
 - `validate`: run repository or project validation and exit nonzero on failure.
 - `templates list`: list packaged template IDs.
 - `templates show <template-id>`: print a packaged template.
-- `run <agent>`: prepare one bounded prompt packet for a project agent.
+- `run <agent>`: prepare one bounded Codex prompt packet for a project agent; add `--exec` to invoke `codex exec` immediately.
 
 ## Project Layout
 
