@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "name": "Test Game",
+    "slug": "test-game",
+    "concept": "A focused test concept",
+    "genre": "Puzzle",
+    "platform": "PC",
+    "audience": "Players who like compact strategy games",
+    "competitors": ["mini-metro", "dorfromantik"],
+    "monetization": "premium",
+    "timeline": "8 weeks",
+    "engine": "godot",
+    "engine_version": "4.4.1",
+    "mode": "prototype",
+    "phase": "Initialization",
+    "status": "active"
+  },
+  "team": {
+    "active_agents": [
+      "master_orchestrator",
+      "producer_agent",
+      "market_analyst",
+      "data_scientist",
+      "sr_game_designer",
+      "mechanics_developer",
+      "qa_agent"
+    ]
+  },
+  "production": {
+    "milestones": [
+      {
+        "id": "m1",
+        "title": "Playable prototype",
+        "target": "Week 4",
+        "exit_criteria": ["Core loop is playable"],
+        "status": "planned"
+      }
+    ]
+  }
+}

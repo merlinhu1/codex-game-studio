@@ -1,0 +1,14 @@
+{
+  "id": "unity",
+  "display_name": "Unity",
+  "aliases": ["unity", "Unity", "Unity Engine"],
+  "default_version": "6000.0",
+  "source_root_pattern": "source/project-{slug}",
+  "folders": ["Assets", "Packages", "ProjectSettings"],
+  "project_files": ["Packages/manifest.json", "ProjectSettings/ProjectSettings.asset"],
+  "best_practices": ["Keep gameplay code under Assets.", "Track ProjectSettings markers."],
+  "agent_specializations": {
+    "summary": "Unity project using Assets, Packages, and ProjectSettings layout.",
+    "validation": "Confirm Packages/manifest.json and ProjectSettings/ProjectSettings.asset exist."
+  }
+}

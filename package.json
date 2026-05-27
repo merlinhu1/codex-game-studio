@@ -1,0 +1,39 @@
+{
+  "name": "open-gamestudio",
+  "version": "0.1.0",
+  "description": "Provider-neutral CLI workflow layer for agent-assisted game projects.",
+  "author": "MerlinH",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist/",
+    "engine_configs/",
+    "agents/base/",
+    "templates/"
+  ],
+  "bin": {
+    "open-gamestudio": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "validate": "npm run build --silent && node dist/cli.js validate",
+    "init": "npm run build --silent && node dist/cli.js init",
+    "manage": "npm run build --silent && node dist/cli.js status",
+    "templates": "npm run build --silent && node dist/cli.js templates"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.25",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^1.6.1"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "unreal",
+  "display_name": "Unreal Engine",
+  "aliases": ["unreal", "Unreal", "Unreal Engine", "ue", "ue5"],
+  "default_version": "5.4",
+  "source_root_pattern": "source/project-{slug}",
+  "folders": ["Content", "Config", "Source"],
+  "project_files": ["<ProjectClass>.uproject"],
+  "best_practices": ["Keep gameplay modules explicit.", "Use Content for assets and Config for project defaults."],
+  "agent_specializations": {
+    "summary": "Unreal Engine project using Content, Config, Source, and a PascalCase .uproject file.",
+    "validation": "Confirm <ProjectClass>.uproject exists under source/project-<slug>/."
+  }
+}
