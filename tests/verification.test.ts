@@ -27,6 +27,21 @@ describe("verification runner", () => {
     expect(noisy.stdout.length).toBeLessThanOrEqual(20);
   });
 
+  test("escalates timed-out children that ignore SIGTERM", async () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-verify-"));
+    const script = path.join(cwd, "ignore-term.mjs");
+    writeFileSync(script, "process.on('SIGTERM', () => {}); setInterval(() => {}, 1000);\n");
+    const result = await Promise.race([
+      runVerificationCommand({ command: process.execPath, args: [script] }, { cwd, timeoutMs: 200, killGraceMs: 50 }),
+      new Promise<"hung">((resolve) => setTimeout(() => resolve("hung"), 500))
+    ]);
+    expect(result).not.toBe("hung");
+    if (result !== "hung") {
+      expect(result.timedOut).toBe(true);
+      expect(result.signal).toBe("SIGKILL");
+    }
+  });
+
   test("does not require shell scripts", async () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-verify-"));
     const script = path.join(cwd, "ok");

@@ -33,6 +33,7 @@ export type PreparedRun = {
   contextFiles: string[];
   verification?: VerificationCommand;
   codexCommand: { command: string; args: string[]; display: string };
+  reviewCodexCommand?: { command: string; args: string[]; display: string };
   output: string;
   reviewPrompt?: string;
   fixPrompt?: string;
@@ -74,13 +75,13 @@ function requireTask(task: string): string {
   return task.trim();
 }
 
-export function codexExecInvocation(projectRoot: string, codexBin = resolveCodexCommand()): { command: string; args: string[]; display: string } {
-  const args = buildCodexExecArgs({ projectRoot, sandbox: "workspace-write" });
+export function codexExecInvocation(projectRoot: string, codexBin = resolveCodexCommand(), sandbox: "read-only" | "workspace-write" = "workspace-write"): { command: string; args: string[]; display: string } {
+  const args = buildCodexExecArgs({ projectRoot, sandbox });
   return { command: codexBin, args, display: [codexBin, ...args.map((arg) => JSON.stringify(arg))].join(" ") };
 }
 
-export function executeCodexPromptSync(run: PreparedRun, prompt: string): CodexExecutionResult {
-  const result = spawnSync(run.codexCommand.command, run.codexCommand.args, {
+export function executeCodexPromptSync(run: PreparedRun, prompt: string, command = run.codexCommand): CodexExecutionResult {
+  const result = spawnSync(command.command, command.args, {
     cwd: run.projectRoot,
     encoding: "utf8",
     input: prompt,
@@ -133,7 +134,7 @@ export function parseReviewJson(raw: string): ReviewResult {
 function runReviewPass(run: PreparedRun, previousSummary = ""): ReviewPassResult | undefined {
   if (!run.reviewPrompt) return undefined;
   const prompt = `${run.reviewPrompt}\n\n# Implementation and verification output\n\n${previousSummary}\n`;
-  const execution = executeCodexPromptSync(run, prompt);
+  const execution = executeCodexPromptSync(run, prompt, run.reviewCodexCommand ?? run.codexCommand);
   const raw = execution.stdout.trim() || execution.stderr.trim();
   if (executionFailed(execution)) return { execution, raw, malformed: execution.error?.message ?? `review exited with status ${execution.status}` };
   try {
@@ -287,38 +288,42 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
       : undefined;
   const runId = `${new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 17)}-${process.pid}-${++runSequence}`;
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role}`);
-  mkdirSync(runDir, { recursive: true });
   const promptPath = path.join(runDir, "prompt.md");
   const metadataPath = path.join(runDir, "metadata.json");
-  writeFileSync(promptPath, prompt);
-  writeFileSync(
-    metadataPath,
-    `${JSON.stringify(
-      {
-        timestamp: new Date().toISOString(),
-        product: "codex-game-studio",
-        project: path.relative(cwd, projectRoot) || ".",
-        role,
-        task,
-        prompt_chars: prompt.length,
-        prompt_cache_path: path.relative(cwd, promptPath),
-        review: Boolean(reviewPrompt),
-        fix: Boolean(fixPrompt),
-        max_fix_passes: maxFixPasses
-      },
-      null,
-      2
-    )}\n`
-  );
-  const codexCommand = codexExecInvocation(projectRoot, options.codexBin ?? resolveCodexCommand());
+  if (!options.printPrompt && !options.dryRun) {
+    mkdirSync(runDir, { recursive: true });
+    writeFileSync(promptPath, prompt);
+    writeFileSync(
+      metadataPath,
+      `${JSON.stringify(
+        {
+          timestamp: new Date().toISOString(),
+          product: "codex-game-studio",
+          project: path.relative(cwd, projectRoot) || ".",
+          role,
+          task,
+          prompt_chars: prompt.length,
+          prompt_cache_path: path.relative(cwd, promptPath),
+          review: Boolean(reviewPrompt),
+          fix: Boolean(fixPrompt),
+          max_fix_passes: maxFixPasses
+        },
+        null,
+        2
+      )}\n`
+    );
+  }
+  const codexBin = options.codexBin ?? resolveCodexCommand();
+  const codexCommand = codexExecInvocation(projectRoot, codexBin);
+  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only") : undefined;
   const dryRunExtra = [
-    reviewPrompt ? `\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
+    reviewPrompt ? `\n\nReview Codex command: ${reviewCodexCommand?.display}\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
     fixPrompt ? `\n\nFix prompt (max passes: ${maxFixPasses}):\n${fixPrompt}` : ""
   ].join("");
   const output = options.printPrompt
     ? prompt
     : options.dryRun
-      ? `Prompt cache: ${promptPath}\nMetadata: ${metadataPath}\nContext files:\n${contextFiles.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${dryRunExtra}`
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\nContext files:\n${contextFiles.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${dryRunExtra}`
       : `Prompt cache written: ${promptPath}\nExecuting Codex: ${codexCommand.display}`;
-  return { prompt, promptPath, metadataPath, projectRoot, role, task, contextFiles, verification: options.verifyCommand, codexCommand, output, reviewPrompt, fixPrompt, maxFixPasses };
+  return { prompt, promptPath, metadataPath, projectRoot, role, task, contextFiles, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses };
 }

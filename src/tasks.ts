@@ -92,6 +92,7 @@ function getTask(store: TaskStore, taskId: string): StudioTask {
 
 export function createTask(projectRoot: string, input: { title: string; role: StudioRoleId; verification?: VerificationCommand; files?: string[] }): StudioTask {
   if (!input.title.trim()) throw new Error("task title is required");
+  readStudioProject(projectRoot);
   const store = readTaskStore(projectRoot);
   const task: StudioTask = {
     id: nextTaskId(store.tasks),

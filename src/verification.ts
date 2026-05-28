@@ -19,6 +19,7 @@ export type VerificationResult = {
 export type RunVerificationOptions = {
   cwd: string;
   timeoutMs?: number;
+  killGraceMs?: number;
   maxOutputBytes?: number;
 };
 
@@ -32,6 +33,8 @@ export async function runVerificationCommand(command: VerificationCommand, optio
   if (!command.command.trim()) throw new Error("verification command is required");
   const timeoutMs = options.timeoutMs ?? 30_000;
   if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) throw new Error("verification timeout must be finite and positive");
+  const killGraceMs = options.killGraceMs ?? 1_000;
+  if (!Number.isFinite(killGraceMs) || killGraceMs < 0) throw new Error("verification kill grace must be finite and non-negative");
   const maxOutputBytes = options.maxOutputBytes ?? 64_000;
   if (!Number.isFinite(maxOutputBytes) || maxOutputBytes <= 0) throw new Error("verification output bound must be finite and positive");
 
@@ -44,10 +47,18 @@ export async function runVerificationCommand(command: VerificationCommand, optio
     let stdout = "";
     let stderr = "";
     let timedOut = false;
+    let killTimer: NodeJS.Timeout | undefined;
     const timer = setTimeout(() => {
       timedOut = true;
       child.kill("SIGTERM");
+      killTimer = setTimeout(() => {
+        child.kill("SIGKILL");
+      }, killGraceMs);
     }, timeoutMs);
+    const clearTimers = (): void => {
+      clearTimeout(timer);
+      if (killTimer) clearTimeout(killTimer);
+    };
 
     child.stdout.setEncoding("utf8");
     child.stderr.setEncoding("utf8");
@@ -58,11 +69,11 @@ export async function runVerificationCommand(command: VerificationCommand, optio
       stderr = appendBounded(stderr, chunk, maxOutputBytes);
     });
     child.on("error", (error) => {
-      clearTimeout(timer);
+      clearTimers();
       resolve({ command: command.command, args: command.args, cwd: options.cwd, exitCode: null, signal: null, stdout, stderr: appendBounded(stderr, error.message, maxOutputBytes), timedOut });
     });
     child.on("close", (exitCode, signal) => {
-      clearTimeout(timer);
+      clearTimers();
       resolve({ command: command.command, args: command.args, cwd: options.cwd, exitCode, signal, stdout, stderr, timedOut });
     });
   });
