@@ -1,28 +1,35 @@
 # Examples
 
-Create and validate a project:
+Create and validate a project from this repository:
 
-```bash
-npm exec open-gamestudio -- init --name "My Game" --engine godot --mode prototype --non-interactive --competitor "Mini Metro" --competitor "Dorfromantik"
-npm exec open-gamestudio -- status --project projects/my-game
-npm exec open-gamestudio -- validate --project projects/my-game
+```sh
+npm run build
+npm run init -- --name "Rogue Core" --engine godot --mode prototype --non-interactive --competitor "Mini Metro" --competitor "Dorfromantik"
+npm run manage -- --project projects/rogue-core
+npm run validate -- --project projects/rogue-core
 ```
 
-Run a role agent directly through Codex:
+Run a studio role directly through Codex:
 
-```bash
-npm exec open-gamestudio -- run market_analyst --project projects/my-game --task "Create the initial market overview." --exec
+```sh
+npm run build && node dist/cli.js run producer --project projects/rogue-core "Create the initial market overview."
 ```
 
-Inspect the bounded Codex prompt packet first:
+Inspect prompts without launching Codex:
 
-```bash
-npm exec open-gamestudio -- run market_analyst --project projects/my-game --task "Create the initial market overview." --dry-run
+```sh
+npm run build && node dist/cli.js run producer --project projects/rogue-core "Create the initial market overview." --dry-run
+npm run build && node dist/cli.js market --project projects/rogue-core --dry-run
+npm run build && node dist/cli.js analytics --project projects/rogue-core --dry-run
+npm run build && node dist/cli.js handoff --project projects/rogue-core --dry-run
+npm run build && node dist/cli.js design-spec --project projects/rogue-core --dry-run
+npm run build && node dist/cli.js feel-review --project projects/rogue-core --dry-run
+npm run build && node dist/cli.js ui-review --project projects/rogue-core --dry-run
 ```
 
-Discover templates:
+Discover packaged templates:
 
-```bash
-npm exec open-gamestudio -- templates list
-npm exec open-gamestudio -- templates show market_analysis
+```sh
+npm run templates -- list
+npm run templates -- show market_analysis
 ```

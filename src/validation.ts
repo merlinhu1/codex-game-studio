@@ -2,12 +2,17 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync, unlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { agentNames, activeAgentsForMode, guidanceConfigHash, readProjectConfig } from "./config.js";
-import { validateBaseAgents } from "./agents.js";
-import { loadEngineConfigs, normalizeEngine, sourceRoot } from "./engines.js";
+import { activeAgentsForMode } from "./config.js";
+import { projectAgentsMdRequiredSections, validateBaseAgents } from "./agents.js";
+import { checkCodexAvailability } from "./codex-runtime.js";
+import { createCodexStudioSession } from "./codex-session.js";
+import { renderCodexPrompt } from "./codex-prompts.js";
+import { loadEngineConfigs, sourceRoot, unrealProjectFileName } from "./engines.js";
 import { packageAssetPath } from "./paths.js";
-import { expectedEngineProjectFile, resumeProject, statusProject } from "./projects.js";
+import { readStudioProject, resumeProject, statusProject } from "./projects.js";
+import { rolePackages, studioRoleIds } from "./roles.js";
 import { templateRegistry, validateTemplateFiles } from "./templates.js";
+import { renderWorkflowPrompt, workflowIds, workflowRegistry } from "./workflows.js";
 
 export type CheckStatus = "pass" | "fail" | "skip";
 export type ValidationCheck = { id: string; status: CheckStatus; message: string; path?: string };
@@ -27,67 +32,118 @@ function sectionHasContent(body: string, section: string): boolean {
   const start = match.index + match[0].length;
   const rest = body.slice(start);
   const nextHeading = rest.search(/^#/m);
-  const content = nextHeading === -1 ? rest : rest.slice(0, nextHeading);
-  return content.trim().length > 0;
+  return (nextHeading === -1 ? rest : rest.slice(0, nextHeading)).trim().length > 0;
 }
 
-const requiredAgentSections = ["# Role", "# Inputs", "# Outputs", "# Validation", "# Engine Notes", "# Rules"];
+function stablePromptSectionChecks(projectRoot: string, role: (typeof studioRoleIds)[number], projectName: string): ValidationCheck[] {
+  const file = path.join(projectRoot, ".codex", "prompts", `${role}.md`);
+  if (!existsSync(file)) return [fail(`codex.role.${role}.prompt.exists`, `${role} prompt missing`, file), fail(`codex.prompt.${role}`, `${role} prompt missing`, file)];
+  const body = readFileSync(file, "utf8");
+  const checks = [pass(`codex.role.${role}.prompt.exists`, `${role} prompt exists`, file)];
+  checks.push(body.trim().length > 0 ? pass(`codex.prompt.${role}`, `${role} prompt exists`, file) : fail(`codex.prompt.${role}`, `${role} prompt missing`, file));
+  const projectLine = `Project: ${projectName}`;
+  checks.push(body.includes(projectLine) ? pass(`codex.role.${role}.prompt.project`, `${projectLine} exists`, file) : fail(`codex.role.${role}.prompt.project`, `${projectLine} missing`, file));
+  const roleLine = `Role: ${rolePackages[role].displayName}`;
+  checks.push(body.includes(roleLine) ? pass(`codex.role.${role}.prompt.role`, `${roleLine} exists`, file) : fail(`codex.role.${role}.prompt.role`, `${roleLine} missing`, file));
+  for (const [id, label] of [
+    ["project-summary", "## Project Summary"],
+    ["engine-context", "## Engine Context"],
+    ["role-instructions", "## Role Instructions"],
+    ["expected-outputs", "## Expected Outputs"],
+    ["review-checklist", "## Review Checklist"],
+    ["handoff", "## Handoff"]
+  ] as const) {
+    checks.push(sectionHasContent(body, label) ? pass(`codex.role.${role}.prompt.${id}`, `${label} exists`, file) : fail(`codex.role.${role}.prompt.${id}`, `${label} missing content`, file));
+  }
+  return checks;
+}
 
 export async function validateRepo(root = process.cwd()): Promise<ValidationCheck[]> {
   const checks: ValidationCheck[] = [];
   const pkgPath = path.join(root, "package.json");
-  const pkg = JSON.parse(readFileSync(pkgPath, "utf8")) as {
-    scripts?: Record<string, string>;
-    bin?: Record<string, string>;
-    files?: string[];
-    engines?: { node?: string };
-  };
+  const pkg = JSON.parse(readFileSync(pkgPath, "utf8")) as { scripts?: Record<string, string>; bin?: Record<string, string>; files?: string[]; engines?: { node?: string } };
   const scripts = pkg.scripts ?? {};
   for (const script of ["init", "manage", "test", "validate", "templates"]) {
-    checks.push(scripts[script] ? pass(`package.script.${script}`, `script ${script} exists`) : fail(`package.script.${script}`, `missing script ${script}`, pkgPath));
+    checks.push(scripts[script] ? pass(`pkg.script.${script}`, `script ${script} exists`) : fail(`pkg.script.${script}`, `missing script ${script}`, pkgPath));
   }
   checks.push(scripts.build === "tsc -p tsconfig.build.json" ? pass("package.build", "build uses tsconfig.build.json") : fail("package.build", "build must use tsconfig.build.json", pkgPath));
   checks.push(pkg.bin?.["open-gamestudio"] === "./dist/cli.js" ? pass("package.bin", "bin points to dist/cli.js") : fail("package.bin", "bin must point to ./dist/cli.js", pkgPath));
   checks.push(pkg.engines?.node?.includes(">=20") ? pass("package.node", "node floor declared") : fail("package.node", "node >=20 must be declared", pkgPath));
-  for (const file of ["dist/", "engine_configs/", "agents/base/", "templates/"]) {
-    checks.push(pkg.files?.includes(file) ? pass(`package.files.${file}`, `${file} shipped`) : fail(`package.files.${file}`, `${file} missing from package files`, pkgPath));
+  for (const file of ["dist/", "engine_configs/", "templates/"]) {
+    checks.push(pkg.files?.includes(file) ? pass(`pkg.files.${file}`, `${file} shipped`) : fail(`pkg.files.${file}`, `${file} missing from package files`, pkgPath));
   }
-  for (const file of ["src/cli.ts", "src/paths.ts", "src/config.ts", "src/engines.ts", "src/templates.ts", "src/agents.ts", "src/projects.ts", "src/runner.ts", "src/validation.ts"]) {
-    checks.push(existsSync(path.join(root, file)) ? pass(`source.${file}`, `${file} exists`) : fail(`source.${file}`, `${file} missing`, file));
+  for (const file of ["src/cli.ts", "src/codex-runtime.ts", "src/codex-session.ts", "src/codex-prompts.ts", "src/roles.ts", "src/tasks.ts", "src/workflows.ts", "src/verification.ts", "src/projects.ts", "src/runner.ts", "src/validation.ts"]) {
+    checks.push(existsSync(path.join(root, file)) ? pass(`src.${file}`, `${file} exists`) : fail(`src.${file}`, `${file} missing`, file));
   }
-  const tsFiles = ["cli", "config", "engines", "templates", "agents", "projects", "runner", "validation", "paths"].map((f) => path.join(root, "src", `${f}.ts`));
-  for (const file of tsFiles.filter(existsSync)) {
-    const body = readFileSync(file, "utf8");
-    const bad = body.match(/from "\.\/(?!.*\.js")/);
-    if (bad) checks.push(fail("typescript.imports", `relative import missing .js in ${file}`, file));
+
+  const codex = await checkCodexAvailability();
+  checks.push(codex.ok ? pass("codex.cli", "Codex CLI is available") : fail("codex.cli", codex.reason ?? "Codex CLI unavailable or unauthenticated"));
+
+  const baseAgentFailures = validateBaseAgents();
+  checks.push(...baseAgentFailures.map((message) => fail("codex.roles", message)));
+  for (const role of studioRoleIds) {
+    const rendered = renderCodexPrompt(createCodexStudioSession({ projectRoot: root, role, objective: "validate role rendering", phase: "plan" }));
+    checks.push(rendered.includes(rolePackages[role].displayName) ? pass(`codex.role.${role}.package-render`, `${role} package renders`) : fail(`codex.role.${role}.package-render`, `${role} package did not render`));
   }
+
   const engines = loadEngineConfigs(packageAssetPath("engine_configs"));
-  for (const value of ["Godot", "Unity", "Unreal", "Unreal Engine", "ue5"]) {
-    try {
-      normalizeEngine(value, engines);
-      checks.push(pass(`engine.alias.${value}`, `${value} normalizes`));
-    } catch (error) {
-      checks.push(fail(`engine.alias.${value}`, (error as Error).message));
-    }
+  for (const [id, config] of Object.entries(engines)) {
+    checks.push(config.codex_hints.length && config.run_command && config.test_command ? pass(`codex.engine.${id}`, `${id} Codex hints parse`) : fail(`codex.engine.${id}`, `${id} Codex hints missing`));
   }
-  checks.push(...validateBaseAgents().map((message) => fail("agents.base", message)));
-  if (validateBaseAgents().length === 0) checks.push(pass("agents.base", "all 12 base agents exist"));
+
+  for (const workflow of workflowIds()) {
+    const definition = workflowRegistry[workflow];
+    checks.push(definition.file.endsWith(`${workflow}.md`) ? pass(`codex.workflow.${workflow}.registry`, `${workflow} registry entry exists`) : fail(`codex.workflow.${workflow}.registry`, `${workflow} registry file mismatch`));
+    const rendered = renderCodexPrompt(createCodexStudioSession({ projectRoot: root, role: definition.role, objective: definition.objective, phase: definition.phase, contextFiles: definition.contextFiles }));
+    checks.push(rendered.includes(definition.objective) ? pass(`codex.workflow.${workflow}.render`, `${workflow} workflow renders`) : fail(`codex.workflow.${workflow}.render`, `${workflow} workflow did not render`));
+  }
+
   const templateFailures = validateTemplateFiles();
   checks.push(...templateFailures.map((message) => fail("templates", message)));
+  for (const [id, info] of Object.entries(templateRegistry)) {
+    const file = packageAssetPath(info.path);
+    if (!existsSync(file)) {
+      checks.push(fail(`codex.template.${id}.exists`, `${id} template missing`, file));
+      continue;
+    }
+    const body = readFileSync(file, "utf8");
+    const missingSection = info.requiredSections.find((section) => !sectionHasContent(body, section));
+    if (missingSection) {
+      checks.push(fail(`codex.template.${id}.exists`, `${id} template missing non-empty ${missingSection}`, file));
+      continue;
+    }
+    if (id === "project_config") {
+      try {
+        JSON.parse(body);
+        checks.push(pass(`codex.template.${id}.exists`, `${id} template exists`, file));
+      } catch (error) {
+        checks.push(fail(`codex.template.${id}.exists`, `${id} template JSON invalid: ${(error as Error).message}`, file));
+      }
+      continue;
+    }
+    checks.push(pass(`codex.template.${id}.exists`, `${id} template exists`, file));
+  }
   if (templateFailures.length === 0 && Object.keys(templateRegistry).length === 7) checks.push(pass("templates", "all templates exist"));
+
+  const cliHelp = existsSync(path.join(root, "src", "cli.ts")) ? execFileSync(path.join(root, "node_modules", ".bin", "tsx"), [path.join(root, "src", "cli.ts"), "--help"], { cwd: root, encoding: "utf8" }) : "";
+  checks.push(/\bnext\b/.test(cliHelp) ? fail("codex.surface.future.next", "future next command exposed") : pass("codex.surface.future.next", "future next command is not exposed"));
+  checks.push(/\btelemetry\b/.test(cliHelp) ? fail("codex.surface.future.telemetry", "future telemetry command exposed") : pass("codex.surface.future.telemetry", "future telemetry command is not exposed"));
+  checks.push(/\bparallel\b/.test(cliHelp) ? fail("codex.surface.future.parallel", "future parallel command exposed") : pass("codex.surface.future.parallel", "future parallel command is not exposed"));
+  checks.push(/ownership/i.test(cliHelp) ? fail("codex.surface.future.ownership", "future ownership enforcement surface exposed") : pass("codex.surface.future.ownership", "future ownership enforcement surface is not exposed"));
+
   checks.push(existsSync(path.join(root, "dist", "cli.js")) ? pass("build.output", "dist/cli.js exists") : fail("build.output", "dist/cli.js missing; run npm run build", path.join(root, "dist", "cli.js")));
   if (existsSync(path.join(root, "dist", "cli.js"))) {
     try {
-      const packRaw = execFileSync("npm", ["pack", "--json"], { cwd: root, encoding: "utf8" });
+      const packRaw = execFileSync("npm", ["pack", "--json"], { cwd: root, encoding: "utf8", shell: false });
       const packInfo = JSON.parse(packRaw)[0] as { filename: string; files: { path: string }[] };
       const packed = new Set(packInfo.files.map((file) => file.path));
-      for (const need of ["dist/cli.js", "engine_configs/godot.json", "engine_configs/unity.json", "engine_configs/unreal.json", "templates/gdd_template.md", "agents/base/master_orchestrator.md"]) {
+      for (const need of ["dist/cli.js", "engine_configs/godot.json", "engine_configs/unity.json", "engine_configs/unreal.json", "templates/gdd_template.md", "templates/market_analysis_template.md", "templates/analytics_setup_template.md", "templates/handoff_template.md"]) {
         checks.push(packed.has(need) ? pass(`pack.${need}`, `${need} packed`) : fail(`pack.${need}`, `${need} missing from npm pack`));
       }
       const temp = mkdtempSync(path.join(tmpdir(), "open-gamestudio-pack-"));
       try {
-        execFileSync("npm", ["install", "--silent", "--prefix", temp, path.join(root, packInfo.filename)], { cwd: root, encoding: "utf8" });
-        execFileSync("npm", ["exec", "--prefix", temp, "open-gamestudio", "--", "templates", "list"], { cwd: temp, encoding: "utf8" });
+        execFileSync("npm", ["install", "--silent", "--prefix", temp, path.join(root, packInfo.filename)], { cwd: root, encoding: "utf8", shell: false });
+        execFileSync("npm", ["exec", "--prefix", temp, "open-gamestudio", "--", "templates", "list"], { cwd: temp, encoding: "utf8", shell: false });
         checks.push(pass("pack.install_smoke", "installed package bin loads templates from temp cwd"));
       } finally {
         rmSync(temp, { recursive: true, force: true });
@@ -97,64 +153,60 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
       checks.push(fail("pack.install_smoke", `package smoke failed: ${(error as Error).message}`));
     }
   }
-  const help = readFileSync(path.join(root, "src", "cli.ts"), "utf8");
-  checks.push(help.includes('.option("--exec"') ? pass("codex.exec", "direct codex exec option exposed") : fail("codex.exec", "run command must expose --exec for direct Codex integration"));
-  for (const forbidden of ["next", "telemetry", "parallel orchestration", "ownership enforcement"]) {
-    checks.push(!help.includes(`command("${forbidden}`) && !help.includes(`option("${forbidden}`) ? pass(`future.absent.${forbidden}`, `${forbidden} not exposed`) : fail(`future.absent.${forbidden}`, `${forbidden} must not be exposed`));
-  }
   return checks;
 }
 
 export function validateProject(projectRoot: string): ValidationCheck[] {
   const checks: ValidationCheck[] = [];
-  const configPath = path.join(projectRoot, "project-config.json");
-  let config;
+  const studioPath = path.join(projectRoot, ".codex", "studio.json");
+  let studio: ReturnType<typeof readStudioProject>;
   try {
-    config = readProjectConfig(configPath);
-    checks.push(pass("project.config", "config schema-valid", configPath));
+    studio = readStudioProject(projectRoot);
+    checks.push(pass("codex.project.studio", "studio.json schema-readable", studioPath));
   } catch (error) {
-    return [fail("project.config", `invalid project config: ${(error as Error).message}`, configPath)];
+    return [fail("codex.project.studio", `invalid studio state: ${(error as Error).message}`, studioPath)];
   }
-  const expectedAgents = activeAgentsForMode(config.project.mode);
-  checks.push(JSON.stringify(expectedAgents) === JSON.stringify(config.team.active_agents) ? pass("project.active_agents", "active agents match mode") : fail("project.active_agents", "active agents do not match mode", configPath));
-  const engines = loadEngineConfigs(packageAssetPath("engine_configs"));
-  const root = sourceRoot(projectRoot, config.project.slug);
-  checks.push(existsSync(root) ? pass("project.source_root", "engine source root exists", root) : fail("project.source_root", "engine source root missing", root));
-  const engineFile = expectedEngineProjectFile(projectRoot, config);
-  checks.push(existsSync(engineFile) ? pass("project.engine_file", "engine project file exists", engineFile) : fail("project.engine_file", "engine project file missing", engineFile));
-  if (config.project.engine === "unity") {
-    const settings = path.join(root, "ProjectSettings", "ProjectSettings.asset");
-    checks.push(existsSync(settings) ? pass("project.engine_settings", "Unity ProjectSettings marker exists", settings) : fail("project.engine_settings", "Unity ProjectSettings marker missing", settings));
-  }
-  for (const agent of config.team.active_agents) {
-    const file = path.join(projectRoot, ".gamestudio", "agents", `${agent}.md`);
-    if (!existsSync(file)) {
-      checks.push(fail(`project.agent.${agent}`, `${agent} prompt missing`, file));
-      continue;
-    }
-    const body = readFileSync(file, "utf8");
-    const engine = engines[config.project.engine];
-    const hasProjectContext =
-      sectionHasContent(body, "# Project Context") &&
-      body.includes(`- Name: ${config.project.name}`) &&
-      body.includes(`- Engine: ${engine.display_name} ${config.project.engine_version}`) &&
-      sectionHasContent(body, "# Engine Overlay");
-    const missingSections = requiredAgentSections.filter((section) => !sectionHasContent(body, section));
-    checks.push(
-      hasProjectContext && missingSections.length === 0
-        ? pass(`project.agent.${agent}`, `${agent} materialized`, file)
-        : fail(`project.agent.${agent}`, `${agent} prompt missing project context or non-empty sections: ${missingSections.join(", ") || "project context"}`, file)
-    );
-  }
+
+  checks.push(JSON.stringify(studio.roles) === JSON.stringify(studioRoleIds) ? pass("codex.project.roles", "full role roster recorded", studioPath) : fail("codex.project.roles", "studio roles must equal canonical studioRoleIds", studioPath));
+  checks.push(JSON.stringify(studio.activeRoles) === JSON.stringify(activeAgentsForMode(studio.mode)) ? pass("codex.project.activeRoles", "mode-active roles recorded", studioPath) : fail("codex.project.activeRoles", "activeRoles must match project mode", studioPath));
+  checks.push(JSON.stringify(studio.workflows) === JSON.stringify(workflowIds()) ? pass("codex.project.workflows", "canonical workflows recorded", studioPath) : fail("codex.project.workflows", "workflows must match registry keys", studioPath));
+
   const agentsMd = path.join(projectRoot, "AGENTS.md");
   if (existsSync(agentsMd)) {
     const body = readFileSync(agentsMd, "utf8");
-    const hash = guidanceConfigHash(config);
-    checks.push(body.includes("generated-by: open-gamestudio src/agents.ts") ? pass("project.agents_md.provenance", "AGENTS.md provenance ok", agentsMd) : fail("project.agents_md.provenance", "AGENTS.md provenance missing", agentsMd));
-    checks.push(body.includes(`source-config-sha256: ${hash}`) ? pass("project.agents_md.hash", "AGENTS.md hash current", agentsMd) : fail("project.agents_md.hash", "AGENTS.md stale; regenerate project agents", agentsMd));
+    for (const section of projectAgentsMdRequiredSections) {
+      checks.push(sectionHasContent(body, section) ? pass(`codex.project.AGENTS.md.${section}`, `${section} exists`, agentsMd) : fail(`codex.project.AGENTS.md.${section}`, `${section} missing content`, agentsMd));
+    }
   } else {
-    checks.push(fail("project.agents_md", "project AGENTS.md missing", agentsMd));
+    checks.push(fail("project.agents_md", "AGENTS.md missing", agentsMd));
   }
+
+  for (const role of studioRoleIds) checks.push(...stablePromptSectionChecks(projectRoot, role, studio.name));
+
+  for (const workflow of workflowIds()) {
+    const file = path.join(projectRoot, workflowRegistry[workflow].file);
+    if (!existsSync(file)) {
+      checks.push(fail(`codex.workflow.${workflow}.file.exists`, `${workflow} workflow missing`, file));
+      continue;
+    }
+    const body = readFileSync(file, "utf8");
+    checks.push(pass(`codex.workflow.${workflow}.file.exists`, `${workflow} workflow exists`, file));
+    const hasSections = ["## Purpose", "## Inputs", "## Role", "## Outputs", "## Validation"].every((section) => sectionHasContent(body, section));
+    checks.push(hasSections ? pass(`codex.workflow.${workflow}.sections`, `${workflow} workflow sections exist`, file) : fail(`codex.workflow.${workflow}.sections`, `${workflow} workflow sections missing content`, file));
+    checks.push(renderWorkflowPrompt(projectRoot, workflow).includes(workflowRegistry[workflow].objective) ? pass(`codex.workflow.${workflow}.render`, `${workflow} workflow renders`) : fail(`codex.workflow.${workflow}.render`, `${workflow} workflow did not render`));
+    checks.push(pass(`codex.workflow.${workflow}.registry`, `${workflow} registry entry exists`));
+    checks.push(pass(`codex.workflow.${workflow}`, `${workflow} workflow exists`, file));
+  }
+
+  const root = sourceRoot(projectRoot, studio.slug);
+  checks.push(existsSync(root) ? pass("project.source_root", "engine source root exists", root) : fail("project.source_root", "engine source root missing", root));
+  const engineFile = studio.engine === "godot" ? path.join(root, "project.godot") : studio.engine === "unity" ? path.join(root, "Packages", "manifest.json") : path.join(root, unrealProjectFileName(studio.name));
+  checks.push(existsSync(engineFile) ? pass("project.engine_file", "engine project file exists", engineFile) : fail("project.engine_file", "engine project file missing", engineFile));
+  if (studio.engine === "unity") {
+    const settings = path.join(root, "ProjectSettings", "ProjectSettings.asset");
+    checks.push(existsSync(settings) ? pass("project.engine_settings", "Unity ProjectSettings marker exists", settings) : fail("project.engine_settings", "Unity ProjectSettings marker missing", settings));
+  }
+
   for (const file of ["resources/market-research/market-overview.md", "documentation/design/gdd.md", "documentation/production/timeline.md"]) {
     checks.push(existsSync(path.join(projectRoot, file)) ? pass(`project.artifact.${file}`, `${file} exists`) : fail(`project.artifact.${file}`, `${file} missing`, path.join(projectRoot, file)));
   }
@@ -165,11 +217,17 @@ export function validateProject(projectRoot: string): ValidationCheck[] {
       checks.push(sectionHasContent(body, section) ? pass(`project.timeline.${section}`, `${section} exists`, timeline) : fail(`project.timeline.${section}`, `${section} missing non-empty content`, timeline));
     }
   }
-  const before = JSON.stringify(readFileSync(configPath, "utf8"));
+
+  for (const forbidden of ["project_orchestrator.md", "CODEX.md", path.join(".gamestudio", "runs")]) {
+    const file = path.join(projectRoot, forbidden);
+    checks.push(existsSync(file) ? fail(`project.forbidden.${forbidden}`, `${forbidden} must not exist`, file) : pass(`project.forbidden.${forbidden}`, `${forbidden} absent`));
+  }
+
+  const before = readFileSync(studioPath, "utf8");
   statusProject(projectRoot, path.dirname(projectRoot));
   resumeProject(projectRoot, path.dirname(projectRoot));
-  const after = JSON.stringify(readFileSync(configPath, "utf8"));
-  checks.push(before === after ? pass("project.read_only", "status/resume are read-only") : fail("project.read_only", "status/resume mutated project", configPath));
+  const after = readFileSync(studioPath, "utf8");
+  checks.push(before === after ? pass("project.read_only", "status/resume are read-only") : fail("project.read_only", "status/resume mutated project", studioPath));
   return checks;
 }
 

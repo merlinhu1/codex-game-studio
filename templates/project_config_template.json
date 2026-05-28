@@ -18,13 +18,11 @@
   },
   "team": {
     "active_agents": [
-      "master_orchestrator",
-      "producer_agent",
-      "market_analyst",
-      "data_scientist",
-      "sr_game_designer",
-      "mechanics_developer",
-      "qa_agent"
+      "creative-director",
+      "producer",
+      "game-designer",
+      "gameplay-programmer",
+      "qa-playtester"
     ]
   },
   "production": {

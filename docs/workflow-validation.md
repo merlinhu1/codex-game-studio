@@ -2,15 +2,17 @@
 
 Validation exits nonzero when any check fails.
 
-Repo validation checks package scripts, build output, NodeNext import specifiers, package assets, engine configs, base agents, templates, package packing, installed-bin asset loading, and direct Codex execution exposure.
+Repo validation checks package scripts, build output, package assets, engine configs, expanded role rendering, canonical workflow rendering, templates, package packing, installed-bin asset loading, future-only CLI surfaces, and Codex CLI readiness.
 
-Project validation checks schema-valid config, active agents, engine source root, engine project file, materialized agents, project `AGENTS.md` provenance and config hash, market seed, starter GDD, timeline sections, and read-only `status`/`resume` behavior.
+Project validation checks `.codex/studio.json` full `roles`, mode-specific `activeRoles`, registry-derived `workflows`, `AGENTS.md`, generated project-specific role prompts, workflow files, engine source files, starter docs, timeline sections, forbidden legacy artifacts, and read-only `status`/`resume` behavior.
 
 CLI surface checks:
 
 ```bash
-npm exec open-gamestudio -- run --help | grep -- "--exec"
+npm exec open-gamestudio -- run --help | grep -- "--dry-run"
 ! npm exec open-gamestudio -- --help | grep -E " next|telemetry"
 ```
 
-No generated `project_orchestrator.md` is required or produced.
+Workflow shortcut commands such as `market`, `analytics`, `design-spec`, `feel-review`, `art-direction`, `ui-review`, `milestone`, and `handoff` render prompts only. They do not launch Codex or create run records.
+
+No generated `CODEX.md`, `.gamestudio/runs`, or `project_orchestrator.md` is required or produced.

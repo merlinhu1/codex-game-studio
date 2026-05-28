@@ -15,4 +15,4 @@ npm run validate
 
 Keep generated projects under `projects/<slug>/`.
 
-The first build includes direct Codex execution through `run --exec`. It still intentionally excludes planner commands, telemetry, parallel orchestration, changed-file tracking, and ownership enforcement.
+The current build invokes Codex by default through `run <role>`. Use `--dry-run` or `--print-prompt` for inspection-only paths. It still intentionally excludes planner commands, telemetry, parallel orchestration, changed-file tracking, and ownership enforcement.

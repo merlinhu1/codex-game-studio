@@ -26,7 +26,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     id: "gdd",
     category: "design",
     path: "templates/gdd_template.md",
-    roles: ["sr_game_designer", "mid_game_designer"],
+    roles: ["game-designer", "creative-director"],
     tags: ["design", "gdd"],
     requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
   },
@@ -34,7 +34,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     id: "feature_spec",
     category: "design",
     path: "templates/feature_spec_template.md",
-    roles: ["sr_game_designer", "mid_game_designer", "mechanics_developer"],
+    roles: ["senior-game-designer", "game-designer", "gameplay-programmer"],
     tags: ["feature", "spec", "design"],
     requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
   },
@@ -42,7 +42,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     id: "handoff",
     category: "coordination",
     path: "templates/handoff_template.md",
-    roles: ["master_orchestrator", "producer_agent"],
+    roles: ["studio-orchestrator", "creative-director", "producer"],
     tags: ["handoff", "coordination"],
     requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
   },
@@ -50,7 +50,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     id: "analytics_setup",
     category: "analytics",
     path: "templates/analytics_setup_template.md",
-    roles: ["data_scientist"],
+    roles: ["data-scientist", "producer"],
     tags: ["analytics", "metrics"],
     requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
   },
@@ -58,7 +58,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     id: "engine_setup",
     category: "engine",
     path: "templates/engine_setup_template.md",
-    roles: ["mechanics_developer", "technical_artist"],
+    roles: ["gameplay-programmer", "engine-programmer", "technical-artist"],
     tags: ["engine", "setup"],
     requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
   },
@@ -66,7 +66,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     id: "market_analysis",
     category: "market",
     path: "templates/market_analysis_template.md",
-    roles: ["market_analyst"],
+    roles: ["market-analyst", "producer"],
     tags: ["market", "competitors"],
     requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
   },
@@ -74,7 +74,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     id: "project_config",
     category: "config",
     path: "templates/project_config_template.json",
-    roles: ["producer_agent", "master_orchestrator"],
+    roles: ["producer", "creative-director"],
     tags: ["config", "setup"],
     requiredSections: []
   }
@@ -140,9 +140,9 @@ export function selectTemplates(agent: AgentName, task: string): TemplateId[] {
   const lower = task.toLowerCase();
   const selected = new Set<TemplateId>();
   if (/(handoff|coordination|coordinate)/.test(lower)) selected.add("handoff");
-  if (agent === "market_analyst") selected.add("market_analysis");
-  if (agent === "data_scientist") selected.add("analytics_setup");
-  if ((agent === "sr_game_designer" || agent === "mid_game_designer") && /(design|spec|gdd|feature)/.test(lower)) {
+  if ((agent === "producer" || agent === "market-analyst") && /(market|competitor|audience)/.test(lower)) selected.add("market_analysis");
+  if ((agent === "producer" || agent === "data-scientist") && /(analytics|metric|telemetry)/.test(lower)) selected.add("analytics_setup");
+  if ((agent === "senior-game-designer" || agent === "game-designer" || agent === "gameplay-programmer") && /(design|spec|gdd|feature)/.test(lower)) {
     selected.add("gdd");
     selected.add("feature_spec");
   }
@@ -150,6 +150,6 @@ export function selectTemplates(agent: AgentName, task: string): TemplateId[] {
     selected.add("engine_setup");
     selected.add("project_config");
   }
-  if (agent === "qa_agent" && /(spec review|review spec)/.test(lower)) selected.add("feature_spec");
+  if (agent === "qa-playtester" && /(spec review|review spec)/.test(lower)) selected.add("feature_spec");
   return [...selected];
 }

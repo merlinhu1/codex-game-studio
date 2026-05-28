@@ -1,8 +1,8 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { agentNames, guidanceConfigHash, type AgentName, type ProjectConfig } from "./config.js";
+import { guidanceConfigHash, type ProjectConfig } from "./config.js";
 import type { EngineConfigRegistry } from "./engines.js";
-import { packageAssetPath } from "./paths.js";
+import { rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
 
 export type MaterializeAgentsInput = {
   projectRoot: string;
@@ -11,30 +11,29 @@ export type MaterializeAgentsInput = {
 };
 
 export function validateBaseAgents(): string[] {
-  return agentNames.flatMap((agent) => {
-    const file = packageAssetPath(`agents/base/${agent}.md`);
-    if (!existsSync(file)) return [`Missing base agent ${agent}`];
-    const body = readFileSync(file, "utf8");
-    return ["# Role", "# Inputs", "# Outputs", "# Validation", "# Engine Notes", "# Rules"].filter((section) => !sectionHasContent(body, section)).map((section) => `${agent} missing non-empty ${section}`);
+  return studioRoleIds.flatMap((role) => {
+    const pkg = rolePackages[role];
+    return pkg.systemPrompt.trim() && pkg.expectedOutputs.length && pkg.reviewChecklist.length ? [] : [`Invalid role package ${role}`];
   });
 }
 
-function sectionHasContent(body: string, section: string): boolean {
-  const escaped = section.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = new RegExp(`^${escaped}\\s*$`, "m").exec(body);
-  if (!match) return false;
-  const start = match.index + match[0].length;
-  const rest = body.slice(start);
-  const nextHeading = rest.search(/^#/m);
-  const content = nextHeading === -1 ? rest : rest.slice(0, nextHeading);
-  return content.trim().length > 0;
+export function readAgentPrompt(agent: StudioRoleId, projectRoot?: string): string {
+  const projectPrompt = projectRoot ? path.join(projectRoot, ".codex", "prompts", `${agent}.md`) : "";
+  if (projectPrompt && existsSync(projectPrompt)) return readFileSync(projectPrompt, "utf8");
+  return rolePackages[agent].systemPrompt;
 }
 
-export function readAgentPrompt(agent: AgentName, projectRoot?: string): string {
-  const projectPrompt = projectRoot ? path.join(projectRoot, ".gamestudio", "agents", `${agent}.md`) : "";
-  if (projectPrompt && existsSync(projectPrompt)) return readFileSync(projectPrompt, "utf8");
-  return readFileSync(packageAssetPath(`agents/base/${agent}.md`), "utf8");
-}
+export const projectAgentsMdRequiredSections = [
+  "## Project Goal",
+  "## Engine",
+  "## Commands",
+  "## Coding Conventions",
+  "## Asset Conventions",
+  "## Studio Roles",
+  "## Current Milestone",
+  "## Verification",
+  "## Rules"
+] as const;
 
 export function generateProjectAgentsMd(config: ProjectConfig): string {
   const hash = guidanceConfigHash(config);
@@ -44,53 +43,108 @@ export function generateProjectAgentsMd(config: ProjectConfig): string {
 
 Project: ${config.project.name}
 Slug: ${config.project.slug}
-Engine: ${config.project.engine}
 Mode: ${config.project.mode}
 
-# Validation
+## Project Goal
 
-Run \`npm run validate -- --project projects/${config.project.slug}\`.
+${config.project.concept}
 
-# Agent Prompts
+## Engine
 
-${config.team.active_agents.map((agent) => `- ${agent}: .gamestudio/agents/${agent}.md`).join("\n")}
+${config.project.engine} ${config.project.engine_version}
 
-# Rules
+## Commands
 
-Use bounded context. Load the current role prompt, project config, engine overlay, and task-relevant templates only.
-Codex execution is first-class: prefer \`open-gamestudio run <agent> --exec\` when you want the toolkit to invoke Codex directly; use \`--dry-run\` or \`--print-prompt\` only for inspection.
+- Validate: \`npm run validate -- --project projects/${config.project.slug}\`
+
+## Coding Conventions
+
+- Prefer engine-native idioms.
+- Keep generated code scoped to the current task.
+
+## Asset Conventions
+
+- Do not edit imported binary assets without documenting the change.
+- Describe scene, prefab, and material changes explicitly.
+
+## Studio Roles
+
+${studioRoleIds.map((role) => `- ${role}: .codex/prompts/${role}.md`).join("\n")}
+
+## Current Milestone
+
+${config.project.mode === "design" ? "design" : config.project.mode === "development" ? "development" : "prototype"}
+
+## Verification
+
+Run project validation before claiming parity or readiness.
+
+## Rules
+
+Use AGENTS.md, .codex/studio.json, the current role prompt, and task-relevant context only.
+Codex is the default runtime for \`open-gamestudio run <role>\`; use \`--dry-run\` or \`--print-prompt\` only for inspection.
 Do not use telemetry, planner/next, parallel orchestration, or ownership enforcement in this build.
 `;
 }
 
+export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfig, engines: EngineConfigRegistry): string {
+  const pkg = rolePackages[role];
+  const engine = engines[config.project.engine];
+  return [
+    `# ${pkg.displayName}`,
+    "",
+    `Project: ${config.project.name}`,
+    `Slug: ${config.project.slug}`,
+    `Role: ${pkg.displayName}`,
+    `Mode: ${config.project.mode}`,
+    `Engine: ${engine.display_name} ${config.project.engine_version}`,
+    `Current Milestone: ${config.project.mode === "design" ? "design" : config.project.mode === "development" ? "development" : "prototype"}`,
+    "",
+    "## Project Summary",
+    "",
+    config.project.concept,
+    "",
+    `Genre: ${config.project.genre}`,
+    `Platform: ${config.project.platform}`,
+    `Audience: ${config.project.audience}`,
+    `Monetization: ${config.project.monetization}`,
+    `Timeline: ${config.project.timeline}`,
+    `Competitors: ${config.project.competitors.join(", ") || "none configured"}`,
+    "",
+    "## Role Instructions",
+    "",
+    pkg.systemPrompt,
+    "",
+    "## Engine Context",
+    "",
+    ...engine.codex_hints.map((hint) => `- ${hint}`),
+    "",
+    "## Expected Outputs",
+    "",
+    ...pkg.expectedOutputs.map((item) => `- ${item}`),
+    "",
+    "## Review Checklist",
+    "",
+    ...pkg.reviewChecklist.map((item) => `- ${item}`),
+    "",
+    "## Handoff",
+    "",
+    pkg.handoffTemplate,
+    ""
+  ].join("\n");
+}
+
 export function materializeAgents(input: MaterializeAgentsInput): string[] {
-  const config = input.config;
-  const engine = input.engines[config.project.engine];
-  const target = path.join(input.projectRoot, ".gamestudio", "agents");
-  mkdirSync(target, { recursive: true });
   const written: string[] = [];
-  for (const agent of config.team.active_agents) {
-    const base = readFileSync(packageAssetPath(`agents/base/${agent}.md`), "utf8");
-    const body = `${base}
-
-# Project Context
-
-- Name: ${config.project.name}
-- Concept: ${config.project.concept}
-- Audience: ${config.project.audience}
-- Engine: ${engine.display_name} ${config.project.engine_version}
-- Mode: ${config.project.mode}
-
-# Engine Overlay
-
-${Object.values(engine.agent_specializations).join("\n")}
-`;
-    const file = path.join(target, `${agent}.md`);
-    writeFileSync(file, body);
-    written.push(file);
-  }
   const agentsMd = path.join(input.projectRoot, "AGENTS.md");
-  writeFileSync(agentsMd, generateProjectAgentsMd(config));
+  writeFileSync(agentsMd, generateProjectAgentsMd(input.config));
   written.push(agentsMd);
+  const prompts = path.join(input.projectRoot, ".codex", "prompts");
+  mkdirSync(prompts, { recursive: true });
+  for (const role of studioRoleIds) {
+    const prompt = path.join(prompts, `${role}.md`);
+    writeFileSync(prompt, renderProjectRolePrompt(role, input.config, input.engines));
+    written.push(prompt);
+  }
   return written;
 }

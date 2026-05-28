@@ -6,6 +6,13 @@
   "source_root_pattern": "source/project-{slug}",
   "folders": ["assets", "scenes", "scripts"],
   "project_files": ["project.godot"],
+  "run_command": "godot --path .",
+  "test_command": "godot --headless --path . --run-tests",
+  "codex_hints": [
+    "Prefer Godot scene/node composition and GDScript-friendly boundaries.",
+    "Do not edit imported assets directly.",
+    "Describe binary scene/resource changes explicitly."
+  ],
   "best_practices": ["Use scenes for composition.", "Keep gameplay scripts focused."],
   "agent_specializations": {
     "summary": "Godot project using scenes, nodes, resources, and GDScript-friendly architecture.",

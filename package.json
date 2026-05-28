@@ -1,7 +1,7 @@
 {
   "name": "open-gamestudio",
   "version": "0.1.0",
-  "description": "Provider-neutral CLI workflow layer for agent-assisted game projects.",
+  "description": "Codex-native CLI workflow layer for game projects.",
   "author": "MerlinH",
   "license": "MIT",
   "type": "module",
@@ -11,7 +11,6 @@
   "files": [
     "dist/",
     "engine_configs/",
-    "agents/base/",
     "templates/"
   ],
   "bin": {

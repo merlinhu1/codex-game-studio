@@ -14,6 +14,10 @@ describe("engine registry", () => {
     expect(normalizeEngine("Unreal Engine", registry)).toBe("unreal");
     expect(normalizeEngine("ue5", registry)).toBe("unreal");
     expect(() => normalizeEngine("scratch", registry)).toThrow(/Unknown engine/);
+    expect(registry.godot.project_files).toContain("project.godot");
+    expect(registry.unity.run_command).toContain("Unity");
+    expect(registry.unreal.test_command).toContain("Automation");
+    expect(registry.godot.codex_hints.length).toBeGreaterThan(0);
   });
 
   test("creates engine roots under source/project-slug", () => {

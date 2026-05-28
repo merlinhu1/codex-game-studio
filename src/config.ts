@@ -1,25 +1,13 @@
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { z } from "zod";
+import { studioRoleIds, type StudioRoleId } from "./roles.js";
 
-export const agentNames = [
-  "master_orchestrator",
-  "producer_agent",
-  "market_analyst",
-  "data_scientist",
-  "sr_game_designer",
-  "mid_game_designer",
-  "mechanics_developer",
-  "game_feel_developer",
-  "sr_game_artist",
-  "technical_artist",
-  "ui_ux_agent",
-  "qa_agent"
-] as const;
+export const agentNames = studioRoleIds;
 
 export const modeSchema = z.enum(["design", "prototype", "development"]);
 export const agentNameSchema = z.enum(agentNames);
-export type AgentName = z.infer<typeof agentNameSchema>;
+export type AgentName = StudioRoleId;
 export type ProjectMode = z.infer<typeof modeSchema>;
 
 export const milestoneSchema = z.object({
@@ -65,19 +53,22 @@ export function slugify(value: string): string {
 }
 
 export function activeAgentsForMode(mode: ProjectMode): AgentName[] {
-  const always: AgentName[] = ["master_orchestrator", "producer_agent", "market_analyst", "data_scientist"];
+  const always: AgentName[] = ["studio-orchestrator", "producer", "market-analyst", "data-scientist"];
   const byMode: Record<ProjectMode, AgentName[]> = {
-    design: ["sr_game_designer", "mid_game_designer", "sr_game_artist"],
-    prototype: ["sr_game_designer", "mechanics_developer", "qa_agent"],
+    design: ["creative-director", "senior-game-designer", "game-designer", "narrative-designer", "senior-game-artist", "ui-ux-designer"],
+    prototype: ["senior-game-designer", "game-designer", "game-feel-designer", "gameplay-programmer", "qa-playtester"],
     development: [
-      "sr_game_designer",
-      "mid_game_designer",
-      "mechanics_developer",
-      "game_feel_developer",
-      "qa_agent",
-      "sr_game_artist",
-      "technical_artist",
-      "ui_ux_agent"
+      "senior-game-designer",
+      "game-designer",
+      "game-feel-designer",
+      "gameplay-programmer",
+      "engine-programmer",
+      "tools-programmer",
+      "qa-playtester",
+      "senior-game-artist",
+      "technical-artist",
+      "ui-ux-designer",
+      "release-manager"
     ]
   };
   return [...always, ...byMode[mode]];

@@ -3,7 +3,6 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, test } from "vitest";
-import { guidanceConfigHash, readProjectConfig, writeProjectConfig } from "../src/config.js";
 import { freezeProject, initProject } from "../src/projects.js";
 import { runValidation, validateProject } from "../src/validation.js";
 
@@ -30,26 +29,14 @@ describe("validation", () => {
     expect(failures.map((f) => f.id)).toContain("project.engine_file");
   });
 
-  test("malformed materialized agent prompts fail validation", () => {
+  test("malformed AGENTS contract and prompt files fail validation", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
-    const { projectRoot, config } = initProject({ name: "Prompt Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    writeFileSync(
-      path.join(projectRoot, ".gamestudio", "agents", "master_orchestrator.md"),
-      `# Role\n\n# Inputs\n\n# Outputs\n\n# Validation\n\n# Engine Notes\n\n# Rules\n\n# Project Context\n\n- Name: ${config.project.name}\n- Engine: Godot ${config.project.engine_version}\n\n# Engine Overlay\n\nUse Godot.\n`
-    );
+    const { projectRoot } = initProject({ name: "Prompt Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    writeFileSync(path.join(projectRoot, "AGENTS.md"), "# Broken\n");
+    writeFileSync(path.join(projectRoot, ".codex", "prompts", "producer.md"), "");
     const failures = validateProject(projectRoot).filter((c) => c.status === "fail");
-    expect(failures.map((f) => f.id)).toContain("project.agent.master_orchestrator");
-  });
-
-  test("materialized agent prompts fail validation when engine overlay is empty", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
-    const { projectRoot, config } = initProject({ name: "Overlay Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    writeFileSync(
-      path.join(projectRoot, ".gamestudio", "agents", "master_orchestrator.md"),
-      `# Role\n\nCoordinate the team.\n\n# Inputs\n\n- Project brief.\n\n# Outputs\n\n- Production direction.\n\n# Validation\n\n- Check generated artifacts.\n\n# Engine Notes\n\n- Use engine-specific guidance.\n\n# Rules\n\n- Keep work scoped.\n\n# Project Context\n\n- Name: ${config.project.name}\n- Engine: Godot ${config.project.engine_version}\n\n# Engine Overlay\n\n`
-    );
-    const failures = validateProject(projectRoot).filter((c) => c.status === "fail");
-    expect(failures.map((f) => f.id)).toContain("project.agent.master_orchestrator");
+    expect(failures.map((f) => f.id)).toContain("codex.project.AGENTS.md.## Project Goal");
+    expect(failures.map((f) => f.id)).toContain("codex.prompt.producer");
   });
 
   test("empty timeline sections fail validation", () => {
@@ -71,31 +58,30 @@ describe("validation", () => {
     expect(failures.map((f) => f.id)).toContain("project.engine_settings");
   });
 
-  test("invalid config and stale AGENTS hash fail", () => {
+  test("invalid studio json fails", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
     const { projectRoot } = initProject({ name: "Stale Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    const configPath = path.join(projectRoot, "project-config.json");
-    const config = readProjectConfig(configPath);
-    const hash = guidanceConfigHash(config);
-    config.project.genre = "Changed";
-    writeProjectConfig(configPath, config);
-    expect(validateProject(projectRoot).some((c) => c.id === "project.agents_md.hash" && c.status === "fail")).toBe(true);
-    config.project.status = "frozen";
-    expect(guidanceConfigHash(config)).not.toBe(hash);
-    writeFileSync(configPath, "{ invalid json");
+    writeFileSync(path.join(projectRoot, ".codex", "studio.json"), "{ invalid json");
     expect(validateProject(projectRoot)[0].status).toBe("fail");
   });
 
-  test("freeze status-only changes do not stale AGENTS hash", () => {
+  test("freeze status-only changes keep project validation green", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
     const { projectRoot } = initProject({ name: "Freeze Valid", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     freezeProject(projectRoot, cwd);
     expect(validateProject(projectRoot).filter((c) => c.status === "fail")).toEqual([]);
   });
 
-  test("repo validation fails hard when built CLI is missing", async () => {
-    const result = await runValidation();
-    expect(result.checks.some((c) => c.id === "package.bin")).toBe(true);
-    expect(result.failed).toBe(result.checks.some((c) => c.status === "fail"));
+  test("repo validation reports Codex readiness hard failure when unavailable", async () => {
+    const old = process.env.CODEX_BIN;
+    process.env.CODEX_BIN = "/missing/codex";
+    try {
+      const result = await runValidation();
+      expect(result.checks.some((c) => c.id === "codex.cli" && c.status === "fail")).toBe(true);
+      expect(result.failed).toBe(true);
+    } finally {
+      if (old === undefined) delete process.env.CODEX_BIN;
+      else process.env.CODEX_BIN = old;
+    }
   });
 });

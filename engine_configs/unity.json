@@ -6,6 +6,13 @@
   "source_root_pattern": "source/project-{slug}",
   "folders": ["Assets", "Packages", "ProjectSettings"],
   "project_files": ["Packages/manifest.json", "ProjectSettings/ProjectSettings.asset"],
+  "run_command": "Unity -projectPath .",
+  "test_command": "Unity -batchmode -projectPath . -runTests",
+  "codex_hints": [
+    "Prefer Unity component patterns and keep gameplay scripts under Assets.",
+    "Do not edit imported assets directly.",
+    "Describe scene, prefab, and ProjectSettings changes explicitly."
+  ],
   "best_practices": ["Keep gameplay code under Assets.", "Track ProjectSettings markers."],
   "agent_specializations": {
     "summary": "Unity project using Assets, Packages, and ProjectSettings layout.",

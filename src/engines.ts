@@ -12,6 +12,9 @@ const engineConfigSchema = z.object({
   source_root_pattern: z.literal("source/project-{slug}"),
   folders: z.array(z.string()),
   project_files: z.array(z.string()),
+  run_command: z.string(),
+  test_command: z.string(),
+  codex_hints: z.array(z.string()),
   best_practices: z.array(z.string()),
   agent_specializations: z.record(z.string())
 });

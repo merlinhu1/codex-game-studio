@@ -6,6 +6,13 @@
   "source_root_pattern": "source/project-{slug}",
   "folders": ["Content", "Config", "Source"],
   "project_files": ["<ProjectClass>.uproject"],
+  "run_command": "UnrealEditor <ProjectClass>.uproject",
+  "test_command": "UnrealEditor-Cmd <ProjectClass>.uproject -ExecCmds=\"Automation RunTests Project\" -unattended",
+  "codex_hints": [
+    "Prefer Unreal module, Blueprint, and Content folder conventions.",
+    "Do not edit imported assets directly.",
+    "Describe binary map, Blueprint, and asset changes explicitly."
+  ],
   "best_practices": ["Keep gameplay modules explicit.", "Use Content for assets and Config for project defaults."],
   "agent_specializations": {
     "summary": "Unreal Engine project using Content, Config, Source, and a PascalCase .uproject file.",

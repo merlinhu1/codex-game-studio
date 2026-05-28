@@ -1,9 +1,11 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { activeAgentsForMode, readProjectConfig, slugify, writeProjectConfig, type ProjectConfig, type ProjectMode } from "./config.js";
+import { activeAgentsForMode, slugify, type ProjectConfig, type ProjectMode } from "./config.js";
 import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, projectClassName, sourceRoot, unrealProjectFileName } from "./engines.js";
 import { materializeAgents } from "./agents.js";
 import { packageAssetPath, resolveProjectRoot } from "./paths.js";
+import { rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
+import { workflowIds, workflowRegistry, type WorkflowId } from "./workflows.js";
 
 export type InitProjectOptions = {
   name: string;
@@ -18,6 +20,26 @@ export type InitProjectOptions = {
   timeline?: string;
   engineVersion?: string;
   nonInteractive?: boolean;
+};
+
+export type StudioProjectState = {
+  schemaVersion: 1;
+  product: "codex-game-studio";
+  name: string;
+  slug: string;
+  concept: string;
+  genre: string;
+  platform: string;
+  audience: string;
+  engine: ProjectConfig["project"]["engine"];
+  engineVersion: string;
+  mode: ProjectMode;
+  phase: string;
+  status: "active" | "frozen" | "inactive";
+  currentMilestone: string;
+  roles: StudioRoleId[];
+  activeRoles: StudioRoleId[];
+  workflows: WorkflowId[];
 };
 
 export function defaultProjectConfig(options: InitProjectOptions): ProjectConfig {
@@ -83,20 +105,92 @@ function assertNoSameParentCollision(parent: string, config: ProjectConfig): voi
   const nextClass = projectClassName(config.project.name);
   for (const entry of readdirSync(parent, { withFileTypes: true })) {
     if (!entry.isDirectory()) continue;
-    const configPath = path.join(parent, entry.name, "project-config.json");
-    if (!existsSync(configPath)) continue;
-    const existing = readProjectConfig(configPath);
-    if (existing.project.name === config.project.name) continue;
-    if (existing.project.slug === config.project.slug) {
-      throw new Error(`Project name "${config.project.name}" collides with existing slug "${existing.project.slug}" in ${parent}`);
+    const studioPath = path.join(parent, entry.name, ".codex", "studio.json");
+    if (!existsSync(studioPath)) continue;
+    const existing = readStudioProject(path.join(parent, entry.name));
+    if (existing.name === config.project.name) continue;
+    if (existing.slug === config.project.slug) {
+      throw new Error(`Project name "${config.project.name}" collides with existing slug "${existing.slug}" in ${parent}`);
     }
-    if (existing.project.engine === "unreal" || config.project.engine === "unreal") {
-      const existingClass = projectClassName(existing.project.name);
+    if (existing.engine === "unreal" || config.project.engine === "unreal") {
+      const existingClass = projectClassName(existing.name);
       if (existingClass === nextClass) {
         throw new Error(`Project name "${config.project.name}" collides with existing Unreal class name "${existingClass}" in ${parent}`);
       }
     }
   }
+}
+
+export function studioStateFromConfig(config: ProjectConfig): StudioProjectState {
+  return {
+    schemaVersion: 1,
+    product: "codex-game-studio",
+    name: config.project.name,
+    slug: config.project.slug,
+    concept: config.project.concept,
+    genre: config.project.genre,
+    platform: config.project.platform,
+    audience: config.project.audience,
+    engine: config.project.engine,
+    engineVersion: config.project.engine_version,
+    mode: config.project.mode,
+    phase: config.project.phase,
+    status: config.project.status,
+    currentMilestone: config.project.mode === "design" ? "design" : config.project.mode === "development" ? "development" : "prototype",
+    roles: [...studioRoleIds],
+    activeRoles: activeAgentsForMode(config.project.mode),
+    workflows: workflowIds()
+  };
+}
+
+export function readStudioProject(projectRoot: string): StudioProjectState {
+  return JSON.parse(readFileSync(path.join(projectRoot, ".codex", "studio.json"), "utf8")) as StudioProjectState;
+}
+
+function writeStudioProject(projectRoot: string, state: StudioProjectState): void {
+  writeFileSync(path.join(projectRoot, ".codex", "studio.json"), `${JSON.stringify(state, null, 2)}\n`);
+}
+
+function workflowTitle(id: WorkflowId): string {
+  return id
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function workflowBody(workflow: WorkflowId): string {
+  const definition = workflowRegistry[workflow];
+  const pkg = rolePackages[definition.role];
+  return [
+    `# ${workflowTitle(workflow)} Workflow`,
+    "",
+    "## Purpose",
+    "",
+    definition.objective,
+    "",
+    "## Inputs",
+    "",
+    ...definition.contextFiles.map((file) => `- ${file}`),
+    "",
+    "## Role",
+    "",
+    `${pkg.displayName} (${definition.role}) owns this workflow.`,
+    "",
+    "## Outputs",
+    "",
+    ...pkg.expectedOutputs.map((item) => `- ${item}`),
+    "",
+    "## Validation",
+    "",
+    ...pkg.reviewChecklist.map((item) => `- ${item}`),
+    ""
+  ].join("\n");
+}
+
+function writeCodexWorkflowFiles(projectRoot: string): void {
+  const workflows = path.join(projectRoot, ".codex", "workflows");
+  mkdirSync(workflows, { recursive: true });
+  for (const workflow of workflowIds()) writeFileSync(path.join(projectRoot, workflowRegistry[workflow].file), workflowBody(workflow));
 }
 
 export function initProject(options: InitProjectOptions, cwd = process.cwd()): { projectRoot: string; config: ProjectConfig } {
@@ -108,7 +202,9 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
   mkdirSync(projectRoot, { recursive: true });
   createEngineFolders({ projectRoot, projectSlug: config.project.slug, projectName: config.project.name, engine: config.project.engine, registry: engines });
   createEngineProjectFiles({ projectRoot, projectSlug: config.project.slug, projectName: config.project.name, engine: config.project.engine, registry: engines, engineVersion: config.project.engine_version });
-  writeProjectConfig(path.join(projectRoot, "project-config.json"), config);
+  mkdirSync(path.join(projectRoot, ".codex", "runs"), { recursive: true });
+  writeStudioProject(projectRoot, studioStateFromConfig(config));
+  writeCodexWorkflowFiles(projectRoot);
   writeStarterDocs(projectRoot, config);
   materializeAgents({ projectRoot, config, engines });
   return { projectRoot, config };
@@ -116,30 +212,29 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
 
 export function statusProject(project?: string, cwd = process.cwd()): string {
   const root = resolveProjectRoot(project, cwd);
-  const config = readProjectConfig(path.join(root, "project-config.json"));
+  const config = readStudioProject(root);
   return [
-    `${config.project.name}`,
-    `phase: ${config.project.phase}`,
-    `status: ${config.project.status}`,
-    `mode: ${config.project.mode}`,
-    `engine: ${config.project.engine}`,
-    `active agents: ${config.team.active_agents.join(", ")}`
+    `${config.name}`,
+    `phase: ${config.phase}`,
+    `status: ${config.status}`,
+    `mode: ${config.mode}`,
+    `engine: ${config.engine}`,
+    `active roles: ${(config.activeRoles ?? config.roles).join(", ")}`
   ].join("\n");
 }
 
 export function resumeProject(project?: string, cwd = process.cwd()): string {
   const root = resolveProjectRoot(project, cwd);
-  const config = readProjectConfig(path.join(root, "project-config.json"));
-  return `Resume ${config.project.name}\nphase: ${config.project.phase}\nstatus: ${config.project.status}\nSuggested next command: npm exec open-gamestudio -- run producer_agent --project ${path.relative(cwd, root) || "."} --task "Summarize current project state"`;
+  const config = readStudioProject(root);
+  return `Resume ${config.name}\nphase: ${config.phase}\nstatus: ${config.status}\nSuggested next command: npm run build && node dist/cli.js run producer --project ${path.relative(cwd, root) || "."} "Summarize current project state"`;
 }
 
 export function freezeProject(project?: string, cwd = process.cwd()): string {
   const root = resolveProjectRoot(project, cwd);
-  const file = path.join(root, "project-config.json");
-  const config = readProjectConfig(file);
-  config.project.status = "frozen";
-  writeProjectConfig(file, config);
-  return `Frozen ${config.project.name}`;
+  const config = readStudioProject(root);
+  config.status = "frozen";
+  writeStudioProject(root, config);
+  return `Frozen ${config.name}`;
 }
 
 export function expectedEngineProjectFile(projectRoot: string, config: ProjectConfig): string {
