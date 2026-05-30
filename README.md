@@ -90,7 +90,9 @@ Inspect the generated prompt packet without executing Codex:
 node dist/cli.js run producer --project projects/my-game "Create the initial market overview." --dry-run
 ```
 
-The `run` command writes a bounded prompt packet and immediately invokes `codex exec` in the project root. Use `--dry-run` or `--print-prompt` when you want to inspect the exact Codex context first.
+The `run` command writes a bounded prompt packet and immediately invokes `codex exec` in the project root. The packet inlines the generated project role prompt from `.codex/prompts/<role>.md` and only the package templates selected for that role and task. `--fix` uses the same generated role prompt and selected templates as the primary implementation prompt. Use `--dry-run` or `--print-prompt` when you want to inspect the exact Codex context first.
+
+`--allow-broad-context` adds bounded project artifact discovery for existing files such as the GDD, production timeline, market overview, `AGENTS.md`, and `.codex/studio.json`; it does not recursively load every prompt, workflow, or template.
 
 ## CLI Commands
 
@@ -111,6 +113,8 @@ The `run` command writes a bounded prompt packet and immediately invokes `codex 
 The Codex-native role roster is `studio-orchestrator`, `producer`, `market-analyst`, `data-scientist`, `creative-director`, `senior-game-designer`, `game-designer`, `narrative-designer`, `game-feel-designer`, `gameplay-programmer`, `engine-programmer`, `tools-programmer`, `senior-game-artist`, `technical-artist`, `ui-ux-designer`, `qa-playtester`, and `release-manager`.
 
 This preserves Claude Game Studio functional coverage without legacy underscore role IDs. `narrative-designer` remains a first-class Codex-native story/content owner.
+
+Supported aliases remain intentional: `new` is an alias for `init`, and registered workflow shortcuts render their prompts. Unsupported upstream or legacy underscore role IDs are rejected.
 
 ## Project Layout
 
@@ -133,6 +137,8 @@ Generated project artifacts:
 - `.codex/runs/`: prepared prompt packets and run metadata.
 - `documentation/`: generated game-design and workflow documents.
 - `source/project-<slug>/`: engine project location contract.
+
+Generated role prompts and workflow files include deterministic freshness metadata and rendered-body hashes. Project validation checks new generated surfaces for stale registry inputs or manual body tampering, and reports legacy generated files without metadata as regeneration-needed skip diagnostics rather than silently treating them as fresh.
 
 ## Development
 

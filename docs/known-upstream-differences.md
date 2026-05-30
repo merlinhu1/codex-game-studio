@@ -12,9 +12,9 @@ Legacy validation depended on Python and shell assumptions. This port is TypeScr
 
 Role roster coverage is preserved through Codex-native IDs: `studio-orchestrator`, `market-analyst`, `data-scientist`, senior design/art roles, game-feel, UI/UX, QA, release, and implementation roles. Legacy underscore aliases such as `producer_agent`, `qa_agent`, and `master_orchestrator` are intentionally not valid role IDs.
 
-Generated projects materialize project-specific `.codex/prompts/<role>.md` files for every role. `AGENTS.md` remains the primary generated Codex instruction surface and is owned by `src/agents.ts`.
+Generated projects materialize project-specific `.codex/prompts/<role>.md` files for every role. `run <role>` inlines the current generated project role prompt instead of falling back to the package role prompt. `AGENTS.md` remains the primary generated Codex instruction surface and is owned by `src/agents.ts`.
 
-Market and analytics are first-class renderable workflows owned by dedicated roles. Their prompts inline the selected package template bodies instead of pointing Codex at project-relative template paths.
+Market and analytics are first-class renderable workflows owned by dedicated roles. Workflow prompts and normal role runs inline selected package template bodies instead of pointing Codex at project-relative template paths or loading every template.
 
 Studio orchestration is provided by the `studio-orchestrator` role and the render-only `handoff` workflow shortcut, not by a generated `project_orchestrator.md`.
 
@@ -22,6 +22,8 @@ Richer workflows exist for design specs, game-feel review, art direction, UI/UX 
 
 Intentional omissions for the first build: no interactive `menu`, no `startover`, no generated `project_orchestrator.md`, no exact `template_info.md`, no eager competitor reports during init, and no upstream license/authorship/citation parity documents.
 
-Codex-native difference: `run <role>` invokes `codex exec` by default against the generated bounded prompt packet. `--dry-run` and `--print-prompt` are the non-executing inspection paths.
+Codex-native difference: `run <role>` invokes `codex exec` by default against the generated bounded prompt packet. `--dry-run` and `--print-prompt` are the non-executing inspection paths. `--allow-broad-context` performs bounded discovery of existing project artifacts rather than recursive ingestion, and `--fix` receives the same generated role prompt and selected templates as the primary implementation prompt.
 
-Future-only features are not implemented in this build: planner/`next`, telemetry, parallel orchestration, changed-file tracking, prompt-size metrics, and hard output-ownership enforcement.
+Generated role prompts and workflow files include freshness metadata and rendered-body hashes for new projects. Validation reports legacy missing-metadata files as regeneration-needed skip diagnostics instead of treating them as fresh.
+
+Future-only features are not implemented in this build: planner/`next`, telemetry, parallel orchestration, changed-file tracking, prompt-size metrics, hard output-ownership enforcement, legacy `.gamestudio` compatibility, `CODEX.md`, and `project_orchestrator.md`.

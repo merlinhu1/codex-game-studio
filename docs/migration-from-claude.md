@@ -7,8 +7,10 @@ npm exec open-gamestudio -- init --name "My Game" --engine godot --mode prototyp
 npm exec open-gamestudio -- run producer --project projects/my-game "Create the initial market overview."
 ```
 
-For inspection-only runs, add `--dry-run` or `--print-prompt` to view the generated Codex prompt packet and metadata path before execution.
+For inspection-only runs, add `--dry-run` or `--print-prompt` to view the generated Codex prompt packet and metadata path before execution. Role runs inline the generated project role prompt and only selected package templates; workflow shortcuts still render prompts only.
 
-Intentional differences: no interactive menu, no `startover`, no exact `template_info.md`, no eager competitor reports during init, and no generated `project_orchestrator.md`.
+`--allow-broad-context` performs bounded discovery of existing project artifacts. New generated prompts and workflows carry freshness metadata and body hashes; older generated files without metadata validate with regeneration-needed skip diagnostics.
+
+Intentional differences: no interactive menu, no `startover`, no exact `template_info.md`, no eager competitor reports during init, no generated `project_orchestrator.md`, no `CODEX.md`, no legacy `.gamestudio` compatibility, and no unsupported upstream underscore role IDs. Supported aliases such as `new` for `init` remain available.
 
 Future-only features are not implemented: `open-gamestudio next`, telemetry, parallel orchestration, changed-file tracking, and ownership enforcement.

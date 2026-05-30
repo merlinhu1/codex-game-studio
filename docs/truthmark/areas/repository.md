@@ -22,6 +22,7 @@ Code surface:
 - src/config.ts
 - src/engines.ts
 - src/agents.ts
+- src/generated-surfaces.ts
 - src/paths.ts
 - engine_configs/**
 - tests/project-workflow.test.ts
@@ -48,6 +49,7 @@ Code surface:
 - src/codex-prompts.ts
 - src/workflows.ts
 - src/templates.ts
+- src/generated-surfaces.ts
 - templates/**
 - tests/roles.test.ts
 - tests/codex-session.test.ts
@@ -69,6 +71,7 @@ truth_documents:
 
 Code surface:
 - src/runner.ts
+- src/context.ts
 - src/tasks.ts
 - src/codex-runtime.ts
 - src/verification.ts
@@ -93,6 +96,7 @@ truth_documents:
 Code surface:
 - src/cli.ts
 - src/validation.ts
+- src/generated-surfaces.ts
 - tests/validation.test.ts
 - tests/functionality-gap-pass.test.ts
 

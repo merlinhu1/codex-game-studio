@@ -21,20 +21,28 @@ describe("config, agents, and templates", () => {
     expect(validateTemplateFiles()).toEqual([]);
     expect(listTemplates().map((t) => t.id).sort()).toEqual([
       "analytics_setup",
+      "art_direction",
       "engine_setup",
       "feature_spec",
+      "game_feel_tuning",
       "gdd",
       "handoff",
       "market_analysis",
-      "project_config"
+      "playtest_report",
+      "production_milestone",
+      "project_config",
+      "ship_check",
+      "ui_ux_review"
     ]);
   });
 
   test("template selection is bounded", () => {
     expect(selectTemplates("producer", "Create market overview")).toEqual(["market_analysis"]);
     expect(selectTemplates("producer", "Create analytics plan")).toEqual(["analytics_setup"]);
-    expect(selectTemplates("qa-playtester", "Review validation readiness")).toEqual([]);
+    expect(selectTemplates("qa-playtester", "Review validation readiness")).toEqual(["playtest_report"]);
     expect(selectTemplates("producer", "handoff coordination")).toEqual(["handoff"]);
+    expect(selectTemplates("qa-playtester", "Review UI usability")).toEqual(["playtest_report", "ui_ux_review"]);
+    expect(selectTemplates("release-manager", "Check package")).toEqual(["ship_check"]);
   });
 
   test("template show includes discoverability metadata before body", () => {

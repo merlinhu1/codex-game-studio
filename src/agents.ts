@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { guidanceConfigHash, type ProjectConfig } from "./config.js";
 import type { EngineConfigRegistry } from "./engines.js";
+import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
 
 export type MaterializeAgentsInput = {
@@ -21,6 +22,12 @@ export function readAgentPrompt(agent: StudioRoleId, projectRoot?: string): stri
   const projectPrompt = projectRoot ? path.join(projectRoot, ".codex", "prompts", `${agent}.md`) : "";
   if (projectPrompt && existsSync(projectPrompt)) return readFileSync(projectPrompt, "utf8");
   return rolePackages[agent].systemPrompt;
+}
+
+export function readProjectAgentPrompt(agent: StudioRoleId, projectRoot: string): string {
+  const projectPrompt = path.join(projectRoot, ".codex", "prompts", `${agent}.md`);
+  if (!existsSync(projectPrompt)) throw new Error(`Missing generated project role prompt: ${path.relative(projectRoot, projectPrompt)}`);
+  return readFileSync(projectPrompt, "utf8");
 }
 
 export const projectAgentsMdRequiredSections = [
@@ -90,7 +97,7 @@ Do not use telemetry, planner/next, parallel orchestration, or ownership enforce
 export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfig, engines: EngineConfigRegistry): string {
   const pkg = rolePackages[role];
   const engine = engines[config.project.engine];
-  return [
+  const body = [
     `# ${pkg.displayName}`,
     "",
     `Project: ${config.project.name}`,
@@ -132,6 +139,41 @@ export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfi
     pkg.handoffTemplate,
     ""
   ].join("\n");
+  return `${renderGeneratedSurfaceMetadata({
+    surface: "role-prompt",
+    role,
+    sourceInput: projectRolePromptSourceInput(role, config, engines),
+    body
+  })}${body}`;
+}
+
+export function projectRolePromptSourceInput(role: StudioRoleId, config: ProjectConfig, engines: EngineConfigRegistry): unknown {
+  const pkg = rolePackages[role];
+  const engine = engines[config.project.engine];
+  return {
+    role,
+    displayName: pkg.displayName,
+    systemPrompt: pkg.systemPrompt,
+    expectedOutputs: pkg.expectedOutputs,
+    reviewChecklist: pkg.reviewChecklist,
+    handoffTemplate: pkg.handoffTemplate,
+    engineDisplayName: engine.display_name,
+    engineHints: engine.codex_hints,
+    project: {
+      name: config.project.name,
+      slug: config.project.slug,
+      mode: config.project.mode,
+      engine: config.project.engine,
+      engineVersion: config.project.engine_version,
+      concept: config.project.concept,
+      genre: config.project.genre,
+      platform: config.project.platform,
+      audience: config.project.audience,
+      monetization: config.project.monetization,
+      timeline: config.project.timeline,
+      competitors: config.project.competitors
+    }
+  };
 }
 
 export function materializeAgents(input: MaterializeAgentsInput): string[] {

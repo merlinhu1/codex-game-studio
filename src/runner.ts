@@ -1,12 +1,15 @@
 import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { readProjectAgentPrompt } from "./agents.js";
 import { buildCodexExecArgs, resolveCodexCommand, type CodexExecutionResult } from "./codex-runtime.js";
 import { renderCodexPrompt } from "./codex-prompts.js";
 import { createCodexStudioSession, type VerificationCommand } from "./codex-session.js";
+import { discoverBroadContextFiles } from "./context.js";
 import { readStudioProject } from "./projects.js";
 import { isStudioRoleId, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
 import { resolveProjectRoot } from "./paths.js";
+import { renderSelectedTemplates, selectTemplates } from "./templates.js";
 import { runVerificationCommand, type VerificationResult } from "./verification.js";
 
 export type RunOptions = {
@@ -100,14 +103,21 @@ export function executeCodexRun(run: PreparedRun): CodexExecutionResult {
   return executeCodexPromptSync(run, run.prompt);
 }
 
-function safeArtifact(projectRoot: string, artifact: string): string {
+function safeArtifact(projectRoot: string, artifact: string): { full: string; display: string } {
+  if (/[\u0000-\u001f\u007f]/.test(artifact)) throw new Error("--include-artifact cannot contain control characters");
   if (path.isAbsolute(artifact)) throw new Error("--include-artifact must be relative");
   const full = path.resolve(projectRoot, artifact);
   if (!full.startsWith(`${projectRoot}${path.sep}`)) throw new Error("--include-artifact cannot escape the project root");
   const realRoot = realpathSync(projectRoot);
   const realFull = realpathSync(full);
   if (realFull !== realRoot && !realFull.startsWith(`${realRoot}${path.sep}`)) throw new Error("--include-artifact cannot escape the project root");
-  return full;
+  return { full: realFull, display: path.relative(realRoot, realFull).split(path.sep).join("/") };
+}
+
+function renderRuntimeContextBlock(role: StudioRoleId, projectRoot: string, task: string): string {
+  const projectRolePrompt = readProjectAgentPrompt(role, projectRoot);
+  const templateBodies = renderSelectedTemplates(selectTemplates(role, task));
+  return ["", `# Project Role Prompt: .codex/prompts/${role}.md`, "", projectRolePrompt.trim(), templateBodies, ""].join("\n");
 }
 
 function executionFailed(result: CodexExecutionResult): boolean {
@@ -238,11 +248,11 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   const studio = readStudioProject(projectRoot);
   const contextFiles = ["AGENTS.md", ".codex/studio.json", `.codex/prompts/${role}.md`];
   const artifactBodies = (options.includeArtifact ?? []).map((artifact) => {
-    const full = safeArtifact(projectRoot, artifact);
-    contextFiles.push(artifact);
-    return `\n\n# Included Artifact: ${artifact}\n\n${readFileSync(full, "utf8")}`;
+    const { full, display } = safeArtifact(projectRoot, artifact);
+    contextFiles.push(display);
+    return `\n\n# Included Artifact: ${display}\n\n${readFileSync(full, "utf8")}`;
   });
-  if (options.allowBroadContext) contextFiles.push("Broad context explicitly allowed by CLI flag.");
+  if (options.allowBroadContext) contextFiles.push(...discoverBroadContextFiles(projectRoot, contextFiles));
   const maxFixPasses = options.maxFixPasses ?? 1;
   if (!Number.isFinite(maxFixPasses) || maxFixPasses < 0) throw new Error("--max-fix-passes must be a finite non-negative number");
   const session = createCodexStudioSession({
@@ -254,26 +264,28 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
     contextFiles,
     verification: options.verifyCommand
   });
-  const prompt = `${renderCodexPrompt(session)}${artifactBodies.join("")}`;
+  const runtimeContextBlock = renderRuntimeContextBlock(role, projectRoot, task);
+  const prompt = `${renderCodexPrompt(session)}${runtimeContextBlock}${artifactBodies.join("")}`;
+  const reviewObjective = `Review the implementation for: ${task}. Inspect the diff and verification output. Return only JSON with blockers, warnings, summary, and needsFix.`;
   const reviewPrompt = options.review
-    ? renderCodexPrompt(
+    ? `${renderCodexPrompt(
         createCodexStudioSession({
           projectRoot,
           role: "qa-playtester",
-          objective: `Review the implementation for: ${task}. Inspect the diff and verification output. Return only JSON with blockers, warnings, summary, and needsFix.`,
+          objective: reviewObjective,
           phase: "review",
           engine: studio.engine,
-          contextFiles: ["AGENTS.md", ".codex/studio.json"],
+          contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/prompts/qa-playtester.md"],
           expectedOutputs: ["Review JSON", "Blockers", "Warnings"],
           allowFileEdits: false,
           sandbox: "read-only",
           reviewMode: "diff"
         })
-      )
+      )}${renderRuntimeContextBlock("qa-playtester", projectRoot, reviewObjective)}`
     : undefined;
   const fixPrompt =
     options.fix && maxFixPasses > 0
-      ? renderCodexPrompt(
+      ? `${renderCodexPrompt(
           createCodexStudioSession({
             projectRoot,
             role,
@@ -284,7 +296,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
             verification: options.verifyCommand,
             expectedOutputs: ["Fix changes", "Verification results", "Remaining blockers"]
           })
-        )
+        )}${runtimeContextBlock}`
       : undefined;
   const runId = `${new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 17)}-${process.pid}-${++runSequence}`;
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role}`);

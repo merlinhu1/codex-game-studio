@@ -2,7 +2,7 @@
 status: active
 doc_type: contract
 truth_kind: contract
-last_reviewed: 2026-05-28
+last_reviewed: 2026-05-30
 source_of_truth:
   - ../../truthmark/areas/repository.md
 ---
@@ -41,7 +41,8 @@ This bounded leaf truth doc owns the repository CLI command contract, package sc
 
 - Unknown roles fail with a message naming Codex-native hyphenated role IDs.
 - Missing package scripts, missing package bin/files, missing source files, unavailable Codex CLI, invalid templates, exposed future surfaces, missing build output, and package smoke failures are validation failures.
-- Project validation fails for invalid `.codex/studio.json`, missing generated project files, missing workflow/prompt sections, forbidden generated surfaces, or read-only command mutations.
+- Project validation fails for invalid `.codex/studio.json`, missing generated project files, missing workflow/prompt sections, stale or tampered generated-surface metadata, current-renderer mismatches, malformed or incomplete generated-surface metadata markers, forbidden generated surfaces, or read-only command mutations.
+- Project validation reports generated prompt or workflow files with no generated-surface metadata markers as legacy skip diagnostics that require regeneration before relying on freshness checks.
 
 ## Compatibility Rules
 
@@ -59,6 +60,7 @@ This bounded leaf truth doc owns the repository CLI command contract, package sc
 
 - Decision (2026-05-28): Keep `validate` as the hard-failing parity gate before claiming repository or project readiness.
 - Decision (2026-05-28): Document and test that future planner/telemetry/parallel/ownership surfaces are not exposed by the CLI.
+- Decision (2026-05-30): Validate generated-surface source metadata, rendered-body hashes, and current renderer output for new generated prompt/workflow files, fail malformed or partial generated metadata with the stable freshness/body check IDs, and treat only fully absent metadata as a legacy skip diagnostic.
 
 ## Rationale
 

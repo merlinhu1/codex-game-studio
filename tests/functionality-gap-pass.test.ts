@@ -83,11 +83,16 @@ describe("functionality gap pass", () => {
     expect(promptBody).toContain("Review Checklist");
     expect(promptBody).toContain("Handoff");
     expect(promptBody).toContain("Competitors: Mini Metro");
+    expect(promptBody).toContain("source-input-sha256");
+    expect(promptBody).toContain("rendered-body-sha256");
 
     for (const workflow of Object.keys(workflowRegistry)) {
       expect(existsSync(path.join(projectRoot, workflowRegistry[workflow as keyof typeof workflowRegistry].file))).toBe(true);
       expect(renderWorkflowPrompt(projectRoot, workflow as keyof typeof workflowRegistry)).toContain(workflow);
     }
+    const workflowBody = readFileSync(path.join(projectRoot, ".codex", "workflows", "ui-ux-review.md"), "utf8");
+    expect(workflowBody).toContain("source-input-sha256");
+    expect(workflowBody).toContain("rendered-body-sha256");
     expect(existsSync(path.join(projectRoot, "project_orchestrator.md"))).toBe(false);
     expect(existsSync(path.join(projectRoot, "CODEX.md"))).toBe(false);
     expect(existsSync(path.join(projectRoot, ".gamestudio", "runs"))).toBe(false);
@@ -117,8 +122,15 @@ describe("functionality gap pass", () => {
 
     expect(renderWorkflowPrompt(projectRoot, "design-spec")).toContain("Template: feature_spec");
     expect(renderWorkflowPrompt(projectRoot, "handoff")).toContain("Template: handoff");
-    expect(renderWorkflowPrompt(projectRoot, "ui-ux-review")).not.toContain("## Workflow Templates");
+    expect(renderWorkflowPrompt(projectRoot, "playtest")).toContain("Template: playtest_report");
+    expect(renderWorkflowPrompt(projectRoot, "game-feel-tuning")).toContain("Template: game_feel_tuning");
+    expect(renderWorkflowPrompt(projectRoot, "art-direction")).toContain("Template: art_direction");
+    expect(renderWorkflowPrompt(projectRoot, "ui-ux-review")).toContain("Template: ui_ux_review");
+    expect(renderWorkflowPrompt(projectRoot, "production-milestone")).toContain("Template: production_milestone");
+    expect(renderWorkflowPrompt(projectRoot, "ship-check")).toContain("Template: ship_check");
     expect(renderWorkflowPrompt(projectRoot, "review")).not.toContain("## Workflow Templates");
+    expect(renderWorkflowPrompt(projectRoot, "ui-ux-review")).not.toContain("Template: market_analysis");
+    expect(renderWorkflowPrompt(projectRoot, "ship-check")).not.toContain("Template: analytics_setup");
     expect(market).not.toMatch(/- templates\/.*\.md/);
   });
 

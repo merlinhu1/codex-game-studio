@@ -10,7 +10,13 @@ export type TemplateId =
   | "analytics_setup"
   | "engine_setup"
   | "market_analysis"
-  | "project_config";
+  | "project_config"
+  | "game_feel_tuning"
+  | "art_direction"
+  | "ui_ux_review"
+  | "production_milestone"
+  | "playtest_report"
+  | "ship_check";
 
 export type TemplateInfo = {
   id: TemplateId;
@@ -77,6 +83,54 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     roles: ["producer", "creative-director"],
     tags: ["config", "setup"],
     requiredSections: []
+  },
+  game_feel_tuning: {
+    id: "game_feel_tuning",
+    category: "design",
+    path: "templates/game_feel_tuning_template.md",
+    roles: ["game-feel-designer", "qa-playtester"],
+    tags: ["feel", "controls", "tuning"],
+    requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
+  },
+  art_direction: {
+    id: "art_direction",
+    category: "art",
+    path: "templates/art_direction_template.md",
+    roles: ["senior-game-artist", "technical-artist", "creative-director"],
+    tags: ["art", "visual", "style"],
+    requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
+  },
+  ui_ux_review: {
+    id: "ui_ux_review",
+    category: "ui",
+    path: "templates/ui_ux_review_template.md",
+    roles: ["ui-ux-designer", "qa-playtester"],
+    tags: ["ui", "ux", "usability"],
+    requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
+  },
+  production_milestone: {
+    id: "production_milestone",
+    category: "production",
+    path: "templates/production_milestone_template.md",
+    roles: ["producer", "studio-orchestrator"],
+    tags: ["milestone", "scope", "schedule"],
+    requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
+  },
+  playtest_report: {
+    id: "playtest_report",
+    category: "qa",
+    path: "templates/playtest_report_template.md",
+    roles: ["qa-playtester"],
+    tags: ["playtest", "qa", "report"],
+    requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
+  },
+  ship_check: {
+    id: "ship_check",
+    category: "release",
+    path: "templates/ship_check_template.md",
+    roles: ["release-manager", "producer"],
+    tags: ["ship", "release", "readiness"],
+    requiredSections: ["# Purpose", "# Inputs", "# Outputs", "# Validation"]
   }
 };
 
@@ -136,9 +190,28 @@ export function validateTemplateFiles(): string[] {
   return failures;
 }
 
+export function renderSelectedTemplates(templateIds: TemplateId[], heading = "## Selected Templates"): string {
+  if (templateIds.length === 0) return "";
+  return [
+    "",
+    heading,
+    "",
+    ...templateIds.flatMap((id) => {
+      const info = templateRegistry[id];
+      return [`### Template: ${id}`, `Source: package:${info.path}`, "", readTemplate(id).trim(), ""];
+    })
+  ].join("\n");
+}
+
 export function selectTemplates(agent: AgentName, task: string): TemplateId[] {
   const lower = task.toLowerCase();
   const selected = new Set<TemplateId>();
+  if (agent === "market-analyst") selected.add("market_analysis");
+  if (agent === "data-scientist") selected.add("analytics_setup");
+  if (agent === "game-feel-designer") selected.add("game_feel_tuning");
+  if (agent === "ui-ux-designer") selected.add("ui_ux_review");
+  if (agent === "qa-playtester") selected.add("playtest_report");
+  if (agent === "release-manager") selected.add("ship_check");
   if (/(handoff|coordination|coordinate)/.test(lower)) selected.add("handoff");
   if ((agent === "producer" || agent === "market-analyst") && /(market|competitor|audience)/.test(lower)) selected.add("market_analysis");
   if ((agent === "producer" || agent === "data-scientist") && /(analytics|metric|telemetry)/.test(lower)) selected.add("analytics_setup");
@@ -151,5 +224,12 @@ export function selectTemplates(agent: AgentName, task: string): TemplateId[] {
     selected.add("project_config");
   }
   if (agent === "qa-playtester" && /(spec review|review spec)/.test(lower)) selected.add("feature_spec");
+  if (agent === "qa-playtester" && /(ui|ux|hud|menu|onboarding|accessibility|usability)/.test(lower)) selected.add("ui_ux_review");
+  if (agent === "qa-playtester" && /(feel|control|movement|timing|camera|pacing)/.test(lower)) selected.add("game_feel_tuning");
+  if ((agent === "senior-game-artist" || agent === "technical-artist" || agent === "creative-director") && /(art|visual|style|asset|direction)/.test(lower)) {
+    selected.add("art_direction");
+  }
+  if ((agent === "producer" || agent === "studio-orchestrator") && /(milestone|scope|schedule|production)/.test(lower)) selected.add("production_milestone");
+  if ((agent === "producer" || agent === "release-manager") && /(release|ship|readiness|package|launch)/.test(lower)) selected.add("ship_check");
   return [...selected];
 }

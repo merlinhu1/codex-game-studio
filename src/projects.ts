@@ -3,6 +3,7 @@ import path from "node:path";
 import { activeAgentsForMode, slugify, type ProjectConfig, type ProjectMode } from "./config.js";
 import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, projectClassName, sourceRoot, unrealProjectFileName } from "./engines.js";
 import { materializeAgents } from "./agents.js";
+import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { packageAssetPath, resolveProjectRoot } from "./paths.js";
 import { rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
 import { workflowIds, workflowRegistry, type WorkflowId } from "./workflows.js";
@@ -31,6 +32,9 @@ export type StudioProjectState = {
   genre: string;
   platform: string;
   audience: string;
+  competitors: string[];
+  monetization: string;
+  timeline: string;
   engine: ProjectConfig["project"]["engine"];
   engineVersion: string;
   mode: ProjectMode;
@@ -131,6 +135,9 @@ export function studioStateFromConfig(config: ProjectConfig): StudioProjectState
     genre: config.project.genre,
     platform: config.project.platform,
     audience: config.project.audience,
+    competitors: config.project.competitors,
+    monetization: config.project.monetization,
+    timeline: config.project.timeline,
     engine: config.project.engine,
     engineVersion: config.project.engine_version,
     mode: config.project.mode,
@@ -158,10 +165,10 @@ function workflowTitle(id: WorkflowId): string {
     .join(" ");
 }
 
-function workflowBody(workflow: WorkflowId): string {
+export function workflowBody(workflow: WorkflowId): string {
   const definition = workflowRegistry[workflow];
   const pkg = rolePackages[definition.role];
-  return [
+  const body = [
     `# ${workflowTitle(workflow)} Workflow`,
     "",
     "## Purpose",
@@ -185,6 +192,29 @@ function workflowBody(workflow: WorkflowId): string {
     ...pkg.reviewChecklist.map((item) => `- ${item}`),
     ""
   ].join("\n");
+  return `${renderGeneratedSurfaceMetadata({
+    surface: "workflow",
+    id: workflow,
+    sourceInput: workflowSourceInput(workflow),
+    body
+  })}${body}`;
+}
+
+export function workflowSourceInput(workflow: WorkflowId): unknown {
+  const definition = workflowRegistry[workflow];
+  const pkg = rolePackages[definition.role];
+  return {
+    workflow,
+    role: definition.role,
+    phase: definition.phase,
+    objective: definition.objective,
+    file: definition.file,
+    contextFiles: definition.contextFiles,
+    templateIds: definition.templateIds ?? [],
+    roleDisplayName: pkg.displayName,
+    expectedOutputs: pkg.expectedOutputs,
+    reviewChecklist: pkg.reviewChecklist
+  };
 }
 
 function writeCodexWorkflowFiles(projectRoot: string): void {

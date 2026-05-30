@@ -4,7 +4,7 @@ import { createCodexStudioSession, type CodexStudioPhase } from "./codex-session
 import { renderCodexPrompt } from "./codex-prompts.js";
 import type { EngineId } from "./engines.js";
 import type { StudioRoleId } from "./roles.js";
-import { readTemplate, templateRegistry, type TemplateId } from "./templates.js";
+import { renderSelectedTemplates, type TemplateId } from "./templates.js";
 
 export type WorkflowId =
   | "vertical-slice"
@@ -55,7 +55,8 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     phase: "review",
     objective: "Inspect the current build, report reproducible playtest issues, and separate blockers from warnings.",
     file: ".codex/workflows/playtest.md",
-    contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/workflows/playtest.md"]
+    contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/workflows/playtest.md"],
+    templateIds: ["playtest_report"]
   },
   "market-analysis": {
     id: "market-analysis",
@@ -94,6 +95,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     objective: "Review moment-to-moment feel, controls, feedback, pacing, and tuning risks with actionable changes.",
     file: ".codex/workflows/game-feel-tuning.md",
     contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/workflows/game-feel-tuning.md"],
+    templateIds: ["game_feel_tuning"],
     cliAlias: "feel-review"
   },
   "art-direction": {
@@ -103,6 +105,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     objective: "Define art direction, visual constraints, asset list, production risks, and review criteria.",
     file: ".codex/workflows/art-direction.md",
     contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/workflows/art-direction.md"],
+    templateIds: ["art_direction"],
     cliAlias: "art-direction"
   },
   "ui-ux-review": {
@@ -112,6 +115,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     objective: "Review UI flows, HUD/menu clarity, usability, onboarding, accessibility, and interaction risks.",
     file: ".codex/workflows/ui-ux-review.md",
     contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/workflows/ui-ux-review.md"],
+    templateIds: ["ui_ux_review"],
     cliAlias: "ui-review"
   },
   "production-milestone": {
@@ -121,6 +125,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     objective: "Convert current project state into milestone goals, task slices, risks, owners, and verification gates.",
     file: ".codex/workflows/production-milestone.md",
     contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/workflows/production-milestone.md", "documentation/production/timeline.md"],
+    templateIds: ["production_milestone"],
     cliAlias: "milestone"
   },
   handoff: {
@@ -147,22 +152,13 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     phase: "ship",
     objective: "Assess milestone readiness, package risk, validation status, and release blockers.",
     file: ".codex/workflows/ship-check.md",
-    contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/workflows/ship-check.md", "documentation/production/timeline.md"]
+    contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/workflows/ship-check.md", "documentation/production/timeline.md"],
+    templateIds: ["ship_check"]
   }
 };
 
 function renderWorkflowTemplates(workflow: WorkflowId): string {
-  const templateIds = workflowRegistry[workflow].templateIds ?? [];
-  if (templateIds.length === 0) return "";
-  return [
-    "",
-    "## Workflow Templates",
-    "",
-    ...templateIds.flatMap((id) => {
-      const info = templateRegistry[id];
-      return [`### Template: ${id}`, `Source: package:${info.path}`, "", readTemplate(id).trim(), ""];
-    })
-  ].join("\n");
+  return renderSelectedTemplates(workflowRegistry[workflow].templateIds ?? [], "## Workflow Templates");
 }
 
 function readStudioEngine(projectRoot: string): EngineId {
