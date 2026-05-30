@@ -24,6 +24,10 @@ authority:
   - docs/truth/**/*.md
 instruction_targets:
   - AGENTS.md
+truthmark-portal:
+  enabled: true
+  output: docs/truthmark-portal
+  template: default
 frontmatter:
   required: []
   recommended:

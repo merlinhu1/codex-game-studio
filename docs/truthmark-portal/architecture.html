@@ -1,0 +1,781 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Architecture · Truthmark Portal</title><link rel="stylesheet" href="assets/style.css"></head><body><header><strong>Open GameStudio · Truthmark Portal</strong><nav><a href="index.html">Home</a><a href="architecture.html">Architecture</a><a href="truth.html">Repository truth</a><a href="standards.html">Standards</a></nav></header><main><h1>Architecture</h1><p class="disclaimer">Markdown remains canonical; this generated Portal HTML is non-canonical presentation only. Truthmark is an injected repository-truth workflow/tooling layer, not an Open GameStudio runtime feature.</p><section class="doc"><h2>Architecture Flow Guides</h2><p>Runtime-view documentation for important Open GameStudio scenarios. These pages explain sequence, branching logic, failures, and traceability while the bounded truth docs remain canonical.</p><div class="card-grid"><div class="card"><h3>Architecture Flow Guides</h3><p><span class="badge">docs/architecture/flows/README.md</span></p></div><div class="card"><h3>Project Initialization Flow Guide</h3><p><span class="badge">docs/architecture/flows/project-initialization.md</span></p></div><div class="card"><h3>Role Run Lifecycle Flow Guide</h3><p><span class="badge">docs/architecture/flows/role-run-lifecycle.md</span></p></div><div class="card"><h3>Workflow Prompt Rendering Flow Guide</h3><p><span class="badge">docs/architecture/flows/workflow-prompt-rendering.md</span></p></div><div class="card"><h3>Validation And Repository Truth Flow Guide</h3><p><span class="badge">docs/architecture/flows/validation-and-repository-truth.md</span></p></div></div></section><section class="doc"><h2>Repository Structure</h2><p><span class="badge">docs/architecture/repository-structure.md</span></p><h2>Repository Structure</h2>
+<h3>Purpose</h3>
+<p>Open GameStudio is a Node/TypeScript CLI package that installs and operates Codex-native game studio project workflows.</p>
+<h3>Scope</h3>
+<p>This architecture note records the top-level repository boundaries needed by Truthmark routing. Bounded behavior details live in leaf docs under <code>docs/truth/<strong></code>; cross-cutting runtime scenario walkthroughs live in <code>docs/architecture/flows/</strong></code>.</p>
+<h3>Components</h3>
+<ul>
+<li>CLI command surface: <code>src/cli.ts</code>.</li>
+<li>Project scaffolding: <code>src/projects.ts</code>, <code>src/config.ts</code>, <code>src/engines.ts</code>, <code>src/agents.ts</code>, <code>src/paths.ts</code>, and <code>engine_configs/**</code>.</li>
+<li>Codex prompt and workflow surfaces: <code>src/roles.ts</code>, <code>src/codex-session.ts</code>, <code>src/codex-prompts.ts</code>, <code>src/workflows.ts</code>, <code>src/templates.ts</code>, and <code>templates/**</code>.</li>
+<li>Runtime/task execution: <code>src/runner.ts</code>, <code>src/tasks.ts</code>, <code>src/codex-runtime.ts</code>, and <code>src/verification.ts</code>.</li>
+<li>Validation: <code>src/validation.ts</code> plus the package metadata and smoke checks it verifies.</li>
+<li>Architecture flow guides: <code>docs/architecture/flows/**</code> explain important runtime scenarios, branch logic, and failure paths by linking back to bounded truth docs.</li>
+</ul>
+<h3>Boundaries</h3>
+<p>Project scaffolding writes generated project files but does not execute Codex. Codex prompt/workflow modules render instructions but do not persist run state. Runtime/task modules execute or persist Codex runs but consume the prompt surfaces instead of defining role contracts. CLI/validation modules expose and verify the public package contract.</p>
+<h3>Current Structure</h3>
+<ul>
+<li><code>src/cli.ts</code> owns the public CLI command wiring.</li>
+<li><code>src/projects.ts</code>, <code>src/config.ts</code>, <code>src/engines.ts</code>, <code>src/agents.ts</code>, and <code>src/paths.ts</code> own project scaffolding and generated project surfaces.</li>
+<li><code>src/roles.ts</code>, <code>src/codex-session.ts</code>, <code>src/codex-prompts.ts</code>, <code>src/workflows.ts</code>, and <code>src/templates.ts</code> own Codex role, prompt, workflow, and template surfaces.</li>
+<li><code>src/runner.ts</code>, <code>src/tasks.ts</code>, <code>src/codex-runtime.ts</code>, and <code>src/verification.ts</code> own Codex execution, task persistence, runtime checks, and verification processes.</li>
+<li><code>src/validation.ts</code> owns repository and generated-project validation checks.</li>
+<li><code>engine_configs/<strong></code> and <code>templates/</strong></code> are package runtime assets.</li>
+<li><code>tests/**</code> mirrors those behavior boundaries with Vitest coverage.</li>
+<li><code>docs/architecture/flows/**</code> contains Markdown runtime views for project initialization, role runs, workflow prompt rendering, and validation/repository-truth workflows.</li>
+</ul>
+<h3>Product Decisions</h3>
+<ul>
+<li>Decision (2026-05-28): Route truth by behavior ownership rather than by mechanically mirroring every source file.</li>
+<li>Decision (2026-05-30): Use Markdown Architecture Flow Guides as arc42-style runtime views for detailed branching/walkthrough documentation; keep bounded Truthmark truth docs as the canonical behavior reference layer.</li>
+</ul>
+<h3>Rationale</h3>
+<p>The package has a small source tree but multiple independent behavioral contracts. Truthmark routing keeps project scaffolding, prompt surfaces, runtime/task execution, and CLI/validation contracts separate so future syncs can update bounded docs instead of a catch-all repository overview.</p>
+<h3>Maintenance Notes</h3>
+<p>Update this architecture note when source modules move across the behavior boundaries in <code>docs/truthmark/areas/repository.md</code>. Update <code>docs/architecture/flows/**</code> when an architecturally relevant runtime scenario, branch, or failure path changes.</p></section><section class="doc"><h2>Architecture Flow Guides</h2><p><span class="badge">docs/architecture/flows/README.md</span></p><h2>Architecture Flow Guides</h2>
+<h3>Purpose</h3>
+<p>These Architecture Flow Guides document Open GameStudio&#x27;s important runtime scenarios, branching logic, failure paths, and code/truth-doc traceability. They are Markdown docs-as-code runtime views: readable in GitHub/VS Code, reviewable in pull requests, and detailed enough to guide humans and agents through the system.</p>
+<h3>Professional Framing</h3>
+<p>This folder uses established software-architecture documentation patterns:</p>
+<ul>
+<li><strong>arc42 Runtime View</strong>: documents concrete behavior, interactions between building blocks, important scenarios, operational flows, and error/exception scenarios.</li>
+<li><strong>C4 dynamic views</strong>: describe how architecture elements interact at runtime when a static structure view is not enough.</li>
+<li><strong>Diátaxis explanation/how-to separation</strong>: these guides explain and navigate flows; Truthmark truth docs remain the canonical reference layer.</li>
+<li><strong>Mermaid in Markdown</strong>: sequence and flowchart diagrams are embedded directly in Markdown so the diagrams stay close to the walkthrough text.</li>
+</ul>
+<h3>Relationship To Truthmark Truth Docs</h3>
+<p>Truthmark truth docs own canonical behavior claims. Architecture flow guides own comprehension.</p>
+<table><thead><tr><th>Layer</th><th>Purpose</th><th>Example</th></tr></thead><tbody>
+<tr><td>Truth docs</td><td>Bounded, canonical behavior/reference claims</td><td><code>docs/truth/codex/runtime-and-tasks.md</code></td></tr>
+<tr><td>Flow guides</td><td>Cross-cutting runtime scenarios, branches, and debugging paths</td><td><code>docs/architecture/flows/role-run-lifecycle.md</code></td></tr>
+<tr><td>Portal</td><td>Generated non-canonical presentation</td><td><code>docs/truthmark-portal/</code></td></tr>
+</tbody></table>
+<p>If a flow guide conflicts with source code or a truth doc, the source code and owning truth doc win. Update the owning truth doc first, then update the affected flow guide.</p>
+<h3>Flow Index</h3>
+<table><thead><tr><th>Flow guide</th><th>Scenario</th><th>Primary truth docs</th></tr></thead><tbody>
+<tr><td><a href="../architecture/flows/project-initialization.md">Project Initialization</a></td><td><code>init</code> / <code>new</code> creates a deterministic generated game project.</td><td><code>docs/truth/projects/project-scaffolding.md</code></td></tr>
+<tr><td><a href="../architecture/flows/role-run-lifecycle.md">Role Run Lifecycle</a></td><td><code>run &lt;role&gt;</code> renders, executes, verifies, reviews, and optionally fixes a Codex role run.</td><td><code>docs/truth/codex/runtime-and-tasks.md</code>, <code>docs/truth/codex/roles-and-workflows.md</code></td></tr>
+<tr><td><a href="../architecture/flows/workflow-prompt-rendering.md">Workflow Prompt Rendering</a></td><td>Workflow shortcut commands render deterministic prompts without executing Codex.</td><td><code>docs/truth/codex/roles-and-workflows.md</code></td></tr>
+<tr><td><a href="../architecture/flows/validation-and-repository-truth.md">Validation And Repository Truth</a></td><td>Repository/project validation and injected Truthmark repository-truth workflows around behavior changes.</td><td><code>docs/truth/contracts/cli-and-validation.md</code>, <code>docs/truth/repository/overview.md</code></td></tr>
+</tbody></table>
+<h3>Guide Template</h3>
+<p>Each flow guide should include:</p>
+<ol>
+<li>Purpose and scenario boundary.</li>
+<li>Entry points.</li>
+<li>Preconditions and inputs.</li>
+<li>Happy path sequence.</li>
+<li>Branch map.</li>
+<li>Decision table.</li>
+<li>Failure modes and debugging cues.</li>
+<li>Code traceability.</li>
+<li>Truth sources and verification.</li>
+</ol>
+<h3>Maintenance Rules</h3>
+<ul>
+<li>Keep these guides focused on architecturally relevant scenarios, not every internal helper call.</li>
+<li>Do not use flow guides to introduce new behavior claims that are absent from source and truth docs.</li>
+<li>When behavior changes, update the owning truth doc and then any impacted flow guide.</li>
+<li>Keep Truthmark framed as an injected repository-truth workflow/tooling layer unless product code explicitly implements Truthmark-facing runtime behavior.</li>
+</ul></section><section class="doc"><h2>Project Initialization Flow Guide</h2><p><span class="badge">docs/architecture/flows/project-initialization.md</span></p><h2>Project Initialization Flow Guide</h2>
+<h3>Purpose</h3>
+<p>This architecture flow guide documents the runtime scenario for <code>open-gamestudio init</code> and <code>open-gamestudio new</code>. Both commands use the same initialization path to create a deterministic Codex Game Studio project under <code>projects/&lt;slug&gt;/</code>.</p>
+<h3>Scope</h3>
+<p>This flow starts when a user invokes <code>init</code> or <code>new</code> with required project options. It ends when the generated project has engine markers, <code>.codex</code> state, workflow prompts, starter docs, role prompts, and project-level <code>AGENTS.md</code>.</p>
+<p>This flow does <strong>not</strong> execute Codex and does <strong>not</strong> own task lifecycle persistence after project creation.</p>
+<h3>Boundaries</h3>
+<p>Project initialization owns generated project creation and initial <code>.codex</code> state. Codex run execution, task lifecycle persistence, and verification/review behavior are owned by separate runtime flows and truth docs.</p>
+<h3>Entry Points</h3>
+<table><thead><tr><th>Entry point</th><th>Role in flow</th><th>Code</th></tr></thead><tbody>
+<tr><td><code>open-gamestudio init</code></td><td>Primary project initialization command.</td><td><code>src/cli.ts</code></td></tr>
+<tr><td><code>open-gamestudio new</code></td><td>Alias that delegates to the same initialization path.</td><td><code>src/cli.ts</code></td></tr>
+<tr><td><code>initProject(...)</code></td><td>Creates project config, directories, state, docs, workflows, and prompts.</td><td><code>src/projects.ts</code></td></tr>
+</tbody></table>
+<h3>Preconditions</h3>
+<ul>
+<li>The user supplies <code>--name</code>, <code>--engine</code>, <code>--mode</code>, and <code>--non-interactive</code>.</li>
+<li>The selected engine is known by the engine registry.</li>
+<li>The target <code>projects/&lt;slug&gt;/</code> path does not already exist.</li>
+<li>Same-parent project slug and Unreal class-name collision checks pass.</li>
+</ul>
+<h3>Inputs</h3>
+<table><thead><tr><th>Input</th><th>Source</th><th>Required</th><th>Notes</th></tr></thead><tbody>
+<tr><td>Project name</td><td><code>--name</code></td><td>yes</td><td>Used for config and slug derivation.</td></tr>
+<tr><td>Engine</td><td><code>--engine</code></td><td>yes</td><td>Must resolve to a supported engine registry entry.</td></tr>
+<tr><td>Mode</td><td><code>--mode</code></td><td>yes</td><td>Selects active project/studio mode.</td></tr>
+<tr><td>Non-interactive flag</td><td><code>--non-interactive</code></td><td>yes</td><td>Enforces deterministic scaffolding.</td></tr>
+<tr><td>Concept/genre/platform/audience/etc.</td><td>Optional CLI flags</td><td>no</td><td>Written into starter planning artifacts where applicable.</td></tr>
+<tr><td>Engine version override</td><td><code>--engine-version</code></td><td>no</td><td>Overrides default engine context.</td></tr>
+</tbody></table>
+<h3>Happy Path Sequence</h3>
+<pre><code class="language-mermaid">
+sequenceDiagram
+
+  actor User
+
+  participant CLI as src/cli.ts
+
+  participant Projects as src/projects.ts
+
+  participant Config as src/config.ts
+
+  participant Engines as src/engines.ts
+
+  participant Agents as src/agents.ts
+
+  participant FS as Project files
+
+
+
+  User-&gt;&gt;CLI: init/new --name --engine --mode --non-interactive
+
+  CLI-&gt;&gt;Projects: initProject(options)
+
+  Projects-&gt;&gt;Config: normalize project config and slug
+
+  Projects-&gt;&gt;Projects: reject target/collision conflicts
+
+  Projects-&gt;&gt;Engines: resolve engine scaffold
+
+  Projects-&gt;&gt;FS: create project and engine folders
+
+  Projects-&gt;&gt;FS: write .codex/studio.json and .codex/runs/
+
+  Projects-&gt;&gt;FS: write workflow prompt files and starter docs
+
+  Projects-&gt;&gt;Agents: render generated project AGENTS.md and role prompts
+
+  Projects--&gt;&gt;CLI: project root and config
+
+  CLI--&gt;&gt;User: Created &lt;name&gt; at &lt;path&gt;
+
+</code></pre>
+<h3>Branch Map</h3>
+<pre><code class="language-mermaid">
+flowchart TD
+
+  A[User runs init or new] --&gt; B{Required options present?}
+
+  B -- no --&gt; B1[Commander reports missing required option]
+
+  B -- yes --&gt; C{--non-interactive present?}
+
+  C -- no --&gt; C1[Fail: deterministic non-interactive mode required]
+
+  C -- yes --&gt; D[Normalize config and derive slug]
+
+  D --&gt; E{Engine known?}
+
+  E -- no --&gt; E1[Fail: invalid engine]
+
+  E -- yes --&gt; F{Target or same-parent collision?}
+
+  F -- yes --&gt; F1[Fail before writing project files]
+
+  F -- no --&gt; G{Unreal class-name collision?}
+
+  G -- yes --&gt; G1[Fail before writing project files]
+
+  G -- no --&gt; H[Create engine/project folders]
+
+  H --&gt; I[Write .codex state and run directory]
+
+  I --&gt; J[Write workflows, starter docs, AGENTS.md, role prompts]
+
+  J --&gt; K[Return created project path]
+
+</code></pre>
+<h3>Decision Table</h3>
+<table><thead><tr><th>Condition</th><th>Branch</th><th>Behavior</th><th>User-visible result</th><th>Owning code/truth</th></tr></thead><tbody>
+<tr><td>Required option missing</td><td>CLI parse failure</td><td>Stop before initialization.</td><td>Commander error.</td><td><code>src/cli.ts</code>; <code>docs/truth/contracts/cli-and-validation.md</code></td></tr>
+<tr><td><code>--non-interactive</code> missing</td><td>Determinism guard</td><td>Stop before writing.</td><td>Required option error.</td><td><code>src/cli.ts</code>; <code>docs/truth/projects/project-scaffolding.md</code></td></tr>
+<tr><td>Engine is unknown</td><td>Engine registry guard</td><td>Stop before writing.</td><td>Invalid engine/lookup failure.</td><td><code>src/engines.ts</code>; <code>docs/truth/projects/project-scaffolding.md</code></td></tr>
+<tr><td>Target path exists</td><td>Collision guard</td><td>Stop before mutating target.</td><td>Existing project/path error.</td><td><code>src/projects.ts</code>; <code>docs/truth/projects/project-scaffolding.md</code></td></tr>
+<tr><td>Collision checks pass</td><td>Happy path</td><td>Write generated project surfaces.</td><td><code>Created &lt;name&gt; at &lt;path&gt;</code>.</td><td><code>src/projects.ts</code>; <code>docs/truth/projects/project-scaffolding.md</code></td></tr>
+</tbody></table>
+<h3>Generated Outputs</h3>
+<p>The successful flow creates or writes:</p>
+<ul>
+<li><code>projects/&lt;slug&gt;/</code></li>
+<li><code>.codex/studio.json</code></li>
+<li><code>.codex/runs/</code></li>
+<li><code>.codex/workflows/*.md</code></li>
+<li>starter design/production/market documents</li>
+<li>engine-specific marker files and source folders</li>
+<li>project-level <code>AGENTS.md</code></li>
+<li>role prompt files for the canonical studio role roster</li>
+</ul>
+<p>Forbidden generated project surfaces remain forbidden: <code>CODEX.md</code>, <code>project_orchestrator.md</code>, and <code>.gamestudio/runs</code>.</p>
+<h3>Failure Modes And Debugging Cues</h3>
+<table><thead><tr><th>Failure</th><th>Likely cause</th><th>Inspect</th></tr></thead><tbody>
+<tr><td>Required-option failure</td><td>CLI command missing required flags.</td><td><code>src/cli.ts</code> command definitions.</td></tr>
+<tr><td>Invalid engine</td><td>Engine value not recognized or engine registry changed.</td><td><code>src/engines.ts</code>, <code>engine_configs/**</code>.</td></tr>
+<tr><td>Target collision</td><td><code>projects/&lt;slug&gt;/</code> already exists.</td><td>Project directory and slug derivation in <code>src/projects.ts</code>.</td></tr>
+<tr><td>Generated file missing in validation</td><td>Scaffolding contract drift.</td><td><code>src/projects.ts</code>, <code>src/agents.ts</code>, <code>src/validation.ts</code>.</td></tr>
+</tbody></table>
+<h3>Code Traceability</h3>
+<table><thead><tr><th>Behavior</th><th>Code</th></tr></thead><tbody>
+<tr><td>Command wiring and required options</td><td><code>src/cli.ts</code></td></tr>
+<tr><td>Project creation and collision checks</td><td><code>src/projects.ts</code></td></tr>
+<tr><td>Config normalization</td><td><code>src/config.ts</code></td></tr>
+<tr><td>Engine-specific scaffold</td><td><code>src/engines.ts</code>, <code>engine_configs/**</code></td></tr>
+<tr><td>Generated project instruction surface</td><td><code>src/agents.ts</code></td></tr>
+<tr><td>Path/slug helpers</td><td><code>src/paths.ts</code></td></tr>
+<tr><td>Project validation checks</td><td><code>src/validation.ts</code></td></tr>
+</tbody></table>
+<h3>Product Decisions</h3>
+<ul>
+<li>Project creation remains deterministic and non-interactive for reproducible Codex project setup.</li>
+<li>Generated project instructions use Codex-native <code>AGENTS.md</code>; this flow does not introduce <code>CODEX.md</code> as a primary project instruction contract.</li>
+</ul>
+<h3>Rationale</h3>
+<p>A bounded initialization flow gives users and agents a stable project scaffold without implying that scaffolding also executes Codex, manages planner state, or owns later runtime task transitions.</p>
+<h3>Truth Sources</h3>
+<ul>
+<li><code>docs/truth/projects/project-scaffolding.md</code></li>
+<li><code>docs/truth/repository/overview.md</code></li>
+<li><code>docs/truth/contracts/cli-and-validation.md</code></li>
+<li><code>docs/truthmark/areas/repository.md</code></li>
+</ul>
+<h3>Verification</h3>
+<p>For behavior changes in this flow, run the relevant project workflow, agent/template, engine-system, and validation tests. For repository-wide readiness claims, run:</p>
+<pre><code class="language-bash">
+npm run validate
+
+npx truthmark check --json
+
+</code></pre></section><section class="doc"><h2>Role Run Lifecycle Flow Guide</h2><p><span class="badge">docs/architecture/flows/role-run-lifecycle.md</span></p><h2>Role Run Lifecycle Flow Guide</h2>
+<h3>Purpose</h3>
+<p>This architecture flow guide documents the runtime scenario for <code>open-gamestudio run &lt;role&gt;</code>. The flow prepares a deterministic Codex prompt, optionally returns inspection output, and otherwise executes a bounded implementation/verification/review/fix lifecycle.</p>
+<h3>Scope</h3>
+<p>This flow starts when a user invokes <code>run &lt;role&gt; ... --project &lt;path&gt;</code>. It ends when the CLI reports <code>done</code> or <code>blocked</code>, or when an inspection-only branch returns prompt/dry-run output without side effects.</p>
+<p>This flow consumes role/workflow prompt contracts but does not own the content of each role package.</p>
+<h3>Boundaries</h3>
+<p>The role run lifecycle owns runtime preparation, prompt inspection branches, Codex availability checks, implementation execution, optional verification, review, and bounded fix passes. Role definitions, generated workflow prompt contents, and project scaffolding are owned by adjacent truth docs and flows.</p>
+<h3>Entry Points</h3>
+<table><thead><tr><th>Entry point</th><th>Role in flow</th><th>Code</th></tr></thead><tbody>
+<tr><td><code>open-gamestudio run &lt;role&gt;</code></td><td>Public CLI command for role execution.</td><td><code>src/cli.ts</code></td></tr>
+<tr><td><code>prepareRun(...)</code></td><td>Resolves project, validates role/task input, renders prompt, builds cache paths and Codex command.</td><td><code>src/runner.ts</code></td></tr>
+<tr><td><code>checkCodexAvailability(...)</code></td><td>Confirms Codex can be executed before non-dry runs.</td><td><code>src/codex-runtime.ts</code></td></tr>
+<tr><td><code>executeRunLifecycle(...)</code></td><td>Runs implementation, verification, review, and bounded fix passes.</td><td><code>src/runner.ts</code></td></tr>
+</tbody></table>
+<h3>Preconditions</h3>
+<ul>
+<li><code>--project &lt;path&gt;</code> points to a valid generated project with <code>.codex/studio.json</code>.</li>
+<li>The requested role is a canonical studio role ID.</li>
+<li>The task/objective is non-empty, either from positional objective text or <code>--task</code>.</li>
+<li>Codex availability is required only for non-dry, non-print execution.</li>
+</ul>
+<h3>Inputs</h3>
+<table><thead><tr><th>Input</th><th>Source</th><th>Required</th><th>Notes</th></tr></thead><tbody>
+<tr><td>Role ID</td><td>positional <code>&lt;role&gt;</code></td><td>yes</td><td>Must be a canonical hyphenated studio role ID.</td></tr>
+<tr><td>Objective/task</td><td>positional objective or <code>--task</code></td><td>yes</td><td>Drives prompt body.</td></tr>
+<tr><td>Project path</td><td><code>--project</code></td><td>yes</td><td>Resolves <code>.codex/studio.json</code>.</td></tr>
+<tr><td>Included artifacts</td><td><code>--include-artifact</code></td><td>no</td><td>Adds explicit project artifacts to context.</td></tr>
+<tr><td>Broad context flag</td><td><code>--allow-broad-context</code></td><td>no</td><td>Allows broader context discovery.</td></tr>
+<tr><td>Verification command</td><td><code>--verify-command</code>, <code>--verify-arg</code></td><td>no</td><td>Runs after implementation when configured.</td></tr>
+<tr><td>Review flag</td><td><code>--review</code></td><td>no</td><td>Adds read-only review pass.</td></tr>
+<tr><td>Fix flag/count</td><td><code>--fix</code>, <code>--max-fix-passes</code></td><td>no</td><td>Enables bounded fix passes when blocked.</td></tr>
+<tr><td>Inspection flags</td><td><code>--print-prompt</code>, <code>--dry-run</code></td><td>no</td><td>Non-mutating inspection branches.</td></tr>
+</tbody></table>
+<h3>Happy Path Sequence</h3>
+<pre><code class="language-mermaid">
+sequenceDiagram
+
+  actor User
+
+  participant CLI as src/cli.ts
+
+  participant Runner as src/runner.ts
+
+  participant Prompts as Prompt rendering
+
+  participant Runtime as src/codex-runtime.ts
+
+  participant Verification as src/verification.ts
+
+  participant FS as .codex/runs
+
+
+
+  User-&gt;&gt;CLI: run &lt;role&gt; objective --project &lt;path&gt;
+
+  CLI-&gt;&gt;Runner: prepareRun(role, options)
+
+  Runner-&gt;&gt;Prompts: render role/session prompt
+
+  Prompts--&gt;&gt;Runner: prompt, context files, command
+
+  Runner--&gt;&gt;CLI: prepared output and Codex command
+
+  CLI-&gt;&gt;Runtime: checkCodexAvailability(command)
+
+  Runtime--&gt;&gt;CLI: available
+
+  CLI-&gt;&gt;Runner: executeRunLifecycle(prepared)
+
+  Runner-&gt;&gt;FS: write prompt and metadata cache
+
+  Runner-&gt;&gt;Runtime: execute implementation prompt
+
+  Runtime--&gt;&gt;Runner: implementation result
+
+  Runner-&gt;&gt;Verification: run verification when configured
+
+  Verification--&gt;&gt;Runner: verification result
+
+  Runner--&gt;&gt;CLI: final status done or blocked
+
+  CLI--&gt;&gt;User: lifecycle summary
+
+</code></pre>
+<h3>Branch Map</h3>
+<pre><code class="language-mermaid">
+flowchart TD
+
+  A[run role command] --&gt; B{Project valid?}
+
+  B -- no --&gt; B1[Fail before prompt execution]
+
+  B -- yes --&gt; C{Role valid?}
+
+  C -- no --&gt; C1[Unknown role error with canonical role IDs]
+
+  C -- yes --&gt; D{Task/objective non-empty?}
+
+  D -- no --&gt; D1[Fail before prompt execution]
+
+  D -- yes --&gt; E[Render deterministic prompt and context]
+
+  E --&gt; F{--print-prompt?}
+
+  F -- yes --&gt; F1[Print prompt only; no mutation]
+
+  F -- no --&gt; G{--dry-run?}
+
+  G -- yes --&gt; G1[Print context and command only; no mutation]
+
+  G -- no --&gt; H{Codex available?}
+
+  H -- no --&gt; H1[Report Codex unavailable; exit non-zero]
+
+  H -- yes --&gt; I[Write prompt and metadata cache]
+
+  I --&gt; J[Execute implementation prompt]
+
+  J --&gt; K{Implementation succeeded?}
+
+  K -- no --&gt; K1[Blocked]
+
+  K -- yes --&gt; L{Verification configured?}
+
+  L -- yes --&gt; M[Run verification]
+
+  L -- no --&gt; N{Review requested?}
+
+  M --&gt; M1{Verification passed?}
+
+  M1 -- no --&gt; O[Blocked]
+
+  M1 -- yes --&gt; N
+
+  N -- yes --&gt; P[Run read-only review]
+
+  N -- no --&gt; R[Done]
+
+  P --&gt; Q{Review blockers?}
+
+  Q -- no --&gt; R
+
+  Q -- yes --&gt; S{Fix requested and passes remain?}
+
+  S -- no --&gt; O
+
+  S -- yes --&gt; T[Run workspace-write fix pass]
+
+  T --&gt; L
+
+</code></pre>
+<h3>Decision Table</h3>
+<table><thead><tr><th>Condition</th><th>Branch</th><th>Behavior</th><th>User-visible result</th><th>Side effects</th></tr></thead><tbody>
+<tr><td>Invalid project</td><td>Project resolution failure</td><td>Stop before execution.</td><td>Error from project/task resolution.</td><td>No run cache.</td></tr>
+<tr><td>Unknown role</td><td>Role validation failure</td><td>Stop before execution.</td><td>Message points to canonical role IDs.</td><td>No run cache.</td></tr>
+<tr><td><code>--print-prompt</code></td><td>Prompt inspection</td><td>Render and print prompt body.</td><td>Prompt text.</td><td>No prompt cache, metadata, task state, or run directory writes.</td></tr>
+<tr><td><code>--dry-run</code></td><td>Command/context inspection</td><td>Print selected context and Codex command.</td><td>Dry-run summary.</td><td>No prompt cache, metadata, task state, or run directory writes.</td></tr>
+<tr><td>Codex unavailable</td><td>Runtime guard</td><td>Stop before lifecycle execution.</td><td>Availability/authentication error.</td><td>No lifecycle execution.</td></tr>
+<tr><td>Verification fails</td><td>Verification blocker</td><td>Mark lifecycle blocked unless fix passes clear it.</td><td>Final status <code>blocked</code>.</td><td>Non-dry cache already written.</td></tr>
+<tr><td>Review blockers found</td><td>Review blocker</td><td>Run bounded fix passes only when requested and available.</td><td><code>blocked</code> or subsequent <code>done</code>.</td><td>Review uses read-only sandbox; fix uses workspace-write sandbox.</td></tr>
+<tr><td>All required passes clear</td><td>Happy path</td><td>Report completion.</td><td>Final status <code>done</code>.</td><td>Non-dry run cache exists.</td></tr>
+</tbody></table>
+<h3>State And Mutation Rules</h3>
+<ul>
+<li><code>--print-prompt</code> and <code>--dry-run</code> are inspection-only and do not write prompt cache, metadata, task state, or run directories.</li>
+<li>Non-dry runs write prompt and metadata before executing Codex.</li>
+<li>Implementation and fix passes use a workspace-write Codex sandbox.</li>
+<li>Review passes use a read-only Codex sandbox.</li>
+<li>Final lifecycle status is <code>done</code> or <code>blocked</code>.</li>
+</ul>
+<h3>Failure Modes And Debugging Cues</h3>
+<table><thead><tr><th>Failure</th><th>Likely cause</th><th>Inspect</th></tr></thead><tbody>
+<tr><td>Unknown role</td><td>Role ID typo or role registry drift.</td><td><code>src/roles.ts</code>, <code>docs/truth/codex/roles-and-workflows.md</code>.</td></tr>
+<tr><td>Empty objective</td><td>User omitted objective and <code>--task</code>.</td><td><code>src/cli.ts</code>, <code>src/runner.ts</code>.</td></tr>
+<tr><td>Codex unavailable</td><td>CLI missing, unauthenticated, or command path invalid.</td><td><code>src/codex-runtime.ts</code>.</td></tr>
+<tr><td>Verification timeout/failure</td><td>Verification command failed or exceeded timeout.</td><td><code>src/verification.ts</code>, command output.</td></tr>
+<tr><td>Malformed review JSON</td><td>Review pass did not produce expected schema.</td><td><code>src/runner.ts</code>, review prompt contract.</td></tr>
+<tr><td>Repeated blocked status</td><td>Implementation, verification, or review blockers not cleared by bounded fix passes.</td><td>Run lifecycle output and <code>.codex/runs/</code> metadata.</td></tr>
+</tbody></table>
+<h3>Code Traceability</h3>
+<table><thead><tr><th>Behavior</th><th>Code</th></tr></thead><tbody>
+<tr><td>CLI option parsing and inspection branch exit</td><td><code>src/cli.ts</code></td></tr>
+<tr><td>Run preparation, prompt/cache metadata, lifecycle orchestration</td><td><code>src/runner.ts</code></td></tr>
+<tr><td>Role IDs and unknown-role message</td><td><code>src/roles.ts</code></td></tr>
+<tr><td>Prompt/session rendering inputs</td><td><code>src/codex-session.ts</code>, <code>src/codex-prompts.ts</code></td></tr>
+<tr><td>Codex availability and command execution</td><td><code>src/codex-runtime.ts</code></td></tr>
+<tr><td>Verification command execution and timeout behavior</td><td><code>src/verification.ts</code></td></tr>
+<tr><td>File-backed task mutation when running tasks</td><td><code>src/tasks.ts</code></td></tr>
+</tbody></table>
+<h3>Product Decisions</h3>
+<ul>
+<li><code>--print-prompt</code> and <code>--dry-run</code> stay inspection-only and do not mutate run state.</li>
+<li>Non-dry role runs explicitly execute Codex and report a final <code>done</code> or <code>blocked</code> status.</li>
+<li>Review is read-only; fix passes are bounded and workspace-write.</li>
+</ul>
+<h3>Rationale</h3>
+<p>Separating inspection, implementation, verification, review, and fix branches makes the Codex lifecycle auditable without inventing hidden planner, telemetry, ownership enforcement, or parallel orchestration behavior.</p>
+<h3>Truth Sources</h3>
+<ul>
+<li><code>docs/truth/codex/runtime-and-tasks.md</code></li>
+<li><code>docs/truth/codex/roles-and-workflows.md</code></li>
+<li><code>docs/truth/contracts/cli-and-validation.md</code></li>
+<li><code>docs/truthmark/areas/repository.md</code></li>
+</ul>
+<h3>Verification</h3>
+<p>For behavior changes in this flow, run runner, task, verification, Codex runtime, role, and prompt/session tests as relevant. For repository-wide readiness claims, run:</p>
+<pre><code class="language-bash">
+npm run validate
+
+npx truthmark check --json
+
+</code></pre></section><section class="doc"><h2>Workflow Prompt Rendering Flow Guide</h2><p><span class="badge">docs/architecture/flows/workflow-prompt-rendering.md</span></p><h2>Workflow Prompt Rendering Flow Guide</h2>
+<h3>Purpose</h3>
+<p>This architecture flow guide documents render-only workflow shortcut commands such as <code>market</code>, <code>analytics</code>, <code>design-spec</code>, <code>feel-review</code>, <code>art-direction</code>, <code>ui-review</code>, <code>milestone</code>, <code>handoff</code>, <code>review</code>, and <code>ship-check</code>.</p>
+<p>These commands produce deterministic Codex prompts for workflow scenarios without launching Codex or implying hidden orchestration.</p>
+<h3>Scope</h3>
+<p>This flow starts when a user invokes a workflow shortcut with <code>--project &lt;path&gt;</code>. It ends when the CLI prints the rendered workflow prompt.</p>
+<p>This flow does <strong>not</strong> execute Codex, does <strong>not</strong> write run cache metadata, and does <strong>not</strong> create a planner/next queue.</p>
+<h3>Boundaries</h3>
+<p>Workflow prompt rendering owns deterministic prompt text for workflow shortcut commands. It does not own Codex runtime execution, task status mutation, generated project scaffolding, or future-only planner/telemetry/orchestration surfaces.</p>
+<h3>Entry Points</h3>
+<table><thead><tr><th>Entry point</th><th>Role in flow</th><th>Code</th></tr></thead><tbody>
+<tr><td>Workflow CLI aliases</td><td>Public render-only commands for selected workflow IDs.</td><td><code>src/cli.ts</code>, <code>src/workflows.ts</code></td></tr>
+<tr><td><code>review</code> and <code>ship-check</code> commands</td><td>Render prompts for explicit workflow IDs without requiring a role run.</td><td><code>src/cli.ts</code></td></tr>
+<tr><td><code>renderWorkflowPrompt(...)</code></td><td>Resolves project state and renders workflow prompt content.</td><td><code>src/workflows.ts</code></td></tr>
+<tr><td>Template registry</td><td>Supplies optional template bodies when a workflow needs them.</td><td><code>src/templates.ts</code>, <code>templates/**</code></td></tr>
+</tbody></table>
+<h3>Preconditions</h3>
+<ul>
+<li><code>--project &lt;path&gt;</code> resolves to a valid generated project.</li>
+<li><code>.codex/studio.json</code> contains engine/project context required by the workflow prompt.</li>
+<li>The requested workflow ID or alias exists in the workflow registry.</li>
+<li>Any required template body is present and valid.</li>
+</ul>
+<h3>Inputs</h3>
+<table><thead><tr><th>Input</th><th>Source</th><th>Required</th><th>Notes</th></tr></thead><tbody>
+<tr><td>Workflow alias/ID</td><td>CLI command</td><td>yes</td><td>Maps to a workflow registry entry.</td></tr>
+<tr><td>Project path</td><td><code>--project</code></td><td>yes</td><td>Provides project and engine context.</td></tr>
+<tr><td>Dry-run flag</td><td><code>--dry-run</code></td><td>no</td><td>Accepted as render-only wording; command already does not launch Codex.</td></tr>
+<tr><td>Template bodies</td><td>package assets</td><td>no/conditional</td><td>Appended when selected by workflow/template rules.</td></tr>
+</tbody></table>
+<h3>Happy Path Sequence</h3>
+<pre><code class="language-mermaid">
+sequenceDiagram
+
+  actor User
+
+  participant CLI as src/cli.ts
+
+  participant Tasks as src/tasks.ts
+
+  participant Workflows as src/workflows.ts
+
+  participant Templates as src/templates.ts
+
+  participant FS as Project/package files
+
+
+
+  User-&gt;&gt;CLI: workflow-alias --project &lt;path&gt;
+
+  CLI-&gt;&gt;Tasks: resolveTaskProject(project)
+
+  Tasks--&gt;&gt;CLI: project root
+
+  CLI-&gt;&gt;Workflows: renderWorkflowPrompt(projectRoot, workflowId)
+
+  Workflows-&gt;&gt;FS: read .codex/studio.json
+
+  Workflows-&gt;&gt;Workflows: look up workflow registry entry
+
+  Workflows-&gt;&gt;Templates: select/read applicable template bodies
+
+  Templates--&gt;&gt;Workflows: template content
+
+  Workflows--&gt;&gt;CLI: rendered prompt
+
+  CLI--&gt;&gt;User: prompt text
+
+</code></pre>
+<h3>Branch Map</h3>
+<pre><code class="language-mermaid">
+flowchart TD
+
+  A[User runs workflow shortcut] --&gt; B{Project path valid?}
+
+  B -- no --&gt; B1[Fail before rendering]
+
+  B -- yes --&gt; C[Read project state]
+
+  C --&gt; D{Workflow alias/ID exists?}
+
+  D -- no --&gt; D1[Unknown workflow/command path]
+
+  D -- yes --&gt; E[Create workflow session context]
+
+  E --&gt; F{Templates required or applicable?}
+
+  F -- no --&gt; G[Render base workflow prompt]
+
+  F -- yes --&gt; H{Template bodies valid?}
+
+  H -- no --&gt; H1[Fail validation/rendering]
+
+  H -- yes --&gt; I[Append template bodies]
+
+  G --&gt; J[Print prompt only]
+
+  I --&gt; J
+
+</code></pre>
+<h3>Decision Table</h3>
+<table><thead><tr><th>Condition</th><th>Branch</th><th>Behavior</th><th>User-visible result</th><th>Side effects</th></tr></thead><tbody>
+<tr><td>Project invalid</td><td>Project resolution failure</td><td>Stop before rendering.</td><td>Error from project resolution.</td><td>None.</td></tr>
+<tr><td>Workflow command exists</td><td>Happy path</td><td>Render workflow prompt for configured workflow ID.</td><td>Prompt text.</td><td>None.</td></tr>
+<tr><td>Applicable template exists</td><td>Template append branch</td><td>Add template content to prompt.</td><td>Prompt text includes template body.</td><td>None.</td></tr>
+<tr><td>Template invalid/missing</td><td>Template validation/render failure</td><td>Stop or fail validation depending on call path.</td><td>Error or validation failure.</td><td>None.</td></tr>
+<tr><td>User expects execution</td><td>Non-goal branch</td><td>Command still only renders prompt.</td><td>Prompt text only.</td><td>Codex is not launched.</td></tr>
+</tbody></table>
+<h3>Render-Only Rules</h3>
+<ul>
+<li>Workflow shortcut commands render prompts and return text.</li>
+<li>They do not call Codex.</li>
+<li>They do not write <code>.codex/runs/</code> cache files.</li>
+<li>They do not mutate <code>.codex/studio.json</code> or <code>.codex/tasks.json</code>.</li>
+<li>They do not expose hidden planner, telemetry, ownership enforcement, or parallel orchestration behavior.</li>
+</ul>
+<h3>Failure Modes And Debugging Cues</h3>
+<table><thead><tr><th>Failure</th><th>Likely cause</th><th>Inspect</th></tr></thead><tbody>
+<tr><td>Project resolution failure</td><td>Missing or invalid <code>.codex/studio.json</code>.</td><td><code>src/tasks.ts</code>, generated project state.</td></tr>
+<tr><td>Alias drift</td><td>CLI alias and workflow registry diverged.</td><td><code>src/cli.ts</code>, <code>src/workflows.ts</code>.</td></tr>
+<tr><td>Missing template content</td><td>Package asset drift or template registry error.</td><td><code>src/templates.ts</code>, <code>templates/**</code>, package files.</td></tr>
+<tr><td>Prompt claim overstates automation</td><td>Documentation or prompt text implies unimplemented planner/execution behavior.</td><td><code>src/workflows.ts</code>, <code>docs/truth/codex/roles-and-workflows.md</code>.</td></tr>
+</tbody></table>
+<h3>Code Traceability</h3>
+<table><thead><tr><th>Behavior</th><th>Code</th></tr></thead><tbody>
+<tr><td>Workflow command registration</td><td><code>src/cli.ts</code></td></tr>
+<tr><td>Workflow registry and prompt rendering</td><td><code>src/workflows.ts</code></td></tr>
+<tr><td>Project path validation used by workflow commands</td><td><code>src/tasks.ts</code></td></tr>
+<tr><td>Template lookup, rendering, and required-section validation</td><td><code>src/templates.ts</code>, <code>templates/**</code></td></tr>
+<tr><td>Validation of workflow/prompt contracts</td><td><code>src/validation.ts</code></td></tr>
+</tbody></table>
+<h3>Product Decisions</h3>
+<ul>
+<li>Workflow shortcut commands remain render-only prompt surfaces.</li>
+<li>Prompt rendering may include templates, but it must not imply unimplemented planner, execution, telemetry, or ownership-enforcement behavior.</li>
+</ul>
+<h3>Rationale</h3>
+<p>Keeping workflow commands render-only lets users inspect and hand off workflow prompts while avoiding hidden side effects or undocumented automation.</p>
+<h3>Truth Sources</h3>
+<ul>
+<li><code>docs/truth/codex/roles-and-workflows.md</code></li>
+<li><code>docs/truth/contracts/cli-and-validation.md</code></li>
+<li><code>docs/truth/repository/overview.md</code></li>
+<li><code>docs/truthmark/areas/repository.md</code></li>
+</ul>
+<h3>Verification</h3>
+<p>For behavior changes in this flow, run workflow, template, Codex prompt/session, and validation tests as relevant. For repository-wide readiness claims, run:</p>
+<pre><code class="language-bash">
+npm run validate
+
+npx truthmark check --json
+
+</code></pre></section><section class="doc"><h2>Validation And Repository Truth Flow Guide</h2><p><span class="badge">docs/architecture/flows/validation-and-repository-truth.md</span></p><h2>Validation And Repository Truth Flow Guide</h2>
+<h3>Purpose</h3>
+<p>This architecture flow guide documents the validation path around Open GameStudio behavior changes and the injected Truthmark repository-truth workflow around documentation/routing updates.</p>
+<p>Validation is an Open GameStudio CLI/package behavior. Truthmark is an injected repository-truth workflow/tooling layer for documentation authority, routing, and agent workflow surfaces; it is not an Open GameStudio runtime feature unless product code explicitly implements Truthmark-facing behavior.</p>
+<h3>Scope</h3>
+<p>This guide covers two related but separate flows:</p>
+<ol>
+<li><code>open-gamestudio validate</code> / <code>npm run validate</code> checks package and generated-project contracts.</li>
+<li><code>npx truthmark check --json</code> checks repository-truth routing and generated Truthmark surfaces.</li>
+</ol>
+<p>The guide ends when validation/truth checks have either passed or produced diagnostics that identify the broken contract.</p>
+<h3>Boundaries</h3>
+<p>Repository validation is an Open GameStudio package behavior implemented by the CLI and validation modules. Truthmark checks are an injected repository-truth workflow/tooling layer for documentation authority and generated agent surfaces, not an Open GameStudio runtime feature.</p>
+<h3>Entry Points</h3>
+<table><thead><tr><th>Entry point</th><th>Role in flow</th><th>Code / owner</th></tr></thead><tbody>
+<tr><td><code>open-gamestudio validate</code></td><td>Public CLI validation command.</td><td><code>src/cli.ts</code>, <code>src/validation.ts</code></td></tr>
+<tr><td><code>npm run validate</code></td><td>Repository readiness gate that builds/tests/validates through package scripts.</td><td><code>package.json</code></td></tr>
+<tr><td><code>npx truthmark check --json</code></td><td>Injected repository-truth consistency check.</td><td>Truthmark tooling, <code>.truthmark/config.yml</code></td></tr>
+<tr><td>Truthmark route files</td><td>Map code surfaces to bounded truth docs.</td><td><code>docs/truthmark/areas.md</code>, <code>docs/truthmark/areas/repository.md</code></td></tr>
+<tr><td>Truth docs</td><td>Canonical bounded behavior/reference docs.</td><td><code>docs/truth/**</code></td></tr>
+</tbody></table>
+<h3>Preconditions</h3>
+<ul>
+<li>Repository validation expects package metadata, source files, templates, engine configs, and build output to match the package contract.</li>
+<li>Project validation expects a generated project with valid <code>.codex/studio.json</code> when <code>--project &lt;path&gt;</code> is supplied.</li>
+<li>Truthmark checks expect <code>.truthmark/config.yml</code> and configured route/truth docs to remain internally consistent when present.</li>
+</ul>
+<h3>Inputs</h3>
+<table><thead><tr><th>Input</th><th>Source</th><th>Required</th><th>Notes</th></tr></thead><tbody>
+<tr><td>Repository files</td><td>Worktree</td><td>yes</td><td>Package metadata, source, templates, engine configs, generated surfaces.</td></tr>
+<tr><td>Project path</td><td><code>--project</code></td><td>no</td><td>Adds generated-project validation checks.</td></tr>
+<tr><td>Truthmark config</td><td><code>.truthmark/config.yml</code></td><td>for Truthmark checks</td><td>Configures doc roots, routes, and generated surfaces.</td></tr>
+<tr><td>Route docs</td><td><code>docs/truthmark/areas*.md</code></td><td>for Truthmark checks</td><td>Map code/doc surfaces to bounded truth docs.</td></tr>
+<tr><td>Truth docs</td><td><code>docs/truth/**</code></td><td>for Truthmark checks</td><td>Canonical behavior/reference claims.</td></tr>
+</tbody></table>
+<h3>Happy Path Sequence</h3>
+<pre><code class="language-mermaid">
+sequenceDiagram
+
+  actor Contributor
+
+  participant Repo as Git worktree
+
+  participant Validate as src/validation.ts
+
+  participant Truth as Truthmark check
+
+  participant Docs as docs/truth and docs/architecture
+
+
+
+  Contributor-&gt;&gt;Repo: change code or docs
+
+  Contributor-&gt;&gt;Validate: npm run validate / open-gamestudio validate
+
+  Validate-&gt;&gt;Repo: check package, source, templates, build, generated project contracts
+
+  Validate--&gt;&gt;Contributor: all checks pass
+
+  alt behavior claim changed
+
+    Contributor-&gt;&gt;Docs: update owning truth doc first
+
+    Contributor-&gt;&gt;Docs: update affected flow guide if runtime scenario changed
+
+  end
+
+  Contributor-&gt;&gt;Truth: npx truthmark check --json
+
+  Truth-&gt;&gt;Docs: check config, routes, truth visibility, generated surfaces
+
+  Truth--&gt;&gt;Contributor: no diagnostics
+
+</code></pre>
+<h3>Branch Map</h3>
+<pre><code class="language-mermaid">
+flowchart TD
+
+  A[Repository change] --&gt; B{Functional behavior changed?}
+
+  B -- yes --&gt; C[Run relevant tests and npm run validate]
+
+  B -- no --&gt; D{Docs/truth/routing changed?}
+
+  C --&gt; E{Validation passed?}
+
+  E -- no --&gt; E1[Fix package/project contract diagnostics]
+
+  E -- yes --&gt; F{Truth claim affected?}
+
+  F -- yes --&gt; G[Update owning Truthmark truth doc]
+
+  F -- no --&gt; H[No truth-doc change needed]
+
+  G --&gt; I{Runtime scenario comprehension affected?}
+
+  H --&gt; I
+
+  D -- yes --&gt; J[Run npx truthmark check --json]
+
+  D -- no --&gt; K[No validation gate beyond normal review]
+
+  I -- yes --&gt; L[Update architecture flow guide]
+
+  I -- no --&gt; J
+
+  L --&gt; J
+
+  J --&gt; M{Truthmark diagnostics?}
+
+  M -- yes --&gt; M1[Repair routing/truth/generated-surface issue]
+
+  M -- no --&gt; N[Reviewable]
+
+</code></pre>
+<h3>Decision Table</h3>
+<table><thead><tr><th>Condition</th><th>Branch</th><th>Required action</th><th>Output/diagnostic</th><th>Owner</th></tr></thead><tbody>
+<tr><td>Source/package behavior changed</td><td>Functional validation branch</td><td>Run relevant tests and <code>npm run validate</code>.</td><td>Failing package/project check if contract is broken.</td><td>Open GameStudio repo</td></tr>
+<tr><td>Generated project behavior changed</td><td>Project validation branch</td><td>Validate generated-project contracts.</td><td>Missing/invalid generated surface diagnostic.</td><td><code>src/validation.ts</code> and scaffold owners</td></tr>
+<tr><td>Public CLI claim changed</td><td>CLI contract branch</td><td>Update contract truth doc and validation/readme claims together.</td><td>Validation or doc drift if missed.</td><td><code>docs/truth/contracts/cli-and-validation.md</code></td></tr>
+<tr><td>Behavior claim changed</td><td>Truth sync branch</td><td>Update owning bounded truth doc.</td><td>Truthmark may flag stale/unmapped surfaces.</td><td>Truthmark docs workflow</td></tr>
+<tr><td>Flow comprehension changed</td><td>Runtime-view branch</td><td>Update affected architecture flow guide after truth doc.</td><td>Stale walkthrough if missed.</td><td><code>docs/architecture/flows/**</code></td></tr>
+<tr><td>Truthmark generated surface changed</td><td>Injected workflow branch</td><td>Preserve managed blocks and run Truthmark check/init only when appropriate.</td><td>Generated surface diagnostic.</td><td>Truthmark tooling layer</td></tr>
+</tbody></table>
+<h3>Failure Modes And Debugging Cues</h3>
+<table><thead><tr><th>Failure</th><th>Likely cause</th><th>Inspect</th></tr></thead><tbody>
+<tr><td>Validation check fails</td><td>Package metadata, source, templates, build output, or project scaffold drift.</td><td><code>src/validation.ts</code>, failing check ID.</td></tr>
+<tr><td>Future-surface guard fails</td><td>CLI/docs exposed unimplemented planner/telemetry/parallel/ownership surface.</td><td><code>src/cli.ts</code>, README/docs, validation tests.</td></tr>
+<tr><td>Truthmark reports route/topology issue</td><td>Code or docs moved outside bounded route ownership.</td><td><code>docs/truthmark/areas.md</code>, <code>docs/truthmark/areas/repository.md</code>.</td></tr>
+<tr><td>Truth doc and flow guide diverge</td><td>Flow guide was updated without updating canonical truth or vice versa.</td><td>Owning <code>docs/truth/<strong></code> file and affected <code>docs/architecture/flows/</strong></code> file.</td></tr>
+<tr><td>Portal output stale</td><td>Generated non-canonical site not refreshed after Markdown changes.</td><td><code>docs/truthmark-portal/</code> and portal provenance.</td></tr>
+</tbody></table>
+<h3>Code And Document Traceability</h3>
+<table><thead><tr><th>Behavior / concern</th><th>Owner</th></tr></thead><tbody>
+<tr><td>CLI validation command wiring</td><td><code>src/cli.ts</code></td></tr>
+<tr><td>Validation checks and project contract diagnostics</td><td><code>src/validation.ts</code></td></tr>
+<tr><td>Package scripts/bin/files contract</td><td><code>package.json</code>, <code>docs/truth/contracts/cli-and-validation.md</code></td></tr>
+<tr><td>Truthmark config and generated workflow surfaces</td><td><code>.truthmark/config.yml</code>, generated agent files</td></tr>
+<tr><td>Truth routing</td><td><code>docs/truthmark/areas.md</code>, <code>docs/truthmark/areas/repository.md</code></td></tr>
+<tr><td>Bounded canonical behavior docs</td><td><code>docs/truth/**</code></td></tr>
+<tr><td>Cross-cutting runtime scenario explanations</td><td><code>docs/architecture/flows/**</code></td></tr>
+<tr><td>Generated presentation output</td><td><code>docs/truthmark-portal/</code></td></tr>
+</tbody></table>
+<h3>Product Decisions</h3>
+<ul>
+<li><code>npm run validate</code> remains the readiness gate before repository parity claims.</li>
+<li>Truthmark checks validate repository-truth routing and generated workflow surfaces without redefining Open GameStudio runtime behavior.</li>
+<li>Markdown truth docs remain canonical; generated portal HTML remains non-canonical presentation.</li>
+</ul>
+<h3>Rationale</h3>
+<p>Keeping validation and repository-truth checks adjacent but distinct prevents injected Truthmark workflow scaffolding from being mistaken for product functionality while still making documentation authority auditable.</p>
+<h3>Truth Sources</h3>
+<ul>
+<li><code>docs/truth/contracts/cli-and-validation.md</code></li>
+<li><code>docs/truth/repository/overview.md</code></li>
+<li><code>docs/truthmark/areas/repository.md</code></li>
+<li><code>.truthmark/config.yml</code></li>
+</ul>
+<h3>Verification</h3>
+<p>For behavior changes, run relevant tests and:</p>
+<pre><code class="language-bash">
+npm run validate
+
+</code></pre>
+<p>For repository-truth docs/routing/generated-surface changes, run:</p>
+<pre><code class="language-bash">
+npx truthmark check --json
+
+</code></pre>
+<p>When both behavior and truth docs change, run both gates.</p></section><p class="footer">Generated locally with no remote dependencies.</p></main><script src="assets/portal.js"></script></body></html>
