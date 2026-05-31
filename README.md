@@ -65,8 +65,8 @@ node dist/cli.js --help
 For package use after installing or linking the package:
 
 ```sh
-npm exec open-gamestudio -- --help
-npm exec open-gamestudio -- templates list
+npm exec opengamestudio -- --help
+npm exec opengamestudio -- templates list
 ```
 
 For local development from this checkout, prefer the npm scripts. They build first and exercise the built CLI through `node dist/cli.js`:

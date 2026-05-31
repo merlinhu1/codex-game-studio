@@ -21,6 +21,6 @@ npm run validate -- --project projects/my-game
 After build/link/install, the package bin is available:
 
 ```bash
-npm exec open-gamestudio -- --help
-npm exec open-gamestudio -- templates show gdd
+npm exec opengamestudio -- --help
+npm exec opengamestudio -- templates show gdd
 ```

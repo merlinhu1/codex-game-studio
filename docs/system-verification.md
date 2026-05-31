@@ -8,9 +8,9 @@ npm run build
 npm test
 node dist/cli.js --help
 node dist/cli.js validate
-npm exec open-gamestudio -- --help
-npm exec open-gamestudio -- validate
-npm exec open-gamestudio -- run --help
+npm exec opengamestudio -- --help
+npm exec opengamestudio -- validate
+npm exec opengamestudio -- run --help
 npm run validate
 ```
 

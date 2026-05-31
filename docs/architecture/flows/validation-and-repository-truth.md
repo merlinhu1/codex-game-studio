@@ -21,7 +21,7 @@ Validation is an Open Game Studio CLI/package behavior. Truthmark is an injected
 
 This guide covers two related but separate flows:
 
-1. `open-gamestudio validate` / `npm run validate` checks package and generated-project contracts.
+1. `opengamestudio validate` / `npm run validate` checks package and generated-project contracts.
 2. `npx truthmark check --json` checks repository-truth routing and generated Truthmark surfaces.
 
 The guide ends when validation/truth checks have either passed or produced diagnostics that identify the broken contract.
@@ -34,7 +34,7 @@ Repository validation is an Open Game Studio package behavior implemented by the
 
 | Entry point | Role in flow | Code / owner |
 | --- | --- | --- |
-| `open-gamestudio validate` | Public CLI validation command. | `src/cli.ts`, `src/validation.ts` |
+| `opengamestudio validate` | Public CLI validation command. | `src/cli.ts`, `src/validation.ts` |
 | `npm run validate` | Repository readiness gate that builds/tests/validates through package scripts. | `package.json` |
 | `npx truthmark check --json` | Injected repository-truth consistency check. | Truthmark tooling, `.truthmark/config.yml` |
 | Truthmark route files | Map code surfaces to bounded truth docs. | `docs/truthmark/areas.md`, `docs/truthmark/areas/repository.md` |
@@ -67,7 +67,7 @@ sequenceDiagram
   participant Docs as docs/truth and docs/architecture
 
   Contributor->>Repo: change code or docs
-  Contributor->>Validate: npm run validate / open-gamestudio validate
+  Contributor->>Validate: npm run validate / opengamestudio validate
   Validate->>Repo: check package, source, templates, build, generated project contracts
   Validate-->>Contributor: all checks pass
   alt behavior claim changed

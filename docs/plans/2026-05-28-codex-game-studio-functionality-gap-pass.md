@@ -29,7 +29,7 @@ This pass addresses the first five functionality gaps identified in the Claude G
 - Do not add interactive `menu` or `startover`.
 - Do not add database-backed task storage.
 - Do not add parallel orchestration.
-- Do not add `open-gamestudio next`, telemetry, changed-file tracking, or hard output-ownership enforcement in this pass.
+- Do not add `opengamestudio next`, telemetry, changed-file tracking, or hard output-ownership enforcement in this pass.
 - Do not eagerly generate full competitor reports during `init`; full reports belong to the market workflow.
 
 ## Design Decisions
@@ -256,22 +256,22 @@ Workflow identity decisions:
 
 ### Workflow CLI Surface
 
-Decision: shortcut workflow commands are prompt-rendering helpers in this pass. They render the selected workflow prompt for inspection and do not launch Codex. Actual Codex execution remains through `open-gamestudio run <role>`; lifecycle workflow execution can be added by a later plan.
+Decision: shortcut workflow commands are prompt-rendering helpers in this pass. They render the selected workflow prompt for inspection and do not launch Codex. Actual Codex execution remains through `opengamestudio run <role>`; lifecycle workflow execution can be added by a later plan.
 
 Add explicit workflow commands where they materially improve usability:
 
 ```bash
-open-gamestudio market --project projects/my-game --dry-run
-open-gamestudio analytics --project projects/my-game --dry-run
-open-gamestudio design-spec --project projects/my-game --dry-run
-open-gamestudio feel-review --project projects/my-game --dry-run
-open-gamestudio art-direction --project projects/my-game --dry-run
-open-gamestudio ui-review --project projects/my-game --dry-run
-open-gamestudio milestone --project projects/my-game --dry-run
-open-gamestudio handoff --project projects/my-game --dry-run
+opengamestudio market --project projects/my-game --dry-run
+opengamestudio analytics --project projects/my-game --dry-run
+opengamestudio design-spec --project projects/my-game --dry-run
+opengamestudio feel-review --project projects/my-game --dry-run
+opengamestudio art-direction --project projects/my-game --dry-run
+opengamestudio ui-review --project projects/my-game --dry-run
+opengamestudio milestone --project projects/my-game --dry-run
+opengamestudio handoff --project projects/my-game --dry-run
 ```
 
-For this pass, these commands only render workflow prompts for inspection; they do not launch Codex. Keep actual Codex execution on the existing `open-gamestudio run <role>` path. They must not introduce a planner, telemetry, ownership enforcement, or parallel orchestration.
+For this pass, these commands only render workflow prompts for inspection; they do not launch Codex. Keep actual Codex execution on the existing `opengamestudio run <role>` path. They must not introduce a planner, telemetry, ownership enforcement, or parallel orchestration.
 
 ---
 
@@ -756,8 +756,8 @@ Expected: PASS.
 Add commands:
 
 ```bash
-open-gamestudio market --project <path> [--dry-run]
-open-gamestudio analytics --project <path> [--dry-run]
+opengamestudio market --project <path> [--dry-run]
+opengamestudio analytics --project <path> [--dry-run]
 ```
 
 Implementation must use the workflow registry `cliAlias` entries and call `renderWorkflowPrompt(projectRoot, "market-analysis")` / `renderWorkflowPrompt(projectRoot, "analytics-setup")`. These shortcut commands render prompts only; they must not launch Codex or create run/session state.
@@ -858,7 +858,7 @@ Expected: PASS.
 
 ### Task 9: Add a handoff CLI command
 
-**Objective:** Make orchestration visible as `open-gamestudio handoff`, not as a hidden or legacy orchestrator file.
+**Objective:** Make orchestration visible as `opengamestudio handoff`, not as a hidden or legacy orchestrator file.
 
 **Files:**
 - Modify: `src/cli.ts`
@@ -870,7 +870,7 @@ Expected: PASS.
 Add:
 
 ```bash
-open-gamestudio handoff --project <path> [--dry-run]
+opengamestudio handoff --project <path> [--dry-run]
 ```
 
 It should render `renderWorkflowPrompt(projectRoot, "handoff")` through the registry `cliAlias: "handoff"` path. It must not launch Codex or create run/session state.
@@ -1164,7 +1164,7 @@ Expected: PASS.
 
 ### Task 13: Update validation for expanded role/workflow contract
 
-**Objective:** Make `open-gamestudio validate` enforce the expanded functional contract.
+**Objective:** Make `opengamestudio validate` enforce the expanded functional contract.
 
 **Files:**
 - Modify: `src/validation.ts`
@@ -1364,7 +1364,7 @@ The functionality-gap pass is complete when all are true:
 - Generated role prompt files include project summary, engine context, role instructions, expected outputs, review checklist, and handoff.
 - Generated projects include the expanded workflow files.
 - Market and analytics workflows render through dedicated roles and bounded template/context selection, without claiming executable workflow lifecycle support.
-- Handoff/orchestration is available through `studio-orchestrator` and the prompt-rendering `open-gamestudio handoff` shortcut, without `project_orchestrator.md`.
+- Handoff/orchestration is available through `studio-orchestrator` and the prompt-rendering `opengamestudio handoff` shortcut, without `project_orchestrator.md`.
 - Design, game-feel, art-direction, UI/UX, production milestone, distinct review, ship-check, playtest, bugfix, vertical-slice, market, analytics, and handoff workflows render successfully from the canonical workflow registry.
 - Validation fails with the stable check IDs listed in Task 13 when required role prompts or workflow files are missing/corrupt.
 - Representative legacy role aliases are rejected with clear guidance.

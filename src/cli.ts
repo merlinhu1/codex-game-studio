@@ -16,7 +16,7 @@ function collectCompetitor(value: string, previous: string[] = []): string[] {
   return [...previous, value.trim()].filter(Boolean);
 }
 
-program.name("open-gamestudio").description("Codex Game Studio: a Codex-native game-development workflow layer").version("0.1.0");
+program.name("opengamestudio").description("Codex Game Studio: a Codex-native game-development workflow layer").version("0.1.0");
 
 function addInitCommand(name: "init" | "new"): void {
   program

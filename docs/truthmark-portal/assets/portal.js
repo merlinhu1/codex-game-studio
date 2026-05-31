@@ -1,1 +1,26 @@
-async function runSearch(){const i=document.querySelector('#portal-search'),r=document.querySelector('#search-results');if(!i||!r)return;const d=await fetch('assets/search.json').then(x=>x.json()).catch(()=>[]);i.addEventListener('input',()=>{const q=i.value.trim().toLowerCase();r.replaceChildren();if(!q)return;for(const item of d.filter(x=>(x.title+' '+x.text+' '+x.sources.join(' ')).toLowerCase().includes(q)).slice(0,12)){const li=document.createElement('li'),a=document.createElement('a');a.href=item.url;a.textContent=item.title;li.appendChild(a);li.append(' — '+item.summary);r.appendChild(li)}})}runSearch();
+async function loadSearch() {
+  const input = document.getElementById('portal-search');
+  const results = document.getElementById('search-results');
+  if (!input || !results) return;
+  const response = await fetch('assets/search.json');
+  const records = await response.json();
+  function render(query) {
+    const q = query.trim().toLowerCase();
+    results.replaceChildren();
+    if (!q) return;
+    for (const record of records.filter((item) => item.searchText.includes(q)).slice(0, 12)) {
+      const li = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = record.url;
+      link.textContent = record.title;
+      const meta = document.createElement('p');
+      meta.className = 'muted';
+      meta.textContent = record.path || record.section;
+      li.appendChild(link);
+      li.appendChild(meta);
+      results.appendChild(li);
+    }
+  }
+  input.addEventListener('input', (event) => render(event.target.value));
+}
+loadSearch().catch((error) => console.warn('Portal search unavailable', error));

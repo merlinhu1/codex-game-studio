@@ -14,7 +14,7 @@
     "templates/"
   ],
   "bin": {
-    "open-gamestudio": "./dist/cli.js"
+    "opengamestudio": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.25",
-    "truthmark": "^1.6.0",
+    "truthmark": "^1.6.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^1.6.1"

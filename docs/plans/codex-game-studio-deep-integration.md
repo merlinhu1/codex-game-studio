@@ -35,7 +35,7 @@ Non-goals for the first implementation pass:
 
 These decisions are final for this plan and should not be re-litigated during implementation:
 
-1. **Breaking runtime change now:** `open-gamestudio run <role> ...` launches Codex by default. `--dry-run` / `--print-prompt` are the non-executing inspection paths. Remove or repurpose legacy `--exec` behavior instead of preserving it.
+1. **Breaking runtime change now:** `opengamestudio run <role> ...` launches Codex by default. `--dry-run` / `--print-prompt` are the non-executing inspection paths. Remove or repurpose legacy `--exec` behavior instead of preserving it.
 2. **No legacy role migration:** Replace old agent IDs such as `producer_agent`, `mechanics_developer`, and `qa_agent` with canonical `StudioRoleId` values. Do not add aliases for backwards compatibility.
 3. **`.codex/studio.json` is authoritative:** Generated projects use `.codex/studio.json` as the source of truth for engine, milestone, roles, workflows, and task state references. Delete or rewrite code that treats `project-config.json` as authoritative.
 4. **Codex state lives under `.codex/`:** Runtime prompt caches and run metadata go to `.codex/runs`. Delete `.gamestudio/runs` and do not create new `.gamestudio` state.
@@ -51,16 +51,16 @@ These decisions are final for this plan and should not be re-litigated during im
 Installed/link package UX:
 
 ```bash
-open-gamestudio run producer --project projects/rogue-core "Create a vertical-slice plan for a roguelike"
-open-gamestudio run gameplay-programmer --project projects/rogue-core "Implement movement"
-open-gamestudio review --project projects/rogue-core
-open-gamestudio task create --project projects/rogue-core "Add player jump" --role gameplay-programmer --verify-command npm --verify-arg test
-open-gamestudio task run --project projects/rogue-core task-001 --review --fix
+opengamestudio run producer --project projects/rogue-core "Create a vertical-slice plan for a roguelike"
+opengamestudio run gameplay-programmer --project projects/rogue-core "Implement movement"
+opengamestudio review --project projects/rogue-core
+opengamestudio task create --project projects/rogue-core "Add player jump" --role gameplay-programmer --verify-command npm --verify-arg test
+opengamestudio task run --project projects/rogue-core task-001 --review --fix
 ```
 
 Repo-local examples must use npm scripts or the built CLI, not bare `open-gamestudio`, until the package is linked/installed. For example: `npm run build && node dist/cli.js run producer --project projects/rogue-core "Plan milestone"`.
 
-The package/binary name may remain `open-gamestudio` initially. Public docs and CLI help should describe the product as **Codex Game Studio** as soon as this plan lands, because the Codex runtime is the default.
+The package name may remain `open-gamestudio` while the binary is `opengamestudio`. Public docs and CLI help should describe the product as **Codex Game Studio** as soon as this plan lands, because the Codex runtime is the default.
 
 ## Proposed End-State Source Layout
 
@@ -311,7 +311,7 @@ Expected: PASS.
 **Copy direction:**
 
 - Product label: **Codex Game Studio**.
-- Package/binary can remain `open-gamestudio` for this phase.
+- Package can remain `open-gamestudio`; binary is `opengamestudio` for this phase.
 - Say “requires Codex CLI for execution and validation.”
 - Say “use `--dry-run` or `--print-prompt` to inspect prompts without launching Codex.”
 - Remove docs that present Claude/OpenCode/generic backends or `--exec` as supported compatibility paths.
@@ -584,7 +584,7 @@ Keep deterministic JSON and stable IDs. Do not add a database. Allocate IDs by s
 Command:
 
 ```bash
-open-gamestudio task create --project projects/rogue-core "Add player jump" --role gameplay-programmer --verify-command npm --verify-arg test
+opengamestudio task create --project projects/rogue-core "Add player jump" --role gameplay-programmer --verify-command npm --verify-arg test
 ```
 
 Expected behavior:
@@ -606,8 +606,8 @@ Expected behavior:
 Command:
 
 ```bash
-open-gamestudio task run --project projects/rogue-core task-001 --dry-run
-open-gamestudio task run --project projects/rogue-core task-001
+opengamestudio task run --project projects/rogue-core task-001 --dry-run
+opengamestudio task run --project projects/rogue-core task-001
 ```
 
 Expected behavior:
@@ -629,9 +629,9 @@ Expected behavior:
 Commands:
 
 ```bash
-open-gamestudio plan vertical-slice --project projects/example --dry-run
-open-gamestudio review --project projects/example --dry-run
-open-gamestudio ship-check --project projects/example --dry-run
+opengamestudio plan vertical-slice --project projects/example --dry-run
+opengamestudio review --project projects/example --dry-run
+opengamestudio ship-check --project projects/example --dry-run
 ```
 
 Start with dry-run/rendering correctness. Actual Codex execution can reuse `codex-runtime.ts`.
@@ -683,7 +683,7 @@ Execute with `spawn`/`execFile`, `shell: false`, `cwd = projectRoot`, a finite t
 Behavior:
 
 ```bash
-open-gamestudio run gameplay-programmer --project projects/rogue-core "Add player jump" --verify-command npm --verify-arg test
+opengamestudio run gameplay-programmer --project projects/rogue-core "Add player jump" --verify-command npm --verify-arg test
 ```
 
 After Codex exits, run verification and include result in final CLI output.
@@ -801,7 +801,7 @@ Required checks:
 
 - Build before black-box CLI tests.
 - `npm pack` includes Codex role/workflow assets if they are stored outside TypeScript source.
-- Temporary install can run `open-gamestudio validate` from a non-repo cwd.
+- Temporary install can run `opengamestudio validate` from a non-repo cwd.
 
 Commands:
 
@@ -826,7 +826,7 @@ Options:
    - package: `codex-game-studio`
    - binary: `codex-game-studio`
 2. Product-only rename:
-   - repo/package/binary remain `open-gamestudio`
+   - repo/package remain `open-gamestudio`; binary is `opengamestudio`
    - README title: **Codex Game Studio**
    - tagline: “A Codex-native AI game studio workflow.”
 

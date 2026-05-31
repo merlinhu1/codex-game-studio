@@ -8,7 +8,7 @@ name: truthmark-structure
 description: Use when routing or truth ownership is missing, stale, broad, overloaded, catch-all, unrouteable, mixed-owner, needs split/repair, or needs new area setup. Not for documenting implemented behavior, syncing a code diff, or realizing docs into code.
 argument-hint: Optional area, directory, or routing concern
 user-invocable: true
-truthmark-version: 1.6.0
+truthmark-version: 1.6.1
 ---
 
 Use this skill to design or repair Truthmark area structure.
@@ -32,7 +32,8 @@ Copilot custom-agent mode:
 
 When creating or updating a truth doc, inspect the routed truth kind and use the matching `docs/templates/<kind>-doc.md` template.
 Supported kinds: behavior, contract, architecture, workflow, operations, and test-behavior.
-Align existing docs to that template while preserving accurate authored content.
+Treat the HTML comments under each template section as normative authoring guidance for that section.
+Align existing docs to that template and write or repair section content so it satisfies the comment guidance while preserving accurate authored content.
 If the template is missing, use Scope, Product Decisions, Rationale, and the kind-specific current-truth section.
 Teams may edit the template files under docs/templates/ to define their local truth-doc standards.
 - use docs/truth/**, docs/architecture/**, or docs/standards/** for current truth destinations

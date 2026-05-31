@@ -9,8 +9,8 @@ Project validation checks `.codex/studio.json` full `roles`, mode-specific `acti
 CLI surface checks:
 
 ```bash
-npm exec open-gamestudio -- run --help | grep -- "--dry-run"
-! npm exec open-gamestudio -- --help | grep -E " next|telemetry"
+npm exec opengamestudio -- run --help | grep -- "--dry-run"
+! npm exec opengamestudio -- --help | grep -E " next|telemetry"
 ```
 
 Workflow shortcut commands such as `market`, `analytics`, `design-spec`, `feel-review`, `art-direction`, `ui-review`, `milestone`, and `handoff` render prompts only. They do not launch Codex or create run records.

@@ -13,6 +13,12 @@ import { loadEngineConfigs } from "../src/engines.js";
 import { rolePackages } from "../src/roles.js";
 
 describe("validation", () => {
+  test("package exposes opengamestudio as the canonical installed CLI", () => {
+    const pkg = JSON.parse(readFileSync(path.join(process.cwd(), "package.json"), "utf8")) as { bin?: Record<string, string> };
+    expect(pkg.bin?.opengamestudio).toBe("./dist/cli.js");
+    expect(pkg.bin?.["open-gamestudio"]).toBeUndefined();
+  });
+
   test("fresh initialized projects validate and failures are explicit", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
     for (const [name, engine, mode] of [

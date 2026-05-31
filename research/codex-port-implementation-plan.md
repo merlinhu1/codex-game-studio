@@ -31,14 +31,14 @@
 - No interactive `menu` flow.
 - No `startover` command.
 - No separate generated `project_orchestrator.md`; preserve orchestration through project `AGENTS.md`, the materialized `master_orchestrator`, and handoff templates/docs.
-- No exact `template_info.md` parity; use a typed template registry and/or `open-gamestudio templates` discoverability.
+- No exact `template_info.md` parity; use a typed template registry and/or `opengamestudio templates` discoverability.
 - No eager full competitor reports during init; init records competitor names in config and creates a market overview/seed only.
 - No upstream license/authorship/citation parity documents; use this repository's own licensing policy.
 - No duplicate script-wrapper implementation. If wrappers are added later, they must be thin pass-throughs to the canonical CLI and must not own logic.
 
 ### Future-Only / Excluded From First Build
 
-- `open-gamestudio next` planner.
+- `opengamestudio next` planner.
 - Telemetry, JSONL runtime metrics, changed-file tracking, productivity comparisons, or token estimates.
 - Direct `codex exec` spawning via `--exec`.
 - Parallel Hermes/subagent orchestration.
@@ -55,7 +55,7 @@ Create or update these files during the first implementation:
 - `package.json`: package metadata, bin entry, dependencies, and required scripts.
 - `tsconfig.json`: strict TypeScript typecheck configuration for NodeNext across `src/**/*.ts` and `tests/**/*.ts`.
 - `tsconfig.build.json`: build-only TypeScript configuration that emits `src/cli.ts` to `dist/cli.js`.
-- `src/cli.ts`: canonical `open-gamestudio` CLI with built-bin shebang support and commands for `init`, `new`, `status`, `resume`, `freeze`, `validate`, `run`, and `templates list/show`.
+- `src/cli.ts`: canonical `opengamestudio` CLI with built-bin shebang support and commands for `init`, `new`, `status`, `resume`, `freeze`, `validate`, `run`, and `templates list/show`.
 - `src/paths.ts`: runtime path helpers that separate package assets from project paths.
 - `src/config.ts`: Zod project-config schemas, JSON I/O, slug helpers, active-agent mode helpers.
 - `src/engines.ts`: engine registry, alias normalization, source-root/project-file generation, and project display-name/class-name helpers.
@@ -159,7 +159,7 @@ Required minimum content:
     "templates/"
   ],
   "bin": {
-    "open-gamestudio": "./dist/cli.js"
+    "opengamestudio": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -183,7 +183,7 @@ Required minimum content:
 }
 ```
 
-`cac` may replace `commander` if used consistently. The public package scripts must preserve `init`, `manage`, `test`, `validate`, and template discoverability while exercising the built CLI path via `node dist/cli.js`, not `tsx src/cli.ts` and not a bare self-bin call. A package's own `bin` name is not guaranteed to be on `PATH` inside its own npm scripts before install/link. Built packages expose `open-gamestudio` through `bin`, and verification must prove both direct built-CLI usage (`node dist/cli.js ...`) and installed package-bin usage from a temporary non-repo cwd. The package manifest must ship runtime assets through `files` or an equivalent publish manifest: `dist/`, `engine_configs/`, `agents/base/`, and `templates/`.
+`cac` may replace `commander` if used consistently. The public package scripts must preserve `init`, `manage`, `test`, `validate`, and template discoverability while exercising the built CLI path via `node dist/cli.js`, not `tsx src/cli.ts` and not a bare self-bin call. A package's own `bin` name is not guaranteed to be on `PATH` inside its own npm scripts before install/link. Built packages expose `opengamestudio` through `bin`, and verification must prove both direct built-CLI usage (`node dist/cli.js ...`) and installed package-bin usage from a temporary non-repo cwd. The package manifest must ship runtime assets through `files` or an equivalent publish manifest: `dist/`, `engine_configs/`, `agents/base/`, and `templates/`.
 
 - [ ] Install dependencies and commit the lockfile.
 
@@ -226,7 +226,7 @@ Required guidance:
 
 - Use `npm run validate` before any parity claim.
 - Because this project uses `"type": "module"`, `module: "NodeNext"`, and `moduleResolution: "NodeNext"`, every relative TypeScript import must use the emitted `.js` specifier: write `import { x } from "./config.js"`, never `import { x } from "./config"`.
-- For local development before install/link, use `npm run ...` scripts. Use `npm exec open-gamestudio -- ...` only after build/link/install or inside the package-bin smoke fixture. Bare `open-gamestudio ...` is only guaranteed after package install/link.
+- For local development before install/link, use `npm run ...` scripts. Use `npm exec opengamestudio -- ...` only after build/link/install or inside the package-bin smoke fixture. Bare `opengamestudio ...` is only guaranteed after package install/link.
 - Package scripts build first and then exercise the built CLI through `node dist/cli.js`; use `npm run init -- ...`, `npm run manage -- ...`, `npm run templates -- list`, and `npm run validate -- ...`.
 - Keep generated game projects under `projects/<slug>/`.
 - Do not load all agents or all templates for a single role task.
@@ -459,7 +459,7 @@ Required behavior:
   - designer roles select `gdd` and `feature_spec` when the task mentions design/spec work;
   - engine/project setup tasks select `engine_setup` and `project_config`;
   - `qa_agent` selects no content template by default beyond validation guidance unless the task explicitly asks for a spec review.
-- Support CLI discoverability through explicit built-CLI commands: `open-gamestudio templates list` and `open-gamestudio templates show <template-id>`.
+- Support CLI discoverability through explicit built-CLI commands: `opengamestudio templates list` and `opengamestudio templates show <template-id>`.
 - Do not create or require exact `template_info.md` parity.
 - Validation knows the canonical template paths, categories, and required lightweight sections/frontmatter for each template.
 
@@ -520,8 +520,8 @@ Minimum tests:
 - All 12 base prompts exist.
 - Active-agent selection matches design/prototype/development contracts.
 - Template registry includes all required categories.
-- `open-gamestudio templates list` lists all template IDs and categories.
-- `open-gamestudio templates show gdd` prints the correct template metadata/path.
+- `opengamestudio templates list` lists all template IDs and categories.
+- `opengamestudio templates show gdd` prints the correct template metadata/path.
 - Template selection tests cover the canonical IDs and the deterministic agent/task selection rules above.
 - Required template files contain their required lightweight sections/frontmatter.
 - No `template_info.md` is required.
@@ -559,7 +559,7 @@ Execution note: do not dispatch this whole phase as one coding-agent task. Split
 
 - [ ] Implement `src/projects.ts`.
 
-Required initialization behavior for `open-gamestudio init` / `open-gamestudio new`:
+Required initialization behavior for `opengamestudio init` / `opengamestudio new`:
 
 Non-interactive CLI contract:
 
@@ -597,10 +597,10 @@ Required CLI examples:
 ```bash
 npm run init -- --name "Test Game" --engine godot --mode prototype --non-interactive
 npm run manage -- --project projects/test-game
-npm exec open-gamestudio -- status --project projects/test-game
-npm exec open-gamestudio -- new --name "Test Game 2" --engine unity --mode design --non-interactive
-npm exec open-gamestudio -- resume --project projects/test-game
-npm exec open-gamestudio -- freeze --project projects/test-game
+npm exec opengamestudio -- status --project projects/test-game
+npm exec opengamestudio -- new --name "Test Game 2" --engine unity --mode design --non-interactive
+npm exec opengamestudio -- resume --project projects/test-game
+npm exec opengamestudio -- freeze --project projects/test-game
 ```
 
 - [ ] Write `tests/project-workflow.test.ts`.
@@ -685,7 +685,7 @@ Required repo checks:
 
 Required read-only project checks when `--project` is provided:
 
-`open-gamestudio validate --project <real-project>` must not mutate the project. It may inspect `status` and `resume` behavior for read-only reporting, but mutating `freeze` and `new` checks belong in disposable test fixtures, not normal project validation.
+`opengamestudio validate --project <real-project>` must not mutate the project. It may inspect `status` and `resume` behavior for read-only reporting, but mutating `freeze` and `new` checks belong in disposable test fixtures, not normal project validation.
 
 - Project config is schema-valid.
 - Project config includes audience, competitors, monetization, timeline, mode, phase, status, active agents, and schema-valid `production.milestones`.
@@ -716,7 +716,7 @@ Minimum tests:
 - Incorrect TypeScript build output path or missing `dist/cli.js` fails repo validation.
 - Relative TypeScript imports without `.js` specifiers fail typecheck or lint-style validation.
 - Package assets still load when the CLI runs from a subdirectory.
-- A package installed from the local `npm pack` tarball can run `open-gamestudio --help` and `open-gamestudio templates list` from a temporary non-repo cwd.
+- A package installed from the local `npm pack` tarball can run `opengamestudio --help` and `opengamestudio templates list` from a temporary non-repo cwd.
 - Stale project `AGENTS.md` config hash fails with a clear regeneration message.
 - Status-only `freeze` changes do not change `guidanceConfigHash` and do not make project `AGENTS.md` stale.
 - Missing starter GDD or milestone/timeline artifacts fail with clear messages.
@@ -753,7 +753,7 @@ git commit -m "feat: add hard-failing validation gates"
 
 - [ ] Implement `src/runner.ts`.
 
-Default `open-gamestudio run <agent> --project <path> --task <text>` behavior:
+Default `opengamestudio run <agent> --project <path> --task <text>` behavior:
 
 - Assemble one structured prompt packet.
 - Load one selected materialized/base agent.
@@ -815,10 +815,10 @@ Prompt determinism contract:
 Required CLI examples:
 
 ```bash
-npm exec open-gamestudio -- run market_analyst --project projects/my-game --task "Create first market overview"
-npm exec open-gamestudio -- run market_analyst --project projects/my-game --task "Create first market overview" --print-prompt
-npm exec open-gamestudio -- run qa_agent --project projects/my-game --task "Review validation readiness" --dry-run
-npm exec open-gamestudio -- run producer_agent --project projects/my-game --task "Summarize current GDD" --include-artifact documentation/design/gdd.md --dry-run
+npm exec opengamestudio -- run market_analyst --project projects/my-game --task "Create first market overview"
+npm exec opengamestudio -- run market_analyst --project projects/my-game --task "Create first market overview" --print-prompt
+npm exec opengamestudio -- run qa_agent --project projects/my-game --task "Review validation readiness" --dry-run
+npm exec opengamestudio -- run producer_agent --project projects/my-game --task "Summarize current GDD" --include-artifact documentation/design/gdd.md --dry-run
 ```
 
 - [ ] Write `tests/runner-prompts.test.ts`.
@@ -879,18 +879,18 @@ Files:
 Required docs behavior:
 
 - Show Node/TypeScript install/build/test commands.
-- Show `open-gamestudio` CLI usage, including `templates list` and `templates show <id>`.
+- Show `opengamestudio` CLI usage, including `templates list` and `templates show <id>`.
 - Show equivalent Codex prompt-runner workflows without claiming toolkit direct execution. Manual `codex exec` examples must be labeled as external user-run commands that consume generated prompt cache output, not commands spawned by `open-gamestudio`.
 - Document intentional omissions and future-only features.
-- Include explicit absence checks/examples: no `open-gamestudio next`, no `run --exec`, no telemetry command or telemetry files, no parallel orchestration command/docs, and no ownership-enforcement behavior in the first build.
+- Include explicit absence checks/examples: no `opengamestudio next`, no `run --exec`, no telemetry command or telemetry files, no parallel orchestration command/docs, and no ownership-enforcement behavior in the first build.
 - Document validation gates and parity checklist.
 - Do not copy upstream license/authorship/citation docs as parity artifacts.
 
 Required migration examples:
 
 ```bash
-npm exec open-gamestudio -- init --name "My Game" --engine godot --mode prototype --non-interactive
-npm exec open-gamestudio -- run market_analyst --project projects/my-game --task "Create the initial market overview."
+npm exec opengamestudio -- init --name "My Game" --engine godot --mode prototype --non-interactive
+npm exec opengamestudio -- run market_analyst --project projects/my-game --task "Create the initial market overview."
 # Manual external Codex command; open-gamestudio does not spawn Codex in the first build.
 codex exec --cd projects/my-game "Read .gamestudio/runs/<run-id>-<agent>/prompt.md and perform the requested task."
 npm run validate -- --project projects/my-game
@@ -906,9 +906,9 @@ npm run build
 npm test
 node dist/cli.js --help
 node dist/cli.js validate
-npm exec open-gamestudio -- --help
-npm exec open-gamestudio -- validate
-npm exec open-gamestudio -- run --help
+npm exec opengamestudio -- --help
+npm exec opengamestudio -- validate
+npm exec opengamestudio -- run --help
 npm run validate
 rm -rf projects/codex-godot-smoke projects/codex-unity-smoke projects/codex-unreal-smoke
 npm run init -- --name "Codex Godot Smoke" --engine godot --mode prototype --non-interactive
@@ -917,8 +917,8 @@ npm run init -- --name "Codex Unreal Smoke" --engine "Unreal Engine" --mode deve
 npm run validate -- --project projects/codex-godot-smoke
 npm run validate -- --project projects/codex-unity-smoke
 npm run validate -- --project projects/codex-unreal-smoke
-npm exec open-gamestudio -- run market_analyst --project projects/codex-godot-smoke --task "Create first market overview" --print-prompt
-npm exec open-gamestudio -- run qa_agent --project projects/codex-unreal-smoke --task "Review validation readiness" --dry-run
+npm exec opengamestudio -- run market_analyst --project projects/codex-godot-smoke --task "Create first market overview" --print-prompt
+npm exec opengamestudio -- run qa_agent --project projects/codex-unreal-smoke --task "Review validation readiness" --dry-run
 test -n "$(find projects/codex-godot-smoke/.gamestudio/runs -name prompt.md -print -quit)"
 test -n "$(find projects/codex-unreal-smoke/.gamestudio/runs -name metadata.json -print -quit)"
 PACK_TGZ="$(npm pack --json | node -e 'let s=""; process.stdin.on("data", d => s += d); process.stdin.on("end", () => { const p = JSON.parse(s)[0]; const paths = p.files.map(f => f.path); for (const need of ["dist/cli.js", "engine_configs/godot.json", "engine_configs/unity.json", "engine_configs/unreal.json", "templates/gdd_template.md", "agents/base/master_orchestrator.md"]) { if (!paths.includes(need)) { console.error(`missing ${need}`); process.exit(1); } } console.log(p.filename); });')"
@@ -926,8 +926,8 @@ rm -rf /tmp/open-gamestudio-pack-smoke
 mkdir -p /tmp/open-gamestudio-pack-smoke
 npm install --prefix /tmp/open-gamestudio-pack-smoke "$PWD/$PACK_TGZ"
 cd /tmp/open-gamestudio-pack-smoke
-npm exec open-gamestudio -- --help
-npm exec open-gamestudio -- templates list
+npm exec opengamestudio -- --help
+npm exec opengamestudio -- templates list
 cd -
 rm -rf /tmp/open-gamestudio-pack-smoke
 rm -f "$PACK_TGZ"
@@ -938,7 +938,7 @@ Expected:
 - Vitest passes.
 - TypeScript typecheck passes.
 - Build passes.
-- Both `node dist/cli.js` and `npm exec open-gamestudio -- ...` prove the built CLI and local package bin are usable.
+- Both `node dist/cli.js` and `npm exec opengamestudio -- ...` prove the built CLI and local package bin are usable.
 - `npm pack --json` includes `dist/`, `engine_configs/`, `agents/base/`, and `templates/`, and the installed tarball smoke can load package assets from `/tmp/open-gamestudio-pack-smoke`.
 - CLI help excludes `next`, `--exec`, telemetry, parallel orchestration, and ownership-enforcement surfaces.
 - Repo validation passes.
@@ -983,9 +983,9 @@ npm run build
 npm test
 node dist/cli.js --help
 node dist/cli.js validate
-npm exec open-gamestudio -- --help
-npm exec open-gamestudio -- validate
-npm exec open-gamestudio -- run --help
+npm exec opengamestudio -- --help
+npm exec opengamestudio -- validate
+npm exec opengamestudio -- run --help
 npm run validate
 rm -rf projects/final-verification-godot projects/final-verification-unity projects/final-verification-unreal
 npm run init -- --name "Final Verification Godot" --engine godot --mode prototype --non-interactive
@@ -994,13 +994,13 @@ npm run init -- --name "Final Verification Unreal" --engine "Unreal Engine" --mo
 npm run validate -- --project projects/final-verification-godot
 npm run validate -- --project projects/final-verification-unity
 npm run validate -- --project projects/final-verification-unreal
-npm exec open-gamestudio -- run qa_agent --project projects/final-verification-unreal --task "Review final verification readiness" --print-prompt
+npm exec opengamestudio -- run qa_agent --project projects/final-verification-unreal --task "Review final verification readiness" --print-prompt
 test -n "$(find projects/final-verification-unreal/.gamestudio/runs -name prompt.md -print -quit)"
 PACK_TGZ="$(npm pack --json | node -e 'let s=""; process.stdin.on("data", d => s += d); process.stdin.on("end", () => { const p = JSON.parse(s)[0]; const paths = p.files.map(f => f.path); for (const need of ["dist/cli.js", "engine_configs/godot.json", "engine_configs/unity.json", "engine_configs/unreal.json", "templates/gdd_template.md", "agents/base/master_orchestrator.md"]) { if (!paths.includes(need)) { console.error(`missing ${need}`); process.exit(1); } } console.log(p.filename); });')"
 rm -rf /tmp/open-gamestudio-pack-smoke
 mkdir -p /tmp/open-gamestudio-pack-smoke
 npm install --prefix /tmp/open-gamestudio-pack-smoke "$PWD/$PACK_TGZ"
-(cd /tmp/open-gamestudio-pack-smoke && npm exec open-gamestudio -- --help && npm exec open-gamestudio -- templates list)
+(cd /tmp/open-gamestudio-pack-smoke && npm exec opengamestudio -- --help && npm exec opengamestudio -- templates list)
 rm -rf /tmp/open-gamestudio-pack-smoke
 rm -f "$PACK_TGZ"
 rm -rf projects/final-verification-godot projects/final-verification-unity projects/final-verification-unreal
@@ -1012,7 +1012,7 @@ Expected:
 - Tests pass.
 - Typecheck passes.
 - Build passes.
-- Built CLI works through both `node dist/cli.js` and `npm exec open-gamestudio -- ...`.
+- Built CLI works through both `node dist/cli.js` and `npm exec opengamestudio -- ...`.
 - Packed tarball contains runtime assets and the installed package bin can load them from a non-repo cwd.
 - CLI help excludes `next`, `--exec`, telemetry, parallel orchestration, and ownership-enforcement surfaces.
 - Repo validation passes.

@@ -20,7 +20,7 @@ This bounded leaf truth doc summarizes the repository-level behavior surface. Mo
 
 ## Current Behavior
 
-- The package exposes the `open-gamestudio` CLI from `dist/cli.js`.
+- The package exposes the `opengamestudio` CLI from `dist/cli.js`.
 - Initialization commands create deterministic generated game project structure under `projects/<slug>`.
 - Generated projects contain `.codex/studio.json`, role prompt files, workflow markdown, starter design/production/market documents, engine-specific project markers, and a Codex-native `AGENTS.md` instruction surface.
 - Role run commands render deterministic Codex prompts and, unless in inspection mode, execute Codex with optional verification, review, and bounded fix passes.

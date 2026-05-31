@@ -8,7 +8,7 @@ name: truthmark-sync
 description: Use automatically at finish-time after functional code changes, or explicit /truthmark-sync, $truthmark-sync, or /truthmark:sync. Skip docs-only, formatting-only, behavior-preserving renames, missing config, and no-code changes. Not for doc-first realization or manual topology design.
 argument-hint: Optional changed-code area, truth-doc area, or sync focus
 user-invocable: true
-truthmark-version: 1.6.0
+truthmark-version: 1.6.1
 ---
 
 Use this skill automatically before finishing when functional code changed since the last successful Truth Sync. Also run it immediately when the user explicitly invokes Truth Sync.
@@ -55,7 +55,8 @@ Product Decisions/Rationale preservation gate:
 - after the edit, verify every touched truth doc still has Product Decisions and Rationale sections and every pre-existing entry is preserved, moved, narrowed, removed with evidence, or blocked
 When creating or updating a truth doc, inspect the routed truth kind and use the matching `docs/templates/<kind>-doc.md` template.
 Supported kinds: behavior, contract, architecture, workflow, operations, and test-behavior.
-Align existing docs to that template while preserving accurate authored content.
+Treat the HTML comments under each template section as normative authoring guidance for that section.
+Align existing docs to that template and write or repair section content so it satisfies the comment guidance while preserving accurate authored content.
 If the template is missing, use Scope, Product Decisions, Rationale, and the kind-specific current-truth section.
 Teams may edit the template files under docs/templates/ to define their local truth-doc standards.
 Truth-doc shape repair gate:

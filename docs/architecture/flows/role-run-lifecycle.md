@@ -13,7 +13,7 @@ source_of_truth:
 
 ## Purpose
 
-This architecture flow guide documents the runtime scenario for `open-gamestudio run <role>`. The flow prepares a deterministic Codex prompt, optionally returns inspection output, and otherwise executes a bounded implementation/verification/review/fix lifecycle.
+This architecture flow guide documents the runtime scenario for `opengamestudio run <role>`. The flow prepares a deterministic Codex prompt, optionally returns inspection output, and otherwise executes a bounded implementation/verification/review/fix lifecycle.
 
 ## Scope
 
@@ -29,7 +29,7 @@ The role run lifecycle owns runtime preparation, prompt inspection branches, Cod
 
 | Entry point | Role in flow | Code |
 | --- | --- | --- |
-| `open-gamestudio run <role>` | Public CLI command for role execution. | `src/cli.ts` |
+| `opengamestudio run <role>` | Public CLI command for role execution. | `src/cli.ts` |
 | `prepareRun(...)` | Resolves project, validates role/task input, renders prompt, builds cache paths and Codex command. | `src/runner.ts` |
 | `checkCodexAvailability(...)` | Confirms Codex can be executed before non-dry runs. | `src/codex-runtime.ts` |
 | `executeRunLifecycle(...)` | Runs implementation, verification, review, and bounded fix passes. | `src/runner.ts` |

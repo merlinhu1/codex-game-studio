@@ -11,7 +11,7 @@ source_of_truth:
 
 ## Purpose
 
-The CLI and validation contracts define the public `open-gamestudio` command surface, package entrypoints, hard-failing validation checks, and future-surface guardrails for this repository.
+The CLI and validation contracts define the public `opengamestudio` command surface, package entrypoints, hard-failing validation checks, and future-surface guardrails for this repository.
 
 ## Scope
 
@@ -20,10 +20,10 @@ This bounded leaf truth doc owns the repository CLI command contract, package sc
 ## Contract Surface
 
 - Package name: `open-gamestudio`.
-- Package bin: `open-gamestudio` points to `./dist/cli.js`.
+- Package bin: `opengamestudio` points to `./dist/cli.js`.
 - Primary scripts include `build`, `typecheck`, `test`, `validate`, `init`, `manage`, and `templates`.
 - Public CLI command groups include initialization/status commands, template discovery, role run execution, file-backed tasks, and render-only workflow shortcuts.
-- Repository validation is exposed through `open-gamestudio validate` and the `npm run validate` script.
+- Repository validation is exposed through `opengamestudio validate` and the `npm run validate` script.
 
 ## Inputs
 

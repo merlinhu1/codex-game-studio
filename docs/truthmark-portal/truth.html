@@ -1,419 +1,140 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Repository Truth · Truthmark Portal</title><link rel="stylesheet" href="assets/style.css"></head><body><header><strong>Open GameStudio · Truthmark Portal</strong><nav><a href="index.html">Home</a><a href="architecture.html">Architecture</a><a href="truth.html">Repository truth</a><a href="standards.html">Standards</a></nav></header><main><h1>Repository Truth</h1><p class="disclaimer">Markdown remains canonical; this generated Portal HTML is non-canonical presentation only. Truthmark is an injected repository-truth workflow/tooling layer, not an Open GameStudio runtime feature.</p><section class="doc"><h2>Truthmark Areas</h2><p><span class="badge">docs/truthmark/areas.md</span></p><h2>Truthmark Areas</h2>
-<h3>Repository</h3>
-<p>Area files:</p>
-<ul>
-<li>docs/truthmark/areas/repository.md</li>
-</ul>
-<p>Code surface:</p>
-<ul>
-<li>src/**</li>
-<li>tests/**</li>
-<li>engine_configs/**</li>
-<li>templates/**</li>
-<li>package.json</li>
-<li>package-lock.json</li>
-<li>README.md</li>
-<li>AGENTS.md</li>
-</ul>
-<p>Update truth when:</p>
-<ul>
-<li>repository CLI behavior, Codex prompt/workflow behavior, generated project layout, validation, packaging, or task execution changes</li>
-<li>code or tests move between bounded behavior owners</li>
-</ul></section><section class="doc"><h2>Repository Areas</h2><p><span class="badge">docs/truthmark/areas/repository.md</span></p><h2>Repository Areas</h2>
-<h3>Project Scaffolding</h3>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Repository Truth · Truthmark Portal</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div><strong>Open Game Studio · Truthmark Portal</strong><span>Generated static presentation</span></div>
+    <nav><a href="index.html" class="">Home</a><a href="architecture.html" class="">Architecture</a><a href="truth.html" class="active">Repository truth</a><a href="standards.html" class="">Standards</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Truthmark Portal</p>
+      <h1>Repository Truth</h1>
+      <p class="disclaimer">Markdown remains canonical; generated Portal HTML is non-canonical presentation only. Truthmark is an injected repository-truth workflow/tooling layer, not an Open Game Studio runtime feature.</p>
+    </section>
+    <section class="search-panel"><label for="portal-search">Search portal pages and source docs</label><input id="portal-search" type="search" placeholder="Search titles, summaries, and source paths…"><ul id="search-results"></ul></section><section><h2>Truthmark routing</h2><p>Routing files map durable behavior areas to owning truth documents and code surfaces.</p><div class="doc-list">
+<article class="doc-card">
+<div class="section-label">Truthmark routing</div>
+<h2>Truthmark Areas</h2>
+<p>Area files: - docs/truthmark/areas/repository.md</p>
+<p class="source"><code>docs/truthmark/areas.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Repository</li>
+</ul></details>
+</article>
+<article class="doc-card">
+<div class="section-label">Truthmark routing</div>
+<h2>Repository Areas</h2>
 <p>Truth documents:</p>
-<pre><code class="language-yaml">
-truth_documents:
-
-  - path: docs/truth/projects/project-scaffolding.md
-
-    kind: behavior
-
-</code></pre>
-<p>Code surface:</p>
-<ul>
-<li>src/projects.ts</li>
-<li>src/config.ts</li>
-<li>src/engines.ts</li>
-<li>src/agents.ts</li>
-<li>src/paths.ts</li>
-<li>engine_configs/**</li>
-<li>tests/project-workflow.test.ts</li>
-<li>tests/agents-templates.test.ts</li>
-<li>tests/engine-system.test.ts</li>
-<li>tests/codex-context-files.test.ts</li>
-</ul>
-<p>Update truth when:</p>
-<ul>
-<li>project initialization, generated project state, engine folder creation, role prompt materialization, or status/resume/freeze behavior changes</li>
-<li>generated project AGENTS.md or base prompt package ownership changes</li>
-</ul>
-<h3>Codex Role And Workflow Surfaces</h3>
-<p>Truth documents:</p>
-<pre><code class="language-yaml">
-truth_documents:
-
-  - path: docs/truth/codex/roles-and-workflows.md
-
-    kind: behavior
-
-</code></pre>
-<p>Code surface:</p>
-<ul>
-<li>src/roles.ts</li>
-<li>src/codex-session.ts</li>
-<li>src/codex-prompts.ts</li>
-<li>src/workflows.ts</li>
-<li>src/templates.ts</li>
-<li>templates/**</li>
-<li>tests/roles.test.ts</li>
-<li>tests/codex-session.test.ts</li>
-<li>tests/codex-prompts.test.ts</li>
-<li>tests/functionality-gap-pass.test.ts</li>
-</ul>
-<p>Update truth when:</p>
-<ul>
-<li>studio role IDs, role contracts, workflow registry entries, prompt rendering, context strategies, or template selection rules change</li>
-<li>Codex-native workflow shortcuts or generated workflow prompt contents change</li>
-</ul>
-<h3>Runtime And Task Execution</h3>
-<p>Truth documents:</p>
-<pre><code class="language-yaml">
-truth_documents:
-
-  - path: docs/truth/codex/runtime-and-tasks.md
-
-    kind: workflow
-
-</code></pre>
-<p>Code surface:</p>
-<ul>
-<li>src/runner.ts</li>
-<li>src/tasks.ts</li>
-<li>src/codex-runtime.ts</li>
-<li>src/verification.ts</li>
-<li>tests/runner.test.ts</li>
-<li>tests/tasks.test.ts</li>
-<li>tests/verification.test.ts</li>
-<li>tests/codex-runtime.test.ts</li>
-</ul>
-<p>Update truth when:</p>
-<ul>
-<li>Codex execution, dry-run or print-prompt mutation rules, review/fix lifecycle behavior, task-store persistence, or verification timeout behavior changes</li>
-<li>task status transitions or Codex sandbox policies change</li>
-</ul>
-<h3>CLI And Validation Contracts</h3>
-<p>Truth documents:</p>
-<pre><code class="language-yaml">
-truth_documents:
-
-  - path: docs/truth/contracts/cli-and-validation.md
-
-    kind: contract
-
-</code></pre>
-<p>Code surface:</p>
-<ul>
-<li>src/cli.ts</li>
-<li>src/validation.ts</li>
-<li>tests/validation.test.ts</li>
-<li>tests/functionality-gap-pass.test.ts</li>
-</ul>
-<p>Update truth when:</p>
-<ul>
-<li>public CLI commands, package scripts/bin/files, validation check IDs, documentation claims, or package dependency contracts change</li>
-<li>future-only surfaces become exposed or are intentionally kept hidden</li>
-</ul></section><section class="doc"><h2>Truth Docs</h2><p><span class="badge">docs/truth/README.md</span></p><h2>Truth Docs</h2>
+<p class="source"><code>docs/truthmark/areas/repository.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Project Scaffolding</li>
+<li>Codex Role And Workflow Surfaces</li>
+<li>Runtime And Task Execution</li>
+<li>CLI And Validation Contracts</li>
+</ul></details>
+</article>
+</div></section><section><h2>Repository truth documents</h2><div class="doc-list">
+<article class="doc-card">
+<div class="section-label">Repository truth</div>
+<h2>Truth Docs</h2>
 <p>This directory is an index for current truth docs organized by the configured Truthmark hierarchy.</p>
-<p>README.md files are indexes, not Truth Sync targets. Keep bounded truth in leaf docs under <code>&lt;domain&gt;/&lt;behavior&gt;.md</code>.</p></section><section class="doc"><h2>Repository Truth Docs</h2><p><span class="badge">docs/truth/repository/README.md</span></p><h2>Repository Truth Docs</h2>
-<p>This directory is reserved for repository-level truth indexes.</p>
-<p>README.md files are indexes, not Truth Sync targets. Current bounded truth lives in:</p>
-<ul>
-<li><a href="../truth/projects/project-scaffolding.md">Project Scaffolding</a></li>
-<li><a href="../truth/codex/roles-and-workflows.md">Codex Roles And Workflows</a></li>
-<li><a href="../truth/codex/runtime-and-tasks.md">Runtime And Task Execution</a></li>
-<li><a href="../truth/contracts/cli-and-validation.md">CLI And Validation Contracts</a></li>
-</ul></section><section class="doc"><h2>Repository Overview</h2><p><span class="badge">docs/truth/repository/overview.md</span></p><h2>Repository Overview</h2>
-<h3>Purpose</h3>
-<p>Open GameStudio exists as a Codex-native workflow layer for game-development projects. The repository packages a TypeScript CLI that scaffolds game projects, renders role/workflow prompts for Codex, executes bounded Codex run lifecycles, and validates both repository and generated-project contracts.</p>
-<h3>Scope</h3>
-<p>This bounded leaf truth doc summarizes the repository-level behavior surface. More specific behavior is owned by the project scaffolding, Codex role/workflow, runtime/task execution, and CLI/validation truth documents listed in <code>docs/truthmark/areas/repository.md</code>.</p>
-<h3>Current Behavior</h3>
-<ul>
-<li>The package exposes the <code>open-gamestudio</code> CLI from <code>dist/cli.js</code>.</li>
-<li>Initialization commands create deterministic generated game project structure under <code>projects/&lt;slug&gt;</code>.</li>
-<li>Generated projects contain <code>.codex/studio.json</code>, role prompt files, workflow markdown, starter design/production/market documents, engine-specific project markers, and a Codex-native <code>AGENTS.md</code> instruction surface.</li>
-<li>Role run commands render deterministic Codex prompts and, unless in inspection mode, execute Codex with optional verification, review, and bounded fix passes.</li>
-<li>Workflow shortcut commands are render-only prompt surfaces and do not imply hidden planner, parallel orchestration, telemetry, or ownership enforcement behavior.</li>
-<li>Validation checks package metadata, source and template presence, role/workflow rendering, future-surface guardrails, build output, and package install smoke behavior.</li>
-</ul>
-<h3>Core Rules</h3>
-<ul>
-<li>Repository behavior is grouped by behavior ownership rather than by mechanically mirroring every source file.</li>
-<li>Generated project instruction contracts use Codex-native <code>AGENTS.md</code>; the repository does not introduce <code>CODEX.md</code> as a primary instruction contract.</li>
-<li>Runtime execution is explicit: dry-run and print-prompt modes are inspection paths, while non-dry runs write prompt/run metadata before executing Codex.</li>
-<li>Truthmark is an injected repository-truth workflow/tooling layer for agent surfaces and documentation routing. It is not an Open GameStudio runtime feature unless product code explicitly implements Truthmark-facing behavior.</li>
-</ul>
-<h3>Flows And States</h3>
-<p>Architecture runtime walkthroughs live under <code>docs/architecture/flows/**</code>; they explain branching logic and failure paths while linking back to the bounded truth docs that own the behavior.</p>
-<ul>
-<li>Project initialization flow: parse CLI input, normalize engine/config, guard against project-name collisions, create engine/project folders, write <code>.codex</code> state and workflow files, write starter docs, and materialize role prompts/instructions. See <code>docs/architecture/flows/project-initialization.md</code>.</li>
-<li>Role run flow: validate role/project/task, render prompt and context list, optionally return inspection output, write run cache, execute Codex, run verification/review, optionally run bounded fix passes, and report <code>done</code> or <code>blocked</code>. See <code>docs/architecture/flows/role-run-lifecycle.md</code>.</li>
-<li>Workflow prompt rendering flow: validate project context, resolve the workflow alias/ID, render deterministic prompt text, and return without launching Codex or writing run state. See <code>docs/architecture/flows/workflow-prompt-rendering.md</code>.</li>
-<li>Repository validation flow: build the package, run validation checks, and fail if any package, source, prompt, workflow, template, or future-surface contract is broken. See <code>docs/architecture/flows/validation-and-repository-truth.md</code>.</li>
-</ul>
-<h3>Contracts</h3>
-<ul>
-<li>Public CLI command contracts are owned by <code>docs/truth/contracts/cli-and-validation.md</code>.</li>
-<li>Role/workflow prompt contracts are owned by <code>docs/truth/codex/roles-and-workflows.md</code>.</li>
-<li>Runtime/task lifecycle contracts are owned by <code>docs/truth/codex/runtime-and-tasks.md</code>.</li>
-<li>Project scaffolding contracts are owned by <code>docs/truth/projects/project-scaffolding.md</code>.</li>
-</ul>
-<h3>Product Decisions</h3>
-<ul>
-<li>Decision (2026-05-28): Route truth by behavior ownership rather than by mechanically mirroring every source file.</li>
-<li>Decision (2026-05-30): Treat Truthmark Portal output as generated non-canonical presentation; Markdown truth docs remain canonical.</li>
-<li>Decision (2026-05-30): Use Markdown Architecture Flow Guides as runtime-view documentation for important cross-cutting flow scenarios; bounded Truthmark truth docs remain the behavior authority.</li>
-</ul>
-<h3>Rationale</h3>
-<p>The repository combines scaffolding, prompt generation, runtime execution, and validation in one package. Keeping those surfaces bounded makes the architecture easier to reason about and prevents generated agent workflow scaffolding from being mistaken for user-facing Open GameStudio product behavior.</p>
-<h3>Non-Goals</h3>
-<ul>
-<li>This doc does not replace the more specific bounded truth docs for project scaffolding, Codex role/workflow surfaces, runtime/task execution, or CLI/validation contracts.</li>
-<li>This repository does not expose hidden parallel orchestration, telemetry, planner/next queues, or ownership enforcement as public CLI behavior.</li>
-<li>Truthmark Portal HTML is generated presentation and is not canonical repository truth.</li>
-</ul>
-<h3>Maintenance Notes</h3>
-<ul>
-<li>Update this overview when top-level repository behavior boundaries change.</li>
-<li>Update the leaf truth docs named in <code>docs/truthmark/areas/repository.md</code> when behavior changes within their owned surface.</li>
-<li>Update <code>docs/architecture/flows/**</code> when an architecturally relevant runtime branch, sequence, or failure path changes.</li>
-<li>Relevant verification includes <code>npm run validate</code> for behavior changes and <code>npx truthmark check --json</code> for repository-truth documentation changes.</li>
-</ul></section><section class="doc"><h2>Project Scaffolding</h2><p><span class="badge">docs/truth/projects/project-scaffolding.md</span></p><h2>Project Scaffolding</h2>
-<h3>Purpose</h3>
-<p>Project scaffolding turns a non-interactive CLI request into a ready Codex Game Studio project with deterministic state, engine markers, role prompts, workflow prompts, and starter production/design artifacts.</p>
-<h3>Scope</h3>
-<p>This bounded leaf truth doc owns project initialization, generated project state, engine-specific file/folder creation, generated project <code>AGENTS.md</code> and role prompts, and read-only project status/resume behavior. It does not own Codex run execution, task lifecycle persistence, or repository-level CLI validation.</p>
-<p>This doc was created from the editable behavior-doc template at docs/templates/behavior-doc.md.</p>
-<h3>Current Behavior</h3>
-<ul>
-<li><code>init</code> and <code>new</code> share the same initialization path and require <code>--name</code>, <code>--engine</code>, <code>--mode</code>, and <code>--non-interactive</code>.</li>
-<li>Initialization writes projects under <code>projects/&lt;slug&gt;/</code>, rejects an existing target path, and checks same-parent slug and Unreal class-name collisions before writing.</li>
-<li>Project state is written to <code>.codex/studio.json</code> with schema version 1, product <code>codex-game-studio</code>, the full canonical role roster, mode-active roles, and all workflow IDs.</li>
-<li>Engine scaffolding uses the configured engine registry to create Godot, Unity, or Unreal marker files and source folders.</li>
-<li>Initialization writes <code>.codex/workflows/*.md</code>, starter design/production/market docs, project <code>AGENTS.md</code>, and one prompt per studio role.</li>
-<li><code>status</code> and <code>resume</code> read project state without mutating <code>.codex/studio.json</code>; <code>freeze</code> intentionally changes project status to <code>frozen</code>.</li>
-</ul>
-<h3>Core Rules</h3>
-<ul>
-<li>Project creation is deterministic and non-interactive; missing <code>--non-interactive</code> or <code>--mode</code> is an error.</li>
-<li>Generated projects live under <code>projects/&lt;slug&gt;/</code> by default.</li>
-<li><code>CODEX.md</code>, <code>project_orchestrator.md</code>, and <code>.gamestudio/runs</code> are forbidden generated project surfaces.</li>
-<li>Generated project prompts must include the project name, role display name, project summary, engine context, role instructions, expected outputs, review checklist, and handoff sections.</li>
-</ul>
-<h3>Flows And States</h3>
-<ul>
-<li>Initialization flow: parse options, normalize engine, derive slug, reject collisions, create engine files, create <code>.codex/runs</code>, write studio state, write workflow files, write starter docs, and materialize role prompts.</li>
-<li>Project status states are <code>active</code>, <code>frozen</code>, and <code>inactive</code>; <code>freeze</code> is the only current CLI path that mutates status.</li>
-</ul>
-<h3>Contracts</h3>
-<ul>
-<li><code>open-gamestudio init --name &lt;name&gt; --engine &lt;engine&gt; --mode &lt;mode&gt; --non-interactive</code> creates a project and prints the created path.</li>
-<li><code>open-gamestudio new</code> is an alias for the same initialization behavior.</li>
-<li><code>open-gamestudio status --project &lt;path&gt;</code>, <code>resume --project &lt;path&gt;</code>, and <code>freeze --project &lt;path&gt;</code> operate on <code>.codex/studio.json</code>.</li>
-</ul>
-<h3>Product Decisions</h3>
-<ul>
-<li>Decision (2026-05-28): Preserve Codex-native project state under <code>.codex/</code> and use project-level <code>AGENTS.md</code> as the generated instruction surface.</li>
-<li>Decision (2026-05-28): Keep status/resume read-only so inspection commands cannot alter generated project state.</li>
-</ul>
-<h3>Rationale</h3>
-<p>A deterministic project scaffold gives Codex a stable context package without introducing a separate planner database or hidden orchestration layer. Keeping generated project instructions in <code>AGENTS.md</code> aligns with Codex-native workflows and avoids a parallel <code>CODEX.md</code> contract.</p>
-<h3>Non-Goals</h3>
-<ul>
-<li>This doc does not own runtime Codex execution or task-store status transitions after project creation.</li>
-<li>This doc does not define game engine runtime behavior beyond the initial marker files and folders created by the scaffolder.</li>
-</ul>
-<h3>Maintenance Notes</h3>
-<ul>
-<li>Update this doc with changes to <code>src/projects.ts</code>, <code>src/config.ts</code>, <code>src/engines.ts</code>, <code>src/agents.ts</code>, <code>src/paths.ts</code>, or <code>engine_configs/**</code>.</li>
-<li>Relevant verification includes project workflow, agent/template, engine-system, and project validation tests.</li>
-</ul></section><section class="doc"><h2>Codex Roles And Workflows</h2><p><span class="badge">docs/truth/codex/roles-and-workflows.md</span></p><h2>Codex Roles And Workflows</h2>
-<h3>Purpose</h3>
-<p>Codex roles and workflows provide the role-specific prompt contracts, context boundaries, templates, and render-only workflow shortcuts that make Open GameStudio a Codex-native game-development layer.</p>
-<h3>Scope</h3>
-<p>This bounded leaf truth doc owns studio role IDs, role package metadata, Codex session prompt rendering, workflow registry entries, template registry behavior, and generated workflow prompt content. It does not own process execution, task persistence, package installation, or generated project initialization side effects.</p>
-<p>This doc was created from the editable behavior-doc template at docs/templates/behavior-doc.md.</p>
-<h3>Current Behavior</h3>
-<ul>
-<li>The canonical studio role roster is defined by hyphenated Codex-native role IDs such as <code>producer</code>, <code>gameplay-programmer</code>, <code>qa-playtester</code>, and <code>studio-orchestrator</code>.</li>
-<li>Each role package contains a display name, system prompt, context strategy, expected outputs, handoff wording, and a review checklist.</li>
-<li>Codex session prompts render the role display name, role ID, phase, project root, objective, engine context, context files, expected outputs, verification command, review checklist, and completion-report instructions.</li>
-<li>The workflow registry defines vertical-slice, bugfix, playtest, market-analysis, analytics-setup, design-spec, game-feel-tuning, art-direction, ui-ux-review, production-milestone, handoff, review, and ship-check workflow prompts.</li>
-<li>Selected workflows include CLI aliases for render-only shortcuts, including market, analytics, design-spec, feel-review, art-direction, ui-review, milestone, and handoff.</li>
-<li>Template selection is task- and role-sensitive; template files are read from package assets and embedded into applicable workflow prompts.</li>
-</ul>
-<h3>Core Rules</h3>
-<ul>
-<li>Unknown role errors must point users toward Codex-native hyphenated role IDs rather than legacy agent names.</li>
-<li>Prompt rendering must include the role display name and project/session metadata needed by Codex to operate without hidden state.</li>
-<li>Templates that require Markdown sections must have non-empty required sections; the project config template must parse as JSON.</li>
-<li>Workflow shortcuts render prompts; they do not imply hidden parallel orchestration or future planner behavior.</li>
-</ul>
-<h3>Flows And States</h3>
-<ul>
-<li>Workflow prompt flow: read project engine from <code>.codex/studio.json</code>, look up the workflow registry entry, create a Codex studio session for the owning role and phase, render the standard prompt, then append any workflow template bodies.</li>
-<li>Template selection flow: match role and task text against bounded keyword rules and return only matching template IDs.</li>
-</ul>
-<h3>Contracts</h3>
-<ul>
-<li>Role IDs are stable strings exported from <code>src/roles.ts</code> and reused by config validation, project state, prompt generation, workflow routing, and task creation.</li>
-<li>Workflow IDs map to <code>.codex/workflows/&lt;workflow&gt;.md</code> files and expected context-file lists.</li>
-<li>Template IDs map to package template paths, role applicability, tags, and required-section validation.</li>
-</ul>
-<h3>Product Decisions</h3>
-<ul>
-<li>Decision (2026-05-28): Use Codex-native hyphenated role IDs as the canonical user- and project-facing role contract.</li>
-<li>Decision (2026-05-28): Keep workflow shortcuts render-only for this pass; future planner, next, telemetry, ownership enforcement, and parallel orchestration surfaces remain hidden.</li>
-</ul>
-<h3>Rationale</h3>
-<p>Role and workflow prompt generation is the user-facing contract that turns a generic Codex CLI into a specialized game-studio workflow. Keeping it render-only and declarative avoids overclaiming automation that is not implemented while still making the workflow packages inspectable and testable.</p>
-<h3>Non-Goals</h3>
-<ul>
-<li>This doc does not own whether Codex is installed or authenticated.</li>
-<li>This doc does not own task lifecycle mutations or verification command execution.</li>
-</ul>
-<h3>Maintenance Notes</h3>
-<ul>
-<li>Update this doc with changes to <code>src/roles.ts</code>, <code>src/codex-session.ts</code>, <code>src/codex-prompts.ts</code>, <code>src/workflows.ts</code>, <code>src/templates.ts</code>, or <code>templates/**</code>.</li>
-<li>Relevant verification includes role, Codex prompt/session, workflow, template, and functionality-gap tests.</li>
-</ul></section><section class="doc"><h2>Runtime And Task Execution</h2><p><span class="badge">docs/truth/codex/runtime-and-tasks.md</span></p><h2>Runtime And Task Execution</h2>
-<h3>Purpose</h3>
+<p class="source"><code>docs/truth/README.md</code></p>
+</article>
+<article class="doc-card">
+<div class="section-label">Repository truth</div>
+<h2>Codex Roles And Workflows</h2>
+<p>Codex roles and workflows provide the role-specific prompt contracts, context boundaries, templates, and render-only workflow shortcuts that make Open Game Studio a Codex-native game-development layer.</p>
+<p class="source"><code>docs/truth/codex/roles-and-workflows.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Purpose</li>
+<li>Scope</li>
+<li>Current Behavior</li>
+<li>Core Rules</li>
+<li>Flows And States</li>
+<li>Contracts</li>
+<li>Product Decisions</li>
+<li>Rationale</li>
+</ul></details>
+</article>
+<article class="doc-card">
+<div class="section-label">Repository truth</div>
+<h2>Runtime And Task Execution</h2>
 <p>Runtime and task execution connect prepared Codex Game Studio prompts to the Codex CLI, preserve explicit task state, and run bounded verification/review/fix loops without hidden orchestration.</p>
-<h3>Scope</h3>
-<p>This bounded leaf truth doc owns <code>run</code> preparation and execution, Codex command construction and availability checks, task-store persistence, review/fix lifecycle behavior, sandbox policy, and structured verification command execution. It does not own role prompt content, project scaffolding, or public CLI help wording except where runtime behavior depends on those options.</p>
-<h3>Triggers</h3>
-<ul>
-<li>A user invokes <code>run &lt;role&gt; ... --project &lt;path&gt;</code> to render or execute a role prompt.</li>
-<li>A user creates or runs a file-backed task through <code>task create</code> or <code>task run</code>.</li>
-<li>A run includes structured verification, review, or bounded fix-pass options.</li>
-</ul>
-<h3>Inputs</h3>
-<ul>
-<li>A valid project root with <code>.codex/studio.json</code>.</li>
-<li>A studio role ID or task ID.</li>
-<li>A non-empty task/objective.</li>
-<li>Optional included artifacts, verification command/args, review flag, fix flag, and max fix-pass count.</li>
-</ul>
-<h3>Execution Model</h3>
-<ul>
-<li><code>prepareRun</code> resolves the project, reads studio state, renders a Codex prompt, computes prompt and metadata cache paths, and builds Codex execution commands.</li>
-<li><code>--print-prompt</code> and <code>--dry-run</code> are inspection-only paths and do not write prompt cache, metadata, task state, or run directories.</li>
-<li>Non-dry runs write prompt and metadata before executing Codex.</li>
-<li>Implementation and fix passes use a workspace-write Codex sandbox; review passes use a read-only Codex sandbox.</li>
-<li>Task runs mutate task status only for non-dry execution.</li>
-</ul>
-<h3>Steps</h3>
-<ol>
-<li>Validate the requested role/task and project state.</li>
-<li>Build context-file lists and render the Codex prompt.</li>
-<li>For non-dry runs, write the prompt and metadata cache under <code>.codex/runs/</code>.</li>
-<li>Check Codex availability before execution through the CLI path.</li>
-<li>Execute the implementation prompt.</li>
-<li>Run verification when configured.</li>
-<li>Run review when requested and verification passes or is absent.</li>
-<li>Run bounded fix passes when requested and blockers remain.</li>
-<li>Report final status as <code>done</code> or <code>blocked</code>; task runs also persist final task status.</li>
-</ol>
-<h3>State, Retry, And Failure Behavior</h3>
-<ul>
-<li>Task stores live at <code>.codex/tasks.json</code> with schema version 1 and unique <code>task-###</code> IDs.</li>
-<li><code>task create</code> requires a valid studio project before writing task state.</li>
-<li>Task statuses are <code>ready</code>, <code>running</code>, <code>blocked</code>, and <code>done</code>.</li>
-<li>Verification commands are spawned with bounded stdout/stderr capture, a default timeout, SIGTERM on timeout, and SIGKILL after the configured grace period.</li>
-<li>Malformed review JSON, non-zero Codex execution, failed verification, or review blockers leave the lifecycle blocked unless a later bounded fix pass clears the blocker.</li>
-</ul>
-<h3>Outputs</h3>
-<ul>
-<li>Dry-run output lists context files and the Codex command without writing cache files.</li>
-<li>Print-prompt output is the deterministic prompt body.</li>
-<li>Non-dry run output reports implementation, verification, review, fix-pass, and final-status summaries.</li>
-<li>Task creation prints the new task ID.</li>
-</ul>
-<h3>Product Decisions</h3>
-<ul>
-<li>Decision (2026-05-28): Make dry-run and print-prompt non-mutating inspection paths.</li>
-<li>Decision (2026-05-28): Force review prompts through a read-only sandbox while implementation/fix prompts retain workspace-write behavior.</li>
-<li>Decision (2026-05-28): Require a valid project before task-store writes.</li>
-</ul>
-<h3>Rationale</h3>
-<p>Codex execution is intentionally explicit: users can inspect prompts without side effects, then run bounded implementation/review/fix loops with visible cache paths and verification output. Read-only review protects the review contract from accidentally becoming a second implementation pass.</p>
-<h3>Non-Goals</h3>
-<ul>
-<li>This workflow does not implement hidden parallel execution, telemetry, ownership enforcement, or a planner/next queue.</li>
-<li>This workflow does not choose role prompt content; it consumes the role and workflow surfaces owned by the Codex roles truth doc.</li>
-</ul>
-<h3>Maintenance Notes</h3>
-<ul>
-<li>Update this doc with changes to <code>src/runner.ts</code>, <code>src/tasks.ts</code>, <code>src/codex-runtime.ts</code>, or <code>src/verification.ts</code>.</li>
-<li>Relevant verification includes runner, task, verification, Codex runtime, and lifecycle-focused tests.</li>
-</ul></section><section class="doc"><h2>CLI And Validation Contracts</h2><p><span class="badge">docs/truth/contracts/cli-and-validation.md</span></p><h2>CLI And Validation Contracts</h2>
-<h3>Purpose</h3>
-<p>The CLI and validation contracts define the public <code>open-gamestudio</code> command surface, package entrypoints, hard-failing validation checks, and future-surface guardrails for this repository.</p>
-<h3>Scope</h3>
-<p>This bounded leaf truth doc owns the repository CLI command contract, package scripts/bin/files expectations, validation check behavior, and documented public-surface claims. It does not own the internal details of project scaffolding, role prompt content, or Codex runtime lifecycle beyond the options exposed through the CLI.</p>
-<h3>Contract Surface</h3>
-<ul>
-<li>Package name: <code>open-gamestudio</code>.</li>
-<li>Package bin: <code>open-gamestudio</code> points to <code>./dist/cli.js</code>.</li>
-<li>Primary scripts include <code>build</code>, <code>typecheck</code>, <code>test</code>, <code>validate</code>, <code>init</code>, <code>manage</code>, and <code>templates</code>.</li>
-<li>Public CLI command groups include initialization/status commands, template discovery, role run execution, file-backed tasks, and render-only workflow shortcuts.</li>
-<li>Repository validation is exposed through <code>open-gamestudio validate</code> and the <code>npm run validate</code> script.</li>
-</ul>
-<h3>Inputs</h3>
-<ul>
-<li>CLI options and arguments parsed by Commander in <code>src/cli.ts</code>.</li>
-<li>Repository files checked by validation, including package metadata, source files, templates, generated build output, engine configs, and optional project paths.</li>
-<li>Project validation input when <code>--project &lt;path&gt;</code> is supplied.</li>
-</ul>
-<h3>Outputs</h3>
-<ul>
-<li>CLI commands print human-readable status, prompt, task, validation, or workflow output.</li>
-<li>Validation emits one line per check in <code>STATUS id: message (path)</code> shape and exits non-zero when any check fails.</li>
-<li>Package smoke validation builds and exercises the packed package bin and template loading behavior.</li>
-</ul>
-<h3>Errors And Diagnostics</h3>
-<ul>
-<li>Unknown roles fail with a message naming Codex-native hyphenated role IDs.</li>
-<li>Missing package scripts, missing package bin/files, missing source files, unavailable Codex CLI, invalid templates, exposed future surfaces, missing build output, and package smoke failures are validation failures.</li>
-<li>Project validation fails for invalid <code>.codex/studio.json</code>, missing generated project files, missing workflow/prompt sections, forbidden generated surfaces, or read-only command mutations.</li>
-</ul>
-<h3>Compatibility Rules</h3>
-<ul>
-<li>The TypeScript project uses NodeNext ESM semantics; relative TypeScript imports must use emitted <code>.js</code> specifiers.</li>
-<li>Node support requires a package engine floor that includes Node &gt;=20.</li>
-<li>Packaged files must include <code>dist/</code>, <code>engine_configs/</code>, and <code>templates/</code> so the installed bin can load runtime assets.</li>
-<li>Future-only command surfaces such as <code>next</code>, <code>telemetry</code>, <code>parallel</code>, and ownership enforcement must stay hidden until implemented intentionally.</li>
-</ul>
-<h3>Versioning And Migration</h3>
-<ul>
-<li>Current package version is managed in <code>package.json</code> and rendered by Commander.</li>
-<li>CLI contract changes should update README claims, validation expectations, and tests in the same change.</li>
-</ul>
-<h3>Product Decisions</h3>
-<ul>
-<li>Decision (2026-05-28): Keep <code>validate</code> as the hard-failing parity gate before claiming repository or project readiness.</li>
-<li>Decision (2026-05-28): Document and test that future planner/telemetry/parallel/ownership surfaces are not exposed by the CLI.</li>
-</ul>
-<h3>Rationale</h3>
-<p>The CLI is the stable integration boundary for humans, package installs, and generated project smoke checks. Validation makes those claims executable so prompt-surface and packaging drift fail before release or parity claims.</p>
-<h3>Non-Goals</h3>
-<ul>
-<li>This contract does not document every generated prompt body; those belong to the Codex role/workflow truth doc.</li>
-<li>This contract does not define npm audit remediation policy.</li>
-</ul>
-<h3>Maintenance Notes</h3>
-<ul>
-<li>Update this doc with changes to <code>src/cli.ts</code>, <code>src/validation.ts</code>, package metadata, README public command claims, or validation check IDs.</li>
-<li>Relevant verification includes <code>npm run validate</code>, CLI help smoke checks, validation tests, package dry-run/smoke checks, and future-surface guard tests.</li>
-</ul></section><p class="footer">Generated locally with no remote dependencies.</p></main><script src="assets/portal.js"></script></body></html>
+<p class="source"><code>docs/truth/codex/runtime-and-tasks.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Purpose</li>
+<li>Scope</li>
+<li>Triggers</li>
+<li>Inputs</li>
+<li>Execution Model</li>
+<li>Steps</li>
+<li>State, Retry, And Failure Behavior</li>
+<li>Outputs</li>
+</ul></details>
+</article>
+<article class="doc-card">
+<div class="section-label">Repository truth</div>
+<h2>CLI And Validation Contracts</h2>
+<p>The CLI and validation contracts define the public opengamestudio command surface, package entrypoints, hard-failing validation checks, and future-surface guardrails for this repository.</p>
+<p class="source"><code>docs/truth/contracts/cli-and-validation.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Purpose</li>
+<li>Scope</li>
+<li>Contract Surface</li>
+<li>Inputs</li>
+<li>Outputs</li>
+<li>Errors And Diagnostics</li>
+<li>Compatibility Rules</li>
+<li>Versioning And Migration</li>
+</ul></details>
+</article>
+<article class="doc-card">
+<div class="section-label">Repository truth</div>
+<h2>Project Scaffolding</h2>
+<p>Project scaffolding turns a non-interactive CLI request into a ready Codex Game Studio project with deterministic state, engine markers, role prompts, workflow prompts, and starter production/design artifacts.</p>
+<p class="source"><code>docs/truth/projects/project-scaffolding.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Purpose</li>
+<li>Scope</li>
+<li>Current Behavior</li>
+<li>Core Rules</li>
+<li>Flows And States</li>
+<li>Contracts</li>
+<li>Product Decisions</li>
+<li>Rationale</li>
+</ul></details>
+</article>
+<article class="doc-card">
+<div class="section-label">Repository truth</div>
+<h2>Repository Truth Docs</h2>
+<p>This directory is reserved for repository-level truth indexes.</p>
+<p class="source"><code>docs/truth/repository/README.md</code></p>
+</article>
+<article class="doc-card">
+<div class="section-label">Repository truth</div>
+<h2>Repository Overview</h2>
+<p>Open Game Studio exists as a Codex-native workflow layer for game-development projects. The repository packages a TypeScript CLI that scaffolds game projects, renders role/workflow prompts for Codex, executes bounded Codex run lifecycles, and validates both re…</p>
+<p class="source"><code>docs/truth/repository/overview.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Purpose</li>
+<li>Scope</li>
+<li>Current Behavior</li>
+<li>Core Rules</li>
+<li>Flows And States</li>
+<li>Contracts</li>
+<li>Product Decisions</li>
+<li>Rationale</li>
+</ul></details>
+</article>
+</div></section>
+    <section class="provenance"><h2>Source provenance</h2><p>This page was generated from canonical repository Markdown and configuration files.</p><ul><li><code>docs/truthmark/areas.md</code></li><li><code>docs/truthmark/areas/repository.md</code></li><li><code>docs/truth/README.md</code></li><li><code>docs/truth/codex/roles-and-workflows.md</code></li><li><code>docs/truth/codex/runtime-and-tasks.md</code></li><li><code>docs/truth/contracts/cli-and-validation.md</code></li><li><code>docs/truth/projects/project-scaffolding.md</code></li><li><code>docs/truth/repository/README.md</code></li><li><code>docs/truth/repository/overview.md</code></li></ul></section>
+  </main>
+  <script src="assets/portal.js" defer></script>
+</body>
+</html>

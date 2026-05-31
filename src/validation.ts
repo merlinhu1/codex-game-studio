@@ -126,7 +126,7 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
     checks.push(scripts[script] ? pass(`pkg.script.${script}`, `script ${script} exists`) : fail(`pkg.script.${script}`, `missing script ${script}`, pkgPath));
   }
   checks.push(scripts.build === "tsc -p tsconfig.build.json" ? pass("package.build", "build uses tsconfig.build.json") : fail("package.build", "build must use tsconfig.build.json", pkgPath));
-  checks.push(pkg.bin?.["open-gamestudio"] === "./dist/cli.js" ? pass("package.bin", "bin points to dist/cli.js") : fail("package.bin", "bin must point to ./dist/cli.js", pkgPath));
+  checks.push(pkg.bin?.opengamestudio === "./dist/cli.js" && !pkg.bin?.["open-gamestudio"] ? pass("package.bin", "opengamestudio bin points to dist/cli.js") : fail("package.bin", "opengamestudio bin must point to ./dist/cli.js and replace open-gamestudio", pkgPath));
   checks.push(pkg.engines?.node?.includes(">=20") ? pass("package.node", "node floor declared") : fail("package.node", "node >=20 must be declared", pkgPath));
   for (const file of ["dist/", "engine_configs/", "templates/"]) {
     checks.push(pkg.files?.includes(file) ? pass(`pkg.files.${file}`, `${file} shipped`) : fail(`pkg.files.${file}`, `${file} missing from package files`, pkgPath));
@@ -202,7 +202,7 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
       const temp = mkdtempSync(path.join(tmpdir(), "open-gamestudio-pack-"));
       try {
         execFileSync("npm", ["install", "--silent", "--prefix", temp, path.join(root, packInfo.filename)], { cwd: root, encoding: "utf8", shell: false });
-        execFileSync("npm", ["exec", "--prefix", temp, "open-gamestudio", "--", "templates", "list"], { cwd: temp, encoding: "utf8", shell: false });
+        execFileSync("npm", ["exec", "--prefix", temp, "opengamestudio", "--", "templates", "list"], { cwd: temp, encoding: "utf8", shell: false });
         checks.push(pass("pack.install_smoke", "installed package bin loads templates from temp cwd"));
       } finally {
         rmSync(temp, { recursive: true, force: true });

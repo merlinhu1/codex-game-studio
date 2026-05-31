@@ -1,30 +1,58 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Standards · Truthmark Portal</title><link rel="stylesheet" href="assets/style.css"></head><body><header><strong>Open GameStudio · Truthmark Portal</strong><nav><a href="index.html">Home</a><a href="architecture.html">Architecture</a><a href="truth.html">Repository truth</a><a href="standards.html">Standards</a></nav></header><main><h1>Standards</h1><p class="disclaimer">Markdown remains canonical; this generated Portal HTML is non-canonical presentation only. Truthmark is an injected repository-truth workflow/tooling layer, not an Open GameStudio runtime feature.</p><section class="doc"><h2>Default Principles</h2><p><span class="badge">docs/standards/default-principles.md</span></p><h2>Default Principles</h2>
-<h3>Scope</h3>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Standards · Truthmark Portal</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div><strong>Open Game Studio · Truthmark Portal</strong><span>Generated static presentation</span></div>
+    <nav><a href="index.html" class="">Home</a><a href="architecture.html" class="">Architecture</a><a href="truth.html" class="">Repository truth</a><a href="standards.html" class="active">Standards</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Truthmark Portal</p>
+      <h1>Standards</h1>
+      <p class="disclaimer">Markdown remains canonical; generated Portal HTML is non-canonical presentation only. Truthmark is an injected repository-truth workflow/tooling layer, not an Open Game Studio runtime feature.</p>
+    </section>
+    <section class="search-panel"><label for="portal-search">Search portal pages and source docs</label><input id="portal-search" type="search" placeholder="Search titles, summaries, and source paths…"><ul id="search-results"></ul></section><section><h2>Standards</h2><div class="doc-list">
+<article class="doc-card">
+<div class="section-label">Standards</div>
+<h2>Default Principles</h2>
 <p>This is a bootstrap standards baseline for repositories that adopt Truthmark.</p>
-<h3>Reusable Defaults</h3>
-<ul>
-<li>Authority order should be explicit.</li>
-<li>Committed repository artifacts are the durable source of truth.</li>
-<li>Each document should have one primary responsibility.</li>
-<li>Each class of fact should have one canonical source.</li>
-<li>Architecture docs describe system structure, module boundaries, runtime topology, persistence boundaries, cross-cutting contracts, generated-surface ownership, and architecturally relevant runtime views.</li>
-<li>Do not put ordinary feature behavior in architecture docs; use architecture flow guides only for cross-cutting runtime scenarios, branching logic, failure paths, and traceability back to bounded truth docs.</li>
-<li>Verification should be explicit, and skipped checks should state why.</li>
-<li>Missing, stale, broad, overloaded, or unrouteable documentation topology should be repaired through AI-native structure workflow before agents create more generic truth docs.</li>
-<li>Installed repository workflows should remain usable from committed files even when the Truthmark CLI is unavailable.</li>
-</ul></section><section class="doc"><h2>Documentation Governance</h2><p><span class="badge">docs/standards/documentation-governance.md</span></p><h2>Documentation Governance</h2>
-<h3>Core Rules</h3>
-<ul>
-<li>Each document should have one primary responsibility.</li>
-<li>Each class of fact should have one canonical source.</li>
-<li>Current implementation, reusable standards, and future proposals should be stored separately.</li>
-<li>Generated helper output is never canonical truth.</li>
-<li>Architecture docs describe structure, ownership, and runtime views; truth docs describe current product behavior and remain the canonical behavior reference.</li>
-<li>Architecture flow guides may explain branching logic and failure paths, but they must trace back to the owning truth docs rather than becoming a competing source of behavior truth.</li>
-</ul>
-<h3>Truthmark Implications</h3>
-<ul>
-<li>Truth Sync should extend mapped docs first, create an area-local doc second, and create a new area only as a last resort.</li>
-<li>Weak routing produces weak truth maintenance.</li>
-<li>Missing, stale, broad, overloaded, or unrouteable routing should trigger Truth Structure before more generic truth docs are created.</li>
-</ul></section><p class="footer">Generated locally with no remote dependencies.</p></main><script src="assets/portal.js"></script></body></html>
+<p class="source"><code>docs/standards/default-principles.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Scope</li>
+<li>Reusable Defaults</li>
+</ul></details>
+</article>
+<article class="doc-card">
+<div class="section-label">Standards</div>
+<h2>Documentation Governance</h2>
+<p>Repository Markdown source document.</p>
+<p class="source"><code>docs/standards/documentation-governance.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Core Rules</li>
+<li>Truthmark Implications</li>
+</ul></details>
+</article>
+</div></section><section><h2>Repository agent rules</h2><div class="doc-list">
+<article class="doc-card">
+<div class="section-label">Agent rules</div>
+<h2>Repository Rules</h2>
+<p>This file mirrors the repository-specific agent rules from AGENTS.md in the configured Truthmark authority tree so structure and sync workflows can find them through the documented authority roots.</p>
+<p class="source"><code>docs/ai/repo-rules.md</code></p>
+<details><summary>Key sections</summary><ul>
+<li>Purpose</li>
+<li>Rules</li>
+<li>Truthmark Notes</li>
+</ul></details>
+</article>
+</div></section>
+    <section class="provenance"><h2>Source provenance</h2><p>This page was generated from canonical repository Markdown and configuration files.</p><ul><li><code>docs/standards/default-principles.md</code></li><li><code>docs/standards/documentation-governance.md</code></li><li><code>docs/ai/repo-rules.md</code></li></ul></section>
+  </main>
+  <script src="assets/portal.js" defer></script>
+</body>
+</html>
