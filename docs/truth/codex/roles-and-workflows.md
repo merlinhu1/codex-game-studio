@@ -11,7 +11,7 @@ source_of_truth:
 
 ## Purpose
 
-Codex roles and workflows provide the role-specific prompt contracts, context boundaries, templates, and render-only workflow shortcuts that make Open GameStudio a Codex-native game-development layer.
+Codex roles and workflows provide the role-specific prompt contracts, context boundaries, templates, and render-only workflow shortcuts that make Open Game Studio a Codex-native game-development layer.
 
 ## Scope
 

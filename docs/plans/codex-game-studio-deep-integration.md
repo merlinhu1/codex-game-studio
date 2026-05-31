@@ -2,7 +2,7 @@
 
 > **For Hermes:** Do not implement this plan until Merlin explicitly approves it. When approved, use subagent-driven-development skill to implement this plan task-by-task. Do not rewrite git history or push commits unless Merlin explicitly asks.
 
-**Goal:** Reorient Open GameStudio into a Codex-native game-development workflow layer, even if that reduces compatibility with Claude Code, OpenCode, or generic agent backends.
+**Goal:** Reorient Open Game Studio into a Codex-native game-development workflow layer, even if that reduces compatibility with Claude Code, OpenCode, or generic agent backends.
 
 **Architecture:** Codex becomes the required runtime spine rather than an optional `--exec` backend. The CLI routes studio roles and workflows through a structured Codex session model, generated projects gain Codex-native instruction/state files, and validation checks Codex readiness plus prompt/workflow rendering. Keep the first implementation file-backed and package-friendly; defer databases, parallel orchestration, and broad backend abstractions until they are proven necessary.
 
@@ -210,7 +210,7 @@ Add tests for:
 
 - `resolveCodexCommand()` uses `CODEX_BIN` if provided.
 - `resolveCodexCommand()` defaults to `codex`.
-- `resolveCodexCommand()` does not read legacy Open GameStudio env names.
+- `resolveCodexCommand()` does not read legacy Open Game Studio env names.
 - `buildCodexExecArgs()` uses `exec`, `--cd <projectRoot>`, sandbox args, and stdin/file prompt mode.
 - `checkCodexAvailability()` returns structured diagnostics for tests and error messages.
 - normal execution and `validate` fail hard when Codex is unavailable or unauthenticated.

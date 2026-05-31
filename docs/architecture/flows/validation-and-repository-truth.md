@@ -13,9 +13,9 @@ source_of_truth:
 
 ## Purpose
 
-This architecture flow guide documents the validation path around Open GameStudio behavior changes and the injected Truthmark repository-truth workflow around documentation/routing updates.
+This architecture flow guide documents the validation path around Open Game Studio behavior changes and the injected Truthmark repository-truth workflow around documentation/routing updates.
 
-Validation is an Open GameStudio CLI/package behavior. Truthmark is an injected repository-truth workflow/tooling layer for documentation authority, routing, and agent workflow surfaces; it is not an Open GameStudio runtime feature unless product code explicitly implements Truthmark-facing behavior.
+Validation is an Open Game Studio CLI/package behavior. Truthmark is an injected repository-truth workflow/tooling layer for documentation authority, routing, and agent workflow surfaces; it is not an Open Game Studio runtime feature unless product code explicitly implements Truthmark-facing behavior.
 
 ## Scope
 
@@ -28,7 +28,7 @@ The guide ends when validation/truth checks have either passed or produced diagn
 
 ## Boundaries
 
-Repository validation is an Open GameStudio package behavior implemented by the CLI and validation modules. Truthmark checks are an injected repository-truth workflow/tooling layer for documentation authority and generated agent surfaces, not an Open GameStudio runtime feature.
+Repository validation is an Open Game Studio package behavior implemented by the CLI and validation modules. Truthmark checks are an injected repository-truth workflow/tooling layer for documentation authority and generated agent surfaces, not an Open Game Studio runtime feature.
 
 ## Entry Points
 
@@ -107,7 +107,7 @@ flowchart TD
 
 | Condition | Branch | Required action | Output/diagnostic | Owner |
 | --- | --- | --- | --- | --- |
-| Source/package behavior changed | Functional validation branch | Run relevant tests and `npm run validate`. | Failing package/project check if contract is broken. | Open GameStudio repo |
+| Source/package behavior changed | Functional validation branch | Run relevant tests and `npm run validate`. | Failing package/project check if contract is broken. | Open Game Studio repo |
 | Generated project behavior changed | Project validation branch | Validate generated-project contracts. | Missing/invalid generated surface diagnostic. | `src/validation.ts` and scaffold owners |
 | Public CLI claim changed | CLI contract branch | Update contract truth doc and validation/readme claims together. | Validation or doc drift if missed. | `docs/truth/contracts/cli-and-validation.md` |
 | Behavior claim changed | Truth sync branch | Update owning bounded truth doc. | Truthmark may flag stale/unmapped surfaces. | Truthmark docs workflow |
@@ -140,7 +140,7 @@ flowchart TD
 ## Product Decisions
 
 - `npm run validate` remains the readiness gate before repository parity claims.
-- Truthmark checks validate repository-truth routing and generated workflow surfaces without redefining Open GameStudio runtime behavior.
+- Truthmark checks validate repository-truth routing and generated workflow surfaces without redefining Open Game Studio runtime behavior.
 - Markdown truth docs remain canonical; generated portal HTML remains non-canonical presentation.
 
 ## Rationale

@@ -11,7 +11,7 @@ source_of_truth:
 
 ## Purpose
 
-Open GameStudio is a Node/TypeScript CLI package that installs and operates Codex-native game studio project workflows.
+Open Game Studio is a Node/TypeScript CLI package that installs and operates Codex-native game studio project workflows.
 
 ## Scope
 

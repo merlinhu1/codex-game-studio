@@ -12,7 +12,7 @@ source_of_truth:
 
 ## Purpose
 
-Open GameStudio exists as a Codex-native workflow layer for game-development projects. The repository packages a TypeScript CLI that scaffolds game projects, renders role/workflow prompts for Codex, executes bounded Codex run lifecycles, and validates both repository and generated-project contracts.
+Open Game Studio exists as a Codex-native workflow layer for game-development projects. The repository packages a TypeScript CLI that scaffolds game projects, renders role/workflow prompts for Codex, executes bounded Codex run lifecycles, and validates both repository and generated-project contracts.
 
 ## Scope
 
@@ -32,7 +32,7 @@ This bounded leaf truth doc summarizes the repository-level behavior surface. Mo
 - Repository behavior is grouped by behavior ownership rather than by mechanically mirroring every source file.
 - Generated project instruction contracts use Codex-native `AGENTS.md`; the repository does not introduce `CODEX.md` as a primary instruction contract.
 - Runtime execution is explicit: dry-run and print-prompt modes are inspection paths, while non-dry runs write prompt/run metadata before executing Codex.
-- Truthmark is an injected repository-truth workflow/tooling layer for agent surfaces and documentation routing. It is not an Open GameStudio runtime feature unless product code explicitly implements Truthmark-facing behavior.
+- Truthmark is an injected repository-truth workflow/tooling layer for agent surfaces and documentation routing. It is not an Open Game Studio runtime feature unless product code explicitly implements Truthmark-facing behavior.
 
 ## Flows And States
 
@@ -58,7 +58,7 @@ Architecture runtime walkthroughs live under `docs/architecture/flows/**`; they 
 
 ## Rationale
 
-The repository combines scaffolding, prompt generation, runtime execution, and validation in one package. Keeping those surfaces bounded makes the architecture easier to reason about and prevents generated agent workflow scaffolding from being mistaken for user-facing Open GameStudio product behavior.
+The repository combines scaffolding, prompt generation, runtime execution, and validation in one package. Keeping those surfaces bounded makes the architecture easier to reason about and prevents generated agent workflow scaffolding from being mistaken for user-facing Open Game Studio product behavior.
 
 ## Non-Goals
 
