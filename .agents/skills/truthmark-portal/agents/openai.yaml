@@ -1,0 +1,11 @@
+interface:
+  display_name: "Truthmark Portal"
+  short_description: "Generate a committed static HTML Truthmark Portal"
+  default_prompt: "Use $truthmark-portal only when explicitly asked to generate or refresh the committed static HTML Portal."
+
+policy:
+  allow_implicit_invocation: false
+
+truthmark:
+  version: "2.1.0"
+  refresh_command: "truthmark init"

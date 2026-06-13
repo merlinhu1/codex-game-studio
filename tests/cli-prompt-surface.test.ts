@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, beforeAll, describe, expect, test } from "vitest";
@@ -7,6 +7,28 @@ import { afterEach, beforeAll, describe, expect, test } from "vitest";
 const repoRoot = process.cwd();
 const cli = path.join(repoRoot, "dist", "cli.js");
 const tempRoots: string[] = [];
+const hash64 = "a".repeat(64);
+
+function runCli(args: string[], cwd: string): string {
+  return execFileSync("node", [cli, ...args], { cwd, encoding: "utf8" });
+}
+
+function runCliFailure(args: string[], cwd: string): string {
+  try {
+    runCli(args, cwd);
+  } catch (error) {
+    const result = error as { stdout?: Buffer | string; stderr?: Buffer | string };
+    return `${result.stdout?.toString() ?? ""}${result.stderr?.toString() ?? ""}`;
+  }
+  throw new Error(`Expected CLI failure for ${args.join(" ")}`);
+}
+
+function initCliProject(prefix: string, name: string): { cwd: string; projectRoot: string } {
+  const cwd = mkdtempSync(path.join(tmpdir(), prefix));
+  tempRoots.push(cwd);
+  runCli(["init", "--name", name, "--engine", "godot", "--mode", "prototype", "--non-interactive"], cwd);
+  return { cwd, projectRoot: path.join(cwd, "projects", name.toLowerCase().replace(/\s+/g, "-")) };
+}
 
 beforeAll(() => {
   execFileSync("npm", ["run", "build", "--silent"], { cwd: repoRoot, encoding: "utf8" });
@@ -48,5 +70,215 @@ describe("built CLI prompt surface", () => {
     } finally {
       if (!repoProjectExisted) rmSync(repoProject, { recursive: true, force: true });
     }
+  });
+
+  test("approval grant lists and revokes scoped task approvals", () => {
+    const { cwd, projectRoot } = initCliProject("ogs-cli-approval-", "Approval Game");
+    writeFileSync(
+      path.join(projectRoot, ".codex", "tasks.json"),
+      `${JSON.stringify(
+        {
+          schemaVersion: 1,
+          tasks: [
+            {
+              id: "task-001",
+              title: "Implement jump feel",
+              role: "gameplay-programmer",
+              status: "ready",
+              files: ["source/player.gd"],
+              notes: []
+            }
+          ]
+        },
+        null,
+        2
+      )}\n`
+    );
+
+    const grant = runCli(
+      [
+        "approval",
+        "grant",
+        "--project",
+        projectRoot,
+        "--role",
+        "gameplay-programmer",
+        "--task",
+        "task-001",
+        "--scope",
+        "source/**/*.gd",
+        "--approved-by",
+        "lead",
+        "--expires-at",
+        "2099-01-01T00:00:00.000Z"
+      ],
+      cwd
+    );
+
+    expect(grant).toContain("approval-001");
+    expect(grant).toContain("Implement jump feel");
+    expect(grant).toContain("source/**/*.gd");
+
+    const store = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "approvals.json"), "utf8")) as {
+      records: Array<{ id: string; role: string; approvedFiles?: string[]; source: string }>;
+    };
+    expect(store.records).toHaveLength(1);
+    expect(store.records[0]).toMatchObject({
+      id: "approval-001",
+      role: "gameplay-programmer",
+      approvedFiles: ["source/player.gd"],
+      source: "approval-command"
+    });
+
+    const list = runCli(["approval", "list", "--project", projectRoot], cwd);
+    expect(list).toContain("approval-001");
+    expect(list).toContain("approved");
+    expect(list).toContain("authorizing");
+
+    const revoke = runCli(["approval", "revoke", "--project", projectRoot, "--approval-id", "approval-001"], cwd);
+    expect(revoke).toContain("Revoked approval-001");
+
+    const revokedList = runCli(["approval", "list", "--project", projectRoot], cwd);
+    expect(revokedList).toContain("approval-001");
+    expect(revokedList).toContain("revoked");
+    expect(revokedList).toContain("non-authorizing");
+  });
+
+  test("approval grant rejects empty broad and mismatched task scopes unless acknowledged", () => {
+    const { cwd, projectRoot } = initCliProject("ogs-cli-approval-", "Approval Scope Game");
+
+    expect(runCliFailure(["approval", "grant", "--project", projectRoot, "--role", "gameplay-programmer", "--task", hash64], cwd)).toMatch(
+      /scope/i
+    );
+    expect(
+      runCliFailure(
+        ["approval", "grant", "--project", projectRoot, "--role", "gameplay-programmer", "--task", hash64, "--scope", "**/*"],
+        cwd
+      )
+    ).toMatch(/broad.*allow-broad-scope/i);
+    expect(
+      runCliFailure(
+        ["approval", "grant", "--project", projectRoot, "--role", "gameplay-programmer", "--task", hash64, "--scope", "**"],
+        cwd
+      )
+    ).toMatch(/broad.*allow-broad-scope/i);
+
+    const broad = runCli(
+      [
+        "approval",
+        "grant",
+        "--project",
+        projectRoot,
+        "--role",
+        "gameplay-programmer",
+        "--task",
+        hash64,
+        "--scope",
+        "**/*",
+        "--allow-broad-scope"
+      ],
+      cwd
+    );
+    expect(broad).toContain("approval-001");
+
+    expect(
+      runCliFailure(
+        [
+          "approval",
+          "grant",
+          "--project",
+          projectRoot,
+          "--role",
+          "not-a-role",
+          "--task",
+          hash64,
+          "--scope",
+          "source/**/*.gd"
+        ],
+        cwd
+      )
+    ).toMatch(/unknown studio role/i);
+
+    writeFileSync(
+      path.join(projectRoot, ".codex", "tasks.json"),
+      `${JSON.stringify(
+        {
+          schemaVersion: 1,
+          tasks: [
+            {
+              id: "task-001",
+              title: "Plan milestone",
+              role: "producer",
+              status: "ready",
+              files: ["documentation/production/timeline.md"],
+              notes: []
+            }
+          ]
+        },
+        null,
+        2
+      )}\n`
+    );
+    expect(
+      runCliFailure(
+        [
+          "approval",
+          "grant",
+          "--project",
+          projectRoot,
+          "--role",
+          "gameplay-programmer",
+          "--task",
+          "task-001",
+          "--scope",
+          "source/**/*.gd"
+        ],
+        cwd
+      )
+    ).toMatch(/assigned to role producer.*does not match/i);
+
+    expect(
+      runCliFailure(
+        [
+          "approval",
+          "grant",
+          "--project",
+          projectRoot,
+          "--role",
+          "gameplay-programmer",
+          "--task",
+          "not-a-task",
+          "--scope",
+          "source/**/*.gd"
+        ],
+        cwd
+      )
+    ).toMatch(/unknown task/i);
+  });
+
+  test("approval list keeps expired approvals visible as non-authorizing", () => {
+    const { cwd, projectRoot } = initCliProject("ogs-cli-approval-", "Approval Expiry Game");
+    runCli(
+      [
+        "approval",
+        "grant",
+        "--project",
+        projectRoot,
+        "--role",
+        "gameplay-programmer",
+        "--task",
+        hash64,
+        "--scope",
+        "source/**/*.gd",
+        "--expires-at",
+        "2000-01-01T00:00:00.000Z"
+      ],
+      cwd
+    );
+
+    const list = runCli(["approval", "list", "--project", projectRoot], cwd);
+    expect(list).toContain("approval-001");
+    expect(list).toContain("expired");
+    expect(list).toContain("non-authorizing");
   });
 });

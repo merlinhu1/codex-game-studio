@@ -4,9 +4,9 @@ doc_type: architecture
 truth_kind: architecture
 last_reviewed: 2026-05-30
 source_of_truth:
-  - ../../truth/codex/runtime-and-tasks.md
-  - ../../truth/codex/roles-and-workflows.md
-  - ../../truth/contracts/cli-and-validation.md
+  - ../../truthmark/truth/codex/runtime-and-tasks.md
+  - ../../truthmark/truth/codex/roles-and-workflows.md
+  - ../../truthmark/truth/contracts/cli-and-validation.md
 ---
 
 # Role Run Lifecycle Flow Guide
@@ -146,7 +146,7 @@ flowchart TD
 
 | Failure | Likely cause | Inspect |
 | --- | --- | --- |
-| Unknown role | Role ID typo or role registry drift. | `src/roles.ts`, `docs/truth/codex/roles-and-workflows.md`. |
+| Unknown role | Role ID typo or role registry drift. | `src/roles.ts`, `docs/truthmark/truth/codex/roles-and-workflows.md`. |
 | Empty objective | User omitted objective and `--task`. | `src/cli.ts`, `src/runner.ts`. |
 | Codex unavailable | CLI missing, unauthenticated, or command path invalid. | `src/codex-runtime.ts`. |
 | Verification timeout/failure | Verification command failed or exceeded timeout. | `src/verification.ts`, command output. |
@@ -177,10 +177,10 @@ Separating inspection, implementation, verification, review, and fix branches ma
 
 ## Truth Sources
 
-- `docs/truth/codex/runtime-and-tasks.md`
-- `docs/truth/codex/roles-and-workflows.md`
-- `docs/truth/contracts/cli-and-validation.md`
-- `docs/truthmark/areas/repository.md`
+- `docs/truthmark/truth/codex/runtime-and-tasks.md`
+- `docs/truthmark/truth/codex/roles-and-workflows.md`
+- `docs/truthmark/truth/contracts/cli-and-validation.md`
+- `docs/truthmark/routes/areas/repository.md`
 
 ## Verification
 
