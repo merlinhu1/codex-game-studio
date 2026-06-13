@@ -1,4 +1,4 @@
-import { readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -11,6 +11,17 @@ import { runValidation, validateProject } from "../src/validation.js";
 import { hashGeneratedBody, stableHash, stripGeneratedMetadata } from "../src/generated-surfaces.js";
 import { loadEngineConfigs } from "../src/engines.js";
 import { rolePackages } from "../src/roles.js";
+
+const validApprovalRecord = {
+  id: "appr_test",
+  stage: "approved",
+  role: "gameplay-programmer",
+  objectiveSha256: "0".repeat(64),
+  approvedGlobs: ["source/**/*.ts"],
+  source: "draft-workflow",
+  approvedBy: "designer",
+  approvedAt: "2026-06-13T00:00:00.000Z"
+};
 
 describe("validation", () => {
   test("package exposes opengamestudio as the canonical installed CLI", () => {
@@ -75,6 +86,42 @@ describe("validation", () => {
     const { projectRoot } = initProject({ name: "Stale Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     writeFileSync(path.join(projectRoot, ".codex", "studio.json"), "{ invalid json");
     expect(validateProject(projectRoot)[0].status).toBe("fail");
+  });
+
+  test("malformed approval store fails project validation", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
+    const { projectRoot } = initProject({ name: "Approval Val", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    writeFileSync(
+      path.join(projectRoot, ".codex", "approvals.json"),
+      `${JSON.stringify({ schemaVersion: 1, product: "codex-game-studio", records: [{ id: "bad", stage: "approved", approvedGlobs: ["../escape.ts"] }] }, null, 2)}\n`
+    );
+    const failures = validateProject(projectRoot).filter((c) => c.status === "fail");
+    expect(failures).toContainEqual(
+      expect.objectContaining({
+        id: "codex.project.approvals",
+        message: expect.stringMatching(/approval store invalid/i)
+      })
+    );
+  });
+
+  test("approval store symlink escape fails project validation", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
+    const { projectRoot } = initProject({ name: "Approval Symlink Val", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const outside = mkdtempSync(path.join(tmpdir(), "ogs-outside-"));
+    mkdirSync(path.join(projectRoot, "source"), { recursive: true });
+    symlinkSync(outside, path.join(projectRoot, "source", "outside-link"));
+    writeFileSync(
+      path.join(projectRoot, ".codex", "approvals.json"),
+      `${JSON.stringify({ schemaVersion: 1, product: "codex-game-studio", records: [{ ...validApprovalRecord, approvedGlobs: ["source/outside-link/file.ts"] }] }, null, 2)}\n`
+    );
+
+    const failures = validateProject(projectRoot).filter((c) => c.status === "fail");
+    expect(failures).toContainEqual(
+      expect.objectContaining({
+        id: "codex.project.approvals",
+        message: expect.stringMatching(/symlink outside project/i)
+      })
+    );
   });
 
   test("freeze status-only changes keep project validation green", () => {

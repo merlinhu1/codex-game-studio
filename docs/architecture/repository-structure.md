@@ -4,7 +4,7 @@ doc_type: architecture
 truth_kind: architecture
 last_reviewed: 2026-05-28
 source_of_truth:
-  - ../truthmark/areas/repository.md
+  - ../truthmark/routes/areas/repository.md
 ---
 
 # Repository Structure
@@ -15,7 +15,7 @@ Open Game Studio is a Node/TypeScript CLI package that installs and operates Cod
 
 ## Scope
 
-This architecture note records the top-level repository boundaries needed by Truthmark routing. Bounded behavior details live in leaf docs under `docs/truth/**`; cross-cutting runtime scenario walkthroughs live in `docs/architecture/flows/**`.
+This architecture note records the top-level repository boundaries needed by Truthmark routing. Bounded behavior details live in leaf docs under `docs/truthmark/truth/**`; cross-cutting runtime scenario walkthroughs live in `docs/architecture/flows/**`.
 
 ## Components
 
@@ -52,4 +52,4 @@ The package has a small source tree but multiple independent behavioral contract
 
 ## Maintenance Notes
 
-Update this architecture note when source modules move across the behavior boundaries in `docs/truthmark/areas/repository.md`. Update `docs/architecture/flows/**` when an architecturally relevant runtime scenario, branch, or failure path changes.
+Update this architecture note when source modules move across the behavior boundaries in `docs/truthmark/routes/areas/repository.md`. Update `docs/architecture/flows/**` when an architecturally relevant runtime scenario, branch, or failure path changes.

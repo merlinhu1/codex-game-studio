@@ -14,6 +14,11 @@ describe("project workflow", () => {
     expect(existsSync(path.join(projectRoot, "project-config.json"))).toBe(false);
     expect(existsSync(path.join(projectRoot, "CODEX.md"))).toBe(false);
     expect(existsSync(path.join(projectRoot, ".codex", "studio.json"))).toBe(true);
+    expect(JSON.parse(readFileSync(path.join(projectRoot, ".codex", "approvals.json"), "utf8"))).toEqual({
+      schemaVersion: 1,
+      product: "codex-game-studio",
+      records: []
+    });
     expect(existsSync(path.join(projectRoot, ".codex", "runs"))).toBe(true);
     expect(existsSync(path.join(projectRoot, ".codex", "prompts", "producer.md"))).toBe(true);
     expect(existsSync(path.join(projectRoot, ".codex", "prompts", "gameplay-programmer.md"))).toBe(true);
@@ -63,6 +68,16 @@ describe("project workflow", () => {
     }, cwd);
     expect(config.project.competitors).toEqual(["terra nil", "mini metro"]);
     expect(config.project.engine_version).toBe("4.5.custom");
+  });
+
+  test("init generates an empty approval store", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-approval-project-"));
+    const { projectRoot } = initProject({ name: "Approval Project", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    expect(JSON.parse(readFileSync(path.join(projectRoot, ".codex", "approvals.json"), "utf8"))).toEqual({
+      schemaVersion: 1,
+      product: "codex-game-studio",
+      records: []
+    });
   });
 
   test("CLI init requires mode and non-interactive and accepts repeated competitor flags", () => {

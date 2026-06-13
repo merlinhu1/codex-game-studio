@@ -3,6 +3,7 @@ import path from "node:path";
 import { activeAgentsForMode, slugify, type ProjectConfig, type ProjectMode } from "./config.js";
 import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, projectClassName, sourceRoot, unrealProjectFileName } from "./engines.js";
 import { materializeAgents } from "./agents.js";
+import { writeApprovalStore } from "./approvals.js";
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { packageAssetPath, resolveProjectRoot } from "./paths.js";
 import { rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
@@ -233,6 +234,7 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
   createEngineFolders({ projectRoot, projectSlug: config.project.slug, projectName: config.project.name, engine: config.project.engine, registry: engines });
   createEngineProjectFiles({ projectRoot, projectSlug: config.project.slug, projectName: config.project.name, engine: config.project.engine, registry: engines, engineVersion: config.project.engine_version });
   mkdirSync(path.join(projectRoot, ".codex", "runs"), { recursive: true });
+  writeApprovalStore(projectRoot);
   writeStudioProject(projectRoot, studioStateFromConfig(config));
   writeCodexWorkflowFiles(projectRoot);
   writeStarterDocs(projectRoot, config);

@@ -1,14 +1,25 @@
 #!/usr/bin/env node
 import { Command } from "commander";
+import { userInfo } from "node:os";
 import path from "node:path";
+import {
+  appendApprovalRecord,
+  approvalListState,
+  canonicalObjectiveSha256,
+  isBroadApprovalScope,
+  normalizeApprovalScope,
+  readApprovalStore,
+  revokeApprovalRecord
+} from "./approvals.js";
 import { formatTemplateShow, listTemplates, templateRegistry, type TemplateId } from "./templates.js";
-import { freezeProject, initProject, resumeProject, statusProject } from "./projects.js";
+import { freezeProject, initProject, readStudioProject, resumeProject, statusProject } from "./projects.js";
 import { runValidation } from "./validation.js";
 import { executeRunLifecycle, prepareRun } from "./runner.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
-import { createTask, executeTaskRun, resolveTaskProject } from "./tasks.js";
+import { createTask, executeTaskRun, readTaskStore, resolveTaskProject } from "./tasks.js";
 import { renderWorkflowPrompt, workflowRegistry, type WorkflowId } from "./workflows.js";
 import { isStudioRoleId, unknownStudioRoleMessage } from "./roles.js";
+import type { ProjectStage, StudioMode } from "./studio-policy.js";
 
 const program = new Command();
 
@@ -16,7 +27,38 @@ function collectCompetitor(value: string, previous: string[] = []): string[] {
   return [...previous, value.trim()].filter(Boolean);
 }
 
+function collectScope(value: string, previous: string[] = []): string[] {
+  return [...previous, value];
+}
+
 program.name("opengamestudio").description("Codex Game Studio: a Codex-native game-development workflow layer").version("0.1.0");
+
+const sha256Pattern = /^[a-f0-9]{64}$/i;
+
+function localApprovedBy(): string {
+  try {
+    return userInfo().username || "local-user";
+  } catch {
+    return "local-user";
+  }
+}
+
+function assertCanonicalIsoTimestamp(value: string, field: string): string {
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString() !== value) {
+    throw new Error(`${field} must be a canonical ISO timestamp such as 2026-06-13T00:00:00.000Z`);
+  }
+  return value;
+}
+
+function approvalStudioMode(): StudioMode {
+  return "guided-studio";
+}
+
+function approvalProjectStage(mode: string): ProjectStage {
+  if (mode === "design" || mode === "prototype" || mode === "development") return mode;
+  throw new Error(`Unsupported project stage: ${mode}`);
+}
 
 function addInitCommand(name: "init" | "new"): void {
   program
@@ -84,6 +126,114 @@ templates
   .action((id: TemplateId) => {
     if (!templateRegistry[id]) throw new Error(`Unknown template "${id}"`);
     console.log(formatTemplateShow(id));
+  });
+
+const approval = program.command("approval").description("Manage auditable studio approvals");
+approval
+  .command("grant")
+  .description("Grant a scoped approval for a role and task objective")
+  .requiredOption("--project <path>", "project path")
+  .requiredOption("--role <role>", "studio role")
+  .requiredOption("--task <id-or-hash>", "task id or precomputed objective sha256")
+  .option("--scope <glob>", "approved relative glob; repeat for multiple scopes", collectScope, [])
+  .option("--approved-by <name>", "approval author")
+  .option("--expires-at <ISO>", "canonical ISO expiry timestamp")
+  .option("--allow-broad-scope", "acknowledge broad approval scope such as **/*")
+  .action((opts) => {
+    const projectRoot = resolveTaskProject(opts.project);
+    if (!isStudioRoleId(opts.role)) throw new Error(unknownStudioRoleMessage(opts.role));
+    const scopes = normalizeApprovalScope(opts.scope, { projectRoot });
+    if (scopes.length === 0) throw new Error("approval grant requires at least one --scope");
+    const broadScope = scopes.find(isBroadApprovalScope);
+    if (broadScope && !opts.allowBroadScope) {
+      throw new Error(`approval scope "${broadScope}" is broad; pass --allow-broad-scope to acknowledge it`);
+    }
+
+    const studio = readStudioProject(projectRoot);
+    const projectStage = approvalProjectStage(studio.mode);
+    const studioMode = approvalStudioMode();
+    const taskRef = String(opts.task);
+    let objectiveSha256: string;
+    let objectiveLabel = taskRef;
+    let approvedFiles: string[] | undefined;
+    if (sha256Pattern.test(taskRef)) {
+      objectiveSha256 = taskRef.toLowerCase();
+      objectiveLabel = "precomputed objective hash";
+    } else {
+      const task = readTaskStore(projectRoot).tasks.find((candidate) => candidate.id === taskRef);
+      if (!task) throw new Error(`Unknown task: ${taskRef}. Pass an existing task id or a 64-character sha256 objective hash.`);
+      if (task.role !== opts.role) throw new Error(`Task ${task.id} is assigned to role ${task.role}; approval role ${opts.role} does not match.`);
+      objectiveLabel = task.title;
+      approvedFiles = task.files.length > 0 ? task.files : undefined;
+      objectiveSha256 = canonicalObjectiveSha256({
+        role: opts.role,
+        objective: task.title,
+        approvedGlobs: scopes,
+        approvedFiles,
+        projectStage,
+        studioMode
+      });
+    }
+
+    const record = appendApprovalRecord(projectRoot, {
+      role: opts.role,
+      objectiveSha256,
+      approvedGlobs: scopes,
+      approvedFiles,
+      approvedBy: opts.approvedBy ?? localApprovedBy(),
+      expiresAt: opts.expiresAt ? assertCanonicalIsoTimestamp(opts.expiresAt, "--expires-at") : undefined
+    });
+    console.log(
+      [
+        `Granted ${record.id}`,
+        `role: ${record.role}`,
+        `objective: ${objectiveLabel}`,
+        `objectiveSha256: ${record.objectiveSha256}`,
+        `scopes: ${record.approvedGlobs.join(", ")}`,
+        record.approvedFiles?.length ? `files: ${record.approvedFiles.join(", ")}` : undefined,
+        `inspect: ${path.relative(process.cwd(), path.join(projectRoot, ".codex", "approvals.json"))}`
+      ]
+        .filter(Boolean)
+        .join("\n")
+    );
+  });
+approval
+  .command("list")
+  .description("List approval records, including revoked and expired history")
+  .requiredOption("--project <path>", "project path")
+  .action((opts) => {
+    const projectRoot = resolveTaskProject(opts.project);
+    const store = readApprovalStore(projectRoot);
+    if (store.records.length === 0) {
+      console.log("No approvals recorded.");
+      return;
+    }
+    for (const record of store.records) {
+      const state = approvalListState(record);
+      const auth = state.authorizing ? "authorizing" : "non-authorizing";
+      console.log(
+        [
+          `${record.id}\t${state.state}\t${auth}`,
+          `role: ${record.role}`,
+          `scopes: ${record.approvedGlobs.join(", ")}`,
+          record.expiresAt ? `expires: ${record.expiresAt}` : "expires: none",
+          record.revokedAt ? `revoked: ${record.revokedAt}` : undefined,
+          state.reasons.length ? `diagnostics: ${state.reasons.join(", ")}` : undefined
+        ]
+          .filter(Boolean)
+          .join("\n")
+      );
+    }
+  });
+approval
+  .command("revoke")
+  .description("Revoke an approval while preserving history")
+  .requiredOption("--project <path>", "project path")
+  .requiredOption("--approval-id <id>", "approval id")
+  .action((opts) => {
+    const projectRoot = resolveTaskProject(opts.project);
+    const record = revokeApprovalRecord(projectRoot, opts.approvalId);
+    console.log(`Revoked ${record.id}`);
   });
 
 program

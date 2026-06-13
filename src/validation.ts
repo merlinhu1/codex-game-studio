@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { activeAgentsForMode } from "./config.js";
 import { projectAgentsMdRequiredSections, projectRolePromptSourceInput, renderProjectRolePrompt, validateBaseAgents } from "./agents.js";
+import { validateApprovalStore } from "./approvals.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
 import { createCodexStudioSession } from "./codex-session.js";
 import { renderCodexPrompt } from "./codex-prompts.js";
@@ -229,6 +230,19 @@ export function validateProject(projectRoot: string): ValidationCheck[] {
   checks.push(JSON.stringify(studio.roles) === JSON.stringify(studioRoleIds) ? pass("codex.project.roles", "full role roster recorded", studioPath) : fail("codex.project.roles", "studio roles must equal canonical studioRoleIds", studioPath));
   checks.push(JSON.stringify(studio.activeRoles) === JSON.stringify(activeAgentsForMode(studio.mode)) ? pass("codex.project.activeRoles", "mode-active roles recorded", studioPath) : fail("codex.project.activeRoles", "activeRoles must match project mode", studioPath));
   checks.push(JSON.stringify(studio.workflows) === JSON.stringify(workflowIds()) ? pass("codex.project.workflows", "canonical workflows recorded", studioPath) : fail("codex.project.workflows", "workflows must match registry keys", studioPath));
+
+  const approvalsPath = path.join(projectRoot, ".codex", "approvals.json");
+  if (!existsSync(approvalsPath)) {
+    checks.push(fail("codex.project.approvals", "approval store missing", approvalsPath));
+  } else {
+    try {
+      const approvalStore = JSON.parse(readFileSync(approvalsPath, "utf8")) as unknown;
+      const result = validateApprovalStore(approvalStore, { projectRoot });
+      checks.push(result.ok ? pass("codex.project.approvals", "approval store schema-readable", approvalsPath) : fail("codex.project.approvals", `approval store invalid: ${result.errors.join("; ")}`, approvalsPath));
+    } catch (error) {
+      checks.push(fail("codex.project.approvals", `approval store invalid JSON: ${(error as Error).message}`, approvalsPath));
+    }
+  }
 
   const agentsMd = path.join(projectRoot, "AGENTS.md");
   if (existsSync(agentsMd)) {
