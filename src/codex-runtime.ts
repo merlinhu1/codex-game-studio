@@ -28,7 +28,7 @@ export function resolveCodexCommand(env: NodeJS.ProcessEnv | Record<string, stri
 }
 
 export function buildCodexExecArgs(options: CodexRuntimeOptions): string[] {
-  return ["exec", "--cd", options.projectRoot, "--sandbox", options.sandbox ?? "workspace-write", "-"];
+  return ["exec", "--cd", options.projectRoot, "--sandbox", options.sandbox ?? "danger-full-access", "-"];
 }
 
 export async function checkCodexAvailability(options: { codexBin?: string } = {}): Promise<CodexAvailability> {

@@ -3,9 +3,9 @@ import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSy
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { activeAgentsForMode } from "../src/config.js";
+import { activeAgentsForMode, activeAgentsForProject } from "../src/config.js";
 import { initProject, statusProject } from "../src/projects.js";
-import { rolePackages, studioRoleIds } from "../src/roles.js";
+import { projectRoleIdsForEngine, rolePackages, studioRoleIds } from "../src/roles.js";
 import { readTemplate, templateRegistry } from "../src/templates.js";
 import { validateProject } from "../src/validation.js";
 import { renderWorkflowPrompt, workflowRegistry } from "../src/workflows.js";
@@ -22,6 +22,9 @@ const requiredRoles = [
   "game-feel-designer",
   "gameplay-programmer",
   "engine-programmer",
+  "godot-specialist",
+  "unity-specialist",
+  "unreal-specialist",
   "tools-programmer",
   "senior-game-artist",
   "technical-artist",
@@ -69,10 +72,10 @@ describe("functionality gap pass", () => {
     );
 
     const studio = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "studio.json"), "utf8"));
-    expect(studio.roles).toEqual(requiredRoles);
-    expect(studio.activeRoles).toEqual(activeAgentsForMode("prototype"));
+    expect(studio.roles).toEqual(projectRoleIdsForEngine("godot"));
+    expect(studio.activeRoles).toEqual(activeAgentsForProject("prototype", "godot"));
     expect(studio.workflows).toEqual(Object.keys(workflowRegistry));
-    expect(statusProject(projectRoot, cwd)).toContain(`active roles: ${activeAgentsForMode("prototype").join(", ")}`);
+    expect(statusProject(projectRoot, cwd)).toContain(`active roles: ${activeAgentsForProject("prototype", "godot").join(", ")}`);
 
     const promptBody = readFileSync(path.join(projectRoot, ".codex", "prompts", "market-analyst.md"), "utf8");
     expect(promptBody).toContain("Project: Test Studio Game");

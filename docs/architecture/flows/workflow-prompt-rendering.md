@@ -4,8 +4,8 @@ doc_type: architecture
 truth_kind: architecture
 last_reviewed: 2026-05-30
 source_of_truth:
-  - ../../truthmark/truth/codex/roles-and-workflows.md
-  - ../../truthmark/truth/contracts/cli-and-validation.md
+  - ../../truthmark/engineering/codex/roles-and-workflows.md
+  - ../../truthmark/engineering/contracts/cli-and-validation.md
 ---
 
 # Workflow Prompt Rendering Flow Guide
@@ -118,7 +118,7 @@ flowchart TD
 | Project resolution failure | Missing or invalid `.codex/studio.json`. | `src/tasks.ts`, generated project state. |
 | Alias drift | CLI alias and workflow registry diverged. | `src/cli.ts`, `src/workflows.ts`. |
 | Missing template content | Package asset drift or template registry error. | `src/templates.ts`, `templates/**`, package files. |
-| Prompt claim overstates automation | Documentation or prompt text implies unimplemented planner/execution behavior. | `src/workflows.ts`, `docs/truthmark/truth/codex/roles-and-workflows.md`. |
+| Prompt claim overstates automation | Documentation or prompt text implies unimplemented planner/execution behavior. | `src/workflows.ts`, `docs/truthmark/engineering/codex/roles-and-workflows.md`. |
 
 ## Code Traceability
 
@@ -141,9 +141,9 @@ Keeping workflow commands render-only lets users inspect and hand off workflow p
 
 ## Truth Sources
 
-- `docs/truthmark/truth/codex/roles-and-workflows.md`
-- `docs/truthmark/truth/contracts/cli-and-validation.md`
-- `docs/truthmark/truth/repository/overview.md`
+- `docs/truthmark/engineering/codex/roles-and-workflows.md`
+- `docs/truthmark/engineering/contracts/cli-and-validation.md`
+- `docs/truthmark/engineering/repository/overview.md`
 - `docs/truthmark/routes/areas/repository.md`
 
 ## Verification

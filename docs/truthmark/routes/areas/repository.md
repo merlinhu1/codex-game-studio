@@ -13,8 +13,9 @@ source_of_truth:
 Truth documents:
 ```yaml
 truth_documents:
-  - path: docs/truthmark/truth/projects/project-scaffolding.md
-    kind: behavior
+  - path: docs/truthmark/engineering/projects/project-scaffolding.md
+    lane: engineering
+    kind: engineering-behavior
 ```
 
 Code surface:
@@ -22,16 +23,19 @@ Code surface:
 - src/config.ts
 - src/engines.ts
 - src/agents.ts
+- src/context-manifest.ts
+- src/engine-reference.ts
 - src/generated-surfaces.ts
 - src/paths.ts
 - engine_configs/**
+- engine_reference/**
 - tests/project-workflow.test.ts
 - tests/agents-templates.test.ts
 - tests/engine-system.test.ts
 - tests/codex-context-files.test.ts
 
 Update truth when:
-- project initialization, generated project state, engine folder creation, role prompt materialization, or status/resume/freeze behavior changes
+- project initialization, generated project state, engine folder creation, engine reference materialization, role prompt materialization, or status/resume/freeze behavior changes
 - generated project AGENTS.md or base prompt package ownership changes
 
 ## Codex Role And Workflow Surfaces
@@ -39,15 +43,18 @@ Update truth when:
 Truth documents:
 ```yaml
 truth_documents:
-  - path: docs/truthmark/truth/codex/roles-and-workflows.md
-    kind: behavior
+  - path: docs/truthmark/engineering/codex/roles-and-workflows.md
+    lane: engineering
+    kind: engineering-behavior
 ```
 
 Code surface:
 - src/roles.ts
 - src/codex-session.ts
 - src/codex-prompts.ts
+- src/prompt-context.ts
 - src/workflows.ts
+- src/engine-reference.ts
 - src/templates.ts
 - src/generated-surfaces.ts
 - templates/**
@@ -57,7 +64,7 @@ Code surface:
 - tests/functionality-gap-pass.test.ts
 
 Update truth when:
-- studio role IDs, role contracts, workflow registry entries, prompt rendering, context strategies, or template selection rules change
+- studio role IDs, role contracts, workflow registry entries, prompt rendering, engine reference prompt selection, context strategies, or template selection rules change
 - Codex-native workflow shortcuts or generated workflow prompt contents change
 
 ## Runtime And Task Execution
@@ -65,14 +72,17 @@ Update truth when:
 Truth documents:
 ```yaml
 truth_documents:
-  - path: docs/truthmark/truth/codex/runtime-and-tasks.md
-    kind: workflow
+  - path: docs/truthmark/engineering/codex/runtime-and-tasks.md
+    lane: engineering
+    kind: engineering-workflow
 ```
 
 Code surface:
 - src/runner.ts
 - src/studio-policy.ts
 - src/context.ts
+- src/context-manifest.ts
+- src/prompt-context.ts
 - src/tasks.ts
 - src/codex-runtime.ts
 - src/verification.ts
@@ -91,8 +101,9 @@ Update truth when:
 Truth documents:
 ```yaml
 truth_documents:
-  - path: docs/truthmark/truth/codex/approval-stores.md
-    kind: behavior
+  - path: docs/truthmark/engineering/codex/approval-stores.md
+    lane: engineering
+    kind: engineering-behavior
 ```
 
 Code surface:
@@ -107,18 +118,21 @@ Update truth when:
 Truth documents:
 ```yaml
 truth_documents:
-  - path: docs/truthmark/truth/contracts/cli-and-validation.md
-    kind: contract
+  - path: docs/truthmark/engineering/contracts/cli-and-validation.md
+    lane: engineering
+    kind: engineering-contract
 ```
 
 Code surface:
 - src/cli.ts
 - src/validation.ts
+- src/context-manifest.ts
+- src/engine-reference.ts
 - src/generated-surfaces.ts
 - tests/cli-prompt-surface.test.ts
 - tests/validation.test.ts
 - tests/functionality-gap-pass.test.ts
 
 Update truth when:
-- public CLI commands, package scripts/bin/files, validation check IDs, documentation claims, or package dependency contracts change
+- public CLI commands, package scripts/bin/files, validation check IDs, engine reference package checks, documentation claims, or package dependency contracts change
 - future-only surfaces become exposed or are intentionally kept hidden

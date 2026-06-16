@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Built-in role taxonomy covers CCGS-level studio functions
-The system SHALL define a built-in target taxonomy that covers directors/orchestration, department leads, market/data/product intelligence, programming specialists, design/UX specialists, content/art/audio specialists, and engine specialists.
+The system SHALL define a built-in target taxonomy that covers direction/coordination, department leads, market/data/product intelligence, programming specialists, design/UX specialists, content/art/audio specialists, and engine specialists. Coordination roles are declarative Codex prompt/catalog roles, not autonomous DAG orchestration, daemons, or non-Codex runtimes.
 
 #### Scenario: Current user-facing capabilities remain covered
 - **WHEN** the built-in role registry is inspected
@@ -41,5 +41,5 @@ The system SHALL enforce one canonical ID per built-in role without old-ID runti
 - **THEN** the CLI rejects it with a clear diagnostic rather than silently translating it.
 
 #### Scenario: Custom roles are namespaced and validated
-- **WHEN** a project declares `customRoles` or namespaced plugin roles
-- **THEN** validation accepts them only if schema, prompt, context, and materialization checks pass.
+- **WHEN** a project declares `customRoles` or namespaced extension roles
+- **THEN** validation accepts them only if schema, prompt, context, and materialization checks pass, and they remain local declarative prompt roles rather than executable plugins.

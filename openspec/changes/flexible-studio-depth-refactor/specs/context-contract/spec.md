@@ -52,7 +52,7 @@ The system SHALL generate path-scoped rules for gameplay, core engine, AI, netwo
 - **THEN** strict mode requires approval scope, guided mode requires explicit override, and fast-prototype mode emits an advisory warning.
 
 ### Requirement: Session state supports recovery without forced ceremony
-The system SHALL generate `production/session-state/active.md` and MAY append `.codex/session-events.jsonl` events. Session state SHALL be included as context only when relevant.
+The system SHALL generate `production/session-state/active.md` and MAY append `.codex/session-events.jsonl` events. Session state SHALL be included as context only when relevant. Session state SHALL stay local and reviewable; it is not telemetry, hidden long-term memory, daemon-managed checkpointing, or an autonomous background controller.
 
 #### Scenario: Session state is suggested in read-only mode
 - **WHEN** a read-only proposal or review identifies state updates

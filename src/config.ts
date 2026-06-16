@@ -1,14 +1,17 @@
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { z } from "zod";
-import { studioRoleIds, type StudioRoleId } from "./roles.js";
+import { engineSpecialistRoleId, studioRoleIds, type RoleEngineId, type StudioRoleId } from "./roles.js";
+import type { StudioMode } from "./studio-policy.js";
 
 export const agentNames = studioRoleIds;
 
 export const modeSchema = z.enum(["design", "prototype", "development"]);
+export const studioModeSchema = z.enum(["fast-prototype", "guided-studio", "strict-studio"]);
 export const agentNameSchema = z.enum(agentNames);
 export type AgentName = StudioRoleId;
 export type ProjectMode = z.infer<typeof modeSchema>;
+export type ProjectStudioMode = StudioMode;
 
 export const milestoneSchema = z.object({
   id: z.string().min(1),
@@ -33,6 +36,7 @@ export const projectConfigSchema = z.object({
     engine: z.enum(["godot", "unity", "unreal"]),
     engine_version: z.string().min(1),
     mode: modeSchema,
+    studio_mode: studioModeSchema,
     phase: z.string().min(1),
     status: z.enum(["active", "frozen", "inactive"])
   }),
@@ -72,6 +76,10 @@ export function activeAgentsForMode(mode: ProjectMode): AgentName[] {
     ]
   };
   return [...always, ...byMode[mode]];
+}
+
+export function activeAgentsForProject(mode: ProjectMode, engine: RoleEngineId): AgentName[] {
+  return [...activeAgentsForMode(mode), engineSpecialistRoleId(engine)];
 }
 
 function ordered(value: unknown, omitOperationalFields: boolean): unknown {

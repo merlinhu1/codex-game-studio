@@ -4,8 +4,8 @@ doc_type: architecture
 truth_kind: architecture
 last_reviewed: 2026-05-30
 source_of_truth:
-  - ../../truthmark/truth/contracts/cli-and-validation.md
-  - ../../truthmark/truth/repository/overview.md
+  - ../../truthmark/engineering/contracts/cli-and-validation.md
+  - ../../truthmark/engineering/repository/overview.md
   - ../../truthmark/routes/areas/repository.md
 ---
 
@@ -38,7 +38,7 @@ Repository validation is an Open Game Studio package behavior implemented by the
 | `npm run validate` | Repository readiness gate that builds/tests/validates through package scripts. | `package.json` |
 | `npx truthmark check --json` | Injected repository-truth consistency check. | Truthmark tooling, `.truthmark/config.yml` |
 | Truthmark route files | Map code surfaces to bounded truth docs. | `docs/truthmark/routes/areas.md`, `docs/truthmark/routes/areas/repository.md` |
-| Truth docs | Canonical bounded behavior/reference docs. | `docs/truthmark/truth/**` |
+| Truth docs | Canonical bounded behavior/reference docs. | `docs/truthmark/engineering/**` |
 
 ## Preconditions
 
@@ -54,7 +54,7 @@ Repository validation is an Open Game Studio package behavior implemented by the
 | Project path | `--project` | no | Adds generated-project validation checks. |
 | Truthmark config | `.truthmark/config.yml` | for Truthmark checks | Configures doc roots, routes, and generated surfaces. |
 | Route docs | `docs/truthmark/routes/areas*.md` | for Truthmark checks | Map code/doc surfaces to bounded truth docs. |
-| Truth docs | `docs/truthmark/truth/**` | for Truthmark checks | Canonical behavior/reference claims. |
+| Truth docs | `docs/truthmark/engineering/**` | for Truthmark checks | Canonical behavior/reference claims. |
 
 ## Happy Path Sequence
 
@@ -109,7 +109,7 @@ flowchart TD
 | --- | --- | --- | --- | --- |
 | Source/package behavior changed | Functional validation branch | Run relevant tests and `npm run validate`. | Failing package/project check if contract is broken. | Open Game Studio repo |
 | Generated project behavior changed | Project validation branch | Validate generated-project contracts. | Missing/invalid generated surface diagnostic. | `src/validation.ts` and scaffold owners |
-| Public CLI claim changed | CLI contract branch | Update contract truth doc and validation/readme claims together. | Validation or doc drift if missed. | `docs/truthmark/truth/contracts/cli-and-validation.md` |
+| Public CLI claim changed | CLI contract branch | Update contract truth doc and validation/readme claims together. | Validation or doc drift if missed. | `docs/truthmark/engineering/contracts/cli-and-validation.md` |
 | Behavior claim changed | Truth sync branch | Update owning bounded truth doc. | Truthmark may flag stale/unmapped surfaces. | Truthmark docs workflow |
 | Flow comprehension changed | Runtime-view branch | Update affected architecture flow guide after truth doc. | Stale walkthrough if missed. | `docs/architecture/flows/**` |
 | Truthmark generated surface changed | Injected workflow branch | Preserve managed blocks and run Truthmark check/init only when appropriate. | Generated surface diagnostic. | Truthmark tooling layer |
@@ -121,7 +121,7 @@ flowchart TD
 | Validation check fails | Package metadata, source, templates, build output, or project scaffold drift. | `src/validation.ts`, failing check ID. |
 | Future-surface guard fails | CLI/docs exposed unimplemented planner/telemetry/parallel/ownership surface. | `src/cli.ts`, README/docs, validation tests. |
 | Truthmark reports route/topology issue | Code or docs moved outside bounded route ownership. | `docs/truthmark/routes/areas.md`, `docs/truthmark/routes/areas/repository.md`. |
-| Truth doc and flow guide diverge | Flow guide was updated without updating canonical truth or vice versa. | Owning `docs/truthmark/truth/**` file and affected `docs/architecture/flows/**` file. |
+| Truth doc and flow guide diverge | Flow guide was updated without updating canonical truth or vice versa. | Owning `docs/truthmark/engineering/**` file and affected `docs/architecture/flows/**` file. |
 | Portal output stale | Generated non-canonical site not refreshed after Markdown changes. | `docs/truthmark/generated/portal/` and portal provenance. |
 
 ## Code And Document Traceability
@@ -130,10 +130,10 @@ flowchart TD
 | --- | --- |
 | CLI validation command wiring | `src/cli.ts` |
 | Validation checks and project contract diagnostics | `src/validation.ts` |
-| Package scripts/bin/files contract | `package.json`, `docs/truthmark/truth/contracts/cli-and-validation.md` |
+| Package scripts/bin/files contract | `package.json`, `docs/truthmark/engineering/contracts/cli-and-validation.md` |
 | Truthmark config and generated workflow surfaces | `.truthmark/config.yml`, generated agent files |
 | Truth routing | `docs/truthmark/routes/areas.md`, `docs/truthmark/routes/areas/repository.md` |
-| Bounded canonical behavior docs | `docs/truthmark/truth/**` |
+| Bounded canonical behavior docs | `docs/truthmark/engineering/**` |
 | Cross-cutting runtime scenario explanations | `docs/architecture/flows/**` |
 | Generated presentation output | `docs/truthmark/generated/portal/` |
 
@@ -149,8 +149,8 @@ Keeping validation and repository-truth checks adjacent but distinct prevents in
 
 ## Truth Sources
 
-- `docs/truthmark/truth/contracts/cli-and-validation.md`
-- `docs/truthmark/truth/repository/overview.md`
+- `docs/truthmark/engineering/contracts/cli-and-validation.md`
+- `docs/truthmark/engineering/repository/overview.md`
 - `docs/truthmark/routes/areas/repository.md`
 - `.truthmark/config.yml`
 

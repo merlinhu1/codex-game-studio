@@ -19,6 +19,30 @@ describe("project workflow", () => {
       product: "codex-game-studio",
       records: []
     });
+    expect(existsSync(path.join(projectRoot, ".codex", "context-manifest.json"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "context-manifest.meta.json"))).toBe(true);
+    const contextManifest = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "context-manifest.json"), "utf8"));
+    const contextManifestMeta = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "context-manifest.meta.json"), "utf8"));
+    expect(contextManifest).toMatchObject({
+      schemaVersion: 1,
+      product: "codex-game-studio",
+      projectStage: "prototype",
+      studioMode: "guided-studio"
+    });
+    expect(contextManifest.entries).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ sourcePath: "AGENTS.md", required: true, safety: "safe", status: "selected" }),
+        expect.objectContaining({ sourcePath: "source/project-test-game/project.godot", reason: expect.stringMatching(/engine/i), status: "selected" })
+      ])
+    );
+    expect(contextManifest.manifestSha256).toBeUndefined();
+    expect(contextManifestMeta).toMatchObject({
+      schemaVersion: 1,
+      product: "codex-game-studio",
+      projectStage: "prototype",
+      studioMode: "guided-studio"
+    });
+    expect(contextManifestMeta.manifestSha256).toMatch(/^[a-f0-9]{64}$/);
     expect(existsSync(path.join(projectRoot, ".codex", "runs"))).toBe(true);
     expect(existsSync(path.join(projectRoot, ".codex", "prompts", "producer.md"))).toBe(true);
     expect(existsSync(path.join(projectRoot, ".codex", "prompts", "gameplay-programmer.md"))).toBe(true);
@@ -31,6 +55,7 @@ describe("project workflow", () => {
       schemaVersion: 1,
       product: "codex-game-studio",
       engine: "godot",
+      studioMode: "guided-studio",
       currentMilestone: "prototype"
     });
     const agents = readFileSync(path.join(projectRoot, "AGENTS.md"), "utf8");
@@ -62,10 +87,12 @@ describe("project workflow", () => {
       name: "Override Game",
       engine: "godot",
       mode: "design",
+      studioMode: "strict-studio",
       nonInteractive: true,
       competitors: ["terra nil", "mini metro"],
       engineVersion: "4.5.custom"
     }, cwd);
+    expect(config.project.studio_mode).toBe("strict-studio");
     expect(config.project.competitors).toEqual(["terra nil", "mini metro"]);
     expect(config.project.engine_version).toBe("4.5.custom");
   });
@@ -78,6 +105,24 @@ describe("project workflow", () => {
       product: "codex-game-studio",
       records: []
     });
+  });
+
+  test("context manifest files describe selected context and sidecar freshness", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-manifest-"));
+    const { projectRoot } = initProject({ name: "Manifest Game", engine: "godot", mode: "development", studioMode: "strict-studio", nonInteractive: true }, cwd);
+    const manifest = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "context-manifest.json"), "utf8"));
+    const meta = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "context-manifest.meta.json"), "utf8"));
+
+    expect(manifest).toMatchObject({ schemaVersion: 1, projectStage: "development", studioMode: "strict-studio" });
+    expect(manifest.entries).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ sourcePath: "AGENTS.md", required: true, status: "selected" }),
+        expect.objectContaining({ sourcePath: "source/project-manifest-game/project.godot", reason: "godot engine reference" })
+      ])
+    );
+    expect(meta).toMatchObject({ schemaVersion: 1, projectStage: "development", studioMode: "strict-studio" });
+    expect(meta.manifestSha256).toMatch(/^[a-f0-9]{64}$/);
+    expect(meta.inputsSha256).toMatch(/^[a-f0-9]{64}$/);
   });
 
   test("CLI init requires mode and non-interactive and accepts repeated competitor flags", () => {
@@ -94,6 +139,8 @@ describe("project workflow", () => {
       "godot",
       "--mode",
       "prototype",
+      "--studio-mode",
+      "fast-prototype",
       "--non-interactive",
       "--competitor",
       "terra nil",
@@ -104,6 +151,7 @@ describe("project workflow", () => {
     ], { cwd, encoding: "utf8" });
     const studio = JSON.parse(readFileSync(path.join(cwd, "projects", "cli-game", ".codex", "studio.json"), "utf8"));
     expect(studio.engineVersion).toBe("4.5.custom");
+    expect(studio.studioMode).toBe("fast-prototype");
   });
 
   test("CLI init does not expose arbitrary project root override", () => {

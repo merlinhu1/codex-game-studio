@@ -17,6 +17,7 @@ Code surface:
 - src/**
 - tests/**
 - engine_configs/**
+- engine_reference/**
 - templates/**
 - package.json
 - package-lock.json

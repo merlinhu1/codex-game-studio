@@ -1,46 +1,60 @@
+## Phase 1 Status Review
+
+Reviewed on 2026-06-13 after completing the phase-1 approval CLI slice. Tasks 1.1 through 1.10 are complete and verified for the scoped foundation behavior: approval grant/list/revoke, safe scope handling, persisted studio-mode hashing, approval baseline metadata, and non-mutating `run <role> --dry-run` approval mismatch diagnostics.
+
+Evidence used for this status:
+
+- `npm test -- tests/studio-policy.test.ts` passed.
+- `npm test -- tests/approval-gates.test.ts tests/project-workflow.test.ts tests/validation.test.ts -t "approval"` passed.
+- `npm test -- tests/cli-prompt-surface.test.ts tests/approval-gates.test.ts -t "approval"` passed with dry-run approval mismatch diagnostics.
+- `npm test -- tests/project-workflow.test.ts tests/validation.test.ts -t "studio mode|approval"` passed with persisted `studioMode` validation.
+- `npm run typecheck` passed.
+- `npm run validate` passed after implementation.
+- `openspec validate flexible-studio-depth-refactor --strict` passed after implementation.
+
 ## 1. Policy and Approval Foundation
 
-- [ ] 1.1 Add failing `tests/studio-policy.test.ts` cases for independent project stage/studio mode, studio-mode approval defaults, read-only plan/review phases, implementation/fix eligibility, and `danger-full-access` mutating sandbox defaults.
-- [ ] 1.2 Create `src/studio-policy.ts` with `ProjectStage`, `StudioMode`, `ApprovalPolicy`, `WritePolicy`, `CodexSandboxMode`, `CodexStudioPhase`, and pure policy mapping helpers.
-- [ ] 1.3 Verify policy primitives with `npm test -- tests/studio-policy.test.ts` and `npm run typecheck`.
-- [ ] 1.4 Add failing `tests/approval-gates.test.ts` and validation/project workflow tests for approval stages, canonical objective/scope hashing, unsafe scope rejection, `.codex/approvals.json` generation, and malformed approval validation.
-- [ ] 1.5 Create `src/approvals.ts` with schema, canonical serialization, objective hash, scope normalization, approval matching, expiry/revocation logic, and approval-store helpers.
-- [ ] 1.6 Generate `.codex/approvals.json` during `initProject` and validate approval-store shape in `src/validation.ts`.
-- [ ] 1.7 Verify approval storage with `npm test -- tests/approval-gates.test.ts tests/project-workflow.test.ts tests/validation.test.ts -t "approval"` and `npm run typecheck`.
-- [ ] 1.8 Add failing CLI tests for `approval grant`, `approval list`, `approval revoke`, empty/broad scope acknowledgement, dry-run mismatch diagnostics, and revoked/expired approval behavior.
-- [ ] 1.9 Implement approval CLI commands in `src/cli.ts` and approval mutation helpers in `src/approvals.ts`.
-- [ ] 1.10 Verify approval CLI with `npm test -- tests/cli-prompt-surface.test.ts tests/approval-gates.test.ts -t "approval"` and `npm run typecheck`.
+- [x] 1.1 Add failing `tests/studio-policy.test.ts` cases for independent project stage/studio mode, studio-mode approval defaults, read-only plan/review phases, implementation/fix eligibility, and `danger-full-access` mutating sandbox defaults.
+- [x] 1.2 Create `src/studio-policy.ts` with `ProjectStage`, `StudioMode`, `ApprovalPolicy`, `WritePolicy`, `CodexSandboxMode`, `CodexStudioPhase`, and pure policy mapping helpers.
+- [x] 1.3 Verify policy primitives with `npm test -- tests/studio-policy.test.ts` and `npm run typecheck`.
+- [x] 1.4 Add failing `tests/approval-gates.test.ts` and validation/project workflow tests for approval stages, canonical objective/scope hashing, unsafe scope rejection, `.codex/approvals.json` generation, and malformed approval validation.
+- [x] 1.5 Create `src/approvals.ts` with schema, canonical serialization, objective hash, scope normalization, approval matching, expiry/revocation logic, and approval-store helpers.
+- [x] 1.6 Generate `.codex/approvals.json` during `initProject` and validate approval-store shape in `src/validation.ts`.
+- [x] 1.7 Verify approval storage with `npm test -- tests/approval-gates.test.ts tests/project-workflow.test.ts tests/validation.test.ts -t "approval"` and `npm run typecheck`.
+- [x] 1.8 Add failing CLI tests for `approval grant`, `approval list`, `approval revoke`, empty/broad scope acknowledgement, dry-run mismatch diagnostics, and revoked/expired approval behavior.
+- [x] 1.9 Implement approval CLI commands in `src/cli.ts` and approval mutation helpers in `src/approvals.ts`.
+- [x] 1.10 Verify approval CLI with `npm test -- tests/cli-prompt-surface.test.ts tests/approval-gates.test.ts -t "approval"` and `npm run typecheck`.
 
 ## 2. Shared Mutating Execution Gate
 
-- [ ] 2.1 Add failing black-box tests proving unapproved strict `run <role>` and `task run` fail before Codex spawn, run metadata writes, or task mutation.
-- [ ] 2.2 Add failing tests proving guided `--approved-by-user` succeeds with override metadata, fast prototype writes advisory provenance, and `--review` stays read-only in every studio mode.
-- [ ] 2.3 Wire `src/runner.ts`, `src/tasks.ts`, `src/cli.ts`, and `src/codex-session.ts` through one eligibility result containing `allowed`, `writePolicy`, `allowFileEdits`, `codexSandbox`, `reason`, `requiredApproval`, and metadata.
-- [ ] 2.4 Ensure allowed mutating implementation/fix defaults to `danger-full-access`; keep `workspace-write` only behind explicit constrained-sandbox override.
-- [ ] 2.5 Verify shared gating with `npm test -- tests/runner.test.ts tests/tasks.test.ts tests/approval-gates.test.ts tests/cli-prompt-surface.test.ts` and `npm run validate`.
+- [x] 2.1 Add failing black-box tests proving unapproved strict `run <role>` and `task run` fail before Codex spawn, run metadata writes, or task mutation.
+- [x] 2.2 Add failing tests proving guided `--approved-by-user` succeeds with override metadata, fast prototype writes advisory provenance, and `--review` stays read-only in every studio mode.
+- [x] 2.3 Wire `src/runner.ts`, `src/tasks.ts`, `src/cli.ts`, and `src/codex-session.ts` through one eligibility result containing `allowed`, `writePolicy`, `allowFileEdits`, `codexSandbox`, `reason`, `requiredApproval`, and metadata.
+- [x] 2.4 Ensure allowed mutating implementation/fix defaults to `danger-full-access`; keep `workspace-write` only behind explicit constrained-sandbox override.
+- [x] 2.5 Verify shared gating with `npm test -- tests/runner.test.ts tests/tasks.test.ts tests/approval-gates.test.ts tests/cli-prompt-surface.test.ts` and `npm run validate`.
 
 ## 3. Context Contract and Prompt Builder
 
-- [ ] 3.1 Add failing `tests/runner.test.ts` cases for a shared `# Context Contract` in implementation, review, and fix prompts, including active studio mode, write policy, selected context, and bounded blocker lists.
-- [ ] 3.2 Create or update `src/prompt-context.ts` and refactor `src/runner.ts` to use it for run/review/fix prompt assembly.
-- [ ] 3.3 Verify prompt builder with `npm test -- tests/runner.test.ts` and `npm run typecheck`.
-- [ ] 3.4 Add failing `tests/codex-context-files.test.ts` cases for required context selection, missing required file status, max file count/character budgets, forbidden paths, symlink escapes, traversal rejection, and secret-like paths.
-- [ ] 3.5 Create `src/context-manifest.ts` and replace ad hoc broad context with a path-safe selector used by runner/workflow code.
-- [ ] 3.6 Verify selector behavior with `npm test -- tests/codex-context-files.test.ts` and `npm run typecheck`.
-- [ ] 3.7 Add failing project generation/validation tests for `.codex/context-manifest.json`, `.codex/context-manifest.meta.json`, manifest schema, stale manifest hashes, and engine reference entries.
-- [ ] 3.8 Generate context manifest files from `src/projects.ts`, validate them in `src/validation.ts`, and include project stage/studio mode in manifest inputs.
-- [ ] 3.9 Verify manifest generation with `npm test -- tests/project-workflow.test.ts tests/validation.test.ts -t "context manifest"` and `npm run validate`.
+- [x] 3.1 Add failing `tests/runner.test.ts` cases for a shared `# Context Contract` in implementation, review, and fix prompts, including active studio mode, write policy, selected context, and bounded blocker lists.
+- [x] 3.2 Create or update `src/prompt-context.ts` and refactor `src/runner.ts` to use it for run/review/fix prompt assembly.
+- [x] 3.3 Verify prompt builder with `npm test -- tests/runner.test.ts` and `npm run typecheck`.
+- [x] 3.4 Add failing `tests/codex-context-files.test.ts` cases for required context selection, missing required file status, max file count/character budgets, forbidden paths, symlink escapes, traversal rejection, and secret-like paths.
+- [x] 3.5 Create `src/context-manifest.ts` and replace ad hoc broad context with a path-safe selector used by runner/workflow code.
+- [x] 3.6 Verify selector behavior with `npm test -- tests/codex-context-files.test.ts` and `npm run typecheck`.
+- [x] 3.7 Add failing project generation/validation tests for `.codex/context-manifest.json`, `.codex/context-manifest.meta.json`, manifest schema, stale manifest hashes, and engine reference entries.
+- [x] 3.8 Generate context manifest files from `src/projects.ts`, validate them in `src/validation.ts`, and include project stage/studio mode in manifest inputs.
+- [x] 3.9 Verify manifest generation with `npm test -- tests/project-workflow.test.ts tests/validation.test.ts -t "context manifest"` and `npm run validate`.
 
 ## 4. Engine Reference Packs
 
-- [ ] 4.1 Add failing `tests/engine-system.test.ts` and `tests/validation.test.ts` cases for engine reference registry entries, required file presence, reviewer/date/source-link metadata, package inclusion, and project materialization.
-- [ ] 4.2 Create `src/engine-reference.ts` with registry entries for Godot, Unity, and Unreal package roots, project roots, required files, plugin/specialist files, prompt references, and validation rules.
-- [ ] 4.3 Add skeleton `engine_reference/godot/**`, `engine_reference/unity/**`, and `engine_reference/unreal/**` files with version applicability, reviewer/date/source-link metadata, prefer/avoid guidance, pitfalls, verification notes, role notes, and official links.
-- [ ] 4.4 Update `package.json.files`, package asset resolution, and validation so `npm pack --json` includes representative engine reference assets.
-- [ ] 4.5 Verify engine package assets with `npm test -- tests/engine-system.test.ts tests/validation.test.ts -t "engine reference"` and `npm run validate`.
-- [ ] 4.6 Add prompt-selection tests proving engine specialists and relevant programmers receive selected engine docs and unrelated engine docs are excluded by default.
-- [ ] 4.7 Wire selected engine references into `src/agents.ts`, `src/roles.ts`, and `src/context-manifest.ts`.
-- [ ] 4.8 Verify engine prompt selection with `npm test -- tests/agents-templates.test.ts tests/codex-context-files.test.ts` and `npm run validate`.
+- [x] 4.1 Add failing `tests/engine-system.test.ts` and `tests/validation.test.ts` cases for engine reference registry entries, required file presence, reviewer/date/source-link metadata, package inclusion, and project materialization.
+- [x] 4.2 Create `src/engine-reference.ts` with registry entries for Godot, Unity, and Unreal package roots, project roots, required files, plugin/specialist files, prompt references, and validation rules.
+- [x] 4.3 Add skeleton `engine_reference/godot/**`, `engine_reference/unity/**`, and `engine_reference/unreal/**` files with version applicability, reviewer/date/source-link metadata, prefer/avoid guidance, pitfalls, verification notes, role notes, and official links.
+- [x] 4.4 Update `package.json.files`, package asset resolution, and validation so `npm pack --json` includes representative engine reference assets.
+- [x] 4.5 Verify engine package assets with `npm test -- tests/engine-system.test.ts tests/validation.test.ts -t "engine reference"` and `npm run validate`.
+- [x] 4.6 Add prompt-selection tests proving engine specialists and relevant programmers receive selected engine docs and unrelated engine docs are excluded by default.
+- [x] 4.7 Wire selected engine references into `src/agents.ts`, `src/roles.ts`, and `src/context-manifest.ts`.
+- [x] 4.8 Verify engine prompt selection with `npm test -- tests/agents-templates.test.ts tests/codex-context-files.test.ts` and `npm run validate`.
 
 ## 5. Studio Role Taxonomy
 

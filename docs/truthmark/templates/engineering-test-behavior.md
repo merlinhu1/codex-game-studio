@@ -1,10 +1,7 @@
 ---
 status: active
-doc_type: behavior
-truth_kind: test-behavior
-last_reviewed: 2026-05-28
-source_of_truth:
-  - {{source_of_truth}}
+truth_kind: engineering-test-behavior
+last_reviewed: 2026-06-16
 ---
 
 # {{title}}
@@ -14,7 +11,7 @@ source_of_truth:
 <!--
 State the software-engineering outcome this document protects and why the documented surface exists.
 Include durable value, impacted users/systems, and the problem boundary; exclude roadmap, implementation plans, and historical narrative.
-Keep claims traceable to source_of_truth evidence rather than prose-only assertion.
+Keep claims traceable to Source References rather than prose-only assertion.
 -->
 
 {{purpose}}
@@ -82,15 +79,15 @@ Include escalation or quarantine criteria for flaky or environment-sensitive tes
 
 {{reporting_and_failure_semantics}}
 
-## Product Decisions
+## Engineering Decisions
 
 <!--
-Keep active decisions only, dated inline when added or changed.
-Capture decisions that shape behavior, interfaces, boundaries, compatibility, risk acceptance, or migration constraints.
+Keep active engineering, architecture, contract, workflow, or operational decisions only, dated inline when added or changed.
+Do not restate product promises, product rationale, or business decisions here; link product truth instead.
 Replace stale decisions instead of appending historical logs.
 -->
 
-{{decision}}
+{{engineering_decisions}}
 
 ## Rationale
 
@@ -118,3 +115,11 @@ Keep this operational and current-state focused, not historical.
 -->
 
 {{maintenance_notes}}
+
+## Source References
+
+<!--
+List source files, tests, configs, generated templates, route files, or product instructions that support current claims.
+-->
+
+{{source_references}}

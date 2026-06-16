@@ -10,6 +10,9 @@ export const studioRoleIds = [
   "game-feel-designer",
   "gameplay-programmer",
   "engine-programmer",
+  "godot-specialist",
+  "unity-specialist",
+  "unreal-specialist",
   "tools-programmer",
   "senior-game-artist",
   "technical-artist",
@@ -19,6 +22,7 @@ export const studioRoleIds = [
 ] as const;
 
 export type StudioRoleId = (typeof studioRoleIds)[number];
+export type RoleEngineId = "godot" | "unity" | "unreal";
 
 export type CodexRolePackage = {
   id: StudioRoleId;
@@ -138,6 +142,30 @@ export const rolePackages: Record<StudioRoleId, CodexRolePackage> = {
     ["Technical implementation", "Performance notes", "Build impact"],
     ["Engine constraints are respected", "Build impact is clear", "Performance risks are named"]
   ),
+  "godot-specialist": role(
+    "godot-specialist",
+    "Godot Specialist",
+    "Apply Godot-specific implementation and review guidance using only the active project's Godot reference pack and project files.",
+    "focused",
+    ["Godot guidance", "Engine-specific risks", "Verification notes"],
+    ["Godot references are relevant", "Scene and script implications are clear", "Verification is engine-specific"]
+  ),
+  "unity-specialist": role(
+    "unity-specialist",
+    "Unity Specialist",
+    "Apply Unity-specific implementation and review guidance using only the active project's Unity reference pack and project files.",
+    "focused",
+    ["Unity guidance", "Engine-specific risks", "Verification notes"],
+    ["Unity references are relevant", "Scene, prefab, and package implications are clear", "Verification is engine-specific"]
+  ),
+  "unreal-specialist": role(
+    "unreal-specialist",
+    "Unreal Specialist",
+    "Apply Unreal-specific implementation and review guidance using only the active project's Unreal reference pack and project files.",
+    "focused",
+    ["Unreal guidance", "Engine-specific risks", "Verification notes"],
+    ["Unreal references are relevant", "C++, Blueprint, and module implications are clear", "Verification is engine-specific"]
+  ),
   "tools-programmer": role(
     "tools-programmer",
     "Tools Programmer",
@@ -190,6 +218,19 @@ export const rolePackages: Record<StudioRoleId, CodexRolePackage> = {
 
 export function isStudioRoleId(value: string): value is StudioRoleId {
   return (studioRoleIds as readonly string[]).includes(value);
+}
+
+export function engineSpecialistRoleId(engine: RoleEngineId): StudioRoleId {
+  return `${engine}-specialist` as StudioRoleId;
+}
+
+export function isEngineSpecialistRoleId(role: StudioRoleId): boolean {
+  return role === "godot-specialist" || role === "unity-specialist" || role === "unreal-specialist";
+}
+
+export function projectRoleIdsForEngine(engine: RoleEngineId): StudioRoleId[] {
+  const activeSpecialist = engineSpecialistRoleId(engine);
+  return studioRoleIds.filter((role) => !isEngineSpecialistRoleId(role) || role === activeSpecialist);
 }
 
 export function unknownStudioRoleMessage(value: string): string {

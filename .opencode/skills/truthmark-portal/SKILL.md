@@ -3,7 +3,7 @@ name: truthmark-portal
 description: Use when the user explicitly asks to generate, refresh, or update the Truthmark Portal static HTML site. Not for code change sync, route repair, truth validation/checking, documenting behavior, realizing docs into code, or machine-readable agent context.
 argument-hint: Optional portal generation focus
 user-invocable: true
-truthmark-version: 2.1.0
+truthmark-version: 2.2.1
 ---
 
 # Truthmark Portal

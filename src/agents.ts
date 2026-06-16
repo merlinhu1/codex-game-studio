@@ -2,8 +2,9 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { guidanceConfigHash, type ProjectConfig } from "./config.js";
 import type { EngineConfigRegistry } from "./engines.js";
+import { engineReferenceProjectPath, selectedEngineReferencePrompts } from "./engine-reference.js";
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
-import { rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
+import { projectRoleIdsForEngine, rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
 
 export type MaterializeAgentsInput = {
   projectRoot: string;
@@ -51,6 +52,7 @@ export function generateProjectAgentsMd(config: ProjectConfig): string {
 Project: ${config.project.name}
 Slug: ${config.project.slug}
 Mode: ${config.project.mode}
+Studio Mode: ${config.project.studio_mode}
 
 ## Project Goal
 
@@ -76,7 +78,7 @@ ${config.project.engine} ${config.project.engine_version}
 
 ## Studio Roles
 
-${studioRoleIds.map((role) => `- ${role}: .codex/prompts/${role}.md`).join("\n")}
+${projectRoleIdsForEngine(config.project.engine).map((role) => `- ${role}: .codex/prompts/${role}.md`).join("\n")}
 
 ## Current Milestone
 
@@ -97,6 +99,7 @@ Do not use telemetry, planner/next, parallel orchestration, or ownership enforce
 export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfig, engines: EngineConfigRegistry): string {
   const pkg = rolePackages[role];
   const engine = engines[config.project.engine];
+  const engineReferences = selectedEngineReferencePrompts(config.project.engine, role);
   const body = [
     `# ${pkg.displayName}`,
     "",
@@ -104,6 +107,7 @@ export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfi
     `Slug: ${config.project.slug}`,
     `Role: ${pkg.displayName}`,
     `Mode: ${config.project.mode}`,
+    `Studio Mode: ${config.project.studio_mode}`,
     `Engine: ${engine.display_name} ${config.project.engine_version}`,
     `Current Milestone: ${config.project.mode === "design" ? "design" : config.project.mode === "development" ? "development" : "prototype"}`,
     "",
@@ -125,6 +129,9 @@ export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfi
     "## Engine Context",
     "",
     ...engine.codex_hints.map((hint) => `- ${hint}`),
+    "",
+    "Selected engine references:",
+    ...engineReferences.map((reference) => `- ${engineReferenceProjectPath(config.project.engine, reference.path)} - ${reference.reason}`),
     "",
     "## Expected Outputs",
     "",
@@ -150,6 +157,11 @@ export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfi
 export function projectRolePromptSourceInput(role: StudioRoleId, config: ProjectConfig, engines: EngineConfigRegistry): unknown {
   const pkg = rolePackages[role];
   const engine = engines[config.project.engine];
+  const engineReferences = selectedEngineReferencePrompts(config.project.engine, role).map((reference) => ({
+    path: engineReferenceProjectPath(config.project.engine, reference.path),
+    reason: reference.reason,
+    required: reference.required
+  }));
   return {
     role,
     displayName: pkg.displayName,
@@ -159,10 +171,12 @@ export function projectRolePromptSourceInput(role: StudioRoleId, config: Project
     handoffTemplate: pkg.handoffTemplate,
     engineDisplayName: engine.display_name,
     engineHints: engine.codex_hints,
+    engineReferences,
     project: {
       name: config.project.name,
       slug: config.project.slug,
       mode: config.project.mode,
+      studioMode: config.project.studio_mode,
       engine: config.project.engine,
       engineVersion: config.project.engine_version,
       concept: config.project.concept,
@@ -183,7 +197,7 @@ export function materializeAgents(input: MaterializeAgentsInput): string[] {
   written.push(agentsMd);
   const prompts = path.join(input.projectRoot, ".codex", "prompts");
   mkdirSync(prompts, { recursive: true });
-  for (const role of studioRoleIds) {
+  for (const role of projectRoleIdsForEngine(input.config.project.engine)) {
     const prompt = path.join(prompts, `${role}.md`);
     writeFileSync(prompt, renderProjectRolePrompt(role, input.config, input.engines));
     written.push(prompt);

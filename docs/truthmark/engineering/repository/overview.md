@@ -1,7 +1,7 @@
 ---
 status: active
 doc_type: behavior
-truth_kind: behavior
+truth_kind: engineering-behavior
 last_reviewed: 2026-05-30
 source_of_truth:
   - ../../routes/areas/repository.md
@@ -18,7 +18,7 @@ Open Game Studio exists as a Codex-native workflow layer for game-development pr
 
 This bounded leaf truth doc summarizes the repository-level behavior surface. More specific behavior is owned by the project scaffolding, Codex role/workflow, runtime/task execution, and CLI/validation truth documents listed in `docs/truthmark/routes/areas/repository.md`.
 
-## Current Behavior
+## Current Implementation Behavior
 
 - The package exposes the `opengamestudio` CLI from `dist/cli.js`.
 - Initialization commands create deterministic generated game project structure under `projects/<slug>`.
@@ -45,12 +45,16 @@ Architecture runtime walkthroughs live under `docs/architecture/flows/**`; they 
 
 ## Contracts
 
-- Public CLI command contracts are owned by `docs/truthmark/truth/contracts/cli-and-validation.md`.
-- Role/workflow prompt contracts are owned by `docs/truthmark/truth/codex/roles-and-workflows.md`.
-- Runtime/task lifecycle contracts are owned by `docs/truthmark/truth/codex/runtime-and-tasks.md`.
-- Project scaffolding contracts are owned by `docs/truthmark/truth/projects/project-scaffolding.md`.
+- Public CLI command contracts are owned by `docs/truthmark/engineering/contracts/cli-and-validation.md`.
+- Role/workflow prompt contracts are owned by `docs/truthmark/engineering/codex/roles-and-workflows.md`.
+- Runtime/task lifecycle contracts are owned by `docs/truthmark/engineering/codex/runtime-and-tasks.md`.
+- Project scaffolding contracts are owned by `docs/truthmark/engineering/projects/project-scaffolding.md`.
 
-## Product Decisions
+## Product Truth Links
+
+- None. This engineering overview currently summarizes repository implementation ownership directly; no separate product-lane promise is currently authored.
+
+## Engineering Decisions
 
 - Decision (2026-05-28): Route truth by behavior ownership rather than by mechanically mirroring every source file.
 - Decision (2026-05-30): Treat Truthmark Portal output as generated non-canonical presentation; Markdown truth docs remain canonical.
@@ -72,3 +76,8 @@ The repository combines scaffolding, prompt generation, runtime execution, and v
 - Update the leaf truth docs named in `docs/truthmark/routes/areas/repository.md` when behavior changes within their owned surface.
 - Update `docs/architecture/flows/**` when an architecturally relevant runtime branch, sequence, or failure path changes.
 - Relevant verification includes `npm run validate` for behavior changes and `npx truthmark check --json` for repository-truth documentation changes.
+
+## Source References
+
+- ../../routes/areas/repository.md
+- ../../../architecture/repository-structure.md

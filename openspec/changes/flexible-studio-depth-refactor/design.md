@@ -76,7 +76,7 @@ The full role taxonomy and workflow catalog should exist as registry data. Proje
 
 ### Decision 6: Preserve current useful capabilities in the new taxonomy
 
-The new taxonomy must keep or explicitly replace current studio orchestration, market analysis, data/analytics, UI/UX, QA, release, and handoff coverage. Built-in canonical IDs are strict, but a `customRoles`/namespaced extension lane is reserved for future project/plugin roles that pass validation.
+The new taxonomy must keep or explicitly replace current studio coordination, market analysis, data/analytics, UI/UX, QA, release, and handoff coverage. Built-in canonical IDs are strict, but a `customRoles`/namespaced extension lane is reserved for future local declarative custom prompt roles that pass validation; it is not an executable plugin system or alternate runtime.
 
 ### Decision 7: Engine references are validated structurally and reviewed qualitatively
 
@@ -94,6 +94,18 @@ The original `.hermes/plans/2026-05-31_173614-depth-context-approval-engine-refa
 - **Engine reference docs can rot** → Require review metadata, compact files, source links, and parity report evidence.
 - **Clean generated-surface contract can invalidate old fixtures/projects** → Current product assumption permits recreation; if that changes, add a non-runtime diagnose/recreate path rather than compatibility shims.
 - **Truth/docs drift** → Add slice closeout requiring README/docs/Truthmark sync/check after behavior changes.
+
+## Product Boundary Check
+
+- This change improves the local Codex game-development workflow by making project depth, approval intent, selected context, and generated surfaces more explicit and reviewable.
+- In-scope surfaces are the package CLI, generated `AGENTS.md` and `.codex/**` files, role/workflow registries, approval policy primitives, validation, package assets, and behavior-bearing docs.
+- Lightweight prototype use is preserved through the separate `fast-prototype` studio mode; lifecycle stage remains `design|prototype|development` and is not reused for process strictness.
+- Codex-native execution remains the default path, and generated instructions stay in `AGENTS.md` plus `.codex/**`; this design does not add `CODEX.md` or legacy compatibility shims.
+- Reviewable evidence lives in local project JSON, generated prompts/workflows, approval records, dry-run output, validation output, and tests.
+- Writes are limited to explicit CLI project/task/approval/generated-surface operations; inspection paths such as `--dry-run` and `--print-prompt` remain non-mutating. Mutating paths must reject absolute paths, traversal, symlink escapes, secret-like paths, and writes outside the project or approved scope; strict/guided failures occur before Codex spawn, metadata writes, or task-state mutation.
+- Context selection is registry and relevance driven; expanded roles, workflows, engine references, and rules must not load wholesale for a single role task.
+- The design does not introduce a hosted service, daemon, hidden memory layer, CI gate, parallel orchestrator, telemetry surface, or heavyweight lifecycle platform.
+- Boundary evidence comes from focused tests, `npm run typecheck`, `npm run validate`, OpenSpec validation, and Truthmark-backed behavior docs after functional changes.
 
 ## Migration Plan
 

@@ -44,12 +44,12 @@ The system SHALL use repo-native npm commands for focused and full verification.
 - **WHEN** a parity or readiness claim is made
 - **THEN** `npm run validate` and `npm test -- --run` pass.
 
-### Requirement: Documentation and Truthmark closeout follows behavior changes
-The system SHALL update README/docs/Truthmark-backed truth claims after behavior-bearing changes and run the repository truth workflow before claiming a slice complete.
+### Requirement: Repository documentation closeout follows behavior changes
+Repository implementation slices SHALL update README/docs/Truthmark-backed truth claims after behavior-bearing changes and run the repository truth workflow before claiming a slice complete. This is a repository-maintenance guardrail, not a generated-project surface or Open Game Studio runtime feature.
 
 #### Scenario: Behavior change closes with truth sync
 - **WHEN** a slice changes functional behavior and Truthmark routes/docs are present
-- **THEN** relevant tests run first, then the Truthmark sync/check workflow runs before reporting completion.
+- **THEN** relevant tests run first, then the repository Truthmark sync/check workflow runs before reporting completion.
 
 ### Requirement: Parity claims require documented rubric evidence
 The system SHALL not claim CCGS comparability or richness until role/workflow/engine/context/approval coverage passes a documented rubric and verification succeeds.

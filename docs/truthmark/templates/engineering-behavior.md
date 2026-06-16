@@ -1,10 +1,7 @@
 ---
 status: active
-doc_type: behavior
-truth_kind: behavior
-last_reviewed: 2026-05-28
-source_of_truth:
-  - {{source_of_truth}}
+truth_kind: engineering-behavior
+last_reviewed: 2026-06-16
 ---
 
 # {{title}}
@@ -14,7 +11,7 @@ source_of_truth:
 <!--
 State the user/system outcome this behavior protects and why it exists.
 Include the problem boundary and durable value; exclude roadmap, implementation plan, and historical narrative.
-List the code, config, docs, or tests that support the claim in source_of_truth rather than prose-only assertion.
+List the code, config, docs, or tests that support the claim in Source References rather than prose-only assertion.
 -->
 
 {{purpose}}
@@ -30,17 +27,17 @@ Keep README.md files as indexes only.
 
 {{scope}}
 
-This doc was created from the editable behavior-doc template at {{template_path}}.
+This doc was created from the editable engineering-behavior template at {{template_path}}.
 
-## Current Behavior
+## Current Implementation Behavior
 
 <!--
 Describe only current implemented behavior in present tense.
 Cover observable behavior, important defaults, and user/system-visible effects; exclude desired future behavior and speculative design.
-Every non-obvious claim should be checkable from source_of_truth evidence.
+Every non-obvious claim should be checkable from Source References.
 -->
 
-{{current_behavior}}
+{{current_implementation_behavior}}
 
 ## Core Rules
 
@@ -69,14 +66,23 @@ Avoid duplicating a separate canonical contract doc; link to it when contract ow
 
 {{contracts}}
 
-## Product Decisions
+## Product Truth Links
+
+<!--
+List product truth docs this engineering doc realizes; author canonical realizes links in route YAML, not doc frontmatter.
+Use 'None.' when this is purely internal engineering behavior.
+-->
+
+{{product_truth_links}}
+
+## Engineering Decisions
 
 <!--
 Keep active decisions only, dated inline when added or changed.
 Explain decisions that shape behavior, boundaries, rejected alternatives, or migration constraints; replace stale decisions instead of appending historical logs.
 -->
 
-{{decision}}
+{{engineering_decisions}}
 
 ## Rationale
 
@@ -104,3 +110,11 @@ Keep this operational and current-state focused, not historical.
 -->
 
 {{maintenance_notes}}
+
+## Source References
+
+<!--
+List source files, tests, configs, generated templates, route files, or product instructions that support current claims.
+-->
+
+{{source_references}}

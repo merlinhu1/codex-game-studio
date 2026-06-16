@@ -1,9 +1,13 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { createCodexStudioSession, type CodexStudioPhase } from "./codex-session.js";
+import { selectContextEntries } from "./context-manifest.js";
 import { renderCodexPrompt } from "./codex-prompts.js";
 import type { EngineId } from "./engines.js";
+import { renderContextContract } from "./prompt-context.js";
+import type { StudioProjectState } from "./projects.js";
 import type { StudioRoleId } from "./roles.js";
+import { evaluateStudioRunEligibility } from "./studio-policy.js";
 import { renderSelectedTemplates, type TemplateId } from "./templates.js";
 
 export type WorkflowId =
@@ -166,6 +170,10 @@ function readStudioEngine(projectRoot: string): EngineId {
   return studio.engine;
 }
 
+function readWorkflowStudio(projectRoot: string): Pick<StudioProjectState, "mode" | "studioMode" | "engine"> {
+  return JSON.parse(readFileSync(path.join(projectRoot, ".codex", "studio.json"), "utf8")) as Pick<StudioProjectState, "mode" | "studioMode" | "engine">;
+}
+
 export function workflowIds(): WorkflowId[] {
   return Object.keys(workflowRegistry) as WorkflowId[];
 }
@@ -176,16 +184,40 @@ export function workflowForAlias(alias: string): WorkflowDefinition | undefined 
 
 export function renderWorkflowPrompt(projectRoot: string, workflow: WorkflowId): string {
   const config = workflowRegistry[workflow];
+  const studio = readWorkflowStudio(projectRoot);
+  const selection = selectContextEntries(
+    projectRoot,
+    config.contextFiles.map((sourcePath) => ({ sourcePath, reason: `workflow ${workflow} context`, required: true }))
+  );
+  const eligibility = evaluateStudioRunEligibility({
+    projectStage: studio.mode,
+    studioMode: studio.studioMode,
+    phase: config.phase
+  });
+  const session = createCodexStudioSession({
+    projectRoot,
+    role: config.role,
+    phase: config.phase,
+    objective: config.objective,
+    engine: readStudioEngine(projectRoot),
+    contextFiles: selection.selected.map((entry) => entry.sourcePath),
+    allowFileEdits: eligibility.allowFileEdits,
+    sandbox: eligibility.codexSandbox,
+    writePolicy: eligibility.writePolicy,
+    eligibility
+  });
   return (
     renderCodexPrompt(
-      createCodexStudioSession({
-        projectRoot,
-        role: config.role,
-        phase: config.phase,
-        objective: config.objective,
-        engine: readStudioEngine(projectRoot),
-        contextFiles: config.contextFiles
-      })
+      {
+        ...session,
+        contextContract: renderContextContract({
+          session,
+          projectStage: studio.mode,
+          studioMode: studio.studioMode,
+          entries: selection.entries,
+          readOnlyReview: config.phase === "review"
+        })
+      }
     ) + renderWorkflowTemplates(workflow)
   );
 }

@@ -60,6 +60,11 @@ function approvalProjectStage(mode: string): ProjectStage {
   throw new Error(`Unsupported project stage: ${mode}`);
 }
 
+function readApprovalStudioMode(value: string): StudioMode {
+  if (value === "fast-prototype" || value === "guided-studio" || value === "strict-studio") return value;
+  throw new Error(`Unsupported studio mode: ${value}`);
+}
+
 function addInitCommand(name: "init" | "new"): void {
   program
     .command(name)
@@ -67,6 +72,7 @@ function addInitCommand(name: "init" | "new"): void {
     .requiredOption("--name <name>", "project name")
     .requiredOption("--engine <engine>", "godot, unity, or unreal")
     .requiredOption("--mode <mode>", "design, prototype, or development")
+    .option("--studio-mode <mode>", "fast-prototype, guided-studio, or strict-studio", "guided-studio")
     .option("--concept <text>", "project concept")
     .option("--genre <text>", "genre")
     .option("--platform <text>", "platform")
@@ -77,7 +83,7 @@ function addInitCommand(name: "init" | "new"): void {
     .option("--engine-version <version>", "engine version override")
     .requiredOption("--non-interactive", "use deterministic defaults")
     .action((opts) => {
-      const result = initProject({ ...opts, competitors: opts.competitor });
+      const result = initProject({ ...opts, competitors: opts.competitor, studioMode: readApprovalStudioMode(opts.studioMode) });
       console.log(`Created ${result.config.project.name} at ${path.relative(process.cwd(), result.projectRoot)}`);
     });
 }
@@ -151,10 +157,11 @@ approval
 
     const studio = readStudioProject(projectRoot);
     const projectStage = approvalProjectStage(studio.mode);
-    const studioMode = approvalStudioMode();
+    const studioMode = readApprovalStudioMode(studio.studioMode ?? approvalStudioMode());
     const taskRef = String(opts.task);
     let objectiveSha256: string;
     let objectiveLabel = taskRef;
+    let objective: string | undefined;
     let approvedFiles: string[] | undefined;
     if (sha256Pattern.test(taskRef)) {
       objectiveSha256 = taskRef.toLowerCase();
@@ -163,6 +170,7 @@ approval
       const task = readTaskStore(projectRoot).tasks.find((candidate) => candidate.id === taskRef);
       if (!task) throw new Error(`Unknown task: ${taskRef}. Pass an existing task id or a 64-character sha256 objective hash.`);
       if (task.role !== opts.role) throw new Error(`Task ${task.id} is assigned to role ${task.role}; approval role ${opts.role} does not match.`);
+      objective = task.title;
       objectiveLabel = task.title;
       approvedFiles = task.files.length > 0 ? task.files : undefined;
       objectiveSha256 = canonicalObjectiveSha256({
@@ -178,6 +186,9 @@ approval
     const record = appendApprovalRecord(projectRoot, {
       role: opts.role,
       objectiveSha256,
+      objective,
+      projectStage,
+      studioMode,
       approvedGlobs: scopes,
       approvedFiles,
       approvedBy: opts.approvedBy ?? localApprovedBy(),
@@ -246,12 +257,15 @@ program
   .option("--print-prompt", "print deterministic prompt body")
   .option("--dry-run", "print selected context and Codex command without launching Codex")
   .option("--include-artifact <relative-path>", "include one project artifact", (value, previous: string[] = []) => [...previous, value], [])
+  .option("--approval-scope <glob>", "approval diagnostic scope for dry-run objective hashing; repeat for multiple scopes", collectScope, [])
   .option("--allow-broad-context", "explicitly allow broader context discovery")
   .option("--verify-command <command>", "structured verification command")
   .option("--verify-arg <arg>", "structured verification argument; repeat for multiple args", (value, previous: string[] = []) => [...previous, value], [])
   .option("--review", "render/run a schema-driven review pass")
   .option("--fix", "render/run bounded fix pass prompts when blocked")
   .option("--max-fix-passes <count>", "maximum automatic fix passes", "1")
+  .option("--approved-by-user", "explicitly approve a guided-studio local override")
+  .option("--constrained-sandbox", "use Codex workspace-write instead of the default full-access sandbox")
   .action(async (role, objectiveParts: string[], opts) => {
     const verifyCommand = opts.verifyCommand ? { command: opts.verifyCommand as string, args: opts.verifyArg as string[] } : undefined;
     const result = prepareRun(role, {
@@ -260,11 +274,14 @@ program
       printPrompt: opts.printPrompt,
       dryRun: opts.dryRun,
       includeArtifact: opts.includeArtifact,
+      approvalScope: opts.approvalScope,
       allowBroadContext: opts.allowBroadContext,
       verifyCommand,
       review: opts.review,
       fix: opts.fix,
-      maxFixPasses: Number(opts.maxFixPasses)
+      maxFixPasses: Number(opts.maxFixPasses),
+      approvedByUser: opts.approvedByUser,
+      constrainedSandbox: opts.constrainedSandbox
     });
     console.log(result.output);
     if (opts.dryRun || opts.printPrompt) return;
@@ -303,6 +320,9 @@ task
   .option("--review", "render/run a schema-driven review pass")
   .option("--fix", "render/run bounded fix pass prompts when blocked")
   .option("--max-fix-passes <count>", "maximum automatic fix passes", "1")
+  .option("--approval-scope <glob>", "approval diagnostic scope for task run objective hashing; repeat for multiple scopes", collectScope, [])
+  .option("--approved-by-user", "explicitly approve a guided-studio local override")
+  .option("--constrained-sandbox", "use Codex workspace-write instead of the default full-access sandbox")
   .argument("<task-id>")
   .action(async (taskId: string, opts) => {
     const projectRoot = resolveTaskProject(opts.project);
@@ -310,7 +330,10 @@ task
       dryRun: opts.dryRun,
       review: opts.review,
       fix: opts.fix,
-      maxFixPasses: Number(opts.maxFixPasses)
+      maxFixPasses: Number(opts.maxFixPasses),
+      approvedByUser: opts.approvedByUser,
+      constrainedSandbox: opts.constrainedSandbox,
+      approvalScope: opts.approvalScope
     });
     console.log(opts.dryRun ? result.prepared.output : `${result.prepared.output}\n${result.lifecycle?.output ?? ""}\n${taskId} ${result.task.status}`);
     if (result.lifecycle?.finalStatus === "blocked") process.exitCode = 1;

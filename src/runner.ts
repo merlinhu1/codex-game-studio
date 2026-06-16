@@ -1,14 +1,17 @@
 import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { explainApprovalMismatch, normalizeApprovalScope, readApprovalStore, type ApprovalMismatchDiagnostic } from "./approvals.js";
 import { readProjectAgentPrompt } from "./agents.js";
 import { buildCodexExecArgs, resolveCodexCommand, type CodexExecutionResult } from "./codex-runtime.js";
 import { renderCodexPrompt } from "./codex-prompts.js";
 import { createCodexStudioSession, type VerificationCommand } from "./codex-session.js";
-import { discoverBroadContextFiles } from "./context.js";
+import { selectContextEntries, type ContextManifestEntry, type ContextRequestEntry } from "./context-manifest.js";
+import { renderContextContract } from "./prompt-context.js";
 import { readStudioProject } from "./projects.js";
-import { isStudioRoleId, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
+import { isEngineSpecialistRoleId, isStudioRoleId, projectRoleIdsForEngine, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
 import { resolveProjectRoot } from "./paths.js";
+import { evaluateStudioRunEligibility, type CodexSandboxMode, type CodexStudioPhase, type StudioRunEligibility } from "./studio-policy.js";
 import { renderSelectedTemplates, selectTemplates } from "./templates.js";
 import { runVerificationCommand, type VerificationResult } from "./verification.js";
 
@@ -19,11 +22,14 @@ export type RunOptions = {
   dryRun?: boolean;
   codexBin?: string;
   includeArtifact?: string[];
+  approvalScope?: string[];
   allowBroadContext?: boolean;
   verifyCommand?: VerificationCommand;
   review?: boolean;
   fix?: boolean;
   maxFixPasses?: number;
+  approvedByUser?: boolean;
+  constrainedSandbox?: boolean;
 };
 
 export type PreparedRun = {
@@ -41,6 +47,7 @@ export type PreparedRun = {
   reviewPrompt?: string;
   fixPrompt?: string;
   maxFixPasses: number;
+  eligibility: StudioRunEligibility;
 };
 
 export type ReviewResult = {
@@ -78,7 +85,7 @@ function requireTask(task: string): string {
   return task.trim();
 }
 
-export function codexExecInvocation(projectRoot: string, codexBin = resolveCodexCommand(), sandbox: "read-only" | "workspace-write" = "workspace-write"): { command: string; args: string[]; display: string } {
+export function codexExecInvocation(projectRoot: string, codexBin = resolveCodexCommand(), sandbox: CodexSandboxMode = "danger-full-access"): { command: string; args: string[]; display: string } {
   const args = buildCodexExecArgs({ projectRoot, sandbox });
   return { command: codexBin, args, display: [codexBin, ...args.map((arg) => JSON.stringify(arg))].join(" ") };
 }
@@ -118,6 +125,68 @@ function renderRuntimeContextBlock(role: StudioRoleId, projectRoot: string, task
   const projectRolePrompt = readProjectAgentPrompt(role, projectRoot);
   const templateBodies = renderSelectedTemplates(selectTemplates(role, task));
   return ["", `# Project Role Prompt: .codex/prompts/${role}.md`, "", projectRolePrompt.trim(), templateBodies, ""].join("\n");
+}
+
+function broadContextRequests(): ContextRequestEntry[] {
+  return [
+    { sourcePath: "documentation/design/gdd.md", reason: "design reference" },
+    { sourcePath: "documentation/production/timeline.md", reason: "production reference" },
+    { sourcePath: "resources/market-research/market-overview.md", reason: "market reference" }
+  ];
+}
+
+function contextFiles(entries: ContextManifestEntry[]): string[] {
+  return entries.filter((entry) => entry.status === "selected").map((entry) => entry.sourcePath);
+}
+
+function formatApprovalDiagnostic(diagnostic: ApprovalMismatchDiagnostic, args: { projectStage: string; studioMode: string; approvalScopes: string[] }): string {
+  const lines = [
+    "Approval diagnostic:",
+    `project stage: ${args.projectStage}`,
+    `studio mode: ${args.studioMode}`,
+    `approval scopes: ${args.approvalScopes.length ? args.approvalScopes.join(", ") : "none"}`,
+    `current objective hash: ${diagnostic.objectiveSha256}`,
+    diagnostic.matched ? "matching approval found" : "no matching approval"
+  ];
+  if (diagnostic.records.length === 0) {
+    lines.push("records: none");
+    return lines.join("\n");
+  }
+  lines.push("records:");
+  for (const record of diagnostic.records) {
+    lines.push(`${record.id}: ${record.authorizing ? "authorizing" : `non-authorizing (${record.reasons.join(", ")})`}`);
+  }
+  return lines.join("\n");
+}
+
+function phaseForRun(role: StudioRoleId): CodexStudioPhase {
+  if (role === "producer") return "plan";
+  if (role === "qa-playtester") return "review";
+  return "implement";
+}
+
+function formatEligibility(eligibility: StudioRunEligibility): string {
+  const lines = [
+    `Eligibility: ${eligibility.allowed ? "allowed" : "blocked"}`,
+    `Write policy: ${eligibility.writePolicy}`,
+    `Sandbox: ${eligibility.codexSandbox}`,
+    `File edits: ${eligibility.allowFileEdits ? "allowed" : "not allowed"}`,
+    `Reason: ${eligibility.reason}`,
+    `Provenance: ${String(eligibility.metadata.provenance)}`,
+    `Approved by user: ${eligibility.metadata.approvedByUser === true}`,
+    `Matching approval: ${eligibility.metadata.hasMatchingApproval === true}`,
+    `Constrained sandbox: ${eligibility.metadata.constrainedSandbox === true}`
+  ];
+  if (eligibility.requiredApproval) {
+    lines.push(
+      "Required approval:",
+      `- project stage: ${eligibility.requiredApproval.projectStage}`,
+      `- studio mode: ${eligibility.requiredApproval.studioMode}`,
+      `- phase: ${eligibility.requiredApproval.phase}`,
+      `- approval policy: ${eligibility.requiredApproval.approvalPolicy}`
+    );
+  }
+  return lines.join("\n");
 }
 
 function executionFailed(result: CodexExecutionResult): boolean {
@@ -246,57 +315,131 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   const task = requireTask(options.task);
   const projectRoot = resolveProjectRoot(options.project, cwd);
   const studio = readStudioProject(projectRoot);
-  const contextFiles = ["AGENTS.md", ".codex/studio.json", `.codex/prompts/${role}.md`];
-  const artifactBodies = (options.includeArtifact ?? []).map((artifact) => {
+  if (isEngineSpecialistRoleId(role) && !projectRoleIdsForEngine(studio.engine).includes(role)) {
+    throw new Error(`${role} is not available for ${studio.engine} projects; use ${studio.engine}-specialist for this project.`);
+  }
+  const artifactRefs = (options.includeArtifact ?? []).map((artifact) => {
     const { full, display } = safeArtifact(projectRoot, artifact);
-    contextFiles.push(display);
-    return `\n\n# Included Artifact: ${display}\n\n${readFileSync(full, "utf8")}`;
+    return { full, display };
   });
-  if (options.allowBroadContext) contextFiles.push(...discoverBroadContextFiles(projectRoot, contextFiles));
+  const artifactDisplays = artifactRefs.map((artifact) => artifact.display);
+  const contextRequests: ContextRequestEntry[] = [
+    { sourcePath: "AGENTS.md", reason: "project instructions", required: true },
+    { sourcePath: ".codex/studio.json", reason: "project state", required: true },
+    { sourcePath: `.codex/prompts/${role}.md`, reason: "selected role prompt", required: true },
+    ...artifactDisplays.map((display) => ({ sourcePath: display, reason: "included artifact", required: true })),
+    ...(options.allowBroadContext ? broadContextRequests() : [])
+  ];
+  const contextSelection = selectContextEntries(projectRoot, contextRequests);
+  const contextFilesForRun = contextFiles(contextSelection.entries);
+  const selectedContextFiles = new Set(contextFilesForRun);
+  const artifactBodies = artifactRefs
+    .filter((artifact) => selectedContextFiles.has(artifact.display))
+    .map((artifact) => `\n\n# Included Artifact: ${artifact.display}\n\n${readFileSync(artifact.full, "utf8")}`);
   const maxFixPasses = options.maxFixPasses ?? 1;
   if (!Number.isFinite(maxFixPasses) || maxFixPasses < 0) throw new Error("--max-fix-passes must be a finite non-negative number");
+  const phase = phaseForRun(role);
+  const approvalScopes = normalizeApprovalScope(options.approvalScope ?? [], { projectRoot });
+  const approvalDiagnosticResult = explainApprovalMismatch(readApprovalStore(projectRoot), {
+    role,
+    objective: task,
+    approvedGlobs: approvalScopes,
+    approvedFiles: artifactDisplays.length ? artifactDisplays : undefined,
+    projectStage: studio.mode,
+    studioMode: studio.studioMode
+  });
+  const eligibility = evaluateStudioRunEligibility({
+    projectStage: studio.mode,
+    studioMode: studio.studioMode,
+    phase,
+    hasMatchingApproval: approvalDiagnosticResult.matched,
+    approvedByUser: options.approvedByUser,
+    constrainedSandbox: options.constrainedSandbox
+  });
+  if (!eligibility.allowed && !options.printPrompt && !options.dryRun) {
+    throw new Error(eligibility.reason);
+  }
   const session = createCodexStudioSession({
     projectRoot,
     role,
     objective: task,
-    phase: role === "producer" ? "plan" : role === "qa-playtester" ? "review" : "implement",
+    phase,
     engine: studio.engine,
-    contextFiles,
-    verification: options.verifyCommand
+    contextFiles: contextFilesForRun,
+    verification: options.verifyCommand,
+    allowFileEdits: eligibility.allowFileEdits,
+    sandbox: eligibility.codexSandbox,
+    writePolicy: eligibility.writePolicy,
+    eligibility
   });
   const runtimeContextBlock = renderRuntimeContextBlock(role, projectRoot, task);
-  const prompt = `${renderCodexPrompt(session)}${runtimeContextBlock}${artifactBodies.join("")}`;
+  const prompt = `${renderCodexPrompt({
+    ...session,
+    contextContract: renderContextContract({
+      session,
+      projectStage: studio.mode,
+      studioMode: studio.studioMode,
+      entries: contextSelection.entries
+    })
+  })}${runtimeContextBlock}${artifactBodies.join("")}`;
   const reviewObjective = `Review the implementation for: ${task}. Inspect the diff and verification output. Return only JSON with blockers, warnings, summary, and needsFix.`;
+  const reviewSelection = selectContextEntries(projectRoot, [
+    { sourcePath: "AGENTS.md", reason: "project instructions", required: true },
+    { sourcePath: ".codex/studio.json", reason: "project state", required: true },
+    { sourcePath: ".codex/prompts/qa-playtester.md", reason: "review role prompt", required: true },
+    ...contextSelection.selected.map((entry) => ({ sourcePath: entry.sourcePath, reason: `implementation context: ${entry.reason}`, required: entry.required }))
+  ]);
+  const reviewSession = createCodexStudioSession({
+    projectRoot,
+    role: "qa-playtester",
+    objective: reviewObjective,
+    phase: "review",
+    engine: studio.engine,
+    contextFiles: contextFiles(reviewSelection.entries),
+    expectedOutputs: ["Review JSON", "Blockers", "Warnings"],
+    allowFileEdits: false,
+    sandbox: "read-only",
+    writePolicy: "read-only",
+    reviewMode: "diff"
+  });
   const reviewPrompt = options.review
-    ? `${renderCodexPrompt(
-        createCodexStudioSession({
-          projectRoot,
-          role: "qa-playtester",
-          objective: reviewObjective,
-          phase: "review",
-          engine: studio.engine,
-          contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/prompts/qa-playtester.md"],
-          expectedOutputs: ["Review JSON", "Blockers", "Warnings"],
-          allowFileEdits: false,
-          sandbox: "read-only",
-          reviewMode: "diff"
+    ? `${renderCodexPrompt({
+        ...reviewSession,
+        contextContract: renderContextContract({
+          session: reviewSession,
+          projectStage: studio.mode,
+          studioMode: studio.studioMode,
+          entries: reviewSelection.entries,
+          readOnlyReview: true
         })
-      )}${renderRuntimeContextBlock("qa-playtester", projectRoot, reviewObjective)}`
+      })}${renderRuntimeContextBlock("qa-playtester", projectRoot, reviewObjective)}`
     : undefined;
+  const fixSession = createCodexStudioSession({
+    projectRoot,
+    role,
+    objective: `Fix verification failures or review blockers for: ${task}`,
+    phase: "fix",
+    engine: studio.engine,
+    contextFiles: contextFilesForRun,
+    verification: options.verifyCommand,
+    expectedOutputs: ["Fix changes", "Verification results", "Remaining blockers"],
+    allowFileEdits: eligibility.allowFileEdits,
+    sandbox: eligibility.codexSandbox,
+    writePolicy: eligibility.writePolicy,
+    eligibility
+  });
   const fixPrompt =
     options.fix && maxFixPasses > 0
-      ? `${renderCodexPrompt(
-          createCodexStudioSession({
-            projectRoot,
-            role,
-            objective: `Fix verification failures or review blockers for: ${task}`,
-            phase: "fix",
-            engine: studio.engine,
-            contextFiles,
-            verification: options.verifyCommand,
-            expectedOutputs: ["Fix changes", "Verification results", "Remaining blockers"]
+      ? `${renderCodexPrompt({
+          ...fixSession,
+          contextContract: renderContextContract({
+            session: fixSession,
+            projectStage: studio.mode,
+            studioMode: studio.studioMode,
+            entries: contextSelection.entries,
+            blockers: ["Review and verification blockers will be supplied at execution time."]
           })
-        )}${runtimeContextBlock}`
+        })}${runtimeContextBlock}`
       : undefined;
   const runId = `${new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 17)}-${process.pid}-${++runSequence}`;
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role}`);
@@ -318,7 +461,11 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
           prompt_cache_path: path.relative(cwd, promptPath),
           review: Boolean(reviewPrompt),
           fix: Boolean(fixPrompt),
-          max_fix_passes: maxFixPasses
+          max_fix_passes: maxFixPasses,
+          writePolicy: eligibility.writePolicy,
+          allowFileEdits: eligibility.allowFileEdits,
+          codexSandbox: eligibility.codexSandbox,
+          eligibility
         },
         null,
         2
@@ -326,16 +473,24 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
     );
   }
   const codexBin = options.codexBin ?? resolveCodexCommand();
-  const codexCommand = codexExecInvocation(projectRoot, codexBin);
+  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox);
   const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only") : undefined;
   const dryRunExtra = [
     reviewPrompt ? `\n\nReview Codex command: ${reviewCodexCommand?.display}\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
     fixPrompt ? `\n\nFix prompt (max passes: ${maxFixPasses}):\n${fixPrompt}` : ""
   ].join("");
+  const approvalDiagnostic =
+    options.dryRun && studio.studioMode !== "fast-prototype"
+      ? formatApprovalDiagnostic(
+          approvalDiagnosticResult,
+          { projectStage: studio.mode, studioMode: studio.studioMode, approvalScopes }
+        )
+      : "";
+  const eligibilitySummary = formatEligibility(eligibility);
   const output = options.printPrompt
     ? prompt
     : options.dryRun
-      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\nContext files:\n${contextFiles.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${dryRunExtra}`
-      : `Prompt cache written: ${promptPath}\nExecuting Codex: ${codexCommand.display}`;
-  return { prompt, promptPath, metadataPath, projectRoot, role, task, contextFiles, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses };
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${eligibilitySummary}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
+      : `Prompt cache written: ${promptPath}\n${eligibilitySummary}\nExecuting Codex: ${codexCommand.display}`;
+  return { prompt, promptPath, metadataPath, projectRoot, role, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility };
 }

@@ -1,8 +1,10 @@
-import { mkdtempSync, existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, existsSync, unlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, test } from "vitest";
 import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, projectClassName, sourceRoot, unrealProjectFileName } from "../src/engines.js";
+import { engineReferenceRegistry, validateEngineReferencePacks } from "../src/engine-reference.js";
 import { packageAssetPath } from "../src/paths.js";
 
 describe("engine registry", () => {
@@ -41,5 +43,41 @@ describe("engine registry", () => {
     expect(projectClassName("rocket! zone")).toBe("RocketZone");
     expect(() => projectClassName("!!!")).toThrow(/Cannot create/);
     expect(unrealProjectFileName("Test Game")).toBe("TestGame.uproject");
+  });
+
+  test("engine reference registry maps package files to project destinations", () => {
+    expect(Object.keys(engineReferenceRegistry).sort()).toEqual(["godot", "unity", "unreal"]);
+    for (const [engine, pack] of Object.entries(engineReferenceRegistry)) {
+      expect(pack.packageRoot).toBe(`engine_reference/${engine}`);
+      expect(pack.projectRoot).toBe(`docs/engine-reference/${engine}`);
+      expect(pack.requiredFiles).toContain("VERSION.md");
+      expect(pack.promptReferences.some((reference) => reference.path === "VERSION.md" && reference.required)).toBe(true);
+      for (const file of pack.requiredFiles) {
+        expect(pack.projectPath(file)).toBe(`docs/engine-reference/${engine}/${file}`);
+      }
+      expect(pack.validation.requiredMetadata).toEqual(["reviewer", "date", "source-link"]);
+      expect(pack.packageSmokeFiles.length).toBeGreaterThan(0);
+    }
+  });
+
+  test("engine reference content has required seed review metadata", () => {
+    const checks = validateEngineReferencePacks(packageAssetPath("."));
+    expect(checks.filter((check) => check.status === "fail")).toEqual([]);
+    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.godot.VERSION.md.metadata", status: "pass" }));
+    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.unity.VERSION.md.metadata", status: "pass" }));
+    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.unreal.VERSION.md.metadata", status: "pass" }));
+  });
+
+  test("engine reference assets are included in npm pack", () => {
+    const raw = execFileSync("npm", ["pack", "--json"], { cwd: process.cwd(), encoding: "utf8", shell: false });
+    const packInfo = JSON.parse(raw)[0] as { filename: string; files: { path: string }[] };
+    try {
+      const packed = new Set(packInfo.files.map((file) => file.path));
+      expect(packed.has("engine_reference/godot/VERSION.md")).toBe(true);
+      expect(packed.has("engine_reference/unity/VERSION.md")).toBe(true);
+      expect(packed.has("engine_reference/unreal/VERSION.md")).toBe(true);
+    } finally {
+      unlinkSync(path.join(process.cwd(), packInfo.filename));
+    }
   });
 });

@@ -281,4 +281,23 @@ describe("built CLI prompt surface", () => {
     expect(list).toContain("expired");
     expect(list).toContain("non-authorizing");
   });
+
+  test("run dry-run shows approval override advisory and sandbox provenance", () => {
+    const { cwd, projectRoot } = initCliProject("ogs-cli-policy-", "Policy Game");
+
+    const blocked = runCli(["run", "gameplay-programmer", "--project", projectRoot, "--dry-run", "Implement jump"], cwd);
+    expect(blocked).toContain("Eligibility: blocked");
+    expect(blocked).toContain("Write policy: read-only");
+    expect(blocked).toContain("Sandbox: read-only");
+    expect(blocked).toContain("Required approval:");
+
+    const override = runCli(["run", "gameplay-programmer", "--project", projectRoot, "--dry-run", "--approved-by-user", "Implement jump"], cwd);
+    expect(override).toContain("Eligibility: allowed");
+    expect(override).toContain("Write policy: override-write");
+    expect(override).toContain("Sandbox: danger-full-access");
+    expect(override).toContain("Provenance: override");
+
+    const constrained = runCli(["run", "gameplay-programmer", "--project", projectRoot, "--dry-run", "--approved-by-user", "--constrained-sandbox", "Implement jump"], cwd);
+    expect(constrained).toContain("Sandbox: workspace-write");
+  });
 });
