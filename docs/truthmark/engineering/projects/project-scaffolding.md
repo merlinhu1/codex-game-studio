@@ -58,7 +58,7 @@ This doc was created from the editable engineering-behavior template at docs/tru
 
 ## Product Truth Links
 
-- None. This engineering behavior currently realizes the repository's generated-project scaffold behavior directly; no separate product-lane promise is currently authored.
+- docs/truthmark/product/open-game-studio-cli.md
 
 ## Engineering Decisions
 

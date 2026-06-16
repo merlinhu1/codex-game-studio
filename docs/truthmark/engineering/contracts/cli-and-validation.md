@@ -77,7 +77,7 @@ This bounded leaf truth doc owns the repository CLI command contract, package sc
 
 ## Product Truth Links
 
-- None. This engineering contract currently realizes the repository's public CLI and validation behavior directly; no separate product-lane promise is currently authored.
+- docs/truthmark/product/open-game-studio-cli.md
 
 ## Engineering Decisions
 

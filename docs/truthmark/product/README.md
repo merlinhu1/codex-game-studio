@@ -12,6 +12,10 @@ Product truth owns capability promises, boundaries, decisions, and acceptance cr
 
 README.md files are indexes, not Truth Sync targets. Keep product truth in bounded capability docs.
 
+## Product Capability Docs
+
+- [Open Game Studio Codex-Native CLI](open-game-studio-cli.md)
+
 ## Source References
 
 - ../routes/areas.md

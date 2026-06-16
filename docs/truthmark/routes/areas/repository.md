@@ -8,6 +8,42 @@ source_of_truth:
 
 # Repository Areas
 
+## Open Game Studio Product Capability
+
+Truth documents:
+```yaml
+truth_documents:
+  - path: docs/truthmark/product/open-game-studio-cli.md
+    lane: product
+    kind: product-capability
+    realized_by:
+      - docs/truthmark/engineering/projects/project-scaffolding.md
+      - docs/truthmark/engineering/codex/roles-and-workflows.md
+      - docs/truthmark/engineering/codex/runtime-and-tasks.md
+      - docs/truthmark/engineering/codex/approval-stores.md
+      - docs/truthmark/engineering/contracts/cli-and-validation.md
+```
+
+Code surface:
+- docs/architecture/product-boundary.md
+- docs/ai/repo-rules.md
+- src/cli.ts
+- src/projects.ts
+- src/roles.ts
+- src/workflows.ts
+- src/runner.ts
+- src/validation.ts
+- engine_reference/**
+- templates/**
+- tests/functionality-gap-pass.test.ts
+- tests/project-workflow.test.ts
+- tests/runner.test.ts
+- tests/validation.test.ts
+
+Update truth when:
+- Open Game Studio's mission, user-visible CLI/package capability, Codex-native product boundary, generated-project contract, product non-goals, or acceptance criteria change
+- user-facing behavior crosses from optional/local repository workflow support into hosted orchestration, hidden memory, CI/release governance, or non-Codex runtime replacement
+
 ## Project Scaffolding
 
 Truth documents:
@@ -16,6 +52,8 @@ truth_documents:
   - path: docs/truthmark/engineering/projects/project-scaffolding.md
     lane: engineering
     kind: engineering-behavior
+    realizes:
+      - docs/truthmark/product/open-game-studio-cli.md
 ```
 
 Code surface:
@@ -46,6 +84,8 @@ truth_documents:
   - path: docs/truthmark/engineering/codex/roles-and-workflows.md
     lane: engineering
     kind: engineering-behavior
+    realizes:
+      - docs/truthmark/product/open-game-studio-cli.md
 ```
 
 Code surface:
@@ -75,6 +115,8 @@ truth_documents:
   - path: docs/truthmark/engineering/codex/runtime-and-tasks.md
     lane: engineering
     kind: engineering-workflow
+    realizes:
+      - docs/truthmark/product/open-game-studio-cli.md
 ```
 
 Code surface:
@@ -104,6 +146,8 @@ truth_documents:
   - path: docs/truthmark/engineering/codex/approval-stores.md
     lane: engineering
     kind: engineering-behavior
+    realizes:
+      - docs/truthmark/product/open-game-studio-cli.md
 ```
 
 Code surface:
@@ -121,6 +165,8 @@ truth_documents:
   - path: docs/truthmark/engineering/contracts/cli-and-validation.md
     lane: engineering
     kind: engineering-contract
+    realizes:
+      - docs/truthmark/product/open-game-studio-cli.md
 ```
 
 Code surface:

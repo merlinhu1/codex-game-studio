@@ -21,6 +21,8 @@ Code surface:
 - templates/**
 - package.json
 - package-lock.json
+- docs/architecture/**
+- docs/ai/**
 - README.md
 - AGENTS.md
 

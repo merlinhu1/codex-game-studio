@@ -56,7 +56,7 @@ This doc was created from the editable engineering-behavior template at docs/tru
 
 ## Product Truth Links
 
-- None. This engineering behavior realizes internal repository write-gating and approval persistence; no separate product-lane promise is currently authored.
+- docs/truthmark/product/open-game-studio-cli.md
 
 ## Engineering Decisions
 

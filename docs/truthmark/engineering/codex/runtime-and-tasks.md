@@ -85,7 +85,7 @@ Runtime execution prepares bounded Codex prompts, evaluates studio write policy 
 
 ## Product Truth Links
 
-- None. This engineering workflow currently realizes the repository's Codex runtime and task-execution behavior directly; no separate product-lane promise is currently authored.
+- docs/truthmark/product/open-game-studio-cli.md
 
 ## Engineering Decisions
 
