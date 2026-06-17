@@ -375,6 +375,74 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
     renderSelectedTemplates(templateIds, "## Selected Templates", { projectRoot }),
     artifactBodies.join("")
   ].join("\n");
+  const reviewObjective = `Review the implementation for: ${task}. Inspect the diff and verification output. Return only JSON with blockers, warnings, summary, and needsFix.`;
+  const reviewSelection = selectContextEntries(projectRoot, [
+    { sourcePath: "AGENTS.md", reason: "project instructions", required: true },
+    { sourcePath: ".codex/studio.json", reason: "project state", required: true },
+    { sourcePath: ".codex/prompts/qa-playtester.md", reason: "review role prompt", required: true },
+    ...contextSelection.selected.map((entry) => ({ sourcePath: entry.sourcePath, reason: `implementation context: ${entry.reason}`, required: entry.required }))
+  ]);
+  const reviewSession = createCodexStudioSession({
+    projectRoot,
+    role: "qa-playtester",
+    objective: reviewObjective,
+    phase: "review",
+    engine: studio.engine,
+    contextFiles: contextFiles(reviewSelection.entries),
+    expectedOutputs: ["Review JSON", "Blockers", "Warnings"],
+    allowFileEdits: false,
+    sandbox: "read-only",
+    writePolicy: "read-only",
+    reviewMode: "diff"
+  });
+  const reviewPrompt = options.review
+    ? `${renderCodexPrompt({
+        ...reviewSession,
+        contextContract: renderContextContract({
+          session: reviewSession,
+          projectStage: studio.mode,
+          studioMode: studio.studioMode,
+          entries: reviewSelection.entries,
+          readOnlyReview: true
+        })
+      })}${renderRuntimeContextBlock("qa-playtester", projectRoot, reviewObjective)}`
+    : undefined;
+  const fixContract = renderContextContract({
+    session: { phase: "fix", writePolicy: eligibility.writePolicy, sandbox: eligibility.codexSandbox, allowFileEdits: eligibility.allowFileEdits },
+    projectStage: studio.mode,
+    studioMode: studio.studioMode,
+    entries: contextSelection.entries,
+    blockers: ["Review and verification blockers will be supplied at execution time."]
+  });
+  const fixPrompt =
+    options.fix && maxFixPasses > 0
+      ? [
+          "# Codex Game Studio Custom Role Session",
+          "",
+          `Role: ${role.displayName}`,
+          `Role ID: ${role.id}`,
+          `Context Strategy: ${role.contextStrategy}`,
+          "Phase: fix",
+          `Project Root: ${projectRoot}`,
+          `Objective: Fix verification failures or review blockers for: ${task}`,
+          `Engine: ${studio.engine}`,
+          `Sandbox: ${eligibility.codexSandbox}`,
+          `Write Policy: ${eligibility.writePolicy}`,
+          `File Edits: ${eligibility.allowFileEdits ? "allowed" : "not allowed"}`,
+          "",
+          fixContract,
+          "",
+          "## Context Files",
+          contextFilesForRun.length ? contextFilesForRun.map((file) => `- ${file}`).join("\n") : "- None selected",
+          "",
+          "## Verification",
+          options.verifyCommand ? `${options.verifyCommand.command} ${options.verifyCommand.args.join(" ")}`.trim() : "No verification command provided.",
+          "",
+          renderCustomRolePrompt(projectRoot, role),
+          renderSelectedTemplates(templateIds, "## Selected Templates", { projectRoot }),
+          artifactBodies.join("")
+        ].join("\n")
+      : undefined;
   const runId = `${new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 17)}-${process.pid}-${++runSequence}`;
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role.id}`);
   const promptPath = path.join(runDir, "prompt.md");
@@ -384,11 +452,16 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
     writeFileSync(promptPath, prompt);
     writeFileSync(
       metadataPath,
-      `${JSON.stringify({ timestamp: new Date().toISOString(), product: "codex-game-studio", project: path.relative(cwd, projectRoot) || ".", role: role.id, task, customRole: true, prompt_chars: prompt.length, prompt_cache_path: path.relative(cwd, promptPath), writePolicy: eligibility.writePolicy, allowFileEdits: eligibility.allowFileEdits, codexSandbox: eligibility.codexSandbox, eligibility }, null, 2)}\n`
+      `${JSON.stringify({ timestamp: new Date().toISOString(), product: "codex-game-studio", project: path.relative(cwd, projectRoot) || ".", role: role.id, task, customRole: true, prompt_chars: prompt.length, prompt_cache_path: path.relative(cwd, promptPath), review: Boolean(reviewPrompt), fix: Boolean(fixPrompt), max_fix_passes: maxFixPasses, writePolicy: eligibility.writePolicy, allowFileEdits: eligibility.allowFileEdits, codexSandbox: eligibility.codexSandbox, eligibility }, null, 2)}\n`
     );
   }
   const codexBin = options.codexBin ?? resolveCodexCommand();
   const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox);
+  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only") : undefined;
+  const dryRunExtra = [
+    reviewPrompt ? `\n\nReview Codex command: ${reviewCodexCommand?.display}\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
+    fixPrompt ? `\n\nFix prompt (max passes: ${maxFixPasses}):\n${fixPrompt}` : ""
+  ].join("");
   const approvalDiagnostic =
     options.dryRun && studio.studioMode !== "fast-prototype"
       ? formatApprovalDiagnostic(
@@ -399,9 +472,9 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
   const output = options.printPrompt
     ? prompt
     : options.dryRun
-      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${formatEligibility(eligibility)}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}`
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${formatEligibility(eligibility)}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
       : `Prompt cache written: ${promptPath}\n${formatEligibility(eligibility)}\nExecuting Codex: ${codexCommand.display}`;
-  return { prompt, promptPath, metadataPath, projectRoot, role: roleInput, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, output, maxFixPasses, eligibility };
+  return { prompt, promptPath, metadataPath, projectRoot, role: roleInput, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility };
 }
 
 export function prepareRun(roleInput: string, options: RunOptions, cwd = process.cwd()): PreparedRun {

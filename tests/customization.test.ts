@@ -102,6 +102,23 @@ describe("project-local customization packs", () => {
     expect(run.output).toContain("Template: custom-boss-brief");
   });
 
+  test("custom role runs render review and fix prompts when requested", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-custom-review-fix-"));
+    const { projectRoot } = initProject({ name: "Custom Review Fix", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
+    writeValidCustomPack(projectRoot, "implement");
+
+    const run = prepareRun("custom-boss-designer", { project: projectRoot, task: "Draft a boss fight brief with phase readability", dryRun: true, review: true, fix: true }, cwd);
+
+    expect(run.reviewPrompt).toContain("Read-only review: inspect diff and verification output; do not edit files.");
+    expect(run.reviewPrompt).toContain(".codex/prompts/qa-playtester.md");
+    expect(run.fixPrompt).toContain("# Project Custom Role Prompt: .codex/custom/roles/boss-designer.md");
+    expect(run.fixPrompt).toContain("Bounded Blockers:");
+    expect(run.reviewCodexCommand?.args).toEqual(expect.arrayContaining(["--sandbox", "read-only"]));
+    expect(run.output).toContain("Review Codex command:");
+    expect(run.output).toContain("Expected review JSON schema:");
+    expect(run.output).toContain("Fix prompt (max passes: 1):");
+  });
+
   test("project-local workflows can render with built-in roles accepted by validation", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-custom-built-in-workflow-"));
     const { projectRoot } = initProject({ name: "Built In Workflow", engine: "godot", mode: "development", nonInteractive: true }, cwd);
