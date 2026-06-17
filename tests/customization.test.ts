@@ -102,6 +102,45 @@ describe("project-local customization packs", () => {
     expect(run.output).toContain("Template: custom-boss-brief");
   });
 
+  test("project-local workflows can render with built-in roles accepted by validation", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-custom-built-in-workflow-"));
+    const { projectRoot } = initProject({ name: "Built In Workflow", engine: "godot", mode: "development", nonInteractive: true }, cwd);
+    mkdirSync(path.join(projectRoot, ".codex", "workflows"), { recursive: true });
+    writeFileSync(path.join(projectRoot, ".codex", "workflows", "custom-production-review.md"), "# Production Review\n\nReview scope, risks, owners, and validation gates.\n");
+    writeFileSync(
+      customizationConfigPath(projectRoot),
+      `${JSON.stringify(
+        {
+          schemaVersion: 1,
+          policy: { merge: "extend-only" },
+          roles: [],
+          templates: [],
+          workflows: [
+            {
+              id: "custom-production-review",
+              role: "producer",
+              phase: "plan",
+              objective: "Review production scope, risks, owners, and validation gates.",
+              file: ".codex/workflows/custom-production-review.md",
+              contextFiles: ["documentation/production/timeline.md"],
+              templateIds: [],
+              aliases: []
+            }
+          ]
+        },
+        null,
+        2
+      )}\n`
+    );
+
+    expect(validateProject(projectRoot)).toContainEqual(expect.objectContaining({ id: "codex.customization.workflow.custom-production-review", status: "pass" }));
+    const workflowPrompt = renderWorkflowPrompt(projectRoot, "custom-production-review");
+    expect(workflowPrompt).toContain("Role: Producer");
+    expect(workflowPrompt).toContain("Role ID: producer");
+    expect(workflowPrompt).toContain("Production Review");
+    expect(workflowPrompt).toContain("Review production scope, risks, owners, and validation gates.");
+  });
+
   test("custom implement roles can run under strict studio with a matching approval", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-custom-approval-"));
     const { projectRoot } = initProject({ name: "Custom Approval", engine: "godot", mode: "development", studioMode: "strict-studio", nonInteractive: true }, cwd);
