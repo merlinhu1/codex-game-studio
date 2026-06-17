@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { createCodexStudioSession, type CodexStudioPhase } from "./codex-session.js";
 import { selectContextEntries } from "./context-manifest.js";
@@ -10,7 +10,7 @@ import type { StudioRoleId } from "./roles.js";
 import { evaluateStudioRunEligibility } from "./studio-policy.js";
 import { engineReferenceContextRequests } from "./engine-reference.js";
 import { renderSelectedTemplates, type TemplateId } from "./templates.js";
-import { findCustomRole, findCustomWorkflow, renderCustomRolePrompt } from "./customization.js";
+import { findCustomRole, findCustomWorkflow, projectRelativePath, renderCustomRolePrompt } from "./customization.js";
 
 export type WorkflowCategory =
   | "onboarding-discovery"
@@ -476,12 +476,15 @@ function renderCustomWorkflowPrompt(projectRoot: string, workflowId: string): st
   if (!workflow) throw new Error(`Unknown workflow "${workflowId}"`);
   const role = findCustomRole(projectRoot, workflow.role);
   if (!role) throw new Error(`Custom workflow "${workflow.id}" references unavailable role "${workflow.role}"`);
+  const workflowPath = projectRelativePath(projectRoot, workflow.file);
+  const workflowBody = workflowPath.ok && existsSync(workflowPath.full) ? readFileSync(workflowPath.full, "utf8").trim() : "Custom workflow file missing.";
   const studio = readWorkflowStudio(projectRoot);
   const selection = selectContextEntries(
     projectRoot,
     [
       { sourcePath: "AGENTS.md", reason: `custom workflow ${workflow.id} instructions`, required: true },
       { sourcePath: ".codex/studio.json", reason: `custom workflow ${workflow.id} project state`, required: true },
+      { sourcePath: workflow.file, reason: `custom workflow ${workflow.id} workflow prompt`, required: true },
       { sourcePath: role.promptFile, reason: `custom workflow ${workflow.id} role prompt`, required: true },
       ...workflow.contextFiles.map((sourcePath) => ({ sourcePath, reason: `custom workflow ${workflow.id} context`, required: false }))
     ]
@@ -508,6 +511,10 @@ function renderCustomWorkflowPrompt(projectRoot: string, workflowId: string): st
     "",
     "## Context Files",
     selection.selected.length ? selection.selected.map((entry) => `- ${entry.sourcePath}`).join("\n") : "- None selected",
+    "",
+    `## Workflow Instructions: ${workflow.file}`,
+    "",
+    workflowBody,
     "",
     renderCustomRolePrompt(projectRoot, role),
     renderSelectedTemplates(workflow.templateIds, "## Workflow Templates", { projectRoot })

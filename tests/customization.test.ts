@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -13,8 +13,10 @@ import { renderWorkflowPrompt } from "../src/workflows.js";
 
 function writeValidCustomPack(projectRoot: string): void {
   mkdirSync(path.join(projectRoot, ".codex", "custom", "roles"), { recursive: true });
+  mkdirSync(path.join(projectRoot, ".codex", "workflows"), { recursive: true });
   mkdirSync(path.join(projectRoot, "documentation", "templates"), { recursive: true });
   writeFileSync(path.join(projectRoot, ".codex", "custom", "roles", "boss-designer.md"), "# Boss Designer Prompt\n\nDesign readable boss fights with phases, tells, counters, accessibility notes, and verification gates.\n");
+  writeFileSync(path.join(projectRoot, ".codex", "workflows", "custom-boss-review.md"), "# Boss Review Workflow\n\nUse phase readability, counterplay, accessibility, and test evidence to review the encounter.\n");
   writeFileSync(path.join(projectRoot, "documentation", "templates", "boss-brief.md"), "# Purpose\n\nCapture a boss encounter brief.\n\n# Inputs\n\nProject fantasy and combat constraints.\n\n# Outputs\n\nPhases, tells, counters, risks, and tests.\n\n# Validation\n\nPlaytest the encounter for readability.\n");
   writeFileSync(
     customizationConfigPath(projectRoot),
@@ -88,6 +90,8 @@ describe("project-local customization packs", () => {
     const workflowPrompt = renderWorkflowPrompt(projectRoot, "custom-boss-review");
     expect(workflowPrompt).toContain("Boss Designer");
     expect(workflowPrompt).toContain("Draft or review a boss encounter");
+    expect(workflowPrompt).toContain("Boss Review Workflow");
+    expect(workflowPrompt).toContain("Use phase readability, counterplay, accessibility, and test evidence");
     expect(workflowPrompt).toContain("Template: custom-boss-brief");
     expect(workflowPrompt).not.toContain("Template: market_analysis");
     const run = prepareRun("custom-boss-designer", { project: projectRoot, task: "Draft a boss fight brief with phase readability", printPrompt: true }, cwd);
@@ -95,6 +99,19 @@ describe("project-local customization packs", () => {
     expect(run.output).toContain("Role ID: custom-boss-designer");
     expect(run.output).toContain("Boss Designer Prompt");
     expect(run.output).toContain("Template: custom-boss-brief");
+  });
+
+  test("customization validation rejects a custom workflow with a missing file", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-custom-missing-workflow-"));
+    const { projectRoot } = initProject({ name: "Missing Workflow", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    writeValidCustomPack(projectRoot);
+    const workflowFile = path.join(projectRoot, ".codex", "workflows", "custom-boss-review.md");
+    expect(existsSync(workflowFile)).toBe(true);
+    unlinkSync(workflowFile);
+
+    const workflowCheck = validateProject(projectRoot).find((check) => check.id === "codex.customization.workflow.custom-boss-review");
+    expect(workflowCheck).toMatchObject({ status: "fail" });
+    expect(workflowCheck?.message).toContain("workflow file missing: .codex/workflows/custom-boss-review.md");
   });
 
   test("customization validation rejects unsafe paths and built-in id conflicts", () => {

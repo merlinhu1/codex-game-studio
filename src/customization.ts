@@ -193,6 +193,7 @@ export function validateProjectCustomization(
     if (!builtInRoles.has(workflow.role) && !customRoleIds.has(workflow.role)) problems.push(`workflow references unknown role ${workflow.role}`);
     const workflowPath = projectRelativePath(projectRoot, workflow.file);
     if (!workflowPath.ok) problems.push(`workflow file ${workflowPath.error}`);
+    else if (!existsSync(workflowPath.full)) problems.push(`workflow file missing: ${workflowPath.display}`);
     for (const contextFile of workflow.contextFiles) {
       const context = projectRelativePath(projectRoot, contextFile);
       if (!context.ok) problems.push(`context file ${contextFile}: ${context.error}`);
