@@ -1,5 +1,6 @@
 import type { EngineId } from "./engines.js";
 import { isStudioRoleId, rolePackages, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
+import type { StudioRunEligibility, WritePolicy } from "./studio-policy.js";
 
 export type CodexStudioPhase = "plan" | "implement" | "review" | "fix" | "ship";
 export type CodexSandboxMode = "read-only" | "workspace-write" | "danger-full-access";
@@ -20,7 +21,10 @@ export type CodexStudioSession = {
   verification?: VerificationCommand;
   allowFileEdits: boolean;
   sandbox: CodexSandboxMode;
+  writePolicy?: WritePolicy;
+  eligibility?: StudioRunEligibility;
   reviewMode?: "none" | "diff" | "full";
+  contextContract?: string;
 };
 
 export type CreateCodexStudioSessionInput = {
@@ -34,11 +38,14 @@ export type CreateCodexStudioSessionInput = {
   verification?: VerificationCommand;
   allowFileEdits?: boolean;
   sandbox?: CodexSandboxMode;
+  writePolicy?: WritePolicy;
+  eligibility?: StudioRunEligibility;
   reviewMode?: "none" | "diff" | "full";
+  contextContract?: string;
 };
 
 function defaultsForPhase(phase: CodexStudioPhase): Pick<CodexStudioSession, "allowFileEdits" | "sandbox"> {
-  if (phase === "implement" || phase === "fix") return { allowFileEdits: true, sandbox: "workspace-write" };
+  if (phase === "implement" || phase === "fix") return { allowFileEdits: true, sandbox: "danger-full-access" };
   return { allowFileEdits: false, sandbox: "read-only" };
 }
 
@@ -65,7 +72,10 @@ export function createCodexStudioSession(input: CreateCodexStudioSessionInput): 
     verification: input.verification,
     allowFileEdits: input.allowFileEdits ?? defaults.allowFileEdits,
     sandbox: input.sandbox ?? defaults.sandbox,
-    reviewMode: input.reviewMode
+    writePolicy: input.writePolicy,
+    eligibility: input.eligibility,
+    reviewMode: input.reviewMode,
+    contextContract: input.contextContract
   };
   return validateCodexStudioSession(session);
 }

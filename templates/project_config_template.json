@@ -13,6 +13,7 @@
     "engine": "godot",
     "engine_version": "4.4.1",
     "mode": "prototype",
+    "studio_mode": "guided-studio",
     "phase": "Initialization",
     "status": "active"
   },

@@ -1,18 +1,21 @@
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { existsSync, mkdtempSync, readFileSync, rmSync, unlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { activeAgentsForMode } from "./config.js";
+import { activeAgentsForProject } from "./config.js";
 import { projectAgentsMdRequiredSections, projectRolePromptSourceInput, renderProjectRolePrompt, validateBaseAgents } from "./agents.js";
 import { validateApprovalStore } from "./approvals.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
+import { contextManifestInput, createContextManifest, type ContextManifest, type ContextManifestMeta } from "./context-manifest.js";
 import { createCodexStudioSession } from "./codex-session.js";
 import { renderCodexPrompt } from "./codex-prompts.js";
 import { loadEngineConfigs, sourceRoot, unrealProjectFileName } from "./engines.js";
+import { engineReferenceRegistry, selectedEngineReferencePrompts, validateEngineReferencePacks } from "./engine-reference.js";
 import { hashGeneratedBody, parseGeneratedSurfaceMetadataParts, stripGeneratedMetadata, stableHash } from "./generated-surfaces.js";
 import { packageAssetPath } from "./paths.js";
 import { readStudioProject, resumeProject, statusProject, workflowBody, workflowSourceInput, type StudioProjectState } from "./projects.js";
-import { rolePackages, studioRoleIds } from "./roles.js";
+import { isEngineSpecialistRoleId, projectRoleIdsForEngine, rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
 import { templateRegistry, validateTemplateFiles } from "./templates.js";
 import { renderWorkflowPrompt, workflowIds, workflowRegistry } from "./workflows.js";
 
@@ -57,6 +60,7 @@ function configFromStudio(studio: StudioProjectState) {
       engine: studio.engine,
       engine_version: studio.engineVersion,
       mode: studio.mode,
+      studio_mode: studio.studioMode,
       phase: studio.phase,
       status: studio.status
     },
@@ -83,7 +87,98 @@ function generatedSurfaceChecks(args: { file: string; body: string; surface: str
   return checks;
 }
 
-function stablePromptSectionChecks(projectRoot: string, role: (typeof studioRoleIds)[number], studio: StudioProjectState): ValidationCheck[] {
+function parseJsonFile<T>(file: string): { ok: true; value: T } | { ok: false; error: string } {
+  try {
+    return { ok: true, value: JSON.parse(readFileSync(file, "utf8")) as T };
+  } catch (error) {
+    return { ok: false, error: (error as Error).message };
+  }
+}
+
+function hashJsonBody(value: unknown): string {
+  return createHash("sha256").update(`${JSON.stringify(value, null, 2)}\n`).digest("hex");
+}
+
+function contextManifestChecks(projectRoot: string, studio: StudioProjectState): ValidationCheck[] {
+  const checks: ValidationCheck[] = [];
+  const manifestPath = path.join(projectRoot, ".codex", "context-manifest.json");
+  const metaPath = path.join(projectRoot, ".codex", "context-manifest.meta.json");
+  if (!existsSync(manifestPath)) return [fail("codex.project.context_manifest", "context manifest missing", manifestPath)];
+  if (!existsSync(metaPath)) return [pass("codex.project.context_manifest", "context manifest exists", manifestPath), fail("codex.project.context_manifest.meta", "context manifest metadata missing", metaPath)];
+
+  const manifestParsed = parseJsonFile<ContextManifest>(manifestPath);
+  if (!manifestParsed.ok) return [fail("codex.project.context_manifest", `context manifest invalid JSON: ${manifestParsed.error}`, manifestPath)];
+  const metaParsed = parseJsonFile<ContextManifestMeta>(metaPath);
+  if (!metaParsed.ok) return [pass("codex.project.context_manifest", "context manifest JSON is valid", manifestPath), fail("codex.project.context_manifest.meta", `context manifest metadata invalid JSON: ${metaParsed.error}`, metaPath)];
+  const manifest = manifestParsed.value;
+  const meta = metaParsed.value;
+  const entryStatuses = new Set(["selected", "missing", "omitted", "rejected"]);
+  const entrySafeties = new Set(["safe", "unsafe", "secret", "generated", "binary"]);
+  const schemaOk =
+    manifest.schemaVersion === 1 &&
+    manifest.product === "codex-game-studio" &&
+    manifest.projectStage === studio.mode &&
+    manifest.studioMode === studio.studioMode &&
+    Array.isArray(manifest.entries) &&
+    manifest.entries.every(
+      (entry) =>
+        typeof entry.sourcePath === "string" &&
+        typeof entry.reason === "string" &&
+        typeof entry.required === "boolean" &&
+        entryStatuses.has(entry.status) &&
+        entrySafeties.has(entry.safety) &&
+        typeof entry.statusReason === "string" &&
+        typeof entry.chars === "number"
+    ) &&
+    manifest.budget &&
+    typeof manifest.budget.maxFiles === "number" &&
+    typeof manifest.budget.maxChars === "number" &&
+    typeof manifest.budget.maxEntryChars === "number";
+  checks.push(schemaOk ? pass("codex.project.context_manifest", "context manifest schema-readable", manifestPath) : fail("codex.project.context_manifest", "context manifest schema invalid", manifestPath));
+
+  const expected = createContextManifest(projectRoot, studio);
+  const freshnessOk =
+    meta.schemaVersion === 1 &&
+    meta.product === "codex-game-studio" &&
+    meta.projectStage === studio.mode &&
+    meta.studioMode === studio.studioMode &&
+    meta.manifestSha256 === hashJsonBody(manifest) &&
+    meta.inputsSha256 === stableHash(contextManifestInput(studio)) &&
+    JSON.stringify(manifest) === JSON.stringify(expected.manifest);
+  checks.push(freshnessOk ? pass("codex.project.context_manifest.freshness", "context manifest freshness metadata is current", metaPath) : fail("codex.project.context_manifest.freshness", "context manifest freshness metadata is stale", metaPath));
+  return checks;
+}
+
+function engineReferenceRepoChecks(root: string): ValidationCheck[] {
+  return validateEngineReferencePacks(root).map((check) => ({
+    id: check.id,
+    status: check.status,
+    message: check.message,
+    path: check.path
+  }));
+}
+
+function engineReferenceProjectChecks(projectRoot: string, studio: StudioProjectState): ValidationCheck[] {
+  const checks: ValidationCheck[] = [];
+  const pack = engineReferenceRegistry[studio.engine];
+  const materializedFiles = [...new Set([...pack.requiredFiles, ...pack.pluginFiles, ...pack.specialistFiles])];
+  for (const file of materializedFiles) {
+    const projectFile = path.join(projectRoot, pack.projectPath(file));
+    checks.push(existsSync(projectFile) ? pass(`engine_reference.project.${studio.engine}.${file}`, `${studio.engine} ${file} materialized`, projectFile) : fail(`engine_reference.project.${studio.engine}.${file}`, `${studio.engine} ${file} missing from generated project`, projectFile));
+  }
+  for (const check of validateEngineReferencePacks(packageAssetPath("."))) {
+    if (!check.id.startsWith(`engine_reference.${studio.engine}.`)) continue;
+    checks.push({
+      id: check.id.replace(`engine_reference.${studio.engine}.`, `engine_reference.package.${studio.engine}.`),
+      status: check.status,
+      message: check.message,
+      path: check.path
+    });
+  }
+  return checks;
+}
+
+function stablePromptSectionChecks(projectRoot: string, role: StudioRoleId, studio: StudioProjectState): ValidationCheck[] {
   const file = path.join(projectRoot, ".codex", "prompts", `${role}.md`);
   if (!existsSync(file)) return [fail(`codex.role.${role}.prompt.exists`, `${role} prompt missing`, file), fail(`codex.prompt.${role}`, `${role} prompt missing`, file)];
   const body = readFileSync(file, "utf8");
@@ -115,6 +210,10 @@ function stablePromptSectionChecks(projectRoot: string, role: (typeof studioRole
   ] as const) {
     checks.push(sectionHasContent(body, label) ? pass(`codex.role.${role}.prompt.${id}`, `${label} exists`, file) : fail(`codex.role.${role}.prompt.${id}`, `${label} missing content`, file));
   }
+  for (const reference of selectedEngineReferencePrompts(studio.engine, role)) {
+    const expected = engineReferenceRegistry[studio.engine].projectPath(reference.path);
+    checks.push(body.includes(expected) ? pass(`codex.role.${role}.engine_reference.${reference.path}`, `${role} references ${expected}`, file) : fail(`codex.role.${role}.engine_reference.${reference.path}`, `${role} prompt missing ${expected}`, file));
+  }
   return checks;
 }
 
@@ -129,10 +228,10 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
   checks.push(scripts.build === "tsc -p tsconfig.build.json" ? pass("package.build", "build uses tsconfig.build.json") : fail("package.build", "build must use tsconfig.build.json", pkgPath));
   checks.push(pkg.bin?.opengamestudio === "./dist/cli.js" && !pkg.bin?.["open-gamestudio"] ? pass("package.bin", "opengamestudio bin points to dist/cli.js") : fail("package.bin", "opengamestudio bin must point to ./dist/cli.js and replace open-gamestudio", pkgPath));
   checks.push(pkg.engines?.node?.includes(">=20") ? pass("package.node", "node floor declared") : fail("package.node", "node >=20 must be declared", pkgPath));
-  for (const file of ["dist/", "engine_configs/", "templates/"]) {
+  for (const file of ["dist/", "engine_configs/", "engine_reference/", "templates/"]) {
     checks.push(pkg.files?.includes(file) ? pass(`pkg.files.${file}`, `${file} shipped`) : fail(`pkg.files.${file}`, `${file} missing from package files`, pkgPath));
   }
-  for (const file of ["src/cli.ts", "src/codex-runtime.ts", "src/codex-session.ts", "src/codex-prompts.ts", "src/roles.ts", "src/tasks.ts", "src/workflows.ts", "src/verification.ts", "src/projects.ts", "src/runner.ts", "src/validation.ts"]) {
+  for (const file of ["src/cli.ts", "src/codex-runtime.ts", "src/codex-session.ts", "src/codex-prompts.ts", "src/prompt-context.ts", "src/context-manifest.ts", "src/roles.ts", "src/tasks.ts", "src/workflows.ts", "src/verification.ts", "src/projects.ts", "src/runner.ts", "src/validation.ts"]) {
     checks.push(existsSync(path.join(root, file)) ? pass(`src.${file}`, `${file} exists`) : fail(`src.${file}`, `${file} missing`, file));
   }
 
@@ -150,6 +249,7 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
   for (const [id, config] of Object.entries(engines)) {
     checks.push(config.codex_hints.length && config.run_command && config.test_command ? pass(`codex.engine.${id}`, `${id} Codex hints parse`) : fail(`codex.engine.${id}`, `${id} Codex hints missing`));
   }
+  checks.push(...engineReferenceRepoChecks(root));
 
   for (const workflow of workflowIds()) {
     const definition = workflowRegistry[workflow];
@@ -197,7 +297,14 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
       const packRaw = execFileSync("npm", ["pack", "--json"], { cwd: root, encoding: "utf8", shell: false });
       const packInfo = JSON.parse(packRaw)[0] as { filename: string; files: { path: string }[] };
       const packed = new Set(packInfo.files.map((file) => file.path));
-      for (const need of ["dist/cli.js", "engine_configs/godot.json", "engine_configs/unity.json", "engine_configs/unreal.json", ...Object.values(templateRegistry).map((template) => template.path)]) {
+      for (const need of [
+        "dist/cli.js",
+        "engine_configs/godot.json",
+        "engine_configs/unity.json",
+        "engine_configs/unreal.json",
+        ...Object.values(templateRegistry).map((template) => template.path),
+        ...Object.values(engineReferenceRegistry).flatMap((pack) => pack.packageSmokeFiles.map((file) => `${pack.packageRoot}/${file}`))
+      ]) {
         checks.push(packed.has(need) ? pass(`pack.${need}`, `${need} packed`) : fail(`pack.${need}`, `${need} missing from npm pack`));
       }
       const temp = mkdtempSync(path.join(tmpdir(), "open-gamestudio-pack-"));
@@ -227,8 +334,10 @@ export function validateProject(projectRoot: string): ValidationCheck[] {
     return [fail("codex.project.studio", `invalid studio state: ${(error as Error).message}`, studioPath)];
   }
 
-  checks.push(JSON.stringify(studio.roles) === JSON.stringify(studioRoleIds) ? pass("codex.project.roles", "full role roster recorded", studioPath) : fail("codex.project.roles", "studio roles must equal canonical studioRoleIds", studioPath));
-  checks.push(JSON.stringify(studio.activeRoles) === JSON.stringify(activeAgentsForMode(studio.mode)) ? pass("codex.project.activeRoles", "mode-active roles recorded", studioPath) : fail("codex.project.activeRoles", "activeRoles must match project mode", studioPath));
+  const expectedProjectRoles = projectRoleIdsForEngine(studio.engine);
+  const expectedActiveRoles = activeAgentsForProject(studio.mode, studio.engine);
+  checks.push(JSON.stringify(studio.roles) === JSON.stringify(expectedProjectRoles) ? pass("codex.project.roles", "engine-scoped role roster recorded", studioPath) : fail("codex.project.roles", "studio roles must match engine-scoped project roles", studioPath));
+  checks.push(JSON.stringify(studio.activeRoles) === JSON.stringify(expectedActiveRoles) ? pass("codex.project.activeRoles", "mode and engine-active roles recorded", studioPath) : fail("codex.project.activeRoles", "activeRoles must match project mode and engine", studioPath));
   checks.push(JSON.stringify(studio.workflows) === JSON.stringify(workflowIds()) ? pass("codex.project.workflows", "canonical workflows recorded", studioPath) : fail("codex.project.workflows", "workflows must match registry keys", studioPath));
 
   const approvalsPath = path.join(projectRoot, ".codex", "approvals.json");
@@ -244,6 +353,9 @@ export function validateProject(projectRoot: string): ValidationCheck[] {
     }
   }
 
+  checks.push(...contextManifestChecks(projectRoot, studio));
+  checks.push(...engineReferenceProjectChecks(projectRoot, studio));
+
   const agentsMd = path.join(projectRoot, "AGENTS.md");
   if (existsSync(agentsMd)) {
     const body = readFileSync(agentsMd, "utf8");
@@ -254,7 +366,13 @@ export function validateProject(projectRoot: string): ValidationCheck[] {
     checks.push(fail("project.agents_md", "AGENTS.md missing", agentsMd));
   }
 
-  for (const role of studioRoleIds) checks.push(...stablePromptSectionChecks(projectRoot, role, studio));
+  const expectedPromptRoles = new Set(expectedProjectRoles);
+  for (const role of expectedProjectRoles) checks.push(...stablePromptSectionChecks(projectRoot, role, studio));
+  for (const role of studioRoleIds) {
+    if (!isEngineSpecialistRoleId(role) || expectedPromptRoles.has(role)) continue;
+    const file = path.join(projectRoot, ".codex", "prompts", `${role}.md`);
+    checks.push(existsSync(file) ? fail(`codex.role.${role}.prompt.absent`, `${role} prompt must not be materialized for ${studio.engine} projects`, file) : pass(`codex.role.${role}.prompt.absent`, `${role} prompt absent for ${studio.engine} project`, file));
+  }
 
   for (const workflow of workflowIds()) {
     const file = path.join(projectRoot, workflowRegistry[workflow].file);

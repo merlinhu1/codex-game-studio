@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -10,6 +10,7 @@ import { workflowSourceInput } from "../src/projects.js";
 import { runValidation, validateProject } from "../src/validation.js";
 import { hashGeneratedBody, stableHash, stripGeneratedMetadata } from "../src/generated-surfaces.js";
 import { loadEngineConfigs } from "../src/engines.js";
+import { engineReferenceRegistry } from "../src/engine-reference.js";
 import { rolePackages } from "../src/roles.js";
 
 const validApprovalRecord = {
@@ -88,6 +89,22 @@ describe("validation", () => {
     expect(validateProject(projectRoot)[0].status).toBe("fail");
   });
 
+  test("invalid studio mode fails project validation", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
+    const { projectRoot } = initProject({ name: "Studio Mode Val", engine: "godot", mode: "prototype", studioMode: "strict-studio", nonInteractive: true }, cwd);
+    const studioPath = path.join(projectRoot, ".codex", "studio.json");
+    const studio = JSON.parse(readFileSync(studioPath, "utf8"));
+    studio.studioMode = "ceremony-platform";
+    writeFileSync(studioPath, `${JSON.stringify(studio, null, 2)}\n`);
+    expect(validateProject(projectRoot)[0]).toEqual(
+      expect.objectContaining({
+        id: "codex.project.studio",
+        status: "fail",
+        message: expect.stringMatching(/studioMode/i)
+      })
+    );
+  });
+
   test("malformed approval store fails project validation", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
     const { projectRoot } = initProject({ name: "Approval Val", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
@@ -102,6 +119,26 @@ describe("validation", () => {
         message: expect.stringMatching(/approval store invalid/i)
       })
     );
+  });
+
+  test("context manifest schema and stale freshness metadata fail project validation", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
+    const { projectRoot } = initProject({ name: "Manifest Val", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+
+    writeFileSync(path.join(projectRoot, ".codex", "context-manifest.json"), "{ invalid json");
+    expect(validateProject(projectRoot).filter((c) => c.status === "fail")).toContainEqual(
+      expect.objectContaining({ id: "codex.project.context_manifest", message: expect.stringMatching(/invalid JSON/i) })
+    );
+
+    const { projectRoot: staleProject } = initProject({ name: "Stale Manifest Val", engine: "godot", mode: "prototype", studioMode: "strict-studio", nonInteractive: true }, cwd);
+    const metaPath = path.join(staleProject, ".codex", "context-manifest.meta.json");
+    const meta = JSON.parse(readFileSync(metaPath, "utf8"));
+    meta.studioMode = "guided-studio";
+    meta.manifestSha256 = "0".repeat(64);
+    writeFileSync(metaPath, `${JSON.stringify(meta, null, 2)}\n`);
+
+    const failures = validateProject(staleProject).filter((c) => c.status === "fail");
+    expect(failures.map((f) => f.id)).toContain("codex.project.context_manifest.freshness");
   });
 
   test("approval store symlink escape fails project validation", () => {
@@ -129,6 +166,53 @@ describe("validation", () => {
     const { projectRoot } = initProject({ name: "Freeze Valid", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     freezeProject(projectRoot, cwd);
     expect(validateProject(projectRoot).filter((c) => c.status === "fail")).toEqual([]);
+  });
+
+  test("engine reference validation covers package metadata and project materialization", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-engine-reference-"));
+    const { projectRoot } = initProject({ name: "Unity Reference Valid", engine: "unity", mode: "prototype", nonInteractive: true }, cwd);
+
+    for (const file of engineReferenceRegistry.unity.requiredFiles) {
+      expect(existsSync(path.join(projectRoot, engineReferenceRegistry.unity.projectPath(file)))).toBe(true);
+    }
+    expect(existsSync(path.join(projectRoot, "docs", "engine-reference", "unreal", "VERSION.md"))).toBe(false);
+
+    const checks = validateProject(projectRoot);
+    expect(checks.filter((c) => c.id.startsWith("engine_reference.") && c.status === "fail")).toEqual([]);
+    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.package.unity.VERSION.md.metadata", status: "pass" }));
+    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.project.unity.VERSION.md", status: "pass" }));
+  });
+
+  test("missing materialized engine reference fails project validation", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-engine-reference-"));
+    const { projectRoot } = initProject({ name: "Broken Reference Valid", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    rmSync(path.join(projectRoot, "docs", "engine-reference", "godot", "plugins.md"));
+
+    expect(validateProject(projectRoot).filter((c) => c.status === "fail")).toContainEqual(
+      expect.objectContaining({ id: "engine_reference.project.godot.plugins.md" })
+    );
+  });
+
+  test("wrong-engine specialist prompts are absent and active specialist prompt is validated", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-specialist-"));
+    const { projectRoot } = initProject({ name: "Godot Specialist Valid", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+
+    expect(validateProject(projectRoot).filter((c) => c.status === "fail")).toEqual([]);
+    rmSync(path.join(projectRoot, ".codex", "prompts", "godot-specialist.md"));
+
+    const failures = validateProject(projectRoot).filter((c) => c.status === "fail");
+    expect(failures.map((f) => f.id)).toContain("codex.role.godot-specialist.prompt.exists");
+    expect(failures.map((f) => f.id)).not.toContain("codex.role.unity-specialist.prompt.exists");
+  });
+
+  test("validation fails when wrong-engine specialist prompts are materialized", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-specialist-"));
+    const { projectRoot } = initProject({ name: "Wrong Specialist Valid", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    writeFileSync(path.join(projectRoot, ".codex", "prompts", "unity-specialist.md"), "# Wrong specialist\n");
+
+    expect(validateProject(projectRoot).filter((c) => c.status === "fail")).toContainEqual(
+      expect.objectContaining({ id: "codex.role.unity-specialist.prompt.absent" })
+    );
   });
 
   test("generated surface hashes are stable for object key order", () => {

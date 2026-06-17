@@ -30,6 +30,9 @@ export type ExecuteTaskRunOptions = {
   review?: boolean;
   fix?: boolean;
   maxFixPasses?: number;
+  approvedByUser?: boolean;
+  constrainedSandbox?: boolean;
+  approvalScope?: string[];
 };
 
 export type ExecuteTaskRunResult = {
@@ -144,7 +147,10 @@ export async function executeTaskRun(projectRoot: string, taskId: string, option
       verifyCommand: task.verification,
       review: options.review,
       fix: options.fix,
-      maxFixPasses: options.maxFixPasses
+      maxFixPasses: options.maxFixPasses,
+      approvedByUser: options.approvedByUser,
+      constrainedSandbox: options.constrainedSandbox,
+      approvalScope: options.approvalScope
     },
     process.cwd()
   );

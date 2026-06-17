@@ -34,8 +34,11 @@ export function renderCodexPrompt(session: CodexStudioSession): string {
     `Objective: ${session.objective}`,
     session.engine ? `Engine: ${session.engine}` : "Engine: unspecified",
     `Sandbox: ${session.sandbox}`,
+    session.writePolicy ? `Write Policy: ${session.writePolicy}` : undefined,
     `File Edits: ${session.allowFileEdits ? "allowed" : "not allowed"}`,
     "",
+    session.contextContract,
+    session.contextContract ? "" : undefined,
     "## Role Contract",
     role.systemPrompt,
     "",
@@ -56,5 +59,7 @@ export function renderCodexPrompt(session: CodexStudioSession): string {
     "",
     "## Completion Report",
     "Report changed files, verification results, decisions made, and remaining risks."
-  ].join("\n");
+  ]
+    .filter((line): line is string => line !== undefined)
+    .join("\n");
 }

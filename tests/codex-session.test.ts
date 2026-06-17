@@ -20,7 +20,7 @@ describe("Codex studio sessions", () => {
       phase: "implement"
     });
     expect(impl.allowFileEdits).toBe(true);
-    expect(impl.sandbox).toBe("workspace-write");
+    expect(impl.sandbox).toBe("danger-full-access");
   });
 
   test("rejects invalid sessions and writable sandbox without file edits", () => {

@@ -1,18 +1,22 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { activeAgentsForMode, slugify, type ProjectConfig, type ProjectMode } from "./config.js";
+import { activeAgentsForProject, slugify, type ProjectConfig, type ProjectMode } from "./config.js";
 import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, projectClassName, sourceRoot, unrealProjectFileName } from "./engines.js";
+import { materializeEngineReferences } from "./engine-reference.js";
 import { materializeAgents } from "./agents.js";
 import { writeApprovalStore } from "./approvals.js";
+import { writeContextManifest } from "./context-manifest.js";
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { packageAssetPath, resolveProjectRoot } from "./paths.js";
-import { rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
+import { projectRoleIdsForEngine, rolePackages, type StudioRoleId } from "./roles.js";
 import { workflowIds, workflowRegistry, type WorkflowId } from "./workflows.js";
+import type { StudioMode } from "./studio-policy.js";
 
 export type InitProjectOptions = {
   name: string;
   engine: string;
   mode?: ProjectMode;
+  studioMode?: StudioMode;
   concept?: string;
   genre?: string;
   platform?: string;
@@ -39,6 +43,7 @@ export type StudioProjectState = {
   engine: ProjectConfig["project"]["engine"];
   engineVersion: string;
   mode: ProjectMode;
+  studioMode: StudioMode;
   phase: string;
   status: "active" | "frozen" | "inactive";
   currentMilestone: string;
@@ -53,6 +58,7 @@ export function defaultProjectConfig(options: InitProjectOptions): ProjectConfig
   if (!options.nonInteractive) throw new Error("init requires --non-interactive");
   if (!options.mode) throw new Error("init requires --mode");
   const mode = options.mode;
+  const studioMode = options.studioMode ?? "guided-studio";
   const slug = slugify(options.name);
   return {
     schema_version: "1.0",
@@ -69,10 +75,11 @@ export function defaultProjectConfig(options: InitProjectOptions): ProjectConfig
       engine,
       engine_version: options.engineVersion ?? engines[engine].default_version,
       mode,
+      studio_mode: studioMode,
       phase: "Initialization",
       status: "active"
     },
-    team: { active_agents: activeAgentsForMode(mode) },
+    team: { active_agents: activeAgentsForProject(mode, engine) },
     production: {
       milestones: [
         {
@@ -142,17 +149,25 @@ export function studioStateFromConfig(config: ProjectConfig): StudioProjectState
     engine: config.project.engine,
     engineVersion: config.project.engine_version,
     mode: config.project.mode,
+    studioMode: config.project.studio_mode,
     phase: config.project.phase,
     status: config.project.status,
     currentMilestone: config.project.mode === "design" ? "design" : config.project.mode === "development" ? "development" : "prototype",
-    roles: [...studioRoleIds],
-    activeRoles: activeAgentsForMode(config.project.mode),
+    roles: projectRoleIdsForEngine(config.project.engine),
+    activeRoles: activeAgentsForProject(config.project.mode, config.project.engine),
     workflows: workflowIds()
   };
 }
 
 export function readStudioProject(projectRoot: string): StudioProjectState {
-  return JSON.parse(readFileSync(path.join(projectRoot, ".codex", "studio.json"), "utf8")) as StudioProjectState;
+  const value = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "studio.json"), "utf8")) as Partial<StudioProjectState>;
+  if (value.mode !== "design" && value.mode !== "prototype" && value.mode !== "development") {
+    throw new Error("studio.json mode must be design, prototype, or development");
+  }
+  if (value.studioMode !== "fast-prototype" && value.studioMode !== "guided-studio" && value.studioMode !== "strict-studio") {
+    throw new Error("studio.json studioMode must be fast-prototype, guided-studio, or strict-studio");
+  }
+  return value as StudioProjectState;
 }
 
 function writeStudioProject(projectRoot: string, state: StudioProjectState): void {
@@ -238,7 +253,9 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
   writeStudioProject(projectRoot, studioStateFromConfig(config));
   writeCodexWorkflowFiles(projectRoot);
   writeStarterDocs(projectRoot, config);
+  materializeEngineReferences(projectRoot, packageAssetPath("."), config.project.engine);
   materializeAgents({ projectRoot, config, engines });
+  writeContextManifest(projectRoot, readStudioProject(projectRoot));
   return { projectRoot, config };
 }
 
@@ -250,6 +267,7 @@ export function statusProject(project?: string, cwd = process.cwd()): string {
     `phase: ${config.phase}`,
     `status: ${config.status}`,
     `mode: ${config.mode}`,
+    `studio mode: ${config.studioMode}`,
     `engine: ${config.engine}`,
     `active roles: ${(config.activeRoles ?? config.roles).join(", ")}`
   ].join("\n");

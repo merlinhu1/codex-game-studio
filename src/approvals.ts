@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, realpathSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import type { ProjectStage, StudioMode } from "./studio-policy.js";
@@ -18,6 +19,9 @@ export type ApprovalRecord = {
   stage: ApprovalStage;
   role: string;
   objectiveSha256: string;
+  objective?: string;
+  projectStage?: ProjectStage;
+  studioMode?: StudioMode;
   approvedGlobs: string[];
   approvedFiles?: string[];
   source: ApprovalSource;
@@ -73,15 +77,21 @@ export type ApprovalMismatchDiagnostic = {
 export type AppendApprovalInput = {
   role: string;
   objectiveSha256: string;
+  objective?: string;
+  projectStage?: ProjectStage;
+  studioMode?: StudioMode;
   approvedGlobs: string[];
   approvedFiles?: string[];
   approvedBy: string;
   approvedAt?: string;
   expiresAt?: string;
+  baseline?: ApprovalBaseline;
 };
 
 const approvalStageSet = new Set<string>(approvalStages);
 const approvalSources = new Set<string>(["draft-workflow", "approval-command", "cli-override"]);
+const projectStages = new Set<string>(["design", "prototype", "development"]);
+const studioModes = new Set<string>(["fast-prototype", "guided-studio", "strict-studio"]);
 const hashPattern = /^[a-f0-9]{64}$/;
 const broadScopeSet = new Set<string>([".", "*", "**", "**/*"]);
 
@@ -197,27 +207,9 @@ export function approvalMatches(store: ApprovalStore, input: ApprovalMatchInput)
   const now = input.now ?? new Date();
   const reasons = new Set<string>();
   for (const record of store.records) {
-    if (normalizeRole(record.role) !== normalizeRole(input.role)) {
-      reasons.add("role mismatch");
-      continue;
-    }
-    if (record.objectiveSha256 !== objectiveSha256) {
-      reasons.add("objective hash mismatch");
-      continue;
-    }
-    if (record.revokedAt) {
-      reasons.add("approval revoked");
-      continue;
-    }
-    if (record.expiresAt && Date.parse(record.expiresAt) <= now.getTime()) {
-      reasons.add("approval expired");
-      continue;
-    }
-    if (record.stage !== "approved") {
-      reasons.add(`approval stage is ${record.stage}`);
-      continue;
-    }
-    return { matched: true, record, reasons: [] };
+    const recordReasons = approvalRecordMismatchReasons(record, input, objectiveSha256, now);
+    if (recordReasons.length === 0) return { matched: true, record, reasons: [] };
+    for (const reason of recordReasons) reasons.add(reason);
   }
   return { matched: false, reasons: [...reasons] };
 }
@@ -226,7 +218,7 @@ export function explainApprovalMismatch(store: ApprovalStore, input: ApprovalMat
   const objectiveSha256 = canonicalObjectiveSha256(input);
   const now = input.now ?? new Date();
   const records = store.records.map((record) => {
-    const reasons = approvalRecordMismatchReasons(record, input.role, objectiveSha256, now);
+    const reasons = approvalRecordMismatchReasons(record, input, objectiveSha256, now);
     return {
       id: record.id,
       authorizing: reasons.length === 0,
@@ -250,12 +242,16 @@ export function appendApprovalRecord(projectRoot: string, input: AppendApprovalI
     stage: "approved",
     role: normalizeRole(input.role),
     objectiveSha256: normalizeObjectiveSha256(input.objectiveSha256),
+    objective: input.objective ? normalizeObjective(input.objective) : undefined,
+    projectStage: input.projectStage,
+    studioMode: input.studioMode,
     approvedGlobs: normalizeApprovalScope(input.approvedGlobs, { projectRoot }),
     approvedFiles: input.approvedFiles ? normalizeApprovalScope(input.approvedFiles, { projectRoot }) : undefined,
     source: "approval-command",
     approvedBy: input.approvedBy.trim(),
     approvedAt: input.approvedAt ?? new Date().toISOString(),
-    expiresAt: input.expiresAt
+    expiresAt: input.expiresAt,
+    baseline: input.baseline ?? collectApprovalBaseline(projectRoot)
   };
   const result = validateApprovalStore({ ...store, records: [...store.records, record] }, { projectRoot });
   if (!result.ok) throw new Error(`approval record invalid: ${result.errors.join("; ")}`);
@@ -267,7 +263,7 @@ export function revokeApprovalRecord(projectRoot: string, approvalId: string, re
   const store = readApprovalStore(projectRoot);
   const record = store.records.find((candidate) => candidate.id === approvalId);
   if (!record) throw new Error(`Unknown approval id: ${approvalId}`);
-  record.revokedAt = revokedAt;
+  if (!record.revokedAt) record.revokedAt = revokedAt;
   const result = validateApprovalStore(store, { projectRoot });
   if (!result.ok) throw new Error(`approval store invalid after revoke: ${result.errors.join("; ")}`);
   writeApprovalStore(projectRoot, store);
@@ -316,6 +312,9 @@ function validateApprovalRecord(value: unknown, index: number, errors: string[],
   if (!approvalStageSet.has(String(value.stage))) errors.push(`${prefix}.stage must be one of ${approvalStages.join(", ")}`);
   requireString(value.role, `${prefix}.role`, errors);
   if (typeof value.objectiveSha256 !== "string" || !hashPattern.test(value.objectiveSha256)) errors.push(`${prefix}.objectiveSha256 must be a sha256 hex string`);
+  if (value.objective !== undefined) requireString(value.objective, `${prefix}.objective`, errors);
+  if (value.projectStage !== undefined && !projectStages.has(String(value.projectStage))) errors.push(`${prefix}.projectStage must be design, prototype, or development`);
+  if (value.studioMode !== undefined && !studioModes.has(String(value.studioMode))) errors.push(`${prefix}.studioMode must be fast-prototype, guided-studio, or strict-studio`);
   validateScopeField(value.approvedGlobs, `${prefix}.approvedGlobs`, errors, options);
   if (value.approvedFiles !== undefined) validateScopeField(value.approvedFiles, `${prefix}.approvedFiles`, errors, options);
   if (!approvalSources.has(String(value.source))) errors.push(`${prefix}.source must be draft-workflow, approval-command, or cli-override`);
@@ -369,12 +368,44 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
-function approvalRecordMismatchReasons(record: ApprovalRecord, role: string, objectiveSha256: string, now: Date): string[] {
+function approvalRecordMismatchReasons(record: ApprovalRecord, input: ApprovalMatchInput, objectiveSha256: string, now: Date): string[] {
   const reasons: string[] = [];
-  if (normalizeRole(record.role) !== normalizeRole(role)) reasons.push("role mismatch");
+  if (normalizeRole(record.role) !== normalizeRole(input.role)) reasons.push("role mismatch");
+  if (record.objective !== undefined && normalizeObjective(record.objective) !== normalizeObjective(input.objective)) reasons.push("normalized objective mismatch");
+  if (!sameScope(record.approvedGlobs, input.approvedGlobs)) reasons.push("scope mismatch");
+  if (!sameScope(record.approvedFiles ?? [], input.approvedFiles ?? [])) reasons.push("approved files mismatch");
+  if (record.projectStage !== undefined && record.projectStage !== input.projectStage) reasons.push("project stage mismatch");
+  if (record.studioMode !== undefined && record.studioMode !== input.studioMode) reasons.push("studio mode mismatch");
   if (record.objectiveSha256 !== objectiveSha256) reasons.push("objective hash mismatch");
   reasons.push(...approvalRecordLifecycleReasons(record, now));
   return reasons;
+}
+
+function sameScope(left: string[], right: string[]): boolean {
+  try {
+    return JSON.stringify(normalizeApprovalScope(left)) === JSON.stringify(normalizeApprovalScope(right));
+  } catch {
+    return false;
+  }
+}
+
+function collectApprovalBaseline(projectRoot: string): ApprovalBaseline {
+  try {
+    const gitHead = execFileSync("git", ["-C", projectRoot, "rev-parse", "HEAD"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    const diff = execFileSync("git", ["-C", projectRoot, "diff", "--binary", "HEAD", "--"], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"]
+    });
+    return {
+      gitHead,
+      diffSha256: sha256(diff)
+    };
+  } catch {
+    return {
+      gitHead: "unavailable:no-git-baseline",
+      diffSha256: sha256("unavailable:no-git-baseline\n")
+    };
+  }
 }
 
 function approvalRecordLifecycleReasons(record: ApprovalRecord, now: Date): string[] {

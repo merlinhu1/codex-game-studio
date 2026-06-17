@@ -4,8 +4,8 @@ doc_type: architecture
 truth_kind: architecture
 last_reviewed: 2026-05-30
 source_of_truth:
-  - ../../truthmark/truth/projects/project-scaffolding.md
-  - ../../truthmark/truth/repository/overview.md
+  - ../../truthmark/engineering/projects/project-scaffolding.md
+  - ../../truthmark/engineering/repository/overview.md
   - ../repository-structure.md
 ---
 
@@ -101,11 +101,11 @@ flowchart TD
 
 | Condition | Branch | Behavior | User-visible result | Owning code/truth |
 | --- | --- | --- | --- | --- |
-| Required option missing | CLI parse failure | Stop before initialization. | Commander error. | `src/cli.ts`; `docs/truthmark/truth/contracts/cli-and-validation.md` |
-| `--non-interactive` missing | Determinism guard | Stop before writing. | Required option error. | `src/cli.ts`; `docs/truthmark/truth/projects/project-scaffolding.md` |
-| Engine is unknown | Engine registry guard | Stop before writing. | Invalid engine/lookup failure. | `src/engines.ts`; `docs/truthmark/truth/projects/project-scaffolding.md` |
-| Target path exists | Collision guard | Stop before mutating target. | Existing project/path error. | `src/projects.ts`; `docs/truthmark/truth/projects/project-scaffolding.md` |
-| Collision checks pass | Happy path | Write generated project surfaces. | `Created <name> at <path>`. | `src/projects.ts`; `docs/truthmark/truth/projects/project-scaffolding.md` |
+| Required option missing | CLI parse failure | Stop before initialization. | Commander error. | `src/cli.ts`; `docs/truthmark/engineering/contracts/cli-and-validation.md` |
+| `--non-interactive` missing | Determinism guard | Stop before writing. | Required option error. | `src/cli.ts`; `docs/truthmark/engineering/projects/project-scaffolding.md` |
+| Engine is unknown | Engine registry guard | Stop before writing. | Invalid engine/lookup failure. | `src/engines.ts`; `docs/truthmark/engineering/projects/project-scaffolding.md` |
+| Target path exists | Collision guard | Stop before mutating target. | Existing project/path error. | `src/projects.ts`; `docs/truthmark/engineering/projects/project-scaffolding.md` |
+| Collision checks pass | Happy path | Write generated project surfaces. | `Created <name> at <path>`. | `src/projects.ts`; `docs/truthmark/engineering/projects/project-scaffolding.md` |
 
 ## Generated Outputs
 
@@ -154,9 +154,9 @@ A bounded initialization flow gives users and agents a stable project scaffold w
 
 ## Truth Sources
 
-- `docs/truthmark/truth/projects/project-scaffolding.md`
-- `docs/truthmark/truth/repository/overview.md`
-- `docs/truthmark/truth/contracts/cli-and-validation.md`
+- `docs/truthmark/engineering/projects/project-scaffolding.md`
+- `docs/truthmark/engineering/repository/overview.md`
+- `docs/truthmark/engineering/contracts/cli-and-validation.md`
 - `docs/truthmark/routes/areas/repository.md`
 
 ## Verification

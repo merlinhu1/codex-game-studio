@@ -5,7 +5,7 @@ truth_kind: architecture
 last_reviewed: 2026-05-30
 source_of_truth:
   - ../repository-structure.md
-  - ../../truthmark/truth/repository/overview.md
+  - ../../truthmark/engineering/repository/overview.md
 ---
 
 # Architecture Flow Guides
@@ -29,7 +29,7 @@ Truthmark truth docs own canonical behavior claims. Architecture flow guides own
 
 | Layer | Purpose | Example |
 | --- | --- | --- |
-| Truth docs | Bounded, canonical behavior/reference claims | `docs/truthmark/truth/codex/runtime-and-tasks.md` |
+| Truth docs | Bounded, canonical behavior/reference claims | `docs/truthmark/engineering/codex/runtime-and-tasks.md` |
 | Flow guides | Cross-cutting runtime scenarios, branches, and debugging paths | `docs/architecture/flows/role-run-lifecycle.md` |
 | Portal | Generated non-canonical presentation | `docs/truthmark/generated/portal/` |
 
@@ -39,10 +39,10 @@ If a flow guide conflicts with source code or a truth doc, the source code and o
 
 | Flow guide | Scenario | Primary truth docs |
 | --- | --- | --- |
-| [Project Initialization](project-initialization.md) | `init` / `new` creates a deterministic generated game project. | `docs/truthmark/truth/projects/project-scaffolding.md` |
-| [Role Run Lifecycle](role-run-lifecycle.md) | `run <role>` renders, executes, verifies, reviews, and optionally fixes a Codex role run. | `docs/truthmark/truth/codex/runtime-and-tasks.md`, `docs/truthmark/truth/codex/roles-and-workflows.md` |
-| [Workflow Prompt Rendering](workflow-prompt-rendering.md) | Workflow shortcut commands render deterministic prompts without executing Codex. | `docs/truthmark/truth/codex/roles-and-workflows.md` |
-| [Validation And Repository Truth](validation-and-repository-truth.md) | Repository/project validation and injected Truthmark repository-truth workflows around behavior changes. | `docs/truthmark/truth/contracts/cli-and-validation.md`, `docs/truthmark/truth/repository/overview.md` |
+| [Project Initialization](project-initialization.md) | `init` / `new` creates a deterministic generated game project. | `docs/truthmark/engineering/projects/project-scaffolding.md` |
+| [Role Run Lifecycle](role-run-lifecycle.md) | `run <role>` renders, executes, verifies, reviews, and optionally fixes a Codex role run. | `docs/truthmark/engineering/codex/runtime-and-tasks.md`, `docs/truthmark/engineering/codex/roles-and-workflows.md` |
+| [Workflow Prompt Rendering](workflow-prompt-rendering.md) | Workflow shortcut commands render deterministic prompts without executing Codex. | `docs/truthmark/engineering/codex/roles-and-workflows.md` |
+| [Validation And Repository Truth](validation-and-repository-truth.md) | Repository/project validation and injected Truthmark repository-truth workflows around behavior changes. | `docs/truthmark/engineering/contracts/cli-and-validation.md`, `docs/truthmark/engineering/repository/overview.md` |
 
 ## Guide Template
 
