@@ -282,6 +282,35 @@ describe("built CLI prompt surface", () => {
     expect(list).toContain("non-authorizing");
   });
 
+  test("approval grant accepts custom role ids for precomputed objective hashes", () => {
+    const { cwd, projectRoot } = initCliProject("ogs-cli-custom-approval-", "Custom Approval Game");
+
+    const grant = runCli(
+      [
+        "approval",
+        "grant",
+        "--project",
+        projectRoot,
+        "--role",
+        "custom-boss-designer",
+        "--task",
+        hash64,
+        "--scope",
+        "source/**/*.gd",
+        "--approved-by",
+        "lead"
+      ],
+      cwd
+    );
+
+    expect(grant).toContain("approval-001");
+    expect(grant).toContain("role: custom-boss-designer");
+    const store = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "approvals.json"), "utf8")) as {
+      records: Array<{ role: string; approvedGlobs: string[] }>;
+    };
+    expect(store.records[0]).toMatchObject({ role: "custom-boss-designer", approvedGlobs: ["source/**/*.gd"] });
+  });
+
   test("run dry-run shows approval override advisory and sandbox provenance", () => {
     const { cwd, projectRoot } = initCliProject("ogs-cli-policy-", "Policy Game");
 

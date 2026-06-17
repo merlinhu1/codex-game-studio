@@ -4,6 +4,7 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, test } from "vitest";
+import { appendApprovalRecord, canonicalObjectiveSha256 } from "../src/approvals.js";
 import { customizationConfigPath, readProjectCustomization } from "../src/customization.js";
 import { initProject, statusProject } from "../src/projects.js";
 import { prepareRun } from "../src/runner.js";
@@ -11,7 +12,7 @@ import { formatTemplateShow, listTemplates } from "../src/templates.js";
 import { validateProject } from "../src/validation.js";
 import { renderWorkflowPrompt } from "../src/workflows.js";
 
-function writeValidCustomPack(projectRoot: string): void {
+function writeValidCustomPack(projectRoot: string, phase: "plan" | "implement" = "plan"): void {
   mkdirSync(path.join(projectRoot, ".codex", "custom", "roles"), { recursive: true });
   mkdirSync(path.join(projectRoot, ".codex", "workflows"), { recursive: true });
   mkdirSync(path.join(projectRoot, "documentation", "templates"), { recursive: true });
@@ -30,7 +31,7 @@ function writeValidCustomPack(projectRoot: string): void {
             displayName: "Boss Designer",
             promptFile: ".codex/custom/roles/boss-designer.md",
             contextStrategy: "focused",
-            phase: "plan",
+            phase,
             expectedOutputs: ["Boss encounter brief", "Readability risks", "Playtest checks"],
             reviewChecklist: ["Boss phases are readable", "Counterplay is explicit", "Verification is concrete"]
           }
@@ -99,6 +100,38 @@ describe("project-local customization packs", () => {
     expect(run.output).toContain("Role ID: custom-boss-designer");
     expect(run.output).toContain("Boss Designer Prompt");
     expect(run.output).toContain("Template: custom-boss-brief");
+  });
+
+  test("custom implement roles can run under strict studio with a matching approval", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-custom-approval-"));
+    const { projectRoot } = initProject({ name: "Custom Approval", engine: "godot", mode: "development", studioMode: "strict-studio", nonInteractive: true }, cwd);
+    writeValidCustomPack(projectRoot, "implement");
+    const task = "Implement a boss encounter controller";
+    const approvedGlobs = ["source/**/*.gd"];
+    const objectiveSha256 = canonicalObjectiveSha256({
+      role: "custom-boss-designer",
+      objective: task,
+      approvedGlobs,
+      projectStage: "development",
+      studioMode: "strict-studio"
+    });
+    appendApprovalRecord(projectRoot, {
+      role: "custom-boss-designer",
+      objectiveSha256,
+      objective: task,
+      projectStage: "development",
+      studioMode: "strict-studio",
+      approvedGlobs,
+      approvedBy: "lead"
+    });
+
+    const run = prepareRun("custom-boss-designer", { project: projectRoot, task, dryRun: true, approvalScope: approvedGlobs }, cwd);
+
+    expect(run.output).toContain("Eligibility: allowed");
+    expect(run.output).toContain("Write policy: approved-write");
+    expect(run.output).toContain("Matching approval: true");
+    expect(run.output).toContain("Approval diagnostic:");
+    expect(run.output).toContain("approval-001: authorizing");
   });
 
   test("customization validation rejects a custom workflow with a missing file", () => {
