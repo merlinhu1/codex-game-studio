@@ -6,11 +6,11 @@ import { renderCodexPrompt } from "./codex-prompts.js";
 import type { EngineId } from "./engines.js";
 import { renderContextContract } from "./prompt-context.js";
 import type { StudioProjectState } from "./projects.js";
-import type { StudioRoleId } from "./roles.js";
+import { isStudioRoleId, type StudioRoleId } from "./roles.js";
 import { evaluateStudioRunEligibility } from "./studio-policy.js";
 import { engineReferenceContextRequests } from "./engine-reference.js";
 import { renderSelectedTemplates, type TemplateId } from "./templates.js";
-import { findCustomRole, findCustomWorkflow, projectRelativePath, renderCustomRolePrompt } from "./customization.js";
+import { findCustomRole, findCustomWorkflow, projectRelativePath, renderCustomRolePrompt, type CustomWorkflowDefinition } from "./customization.js";
 
 export type WorkflowCategory =
   | "onboarding-discovery"
@@ -474,6 +474,7 @@ export function renderWorkflowPrompt(projectRoot: string, workflow: string): str
 function renderCustomWorkflowPrompt(projectRoot: string, workflowId: string): string {
   const workflow = findCustomWorkflow(projectRoot, workflowId);
   if (!workflow) throw new Error(`Unknown workflow "${workflowId}"`);
+  if (isStudioRoleId(workflow.role)) return renderBuiltInRoleCustomWorkflowPrompt(projectRoot, workflow, workflow.role);
   const role = findCustomRole(projectRoot, workflow.role);
   if (!role) throw new Error(`Custom workflow "${workflow.id}" references unavailable role "${workflow.role}"`);
   const workflowPath = projectRelativePath(projectRoot, workflow.file);
@@ -517,6 +518,53 @@ function renderCustomWorkflowPrompt(projectRoot: string, workflowId: string): st
     workflowBody,
     "",
     renderCustomRolePrompt(projectRoot, role),
+    renderSelectedTemplates(workflow.templateIds, "## Workflow Templates", { projectRoot })
+  ].join("\n");
+}
+
+function renderBuiltInRoleCustomWorkflowPrompt(projectRoot: string, workflow: CustomWorkflowDefinition, role: StudioRoleId): string {
+  const workflowPath = projectRelativePath(projectRoot, workflow.file);
+  const workflowBody = workflowPath.ok && existsSync(workflowPath.full) ? readFileSync(workflowPath.full, "utf8").trim() : "Custom workflow file missing.";
+  const studio = readWorkflowStudio(projectRoot);
+  const selection = selectContextEntries(projectRoot, [
+    { sourcePath: "AGENTS.md", reason: `custom workflow ${workflow.id} instructions`, required: true },
+    { sourcePath: ".codex/studio.json", reason: `custom workflow ${workflow.id} project state`, required: true },
+    { sourcePath: workflow.file, reason: `custom workflow ${workflow.id} workflow prompt`, required: true },
+    ...workflow.contextFiles.map((sourcePath) => ({ sourcePath, reason: `custom workflow ${workflow.id} context`, required: false })),
+    ...engineReferenceContextRequests(studio.engine, role, workflow.objective)
+  ]);
+  const eligibility = evaluateStudioRunEligibility({
+    projectStage: studio.mode,
+    studioMode: studio.studioMode,
+    phase: workflow.phase
+  });
+  const session = createCodexStudioSession({
+    projectRoot,
+    role,
+    phase: workflow.phase,
+    objective: workflow.objective,
+    engine: readStudioEngine(projectRoot),
+    contextFiles: selection.selected.map((entry) => entry.sourcePath),
+    allowFileEdits: eligibility.allowFileEdits,
+    sandbox: eligibility.codexSandbox,
+    writePolicy: eligibility.writePolicy,
+    eligibility
+  });
+  return [
+    renderCodexPrompt({
+      ...session,
+      contextContract: renderContextContract({
+        session,
+        projectStage: studio.mode,
+        studioMode: studio.studioMode,
+        entries: selection.entries,
+        readOnlyReview: workflow.phase === "review"
+      })
+    }),
+    "",
+    `## Workflow Instructions: ${workflow.file}`,
+    "",
+    workflowBody,
     renderSelectedTemplates(workflow.templateIds, "## Workflow Templates", { projectRoot })
   ].join("\n");
 }
