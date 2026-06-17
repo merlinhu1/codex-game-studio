@@ -7,9 +7,11 @@ import { buildCodexExecArgs, resolveCodexCommand, type CodexExecutionResult } fr
 import { renderCodexPrompt } from "./codex-prompts.js";
 import { createCodexStudioSession, type VerificationCommand } from "./codex-session.js";
 import { selectContextEntries, type ContextManifestEntry, type ContextRequestEntry } from "./context-manifest.js";
+import { engineReferenceContextRequests } from "./engine-reference.js";
 import { renderContextContract } from "./prompt-context.js";
 import { readStudioProject } from "./projects.js";
 import { isEngineSpecialistRoleId, isStudioRoleId, projectRoleIdsForEngine, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
+import { customPhaseForRun, customTemplateIdsForRole, findCustomRole, renderCustomRolePrompt } from "./customization.js";
 import { resolveProjectRoot } from "./paths.js";
 import { evaluateStudioRunEligibility, type CodexSandboxMode, type CodexStudioPhase, type StudioRunEligibility } from "./studio-policy.js";
 import { renderSelectedTemplates, selectTemplates } from "./templates.js";
@@ -37,7 +39,7 @@ export type PreparedRun = {
   promptPath: string;
   metadataPath: string;
   projectRoot: string;
-  role: StudioRoleId;
+  role: string;
   task: string;
   contextFiles: string[];
   verification?: VerificationCommand;
@@ -309,11 +311,89 @@ export async function executeRunLifecycle(run: PreparedRun): Promise<RunLifecycl
 
 let runSequence = 0;
 
+function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer T ? NonNullable<T> : never, options: RunOptions, cwd: string, roleInput: string, task: string, projectRoot: string): PreparedRun {
+  const studio = readStudioProject(projectRoot);
+  const artifactRefs = (options.includeArtifact ?? []).map((artifact) => {
+    const { full, display } = safeArtifact(projectRoot, artifact);
+    return { full, display };
+  });
+  const artifactDisplays = artifactRefs.map((artifact) => artifact.display);
+  const contextRequests: ContextRequestEntry[] = [
+    { sourcePath: "AGENTS.md", reason: "project instructions", required: true },
+    { sourcePath: ".codex/studio.json", reason: "project state", required: true },
+    { sourcePath: role.promptFile, reason: "selected custom role prompt", required: true },
+    ...role.contextFiles.map((sourcePath) => ({ sourcePath, reason: "custom role context", required: false })),
+    ...artifactDisplays.map((display) => ({ sourcePath: display, reason: "included artifact", required: true })),
+    ...(options.allowBroadContext ? broadContextRequests() : [])
+  ];
+  const contextSelection = selectContextEntries(projectRoot, contextRequests);
+  const contextFilesForRun = contextFiles(contextSelection.entries);
+  const selectedContextFiles = new Set(contextFilesForRun);
+  const artifactBodies = artifactRefs
+    .filter((artifact) => selectedContextFiles.has(artifact.display))
+    .map((artifact) => `\n\n# Included Artifact: ${artifact.display}\n\n${readFileSync(artifact.full, "utf8")}`);
+  const maxFixPasses = options.maxFixPasses ?? 1;
+  if (!Number.isFinite(maxFixPasses) || maxFixPasses < 0) throw new Error("--max-fix-passes must be a finite non-negative number");
+  const phase = customPhaseForRun(role);
+  const eligibility = evaluateStudioRunEligibility({
+    projectStage: studio.mode,
+    studioMode: studio.studioMode,
+    phase,
+    approvedByUser: options.approvedByUser,
+    constrainedSandbox: options.constrainedSandbox
+  });
+  if (!eligibility.allowed && !options.printPrompt && !options.dryRun) throw new Error(eligibility.reason);
+  const templateIds = customTemplateIdsForRole(projectRoot, role.id, task);
+  const prompt = [
+    "# Codex Game Studio Custom Role Session",
+    "",
+    `Role: ${role.displayName}`,
+    `Role ID: ${role.id}`,
+    `Context Strategy: ${role.contextStrategy}`,
+    `Phase: ${phase}`,
+    `Project Root: ${projectRoot}`,
+    `Objective: ${task}`,
+    `Engine: ${studio.engine}`,
+    `Sandbox: ${eligibility.codexSandbox}`,
+    `Write Policy: ${eligibility.writePolicy}`,
+    `File Edits: ${eligibility.allowFileEdits ? "allowed" : "not allowed"}`,
+    "",
+    "## Context Files",
+    contextFilesForRun.length ? contextFilesForRun.map((file) => `- ${file}`).join("\n") : "- None selected",
+    "",
+    renderCustomRolePrompt(projectRoot, role),
+    renderSelectedTemplates(templateIds, "## Selected Templates", { projectRoot }),
+    artifactBodies.join("")
+  ].join("\n");
+  const runId = `${new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 17)}-${process.pid}-${++runSequence}`;
+  const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role.id}`);
+  const promptPath = path.join(runDir, "prompt.md");
+  const metadataPath = path.join(runDir, "metadata.json");
+  if (!options.printPrompt && !options.dryRun) {
+    mkdirSync(runDir, { recursive: true });
+    writeFileSync(promptPath, prompt);
+    writeFileSync(
+      metadataPath,
+      `${JSON.stringify({ timestamp: new Date().toISOString(), product: "codex-game-studio", project: path.relative(cwd, projectRoot) || ".", role: role.id, task, customRole: true, prompt_chars: prompt.length, prompt_cache_path: path.relative(cwd, promptPath), writePolicy: eligibility.writePolicy, allowFileEdits: eligibility.allowFileEdits, codexSandbox: eligibility.codexSandbox, eligibility }, null, 2)}\n`
+    );
+  }
+  const codexBin = options.codexBin ?? resolveCodexCommand();
+  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox);
+  const output = options.printPrompt
+    ? prompt
+    : options.dryRun
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${formatEligibility(eligibility)}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}`
+      : `Prompt cache written: ${promptPath}\n${formatEligibility(eligibility)}\nExecuting Codex: ${codexCommand.display}`;
+  return { prompt, promptPath, metadataPath, projectRoot, role: roleInput, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, output, maxFixPasses, eligibility };
+}
+
 export function prepareRun(roleInput: string, options: RunOptions, cwd = process.cwd()): PreparedRun {
-  if (!isStudioRoleId(roleInput)) throw new Error(unknownStudioRoleMessage(roleInput));
-  const role = roleInput as StudioRoleId;
   const task = requireTask(options.task);
   const projectRoot = resolveProjectRoot(options.project, cwd);
+  const customRole = isStudioRoleId(roleInput) ? undefined : findCustomRole(projectRoot, roleInput);
+  if (customRole) return prepareCustomRun(customRole, options, cwd, roleInput, task, projectRoot);
+  if (!isStudioRoleId(roleInput)) throw new Error(unknownStudioRoleMessage(roleInput));
+  const role = roleInput as StudioRoleId;
   const studio = readStudioProject(projectRoot);
   if (isEngineSpecialistRoleId(role) && !projectRoleIdsForEngine(studio.engine).includes(role)) {
     throw new Error(`${role} is not available for ${studio.engine} projects; use ${studio.engine}-specialist for this project.`);
@@ -328,6 +408,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
     { sourcePath: ".codex/studio.json", reason: "project state", required: true },
     { sourcePath: `.codex/prompts/${role}.md`, reason: "selected role prompt", required: true },
     ...artifactDisplays.map((display) => ({ sourcePath: display, reason: "included artifact", required: true })),
+    ...engineReferenceContextRequests(studio.engine, role, task),
     ...(options.allowBroadContext ? broadContextRequests() : [])
   ];
   const contextSelection = selectContextEntries(projectRoot, contextRequests);

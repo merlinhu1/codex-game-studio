@@ -1,36 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
-source-link: https://docs.unity3d.com/Manual/CreatingAndUsingScripts.html
+date: 2026-06-17
+source-link: https://docs.unity3d.com/Manual/index.html
+engine: unity
+version-reviewed: 6000.0
+tags: unity,gameplay
+roles: gameplay-programmer,engine-programmer,tools-programmer,technical-artist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
-# Unity Gameplay Reference
+# Unity Gameplay Implementation Reference
 
-version-applicability: Unity gameplay scripts, scenes, prefabs, and play-mode checks.
+## Purpose
 
-## Prefer
+Guide gameplay code with engine-native runtime patterns and verification evidence.
 
-- Keep MonoBehaviour responsibilities small and visible through serialized fields.
-- Use prefabs and scenes as explicit context when code depends on hierarchy.
+## Guidance
 
-## Avoid
+- Keep gameplay state deterministic where practical.
+- Separate authored content from generated/runtime data.
+- Prefer small feature slices with direct playtest or automated validation.
 
-- Avoid hidden scene-object lookup chains when dependencies can be assigned.
-- Avoid editing generated project caches.
+## Validation
 
-## Pitfalls
-
-- Script execution order and physics timestep can affect gameplay behavior.
-- Prefab overrides may not be obvious from script diffs alone.
-
-## Verification Notes
-
-- Run available edit-mode or play-mode tests, or document a play-mode check.
-- Name the scene or prefab used for manual verification.
-
-## Role Notes
-
-- Gameplay programmers receive this reference by default for Unity projects.
-- Technical artists should cite material, shader, or prefab runtime impact.
-
-## Official Links
-
-- https://docs.unity3d.com/Manual/CreatingAndUsingScripts.html
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

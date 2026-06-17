@@ -12,6 +12,7 @@ import { hashGeneratedBody, stableHash, stripGeneratedMetadata } from "../src/ge
 import { loadEngineConfigs } from "../src/engines.js";
 import { engineReferenceRegistry } from "../src/engine-reference.js";
 import { rolePackages } from "../src/roles.js";
+import { behavioralEvaluationScenarios } from "../src/behavioral-evaluation.js";
 
 const validApprovalRecord = {
   id: "appr_test",
@@ -172,7 +173,7 @@ describe("validation", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-engine-reference-"));
     const { projectRoot } = initProject({ name: "Unity Reference Valid", engine: "unity", mode: "prototype", nonInteractive: true }, cwd);
 
-    for (const file of engineReferenceRegistry.unity.requiredFiles) {
+    for (const file of [...engineReferenceRegistry.unity.requiredFiles, ...engineReferenceRegistry.unity.moduleFiles, ...engineReferenceRegistry.unity.pluginFiles]) {
       expect(existsSync(path.join(projectRoot, engineReferenceRegistry.unity.projectPath(file)))).toBe(true);
     }
     expect(existsSync(path.join(projectRoot, "docs", "engine-reference", "unreal", "VERSION.md"))).toBe(false);
@@ -180,7 +181,9 @@ describe("validation", () => {
     const checks = validateProject(projectRoot);
     expect(checks.filter((c) => c.id.startsWith("engine_reference.") && c.status === "fail")).toEqual([]);
     expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.package.unity.VERSION.md.metadata", status: "pass" }));
+    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.package.unity.modules/networking.md.metadata", status: "pass" }));
     expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.project.unity.VERSION.md", status: "pass" }));
+    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.project.unity.modules/networking.md", status: "pass" }));
   });
 
   test("missing materialized engine reference fails project validation", () => {
@@ -298,6 +301,14 @@ describe("validation", () => {
     } finally {
       rolePackages["ui-ux-designer"].displayName = originalName;
     }
+  });
+
+  test("repo validation includes deterministic behavioral evaluation subchecks", async () => {
+    const result = await runValidation();
+    const checks = result.checks.filter((check) => check.id.startsWith("behavioral.scenario."));
+
+    expect(checks.map((check) => check.id)).toEqual(behavioralEvaluationScenarios.map((scenario) => `behavioral.scenario.${scenario.id}`));
+    expect(checks.every((check) => check.status === "pass")).toBe(true);
   });
 
   test("repo validation reports Codex readiness hard failure when unavailable", async () => {

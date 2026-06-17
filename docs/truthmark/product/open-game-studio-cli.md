@@ -24,13 +24,13 @@ This capability excludes game-engine functionality, hosted orchestration, backgr
 
 Open Game Studio exposes npm package scripts and a built CLI for initialization, management, template listing, validation, and Codex-oriented role execution. Generated projects use `AGENTS.md` and `.codex/**` surfaces rather than legacy `CODEX.md` contracts. Direct Codex execution through `opengamestudio run <role>` is the default runtime path; `--dry-run` and `--print-prompt` remain inspection-only paths.
 
-The current repository also includes engine reference material for Godot, Unity, and Unreal, context-manifest generation, project task state, approval-store behavior, role/workflow registries, and validation coverage for package assets and generated surfaces.
+The current repository also includes metadata-validated engine reference material for Godot, Unity, and Unreal, context-manifest generation, project task state, approval-store behavior, role/workflow registries, deterministic behavioral-evaluation scenarios, project-local customization packs, and validation coverage for package assets and generated surfaces. Built-in role prompts use bounded structured contracts for responsibilities, expected inputs, output formats, quality gates, collaboration notes, and stop conditions instead of cloning broad external agent bodies. Project-local customization uses `.codex/studio/config.json` as an extend-only overlay for `custom-*` roles, workflows, and templates, with path-safe validation and generic workflow rendering rather than built-in registry replacement. Engine reference depth is packaged as active-engine version, best-practice, deprecated API, breaking-change, module, and plugin files selected by role/task relevance rather than loaded wholesale. The workflow catalog is a curated prompt-only game-development surface across onboarding/discovery, design/architecture, implementation planning, QA/testing, release/hotfix, localization/accessibility, and team coordination rather than a hidden lifecycle controller. The production template pack covers design, architecture, art, audio, UX, accessibility, QA, release, production-risk, economy, difficulty, player-journey, and pitch artifacts as package-shipped assets selected by relevance.
 
 ## Acceptance Criteria
 
 - Developers can initialize and manage project scaffolds through the package CLI while generated project files remain reviewable in the repository.
 - Role and workflow execution stays Codex-native by default and does not require a hosted service, daemon, or alternate agent runtime.
-- Prompt and context materialization selects relevant roles, workflows, templates, and engine references instead of loading every available agent or template for a single task.
+- Prompt and context materialization selects relevant roles, workflows, templates, engine references, and project-local customization pack entries instead of loading every available agent or template for a single task.
 - Mutating runtime behavior is visible and policy-gated; dry-run and print-prompt paths do not mutate project state.
 - Generated project contracts use `AGENTS.md` and `.codex/**`; stale generated-project compatibility surfaces are not reintroduced without an explicit boundary change.
 - Validation commands and tests cover public CLI/package behavior, generated surfaces, engine references, and future-only surfaces remaining absent until implemented.
@@ -42,6 +42,7 @@ The current repository also includes engine reference material for Godot, Unity,
 - 2026-06-13: Generated project instruction contracts use `AGENTS.md` and `.codex/**`, not `CODEX.md` or legacy compatibility shims.
 - 2026-06-13: Planner/next, telemetry, parallel orchestration, hard ownership enforcement, and similar future-only surfaces must remain absent until implementation, tests, and docs exist.
 - 2026-06-13: Truthmark-backed docs guard repository truth in this checkout, but Truthmark workflow mechanics are not Open Game Studio product features.
+- 2026-06-17: Project-local customization is an extend-only, file-backed overlay for `custom-*` roles, workflows, and templates; it must remain Codex-native, reviewable, path-safe, and non-hosted.
 
 ## Engineering Realization Links
 
@@ -75,6 +76,7 @@ The current repository also includes engine reference material for Godot, Unity,
 - ../../../src/projects.ts
 - ../../../src/roles.ts
 - ../../../src/workflows.ts
+- ../../../src/customization.ts
 - ../../../src/runner.ts
 - ../../../src/validation.ts
 - ../../../tests/functionality-gap-pass.test.ts

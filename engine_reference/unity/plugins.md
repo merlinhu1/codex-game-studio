@@ -1,34 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
-source-link: https://docs.unity3d.com/Manual/Packages.html
+date: 2026-06-17
+source-link: https://docs.unity3d.com/Manual/index.html
+engine: unity
+version-reviewed: 6000.0
+tags: unity,plugins
+roles: tools-programmer,engine-programmer,unity-specialist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
-# Unity Package And Plugin Reference
+# Unity Plugin And Package Reference
 
-version-applicability: Unity package manifest, editor tooling, and plugin integrations.
+## Purpose
 
-## Prefer
+Guide plugin/package use without adding hidden runtime dependencies.
 
-- Keep package changes explicit in `Packages/manifest.json`.
-- Separate editor-only code from runtime assemblies.
+## Guidance
 
-## Avoid
+- Prefer package-manager or marketplace sources that are reviewable in the project.
+- Record plugin version, install surface, and rollback risk.
+- Avoid requiring plugins for lightweight prototypes unless explicitly justified.
 
-- Avoid machine-local package paths unless the task explicitly requires them.
-- Avoid broad editor automation that mutates unrelated assets.
+## Validation
 
-## Pitfalls
-
-- Package resolution can differ across Unity versions.
-- Editor scripts can run during import and produce unexpected asset changes.
-
-## Verification Notes
-
-- Report package manifest diffs and any editor menu or importer smoke check.
-
-## Role Notes
-
-- Tools programmers and engine programmers receive this when package or editor work is relevant.
-
-## Official Links
-
-- https://docs.unity3d.com/Manual/Packages.html
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

@@ -32,6 +32,7 @@ Code surface:
 - src/roles.ts
 - src/workflows.ts
 - src/runner.ts
+- src/customization.ts
 - src/validation.ts
 - engine_reference/**
 - templates/**
@@ -64,6 +65,7 @@ Code surface:
 - src/context-manifest.ts
 - src/engine-reference.ts
 - src/generated-surfaces.ts
+- src/customization.ts
 - src/paths.ts
 - engine_configs/**
 - engine_reference/**
@@ -92,6 +94,8 @@ Code surface:
 - src/roles.ts
 - src/codex-session.ts
 - src/codex-prompts.ts
+- src/behavioral-evaluation.ts
+- src/customization.ts
 - src/prompt-context.ts
 - src/workflows.ts
 - src/engine-reference.ts
@@ -101,10 +105,12 @@ Code surface:
 - tests/roles.test.ts
 - tests/codex-session.test.ts
 - tests/codex-prompts.test.ts
+- tests/behavioral-evaluation.test.ts
+- tests/customization.test.ts
 - tests/functionality-gap-pass.test.ts
 
 Update truth when:
-- studio role IDs, role contracts, workflow registry entries, prompt rendering, engine reference prompt selection, context strategies, or template selection rules change
+- studio role IDs, custom role IDs, role contracts, workflow registry entries, prompt rendering, engine reference prompt selection, context strategies, or template selection rules change
 - Codex-native workflow shortcuts or generated workflow prompt contents change
 
 ## Runtime And Task Execution
@@ -123,6 +129,7 @@ Code surface:
 - src/runner.ts
 - src/studio-policy.ts
 - src/context.ts
+- src/customization.ts
 - src/context-manifest.ts
 - src/prompt-context.ts
 - src/tasks.ts
@@ -172,6 +179,7 @@ truth_documents:
 Code surface:
 - src/cli.ts
 - src/validation.ts
+- src/customization.ts
 - src/context-manifest.ts
 - src/engine-reference.ts
 - src/generated-surfaces.ts
@@ -180,5 +188,5 @@ Code surface:
 - tests/functionality-gap-pass.test.ts
 
 Update truth when:
-- public CLI commands, package scripts/bin/files, validation check IDs, engine reference package checks, documentation claims, or package dependency contracts change
+- public CLI commands, package scripts/bin/files, validation check IDs, project-local customization checks, engine reference package checks, documentation claims, or package dependency contracts change
 - future-only surfaces become exposed or are intentionally kept hidden

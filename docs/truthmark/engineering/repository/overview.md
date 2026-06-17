@@ -25,7 +25,7 @@ This bounded leaf truth doc summarizes the repository-level behavior surface. Mo
 - Generated projects contain `.codex/studio.json`, role prompt files, workflow markdown, starter design/production/market documents, engine-specific project markers, and a Codex-native `AGENTS.md` instruction surface.
 - Role run commands render deterministic Codex prompts and, unless in inspection mode, execute Codex with optional verification, review, and bounded fix passes.
 - Workflow shortcut commands are render-only prompt surfaces and do not imply hidden planner, parallel orchestration, telemetry, or ownership enforcement behavior.
-- Validation checks package metadata, source and template presence, role/workflow rendering, future-surface guardrails, build output, and package install smoke behavior.
+- Validation checks package metadata, source and template presence, role/workflow rendering, behavioral-evaluation scenarios, project-local customization packs, future-surface guardrails, build output, and package install smoke behavior.
 
 ## Core Rules
 

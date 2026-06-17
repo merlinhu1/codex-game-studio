@@ -1,36 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
-source-link: https://docs.godotengine.org/en/stable/tutorials/scripting/index.html
+date: 2026-06-17
+source-link: https://docs.godotengine.org/en/stable/
+engine: godot
+version-reviewed: 4.4
+tags: godot,gameplay
+roles: gameplay-programmer,engine-programmer,tools-programmer,technical-artist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
-# Godot Gameplay Reference
+# Godot Gameplay Implementation Reference
 
-version-applicability: Godot 4.x gameplay scripts and scenes.
+## Purpose
 
-## Prefer
+Guide gameplay code with engine-native runtime patterns and verification evidence.
 
-- Keep behavior near the scene nodes that own it.
-- Use exported properties for tunables that designers should inspect.
+## Guidance
 
-## Avoid
+- Keep gameplay state deterministic where practical.
+- Separate authored content from generated/runtime data.
+- Prefer small feature slices with direct playtest or automated validation.
 
-- Avoid broad singleton state for feature-local behavior.
-- Avoid hard-coded node paths when a typed exported reference is clearer.
+## Validation
 
-## Pitfalls
-
-- `_process` and `_physics_process` serve different timing needs.
-- InputMap entries must exist before gameplay code can rely on them.
-
-## Verification Notes
-
-- Exercise the scene that owns the changed script.
-- Include manual input and physics checks when no automated test exists.
-
-## Role Notes
-
-- Gameplay programmers receive this reference by default for Godot projects.
-- Technical artists should use it when visual scripts or scene materials affect runtime behavior.
-
-## Official Links
-
-- https://docs.godotengine.org/en/stable/tutorials/scripting/index.html
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

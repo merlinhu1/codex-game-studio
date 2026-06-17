@@ -6,8 +6,10 @@ import path from "node:path";
 import { activeAgentsForProject } from "./config.js";
 import { projectAgentsMdRequiredSections, projectRolePromptSourceInput, renderProjectRolePrompt, validateBaseAgents } from "./agents.js";
 import { validateApprovalStore } from "./approvals.js";
+import { runBehavioralEvaluations } from "./behavioral-evaluation.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
 import { contextManifestInput, createContextManifest, type ContextManifest, type ContextManifestMeta } from "./context-manifest.js";
+import { validateProjectCustomization } from "./customization.js";
 import { createCodexStudioSession } from "./codex-session.js";
 import { renderCodexPrompt } from "./codex-prompts.js";
 import { loadEngineConfigs, sourceRoot, unrealProjectFileName } from "./engines.js";
@@ -161,7 +163,7 @@ function engineReferenceRepoChecks(root: string): ValidationCheck[] {
 function engineReferenceProjectChecks(projectRoot: string, studio: StudioProjectState): ValidationCheck[] {
   const checks: ValidationCheck[] = [];
   const pack = engineReferenceRegistry[studio.engine];
-  const materializedFiles = [...new Set([...pack.requiredFiles, ...pack.pluginFiles, ...pack.specialistFiles])];
+  const materializedFiles = [...new Set([...pack.requiredFiles, ...pack.moduleFiles, ...pack.pluginFiles, ...pack.specialistFiles])];
   for (const file of materializedFiles) {
     const projectFile = path.join(projectRoot, pack.projectPath(file));
     checks.push(existsSync(projectFile) ? pass(`engine_reference.project.${studio.engine}.${file}`, `${studio.engine} ${file} materialized`, projectFile) : fail(`engine_reference.project.${studio.engine}.${file}`, `${studio.engine} ${file} missing from generated project`, projectFile));
@@ -231,7 +233,7 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
   for (const file of ["dist/", "engine_configs/", "engine_reference/", "templates/"]) {
     checks.push(pkg.files?.includes(file) ? pass(`pkg.files.${file}`, `${file} shipped`) : fail(`pkg.files.${file}`, `${file} missing from package files`, pkgPath));
   }
-  for (const file of ["src/cli.ts", "src/codex-runtime.ts", "src/codex-session.ts", "src/codex-prompts.ts", "src/prompt-context.ts", "src/context-manifest.ts", "src/roles.ts", "src/tasks.ts", "src/workflows.ts", "src/verification.ts", "src/projects.ts", "src/runner.ts", "src/validation.ts"]) {
+  for (const file of ["src/cli.ts", "src/behavioral-evaluation.ts", "src/customization.ts", "src/codex-runtime.ts", "src/codex-session.ts", "src/codex-prompts.ts", "src/prompt-context.ts", "src/context-manifest.ts", "src/roles.ts", "src/tasks.ts", "src/workflows.ts", "src/verification.ts", "src/projects.ts", "src/runner.ts", "src/validation.ts"]) {
     checks.push(existsSync(path.join(root, file)) ? pass(`src.${file}`, `${file} exists`) : fail(`src.${file}`, `${file} missing`, file));
   }
 
@@ -256,6 +258,13 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
     checks.push(definition.file.endsWith(`${workflow}.md`) ? pass(`codex.workflow.${workflow}.registry`, `${workflow} registry entry exists`) : fail(`codex.workflow.${workflow}.registry`, `${workflow} registry file mismatch`));
     const rendered = renderCodexPrompt(createCodexStudioSession({ projectRoot: root, role: definition.role, objective: definition.objective, phase: definition.phase, contextFiles: definition.contextFiles }));
     checks.push(rendered.includes(definition.objective) ? pass(`codex.workflow.${workflow}.render`, `${workflow} workflow renders`) : fail(`codex.workflow.${workflow}.render`, `${workflow} workflow did not render`));
+  }
+
+  for (const result of runBehavioralEvaluations({})) {
+    const message = result.status === "pass"
+      ? `${result.id} behavioral scenario passes`
+      : `${result.id} behavioral scenario failed: missing phrases [${result.missingRequiredPhrases.join(", ")}], forbidden phrases [${result.presentForbiddenPhrases.join(", ")}], missing context [${result.missingContextCategories.join(", ")}], missing templates [${result.missingTemplateIds.join(", ")}], forbidden templates [${result.presentForbiddenTemplateIds.join(", ")}]`;
+    checks.push(result.status === "pass" ? pass(`behavioral.scenario.${result.id}`, message) : fail(`behavioral.scenario.${result.id}`, message));
   }
 
   const templateFailures = validateTemplateFiles();
@@ -339,6 +348,11 @@ export function validateProject(projectRoot: string): ValidationCheck[] {
   checks.push(JSON.stringify(studio.roles) === JSON.stringify(expectedProjectRoles) ? pass("codex.project.roles", "engine-scoped role roster recorded", studioPath) : fail("codex.project.roles", "studio roles must match engine-scoped project roles", studioPath));
   checks.push(JSON.stringify(studio.activeRoles) === JSON.stringify(expectedActiveRoles) ? pass("codex.project.activeRoles", "mode and engine-active roles recorded", studioPath) : fail("codex.project.activeRoles", "activeRoles must match project mode and engine", studioPath));
   checks.push(JSON.stringify(studio.workflows) === JSON.stringify(workflowIds()) ? pass("codex.project.workflows", "canonical workflows recorded", studioPath) : fail("codex.project.workflows", "workflows must match registry keys", studioPath));
+  checks.push(
+    ...validateProjectCustomization(projectRoot, { builtInWorkflowIds: workflowIds(), builtInTemplateIds: Object.keys(templateRegistry) }).map((check) =>
+      check.status === "pass" ? pass(check.id, check.message, check.path) : fail(check.id, check.message, check.path)
+    )
+  );
 
   const approvalsPath = path.join(projectRoot, ".codex", "approvals.json");
   if (!existsSync(approvalsPath)) {

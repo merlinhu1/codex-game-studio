@@ -25,6 +25,7 @@ This doc was created from the editable engineering-behavior template at docs/tru
 - Initialization writes projects under `projects/<slug>/`, rejects an existing target path, and checks same-parent slug and Unreal class-name collisions before writing.
 - Project state is written to `.codex/studio.json` with schema version 1, product `codex-game-studio`, project summary fields, lifecycle `mode`, policy `studioMode`, the project-scoped role roster, mode-active roles plus the active engine specialist, and all workflow IDs.
 - Initialization writes an empty versioned `.codex/approvals.json` approval store alongside `.codex/studio.json`.
+- Initialization writes `.codex/studio/config.json` as a schema-versioned, extend-only customization pack seed. The default file contains no local roles, workflows, or templates; projects can add `custom-*` IDs without overriding built-in role/workflow/template IDs.
 - Initialization writes `.codex/context-manifest.json` and `.codex/context-manifest.meta.json`. The manifest records selected context entries with source path, reason, required flag, budget metadata, safety classification, and selection status; freshness hashes and inputs live only in the metadata sidecar.
 - Initialization materializes only the active engine reference pack under `docs/engine-reference/<engine>/` from packaged `engine_reference/<engine>/` assets before writing the context manifest.
 - Context selection rejects unsafe, secret-like, generated/build-output, binary, and non-file paths before budget allocation. Existing required entries receive budget priority over optional entries, but required entries must still fit the file count, per-entry character, and total character budgets.
@@ -47,7 +48,7 @@ This doc was created from the editable engineering-behavior template at docs/tru
 
 ## Flows And States
 
-- Initialization flow: parse options, normalize engine, derive slug, reject collisions, create engine files, create `.codex/runs`, write the empty approval store, write studio state, write metadata-bearing workflow files, write starter docs, materialize the active engine reference pack, materialize metadata-bearing role prompts, and write the context manifest plus sidecar metadata.
+- Initialization flow: parse options, normalize engine, derive slug, reject collisions, create engine files, create `.codex/runs`, write the empty approval store, write studio state, write the default extend-only customization config, write metadata-bearing workflow files, write starter docs, materialize the active engine reference pack, materialize metadata-bearing role prompts, and write the context manifest plus sidecar metadata.
 - Project status states are `active`, `frozen`, and `inactive`; `freeze` is the only current CLI path that mutates status.
 
 ## Contracts
@@ -68,6 +69,7 @@ This doc was created from the editable engineering-behavior template at docs/tru
 - Decision (2026-06-13): Generate context manifest freshness metadata as a sidecar so the manifest body remains stable JSON describing selected context, while stale project-stage or studio-mode inputs are detected separately.
 - Decision (2026-06-14): Materialize packaged engine references only for the active engine and select prompt/context entries by relevance instead of loading all engine packs.
 - Decision (2026-06-14): Materialize generated project specialist prompts only for the active project engine while keeping all specialist IDs in the canonical role catalog.
+- Decision (2026-06-17): Initialize a project-local `.codex/studio/config.json` customization pack as an extend-only overlay so users can add `custom-*` roles, workflows, and templates without replacing generated built-ins.
 
 ## Rationale
 

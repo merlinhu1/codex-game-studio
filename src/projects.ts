@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import path from "node:path";
 import { activeAgentsForProject, slugify, type ProjectConfig, type ProjectMode } from "./config.js";
 import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, projectClassName, sourceRoot, unrealProjectFileName } from "./engines.js";
+import { writeDefaultProjectCustomization, readProjectCustomization } from "./customization.js";
 import { materializeEngineReferences } from "./engine-reference.js";
 import { materializeAgents } from "./agents.js";
 import { writeApprovalStore } from "./approvals.js";
@@ -9,7 +10,7 @@ import { writeContextManifest } from "./context-manifest.js";
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { packageAssetPath, resolveProjectRoot } from "./paths.js";
 import { projectRoleIdsForEngine, rolePackages, type StudioRoleId } from "./roles.js";
-import { workflowIds, workflowRegistry, type WorkflowId } from "./workflows.js";
+import { workflowAliases, workflowIds, workflowRegistry, type WorkflowId } from "./workflows.js";
 import type { StudioMode } from "./studio-policy.js";
 
 export type InitProjectOptions = {
@@ -199,6 +200,15 @@ export function workflowBody(workflow: WorkflowId): string {
     "",
     `${pkg.displayName} (${definition.role}) owns this workflow.`,
     "",
+    "## Taxonomy",
+    "",
+    `Category: ${definition.category}`,
+    "CCGS-derived gap coverage:",
+    ...definition.gapCoverage.map((item) => `- ${item}`),
+    "",
+    "CLI aliases:",
+    ...(workflowAliases(definition).length ? workflowAliases(definition).map((alias) => `- ${alias}`) : ["- none"]),
+    "",
     "## Outputs",
     "",
     ...pkg.expectedOutputs.map((item) => `- ${item}`),
@@ -224,6 +234,9 @@ export function workflowSourceInput(workflow: WorkflowId): unknown {
     role: definition.role,
     phase: definition.phase,
     objective: definition.objective,
+    category: definition.category,
+    gapCoverage: definition.gapCoverage,
+    aliases: workflowAliases(definition),
     file: definition.file,
     contextFiles: definition.contextFiles,
     templateIds: definition.templateIds ?? [],
@@ -251,6 +264,7 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
   mkdirSync(path.join(projectRoot, ".codex", "runs"), { recursive: true });
   writeApprovalStore(projectRoot);
   writeStudioProject(projectRoot, studioStateFromConfig(config));
+  writeDefaultProjectCustomization(projectRoot);
   writeCodexWorkflowFiles(projectRoot);
   writeStarterDocs(projectRoot, config);
   materializeEngineReferences(projectRoot, packageAssetPath("."), config.project.engine);
@@ -262,6 +276,7 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
 export function statusProject(project?: string, cwd = process.cwd()): string {
   const root = resolveProjectRoot(project, cwd);
   const config = readStudioProject(root);
+  const customization = readProjectCustomization(root);
   return [
     `${config.name}`,
     `phase: ${config.phase}`,
@@ -269,7 +284,8 @@ export function statusProject(project?: string, cwd = process.cwd()): string {
     `mode: ${config.mode}`,
     `studio mode: ${config.studioMode}`,
     `engine: ${config.engine}`,
-    `active roles: ${(config.activeRoles ?? config.roles).join(", ")}`
+    `active roles: ${(config.activeRoles ?? config.roles).join(", ")}`,
+    `custom roles: ${customization.roles.length}, workflows: ${customization.workflows.length}, templates: ${customization.templates.length}`
   ].join("\n");
 }
 

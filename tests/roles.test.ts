@@ -12,17 +12,35 @@ describe("Codex role packages", () => {
       "senior-game-designer",
       "game-designer",
       "narrative-designer",
+      "writer",
+      "world-builder",
+      "level-designer",
       "game-feel-designer",
+      "systems-designer",
+      "economy-designer",
       "gameplay-programmer",
+      "ai-programmer",
+      "network-programmer",
+      "ui-programmer",
       "engine-programmer",
       "godot-specialist",
       "unity-specialist",
       "unreal-specialist",
       "tools-programmer",
+      "technical-director",
+      "devops-engineer",
+      "security-engineer",
+      "performance-analyst",
       "senior-game-artist",
       "technical-artist",
+      "audio-director",
+      "sound-designer",
       "ui-ux-designer",
+      "accessibility-specialist",
       "qa-playtester",
+      "localization-lead",
+      "live-ops-designer",
+      "community-manager",
       "release-manager"
     ]);
     expect(Object.keys(rolePackages).sort()).toEqual([...studioRoleIds].sort());
@@ -36,6 +54,52 @@ describe("Codex role packages", () => {
       expect(role.handoffTemplate).toMatch(/\S/);
       expect(role.reviewChecklist.length).toBeGreaterThan(0);
     }
+  });
+
+
+  test("role packages cover bounded specialist domain clusters", () => {
+    const clusters = {
+      audio: ["audio-director", "sound-designer"],
+      content: ["writer", "world-builder", "level-designer"],
+      systems: ["systems-designer", "economy-designer"],
+      operations: ["live-ops-designer", "community-manager", "localization-lead", "accessibility-specialist"],
+      technical: ["technical-director", "devops-engineer", "security-engineer", "performance-analyst", "network-programmer", "ai-programmer", "ui-programmer"]
+    } as const;
+
+    for (const roles of Object.values(clusters)) {
+      for (const role of roles) {
+        expect(studioRoleIds).toContain(role);
+        expect(rolePackages[role].expectedOutputs.length).toBeGreaterThanOrEqual(2);
+        expect(rolePackages[role].reviewChecklist.length).toBeGreaterThanOrEqual(2);
+      }
+    }
+
+    expect(rolePackages["audio-director"].systemPrompt).toContain("audio");
+    expect(rolePackages["network-programmer"].systemPrompt).toContain("network");
+    expect(rolePackages["accessibility-specialist"].systemPrompt).toContain("accessibility");
+  });
+
+
+
+  test("role packages expose structured compact role contracts", () => {
+    for (const role of Object.values(rolePackages)) {
+      expect(role.responsibilities.length).toBeGreaterThanOrEqual(2);
+      expect(role.inputsToInspect.length).toBeGreaterThanOrEqual(2);
+      expect(role.qualityGates.length).toBeGreaterThanOrEqual(2);
+      expect(role.stopConditions.length).toBeGreaterThanOrEqual(1);
+      expect(role.sharedFragments).toBeDefined();
+      expect(new Set(role.sharedFragments).size).toBe(role.sharedFragments.length);
+    }
+
+    expect(rolePackages["gameplay-programmer"].outputSchema).toEqual(
+      expect.arrayContaining(["Changed files", "Implementation notes", "Verification evidence", "Risks or follow-ups"])
+    );
+    expect(rolePackages["qa-playtester"].outputSchema).toEqual(
+      expect.arrayContaining(["Issue ID", "Severity", "Reproduction steps", "Expected result", "Actual result", "Evidence"])
+    );
+    expect(rolePackages["release-manager"].outputSchema).toEqual(
+      expect.arrayContaining(["Release decision", "Blocking issues", "Warnings", "Validation evidence", "Rollback notes"])
+    );
   });
 
   test("legacy underscore aliases are rejected with guidance", () => {

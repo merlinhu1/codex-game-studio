@@ -1,0 +1,26 @@
+reviewer: Open Game Studio seed review
+date: 2026-06-17
+source-link: https://docs.godotengine.org/en/stable/
+engine: godot
+version-reviewed: 4.4
+tags: godot,physics,collision,simulation,game-feel
+roles: gameplay-programmer,game-feel-designer,qa-playtester
+workflows: prototype,bugfix,architecture-review,qa-plan
+
+# Godot Physics Module Reference
+
+## Purpose
+
+Collision, rigid bodies, physics queries, deterministic simulation risks, and game-feel tuning.
+
+## Guidance
+
+- Select this file only for physics-related tasks.
+- Keep implementation guidance scoped to Godot project files and validation commands.
+- Include performance, accessibility, and content-pipeline risks when they apply.
+
+## Validation
+
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

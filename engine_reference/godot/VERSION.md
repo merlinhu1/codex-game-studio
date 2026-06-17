@@ -1,36 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
-source-link: https://docs.godotengine.org/
+date: 2026-06-17
+source-link: https://docs.godotengine.org/en/stable/
+engine: godot
+version-reviewed: 4.4
+tags: godot,VERSION
+roles: gameplay-programmer,engine-programmer,tools-programmer,technical-artist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
 # Godot Version Reference
 
-version-applicability: Godot 4.x projects unless project files state otherwise.
+## Purpose
 
-## Prefer
+Use this file to confirm the reviewed engine version, official documentation root, and version-sensitive assumptions before making implementation claims.
 
-- Use scene composition, typed GDScript where present, and signal-based communication for gameplay events.
-- Keep engine-specific checks tied to the active project version.
+## Guidance
 
-## Avoid
+- Match generated project engine version against this reviewed baseline.
+- Prefer official docs for version-specific APIs.
+- Record any project-local engine version drift in the handoff.
 
-- Do not assume Godot 3.x APIs when the project targets Godot 4.x.
-- Do not rewrite imported assets or generated import metadata without an explicit task reason.
+## Validation
 
-## Pitfalls
-
-- Node paths, autoload names, and signal signatures are easy to drift during refactors.
-- Physics behavior can depend on project settings as much as script code.
-
-## Verification Notes
-
-- Run the configured Godot command or a documented editor smoke check.
-- Report scene paths, script paths, and any ProjectSettings changes.
-
-## Role Notes
-
-- Gameplay programmers should cite the scene/script touched.
-- Tools and engine programmers should name editor plugin or export changes.
-
-## Official Links
-
-- https://docs.godotengine.org/
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

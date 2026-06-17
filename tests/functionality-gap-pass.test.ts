@@ -8,7 +8,7 @@ import { initProject, statusProject } from "../src/projects.js";
 import { projectRoleIdsForEngine, rolePackages, studioRoleIds } from "../src/roles.js";
 import { readTemplate, templateRegistry } from "../src/templates.js";
 import { validateProject } from "../src/validation.js";
-import { renderWorkflowPrompt, workflowRegistry } from "../src/workflows.js";
+import { renderWorkflowPrompt, workflowAliases, workflowRegistry } from "../src/workflows.js";
 
 const requiredRoles = [
   "studio-orchestrator",
@@ -19,18 +19,70 @@ const requiredRoles = [
   "senior-game-designer",
   "game-designer",
   "narrative-designer",
+  "writer",
+  "world-builder",
+  "level-designer",
   "game-feel-designer",
+  "systems-designer",
+  "economy-designer",
   "gameplay-programmer",
+  "ai-programmer",
+  "network-programmer",
+  "ui-programmer",
   "engine-programmer",
   "godot-specialist",
   "unity-specialist",
   "unreal-specialist",
   "tools-programmer",
+  "technical-director",
+  "devops-engineer",
+  "security-engineer",
+  "performance-analyst",
   "senior-game-artist",
   "technical-artist",
+  "audio-director",
+  "sound-designer",
   "ui-ux-designer",
+  "accessibility-specialist",
   "qa-playtester",
+  "localization-lead",
+  "live-ops-designer",
+  "community-manager",
   "release-manager"
+ ] as const;
+
+const requiredWorkflowIds = [
+  "vertical-slice",
+  "bugfix",
+  "playtest",
+  "market-analysis",
+  "analytics-setup",
+  "design-spec",
+  "game-feel-tuning",
+  "art-direction",
+  "ui-ux-review",
+  "production-milestone",
+  "handoff",
+  "review",
+  "ship-check",
+  "onboard",
+  "brainstorm",
+  "prototype",
+  "architecture-decision",
+  "architecture-review",
+  "create-epics",
+  "create-stories",
+  "sprint-plan",
+  "sprint-status",
+  "story-readiness",
+  "story-done",
+  "qa-plan",
+  "regression-suite",
+  "security-audit",
+  "perf-profile",
+  "release-checklist",
+  "hotfix",
+  "localization-plan"
 ] as const;
 
 describe("functionality gap pass", () => {
@@ -46,6 +98,23 @@ describe("functionality gap pass", () => {
     expect(studioRoleIds).not.toContain("master_orchestrator");
   });
 
+  it("exposes a curated prompt-only workflow catalog", () => {
+    expect(Object.keys(workflowRegistry)).toEqual(requiredWorkflowIds);
+    const categories = new Map(Object.values(workflowRegistry).map((workflow) => [workflow.id, workflow.category]));
+    expect(new Set(categories.values())).toEqual(
+      new Set(["onboarding-discovery", "design-architecture", "implementation-planning", "qa-testing", "release-hotfix", "localization-accessibility", "team-coordination"])
+    );
+
+    for (const workflow of Object.values(workflowRegistry)) {
+      expect(workflow.gapCoverage.length).toBeGreaterThan(0);
+      expect(workflow.file).toBe(`.codex/workflows/${workflow.id}.md`);
+    }
+
+    expect(workflowAliases(workflowRegistry.onboard)).toEqual(expect.arrayContaining(["start", "onboard"]));
+    expect(workflowAliases(workflowRegistry["release-checklist"])).toEqual(expect.arrayContaining(["release-checklist"]));
+    expect(workflowRegistry.hotfix.phase).toBe("review");
+  });
+
   it("selects market, analytics, orchestration, and mode-specific roles", () => {
     for (const mode of ["design", "prototype", "development"] as const) {
       expect(activeAgentsForMode(mode)).toEqual(
@@ -54,13 +123,43 @@ describe("functionality gap pass", () => {
     }
 
     expect(activeAgentsForMode("design")).toEqual(
-      expect.arrayContaining(["creative-director", "senior-game-designer", "game-designer", "narrative-designer", "senior-game-artist", "ui-ux-designer"])
+      expect.arrayContaining([
+        "creative-director",
+        "senior-game-designer",
+        "game-designer",
+        "narrative-designer",
+        "writer",
+        "world-builder",
+        "level-designer",
+        "systems-designer",
+        "economy-designer",
+        "audio-director",
+        "senior-game-artist",
+        "ui-ux-designer",
+        "accessibility-specialist"
+      ])
     );
     expect(activeAgentsForMode("prototype")).toEqual(
-      expect.arrayContaining(["senior-game-designer", "game-feel-designer", "gameplay-programmer", "qa-playtester"])
+      expect.arrayContaining(["senior-game-designer", "systems-designer", "level-designer", "game-feel-designer", "gameplay-programmer", "ui-programmer", "sound-designer", "qa-playtester", "accessibility-specialist"])
     );
     expect(activeAgentsForMode("development")).toEqual(
-      expect.arrayContaining(["game-feel-designer", "engine-programmer", "tools-programmer", "technical-artist", "ui-ux-designer", "release-manager"])
+      expect.arrayContaining([
+        "technical-director",
+        "game-feel-designer",
+        "engine-programmer",
+        "tools-programmer",
+        "ai-programmer",
+        "network-programmer",
+        "ui-programmer",
+        "devops-engineer",
+        "security-engineer",
+        "performance-analyst",
+        "technical-artist",
+        "localization-lead",
+        "live-ops-designer",
+        "community-manager",
+        "release-manager"
+      ])
     );
   });
 
@@ -89,6 +188,12 @@ describe("functionality gap pass", () => {
     expect(promptBody).toContain("source-input-sha256");
     expect(promptBody).toContain("rendered-body-sha256");
 
+    const networkPromptBody = readFileSync(path.join(projectRoot, ".codex", "prompts", "network-programmer.md"), "utf8");
+    expect(networkPromptBody).toContain("Role: Network Programmer");
+    expect(networkPromptBody).toContain("Context Strategy: broad");
+    expect(networkPromptBody).toContain("Expected Outputs");
+    expect(networkPromptBody).toContain("Review Checklist");
+
     for (const workflow of Object.keys(workflowRegistry)) {
       expect(existsSync(path.join(projectRoot, workflowRegistry[workflow as keyof typeof workflowRegistry].file))).toBe(true);
       expect(renderWorkflowPrompt(projectRoot, workflow as keyof typeof workflowRegistry)).toContain(workflow);
@@ -96,6 +201,9 @@ describe("functionality gap pass", () => {
     const workflowBody = readFileSync(path.join(projectRoot, ".codex", "workflows", "ui-ux-review.md"), "utf8");
     expect(workflowBody).toContain("source-input-sha256");
     expect(workflowBody).toContain("rendered-body-sha256");
+    expect(workflowBody).toContain("## Taxonomy");
+    expect(readFileSync(path.join(projectRoot, ".codex", "workflows", "release-checklist.md"), "utf8")).toContain("release-hotfix");
+    expect(readFileSync(path.join(projectRoot, ".codex", "workflows", "localization-plan.md"), "utf8")).toContain("localization-accessibility");
     expect(existsSync(path.join(projectRoot, "project_orchestrator.md"))).toBe(false);
     expect(existsSync(path.join(projectRoot, "CODEX.md"))).toBe(false);
     expect(existsSync(path.join(projectRoot, ".gamestudio", "runs"))).toBe(false);
@@ -131,6 +239,24 @@ describe("functionality gap pass", () => {
     expect(renderWorkflowPrompt(projectRoot, "ui-ux-review")).toContain("Template: ui_ux_review");
     expect(renderWorkflowPrompt(projectRoot, "production-milestone")).toContain("Template: production_milestone");
     expect(renderWorkflowPrompt(projectRoot, "ship-check")).toContain("Template: ship_check");
+    expect(renderWorkflowPrompt(projectRoot, "ship-check")).toContain("Template: release_notes");
+    expect(renderWorkflowPrompt(projectRoot, "ship-check")).toContain("Template: risk_register");
+    const architectureDecision = renderWorkflowPrompt(projectRoot, "architecture-decision");
+    expect(architectureDecision).toContain("Template: adr");
+    expect(architectureDecision).toContain("Template: technical_design");
+    expect(architectureDecision).toContain("Template: architecture_traceability");
+    expect(architectureDecision).not.toContain("Template: art_bible");
+    const qaPlan = renderWorkflowPrompt(projectRoot, "qa-plan");
+    expect(qaPlan).toContain("Template: test_plan");
+    expect(qaPlan).toContain("Template: test_evidence");
+    expect(renderWorkflowPrompt(projectRoot, "sprint-plan")).toContain("Template: sprint_plan");
+    expect(renderWorkflowPrompt(projectRoot, "art-direction")).toContain("Template: art_bible");
+    expect(renderWorkflowPrompt(projectRoot, "localization-plan")).toContain("Template: accessibility_requirements");
+    expect(renderWorkflowPrompt(projectRoot, "prototype")).toContain("Template: vertical_slice_report");
+    expect(renderWorkflowPrompt(projectRoot, "brainstorm")).toContain("Template: pitch_document");
+    expect(renderWorkflowPrompt(projectRoot, "security-audit")).toContain("Security Engineer");
+    expect(renderWorkflowPrompt(projectRoot, "security-audit")).not.toContain("## Workflow Templates");
+    expect(renderWorkflowPrompt(projectRoot, "localization-plan")).toContain("Localization Lead");
     expect(renderWorkflowPrompt(projectRoot, "review")).not.toContain("## Workflow Templates");
     expect(renderWorkflowPrompt(projectRoot, "ui-ux-review")).not.toContain("Template: market_analysis");
     expect(renderWorkflowPrompt(projectRoot, "ship-check")).not.toContain("Template: analytics_setup");
@@ -143,18 +269,45 @@ describe("functionality gap pass", () => {
     const cli = path.join(process.cwd(), "src", "cli.ts");
     const tsx = path.join(process.cwd(), "node_modules", ".bin", "tsx");
     const help = execFileSync(tsx, [cli, "--help"], { encoding: "utf8" });
-    for (const alias of ["market", "analytics", "design-spec", "feel-review", "art-direction", "ui-review", "milestone", "handoff"]) {
+    for (const alias of [
+      "market",
+      "analytics",
+      "design-spec",
+      "feel-review",
+      "art-direction",
+      "ui-review",
+      "milestone",
+      "handoff",
+      "start",
+      "onboard",
+      "brainstorm",
+      "prototype",
+      "architecture-decision",
+      "architecture-review",
+      "create-epics",
+      "create-stories",
+      "sprint-plan",
+      "sprint-status",
+      "story-readiness",
+      "story-done",
+      "qa-plan",
+      "regression-suite",
+      "security-audit",
+      "perf-profile",
+      "release-checklist",
+      "hotfix",
+      "localization-plan"
+    ]) {
       expect(help).toContain(alias);
     }
-    expect(help).not.toMatch(/\bplan\b/);
     expect(help).not.toMatch(/\bnext\b/);
     expect(help).not.toMatch(/\btelemetry\b/);
     expect(help).not.toMatch(/\bparallel\b/);
 
     process.env.CODEX_BIN = "/missing/codex";
     try {
-      for (const workflow of Object.values(workflowRegistry).filter((entry) => entry.cliAlias)) {
-        for (const args of [[workflow.cliAlias!], [workflow.cliAlias!, "--dry-run"]]) {
+      for (const workflow of Object.values(workflowRegistry).filter((entry) => workflowAliases(entry).length > 0)) {
+        for (const alias of workflowAliases(workflow)) for (const args of [[alias], [alias, "--dry-run"]]) {
           const before = readdirSync(path.join(projectRoot, ".codex", "runs"));
           const output = execFileSync(tsx, [cli, ...args, "--project", projectRoot], { cwd, encoding: "utf8" });
           expect(output).toContain(`Role: ${rolePackages[workflow.role].displayName}`);

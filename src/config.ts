@@ -59,18 +59,53 @@ export function slugify(value: string): string {
 export function activeAgentsForMode(mode: ProjectMode): AgentName[] {
   const always: AgentName[] = ["studio-orchestrator", "producer", "market-analyst", "data-scientist"];
   const byMode: Record<ProjectMode, AgentName[]> = {
-    design: ["creative-director", "senior-game-designer", "game-designer", "narrative-designer", "senior-game-artist", "ui-ux-designer"],
-    prototype: ["senior-game-designer", "game-designer", "game-feel-designer", "gameplay-programmer", "qa-playtester"],
+    design: [
+      "creative-director",
+      "senior-game-designer",
+      "game-designer",
+      "narrative-designer",
+      "writer",
+      "world-builder",
+      "level-designer",
+      "systems-designer",
+      "economy-designer",
+      "audio-director",
+      "senior-game-artist",
+      "ui-ux-designer",
+      "accessibility-specialist"
+    ],
+    prototype: [
+      "senior-game-designer",
+      "game-designer",
+      "systems-designer",
+      "level-designer",
+      "game-feel-designer",
+      "gameplay-programmer",
+      "ui-programmer",
+      "sound-designer",
+      "qa-playtester",
+      "accessibility-specialist"
+    ],
     development: [
+      "technical-director",
       "senior-game-designer",
       "game-designer",
       "game-feel-designer",
       "gameplay-programmer",
       "engine-programmer",
       "tools-programmer",
+      "ai-programmer",
+      "network-programmer",
+      "ui-programmer",
+      "devops-engineer",
+      "security-engineer",
+      "performance-analyst",
       "qa-playtester",
       "senior-game-artist",
       "technical-artist",
+      "localization-lead",
+      "live-ops-designer",
+      "community-manager",
       "ui-ux-designer",
       "release-manager"
     ]
