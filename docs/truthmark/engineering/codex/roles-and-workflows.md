@@ -2,7 +2,7 @@
 status: active
 doc_type: behavior
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-14
+last_reviewed: 2026-06-17
 source_of_truth:
   - ../../routes/areas/repository.md
 ---
@@ -37,7 +37,7 @@ This doc was created from the editable engineering-behavior template at docs/tru
 - Behavioral evaluation scenarios cover representative role/workflow prompt contracts by rendering prompts locally and checking required obligations, output-contract fields, selected context categories, relevant templates, forbidden future-only drift, and prompt-size bounds without LLM judges or hosted evaluators.
 - Market analyst, data scientist, game-feel, UI/UX, QA, release, audio, content, systems/economy, accessibility/localization/live-ops/community, and technical specialist roles have bounded default role packages; reusable template selection remains task-specific rather than loading every role or template.
 - Project-local customization packs may add `custom-*` role, workflow, and template IDs through `.codex/studio/config.json`; these overlays are extend-only and cannot replace built-in role/workflow/template IDs.
-- Custom role prompts render the same visible role ID, context strategy, expected outputs, review checklist, write-policy, sandbox, and selected-template sections as built-in role runs, while custom workflow prompts use the generic `workflow <id>` command rather than adding unbounded shortcut commands.
+- Custom role prompts render the same visible role ID, context strategy, expected outputs, review checklist, write-policy, sandbox, and selected-template sections as built-in role runs, while custom workflow prompts use the generic `workflow <id>` command, require the declared workflow markdown file to exist, include that file as selected context, and render its body as workflow instructions rather than adding unbounded shortcut commands.
 - Generated workflow files carry deterministic source-input and rendered-body hash metadata that covers workflow definition fields and the owning role display name, expected outputs, and review checklist used in the rendered workflow body.
 
 ## Core Rules
@@ -46,7 +46,7 @@ This doc was created from the editable engineering-behavior template at docs/tru
 - Prompt rendering must include the role display name, project/session metadata, and the bounded structured role contract, including explicit sandbox and write-policy context when available, needed by Codex to operate without hidden state.
 - Templates that require Markdown sections must have non-empty required sections; every built-in template records a description plus role/workflow use hints, and the project config template must parse as JSON.
 - Workflow shortcuts render prompts; they do not imply hidden parallel orchestration or future planner behavior.
-- Customization overlays are extend-only: custom IDs must use the `custom-*` prefix, may reference only project-safe relative paths, and must not replace built-in role/workflow/template IDs.
+- Customization overlays are extend-only: custom IDs must use the `custom-*` prefix, required role prompt, workflow prompt, and template files must exist at project-safe relative paths, and custom entries must not replace built-in role/workflow/template IDs.
 - Workflow prompt rendering may append only selected workflow templates and must not load every template.
 - Role prompt rendering may list only selected active-engine reference paths and must not load every engine reference pack by default.
 - Generated project prompt materialization may include only the specialist prompt matching the active project engine.
@@ -54,7 +54,7 @@ This doc was created from the editable engineering-behavior template at docs/tru
 ## Flows And States
 
 - Workflow prompt flow: read project stage, studio mode, and engine from `.codex/studio.json`, select the workflow's declared context files through the path-safe selector, compute phase/studio-mode eligibility, create a Codex studio session for the owning role and phase, render the standard prompt with a context contract, then append any workflow template bodies.
-- Custom workflow prompt flow: resolve the workflow or alias from `.codex/studio/config.json`, validate its custom role and template references, select only declared project-safe context files, render the custom role prompt, then append only the custom workflow's template IDs.
+- Custom workflow prompt flow: resolve the workflow or alias from `.codex/studio/config.json`, validate its custom role, workflow file, and template references, select the declared workflow file plus other project-safe context files, render the workflow file body as workflow instructions, render the custom role prompt, then append only the custom workflow's template IDs.
 - Template selection flow: match role and task text against bounded keyword rules and return only matching template IDs.
 
 ## Contracts
