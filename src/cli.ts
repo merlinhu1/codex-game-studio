@@ -34,6 +34,7 @@ function collectScope(value: string, previous: string[] = []): string[] {
 program.name("opengamestudio").description("Codex Game Studio: a Codex-native game-development workflow layer").version("0.1.0");
 
 const sha256Pattern = /^[a-f0-9]{64}$/i;
+const customRoleIdPattern = /^custom-[a-z0-9][a-z0-9-]*$/;
 
 function localApprovedBy(): string {
   try {
@@ -63,6 +64,10 @@ function approvalProjectStage(mode: string): ProjectStage {
 function readApprovalStudioMode(value: string): StudioMode {
   if (value === "fast-prototype" || value === "guided-studio" || value === "strict-studio") return value;
   throw new Error(`Unsupported studio mode: ${value}`);
+}
+
+function isApprovalRoleId(value: string): boolean {
+  return isStudioRoleId(value) || customRoleIdPattern.test(value);
 }
 
 function addInitCommand(name: "init" | "new"): void {
@@ -150,7 +155,7 @@ approval
   .option("--allow-broad-scope", "acknowledge broad approval scope such as **/*")
   .action((opts) => {
     const projectRoot = resolveTaskProject(opts.project);
-    if (!isStudioRoleId(opts.role)) throw new Error(unknownStudioRoleMessage(opts.role));
+    if (!isApprovalRoleId(opts.role)) throw new Error(unknownStudioRoleMessage(opts.role));
     const scopes = normalizeApprovalScope(opts.scope, { projectRoot });
     if (scopes.length === 0) throw new Error("approval grant requires at least one --scope");
     const broadScope = scopes.find(isBroadApprovalScope);

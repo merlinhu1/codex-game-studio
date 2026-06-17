@@ -335,10 +335,20 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
   const maxFixPasses = options.maxFixPasses ?? 1;
   if (!Number.isFinite(maxFixPasses) || maxFixPasses < 0) throw new Error("--max-fix-passes must be a finite non-negative number");
   const phase = customPhaseForRun(role);
+  const approvalScopes = normalizeApprovalScope(options.approvalScope ?? [], { projectRoot });
+  const approvalDiagnosticResult = explainApprovalMismatch(readApprovalStore(projectRoot), {
+    role: role.id,
+    objective: task,
+    approvedGlobs: approvalScopes,
+    approvedFiles: artifactDisplays.length ? artifactDisplays : undefined,
+    projectStage: studio.mode,
+    studioMode: studio.studioMode
+  });
   const eligibility = evaluateStudioRunEligibility({
     projectStage: studio.mode,
     studioMode: studio.studioMode,
     phase,
+    hasMatchingApproval: approvalDiagnosticResult.matched,
     approvedByUser: options.approvedByUser,
     constrainedSandbox: options.constrainedSandbox
   });
@@ -379,10 +389,17 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
   }
   const codexBin = options.codexBin ?? resolveCodexCommand();
   const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox);
+  const approvalDiagnostic =
+    options.dryRun && studio.studioMode !== "fast-prototype"
+      ? formatApprovalDiagnostic(
+          approvalDiagnosticResult,
+          { projectStage: studio.mode, studioMode: studio.studioMode, approvalScopes }
+        )
+      : "";
   const output = options.printPrompt
     ? prompt
     : options.dryRun
-      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${formatEligibility(eligibility)}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}`
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${formatEligibility(eligibility)}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}`
       : `Prompt cache written: ${promptPath}\n${formatEligibility(eligibility)}\nExecuting Codex: ${codexCommand.display}`;
   return { prompt, promptPath, metadataPath, projectRoot, role: roleInput, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, output, maxFixPasses, eligibility };
 }

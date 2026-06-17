@@ -2,7 +2,7 @@
 status: active
 doc_type: contract
 truth_kind: engineering-contract
-last_reviewed: 2026-06-14
+last_reviewed: 2026-06-17
 source_of_truth:
   - ../../routes/areas/repository.md
 ---
@@ -34,7 +34,7 @@ This bounded leaf truth doc owns the repository CLI command contract, package sc
 - `opengamestudio workflow <workflow-id> --project <path>` renders either a built-in workflow ID or an extend-only project-local custom workflow ID/alias.
 - Render-only workflow shortcut commands include market, analytics, design-spec, feel-review, art-direction, ui-review, milestone, handoff, review, ship-check, start, onboard, brainstorm, prototype, architecture-decision, architecture-review, create-epics, create-stories, sprint-plan, sprint-status, story-readiness, story-done, qa-plan, regression-suite, security-audit, perf-profile, release-checklist, hotfix, and localization-plan.
 - `opengamestudio init` and `opengamestudio new` accept `--studio-mode fast-prototype|guided-studio|strict-studio`, default to `guided-studio` when omitted, and persist that value as `studioMode` in generated `.codex/studio.json`.
-- `opengamestudio approval grant --project <path> --role <role> --task <id-or-hash> --scope <glob>` appends a scoped approval record when the role is valid, the scope is safe and non-empty, and the task reference is either an existing task ID assigned to the same role or a 64-character SHA-256 objective hash.
+- `opengamestudio approval grant --project <path> --role <role> --task <id-or-hash> --scope <glob>` appends a scoped approval record when the role is a built-in studio role or syntactically valid `custom-*` role ID, the scope is safe and non-empty, and the task reference is either an existing task ID assigned to the same role or a 64-character SHA-256 objective hash.
 - `opengamestudio approval list --project <path>` prints approval history, including revoked and expired records as visible non-authorizing records.
 - `opengamestudio approval revoke --project <path> --approval-id <id>` sets `revokedAt` on the matching record and preserves approval history.
 - `opengamestudio run <role> --project <path> --dry-run --approval-scope <glob>` prints approval mismatch diagnostics for guided and strict studio modes without writing prompt cache or run metadata.
