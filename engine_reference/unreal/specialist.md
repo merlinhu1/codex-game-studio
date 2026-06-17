@@ -1,33 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
-source-link: https://dev.epicgames.com/documentation/en-us/unreal-engine
+date: 2026-06-17
+source-link: https://dev.epicgames.com/documentation/en-us/unreal-engine/
+engine: unreal
+version-reviewed: 5.5
+tags: unreal,specialist
+roles: unreal-specialist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
-# Unreal Specialist Reference
+# Unreal Engine Specialist Reference
 
-version-applicability: Unreal Engine 5.x specialist review and implementation.
+## Purpose
 
-## Prefer
+Guide the active engine specialist role with bounded, engine-specific review context.
 
-- Anchor advice in modules, Actors, Components, Blueprints, maps, plugins, and config.
-- Keep guidance tied to the active project and role.
+## Guidance
 
-## Avoid
+- Review engine idioms, project layout, version risks, plugins/packages, and validation commands.
+- Do not load references for other engines.
+- Escalate engine-version uncertainty instead of guessing.
 
-- Avoid Godot or Unity terminology unless the task is migration-oriented.
-- Avoid including Unreal-only docs in non-Unreal prompts by default.
+## Validation
 
-## Pitfalls
-
-- Blueprint/editor state can make code-only review incomplete.
-
-## Verification Notes
-
-- Name build, automation, PIE, map-load, or packaging checks used.
-
-## Role Notes
-
-- `unreal-specialist` should use this as the role-specific seed reference.
-
-## Official Links
-
-- https://dev.epicgames.com/documentation/en-us/unreal-engine
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

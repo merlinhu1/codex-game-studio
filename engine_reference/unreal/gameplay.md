@@ -1,36 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
-source-link: https://dev.epicgames.com/documentation/en-us/unreal-engine/programming-with-cplusplus-in-unreal-engine
+date: 2026-06-17
+source-link: https://dev.epicgames.com/documentation/en-us/unreal-engine/
+engine: unreal
+version-reviewed: 5.5
+tags: unreal,gameplay
+roles: gameplay-programmer,engine-programmer,tools-programmer,technical-artist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
-# Unreal Gameplay Reference
+# Unreal Gameplay Implementation Reference
 
-version-applicability: Unreal Engine 5.x gameplay C++, Blueprints, maps, and input setup.
+## Purpose
 
-## Prefer
+Guide gameplay code with engine-native runtime patterns and verification evidence.
 
-- Keep gameplay state ownership clear across Actors, Components, Pawns, and GameMode.
-- Mention Blueprint dependencies when C++ behavior expects asset wiring.
+## Guidance
 
-## Avoid
+- Keep gameplay state deterministic where practical.
+- Separate authored content from generated/runtime data.
+- Prefer small feature slices with direct playtest or automated validation.
 
-- Avoid unreviewed changes to generated project files or caches.
-- Avoid broad asset edits without naming the map or Blueprint.
+## Validation
 
-## Pitfalls
-
-- UPROPERTY and UFUNCTION metadata affects editor and Blueprint behavior.
-- Enhanced Input setup may live in assets as well as code.
-
-## Verification Notes
-
-- Run available automation or document PIE/editor smoke checks.
-- Include compile, map load, and input checks where relevant.
-
-## Role Notes
-
-- Gameplay programmers receive this reference by default for Unreal projects.
-- Technical artists should cite material, Blueprint, or asset pipeline effects.
-
-## Official Links
-
-- https://dev.epicgames.com/documentation/en-us/unreal-engine/programming-with-cplusplus-in-unreal-engine
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

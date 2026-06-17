@@ -162,7 +162,24 @@ describe("Codex context files", () => {
 
     const sources = manifest.manifest.entries.map((entry) => entry.sourcePath);
     expect(sources).toContain("docs/engine-reference/unity/VERSION.md");
+    expect(sources).toContain("docs/engine-reference/unity/current-best-practices.md");
     expect(sources).toContain("docs/engine-reference/unity/gameplay.md");
     expect(sources.some((source) => source.startsWith("docs/engine-reference/unreal/"))).toBe(false);
   });
+
+  test("role runs and workflow prompts select task-relevant engine references without broad loading", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-engine-task-"));
+    const { projectRoot } = initProject({ name: "Godot Netcode Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+
+    const run = prepareRun("gameplay-programmer", { project: projectRoot, task: "Implement rollback networking input sync", printPrompt: true }, cwd);
+    expect(run.contextFiles).toContain("docs/engine-reference/godot/modules/networking.md");
+    expect(run.contextFiles).toContain("docs/engine-reference/godot/modules/input.md");
+    expect(run.contextFiles).not.toContain("docs/engine-reference/godot/modules/audio.md");
+    expect(run.contextFiles.some((source) => source.startsWith("docs/engine-reference/unity/"))).toBe(false);
+
+    const workflow = renderWorkflowPrompt(projectRoot, "bugfix");
+    expect(workflow).toContain("docs/engine-reference/godot/current-best-practices.md");
+    expect(workflow).not.toContain("docs/engine-reference/godot/modules/audio.md");
+  });
+
 });

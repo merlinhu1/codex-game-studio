@@ -25,7 +25,7 @@ This bounded leaf truth doc owns `run` preparation and execution, Codex command 
 
 ## Inputs
 
-- A valid project root with `.codex/studio.json` and the generated role prompt for the requested role.
+- A valid project root with `.codex/studio.json`, `.codex/studio/config.json`, and either a generated built-in role prompt or a project-local custom role prompt for the requested role.
 - A studio role ID or task ID.
 - A non-empty task/objective.
 - Optional included artifacts, verification command/args, review flag, fix flag, and max fix-pass count.
@@ -37,9 +37,10 @@ Runtime execution prepares bounded Codex prompts, evaluates studio write policy 
 ## Execution Model
 
 - `prepareRun` resolves the project, reads studio state, inlines the generated project role prompt plus selected package templates, renders a Codex prompt, computes prompt and metadata cache paths, and builds Codex execution commands.
+- When the requested role is a project-local `custom-*` role from `.codex/studio/config.json`, `prepareRun` renders the configured custom prompt file, expected outputs, review checklist, selected project-local templates, and declared context files through the same path-safe selector and studio-policy gates used by built-in roles.
 - `prepareRun` rejects wrong-engine specialist roles before prompt construction; for example, a Godot project may run `godot-specialist` but not `unity-specialist` or `unreal-specialist`.
 - `--print-prompt` and `--dry-run` are inspection-only paths and do not write prompt cache, metadata, task state, or run directories.
-- Runtime prompt preparation uses the path-safe context selector for required role context, included artifacts, and explicitly allowed broad context. The selector rejects absolute paths, traversal, control characters, symlink escapes, secret-like paths, generated/build output, and binary or non-file entries; missing required context is recorded as a context-contract omission instead of widening reads.
+- Runtime prompt preparation uses the path-safe context selector for required role context, task-relevant active-engine reference files, included artifacts, and explicitly allowed broad context. The selector rejects absolute paths, traversal, control characters, symlink escapes, secret-like paths, generated/build output, and binary or non-file entries; missing required context is recorded as a context-contract omission instead of widening reads.
 - Context selection allocates file and character budgets to required entries before optional entries, but required entries cannot bypass path safety, generated-output, binary, per-entry character, total character, or file-count limits.
 - Included artifact file bodies are appended to the rendered prompt only when the artifact entry is selected by the context selector; rejected or omitted artifacts remain visible in context-contract omissions without embedding their contents.
 - `--allow-broad-context` adds only an explicit bounded list of candidate project files such as the GDD, production timeline, and market overview; candidates still pass through the selector and must resolve under the project root.
@@ -57,7 +58,7 @@ Runtime execution prepares bounded Codex prompts, evaluates studio write policy 
 ## Steps
 
 1. Validate the requested role/task and project state.
-2. Select path-safe context entries, record missing/omitted/rejected entries for the context contract, and compute the shared studio-run eligibility result.
+2. Select path-safe context entries, including task-relevant active-engine reference files, record missing/omitted/rejected entries for the context contract, and compute the shared studio-run eligibility result.
 3. Block non-dry mutating runs when the eligibility result is not allowed; inspection paths may still render diagnostics.
 4. Render the Codex prompt with the active write policy and sandbox.
 5. For non-dry allowed runs, write the prompt and metadata cache under `.codex/runs/`.
@@ -97,6 +98,8 @@ Runtime execution prepares bounded Codex prompts, evaluates studio write policy 
 - Decision (2026-06-13): Route both direct role runs and task runs through the shared eligibility result before mutating side effects, failing closed for unapproved strict-studio mutation.
 - Decision (2026-06-13): Use one shared context-contract renderer for implementation, review, and fix prompts so selected context and write policy are visible without loading broad prompt material.
 - Decision (2026-06-14): Fail wrong-engine specialist role runs before constructing contradictory prompts or writing run metadata.
+- Decision (2026-06-17): Add task-relevant active-engine reference requests to role-run and workflow context contracts so module/plugin depth is selected by role/task relevance instead of broad prompt loading.
+- Decision (2026-06-17): Route project-local custom role runs through the same visible write-policy, sandbox, context-selection, prompt-cache, and template-selection contracts as built-in roles instead of introducing a separate plugin runtime.
 
 ## Rationale
 
@@ -109,7 +112,7 @@ Codex execution is intentionally explicit: users can inspect prompts without sid
 
 ## Maintenance Notes
 
-- Update this doc with changes to `src/runner.ts`, `src/tasks.ts`, `src/context-manifest.ts`, `src/prompt-context.ts`, `src/codex-runtime.ts`, or `src/verification.ts`.
+- Update this doc with changes to `src/runner.ts`, `src/tasks.ts`, `src/customization.ts`, `src/context-manifest.ts`, `src/prompt-context.ts`, `src/codex-runtime.ts`, or `src/verification.ts`.
 - Update this doc with changes to `src/studio-policy.ts` when policy primitive behavior changes.
 - Relevant verification includes studio-policy, runner, task, verification, Codex runtime, and lifecycle-focused tests.
 

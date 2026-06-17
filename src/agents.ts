@@ -4,7 +4,7 @@ import { guidanceConfigHash, type ProjectConfig } from "./config.js";
 import type { EngineConfigRegistry } from "./engines.js";
 import { engineReferenceProjectPath, selectedEngineReferencePrompts } from "./engine-reference.js";
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
-import { projectRoleIdsForEngine, rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
+import { projectRoleIdsForEngine, renderRoleContractSections, rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
 
 export type MaterializeAgentsInput = {
   projectRoot: string;
@@ -15,7 +15,17 @@ export type MaterializeAgentsInput = {
 export function validateBaseAgents(): string[] {
   return studioRoleIds.flatMap((role) => {
     const pkg = rolePackages[role];
-    return pkg.systemPrompt.trim() && pkg.expectedOutputs.length && pkg.reviewChecklist.length ? [] : [`Invalid role package ${role}`];
+    return pkg.systemPrompt.trim() &&
+      pkg.responsibilities.length &&
+      pkg.inputsToInspect.length &&
+      pkg.expectedOutputs.length &&
+      pkg.qualityGates.length &&
+      pkg.collaborationNotes.length &&
+      pkg.stopConditions.length &&
+      pkg.sharedFragments.length &&
+      pkg.reviewChecklist.length
+      ? []
+      : [`Invalid role package ${role}`];
   });
 }
 
@@ -106,6 +116,7 @@ export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfi
     `Project: ${config.project.name}`,
     `Slug: ${config.project.slug}`,
     `Role: ${pkg.displayName}`,
+    `Context Strategy: ${pkg.contextStrategy}`,
     `Mode: ${config.project.mode}`,
     `Studio Mode: ${config.project.studio_mode}`,
     `Engine: ${engine.display_name} ${config.project.engine_version}`,
@@ -125,6 +136,8 @@ export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfi
     "## Role Instructions",
     "",
     pkg.systemPrompt,
+    "",
+    renderRoleContractSections(pkg),
     "",
     "## Engine Context",
     "",
@@ -165,8 +178,16 @@ export function projectRolePromptSourceInput(role: StudioRoleId, config: Project
   return {
     role,
     displayName: pkg.displayName,
+    contextStrategy: pkg.contextStrategy,
     systemPrompt: pkg.systemPrompt,
+    responsibilities: pkg.responsibilities,
+    inputsToInspect: pkg.inputsToInspect,
     expectedOutputs: pkg.expectedOutputs,
+    outputSchema: pkg.outputSchema,
+    qualityGates: pkg.qualityGates,
+    collaborationNotes: pkg.collaborationNotes,
+    stopConditions: pkg.stopConditions,
+    sharedFragments: pkg.sharedFragments,
     reviewChecklist: pkg.reviewChecklist,
     handoffTemplate: pkg.handoffTemplate,
     engineDisplayName: engine.display_name,

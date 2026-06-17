@@ -17,7 +17,7 @@ import { runValidation } from "./validation.js";
 import { executeRunLifecycle, prepareRun } from "./runner.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
 import { createTask, executeTaskRun, readTaskStore, resolveTaskProject } from "./tasks.js";
-import { renderWorkflowPrompt, workflowRegistry, type WorkflowId } from "./workflows.js";
+import { renderWorkflowPrompt, workflowAliases, workflowRegistry, type WorkflowId } from "./workflows.js";
 import { isStudioRoleId, unknownStudioRoleMessage } from "./roles.js";
 import type { ProjectStage, StudioMode } from "./studio-policy.js";
 
@@ -122,16 +122,19 @@ program
   });
 
 const templates = program.command("templates").description("Discover templates");
-templates.command("list").description("List template IDs").action(() => {
-  for (const info of listTemplates()) console.log(`${info.id}\t${info.category}\t${info.path}`);
+templates.command("list").description("List template IDs").option("--project <path>", "project path for local templates").action((opts) => {
+  const projectRoot = opts.project ? resolveTaskProject(opts.project) : undefined;
+  for (const info of listTemplates(projectRoot)) console.log(`${info.id}\t${info.category}\t${info.path}`);
 });
 templates
   .command("show")
   .description("Show a template")
   .argument("<template-id>")
-  .action((id: TemplateId) => {
-    if (!templateRegistry[id]) throw new Error(`Unknown template "${id}"`);
-    console.log(formatTemplateShow(id));
+  .option("--project <path>", "project path for local templates")
+  .action((id: string, opts) => {
+    const projectRoot = opts.project ? resolveTaskProject(opts.project) : undefined;
+    if (!templateRegistry[id as TemplateId] && !projectRoot) throw new Error(`Unknown template "${id}"`);
+    console.log(formatTemplateShow(id, projectRoot ? { projectRoot } : {}));
   });
 
 const approval = program.command("approval").description("Manage auditable studio approvals");
@@ -339,10 +342,18 @@ task
     if (result.lifecycle?.finalStatus === "blocked") process.exitCode = 1;
   });
 
-function renderWorkflowCommand(workflow: WorkflowId, opts: { project: string }): void {
+function renderWorkflowCommand(workflow: string, opts: { project: string }): void {
   const projectRoot = resolveTaskProject(opts.project);
   console.log(renderWorkflowPrompt(projectRoot, workflow));
 }
+
+program
+  .command("workflow")
+  .description("Render a built-in or project-local workflow prompt by id")
+  .argument("<workflow-id>")
+  .requiredOption("--project <path>", "project path")
+  .option("--dry-run", "render prompt without launching Codex")
+  .action((workflow: string, opts) => renderWorkflowCommand(workflow, opts));
 
 function addWorkflowCommand(name: "review" | "ship-check"): void {
   program
@@ -353,13 +364,15 @@ function addWorkflowCommand(name: "review" | "ship-check"): void {
     .action((opts) => renderWorkflowCommand(name, opts));
 }
 
-for (const workflow of Object.values(workflowRegistry).filter((entry) => entry.cliAlias)) {
-  program
-    .command(workflow.cliAlias!)
-    .description(`Render the ${workflow.id} workflow prompt`)
-    .requiredOption("--project <path>", "project path")
-    .option("--dry-run", "render prompt without launching Codex")
-    .action((opts) => renderWorkflowCommand(workflow.id, opts));
+for (const workflow of Object.values(workflowRegistry)) {
+  for (const alias of workflowAliases(workflow)) {
+    program
+      .command(alias)
+      .description(`Render the ${workflow.id} workflow prompt`)
+      .requiredOption("--project <path>", "project path")
+      .option("--dry-run", "render prompt without launching Codex")
+      .action((opts) => renderWorkflowCommand(workflow.id, opts));
+  }
 }
 addWorkflowCommand("review");
 addWorkflowCommand("ship-check");

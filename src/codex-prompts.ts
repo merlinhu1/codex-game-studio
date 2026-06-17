@@ -1,4 +1,4 @@
-import { rolePackages } from "./roles.js";
+import { renderRoleContractSections, rolePackages } from "./roles.js";
 import type { CodexStudioSession } from "./codex-session.js";
 import { loadEngineConfigs } from "./engines.js";
 import { packageAssetPath } from "./paths.js";
@@ -29,6 +29,7 @@ export function renderCodexPrompt(session: CodexStudioSession): string {
     "",
     `Role: ${role.displayName}`,
     `Role ID: ${role.id}`,
+    `Context Strategy: ${role.contextStrategy}`,
     `Phase: ${session.phase}`,
     `Project Root: ${session.projectRoot}`,
     `Objective: ${session.objective}`,
@@ -41,6 +42,8 @@ export function renderCodexPrompt(session: CodexStudioSession): string {
     session.contextContract ? "" : undefined,
     "## Role Contract",
     role.systemPrompt,
+    "",
+    renderRoleContractSections(role),
     "",
     "## Engine Context",
     engineSection,

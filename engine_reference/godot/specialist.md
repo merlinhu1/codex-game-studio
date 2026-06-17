@@ -1,33 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
+date: 2026-06-17
 source-link: https://docs.godotengine.org/en/stable/
+engine: godot
+version-reviewed: 4.4
+tags: godot,specialist
+roles: godot-specialist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
-# Godot Specialist Reference
+# Godot Engine Specialist Reference
 
-version-applicability: Godot 4.x specialist review and implementation.
+## Purpose
 
-## Prefer
+Guide the active engine specialist role with bounded, engine-specific review context.
 
-- Anchor advice in scenes, nodes, resources, signals, and ProjectSettings.
-- Keep generated guidance compact and task-specific.
+## Guidance
 
-## Avoid
+- Review engine idioms, project layout, version risks, plugins/packages, and validation commands.
+- Do not load references for other engines.
+- Escalate engine-version uncertainty instead of guessing.
 
-- Avoid Unity or Unreal terminology unless comparing a migration decision.
-- Avoid broad engine tutorials in prompts.
+## Validation
 
-## Pitfalls
-
-- Scene ownership, resource reuse, and autoload state can interact in subtle ways.
-
-## Verification Notes
-
-- Name the exact Godot editor/runtime command or manual check used.
-
-## Role Notes
-
-- `godot-specialist` should use this as the role-specific seed reference.
-
-## Official Links
-
-- https://docs.godotengine.org/en/stable/
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

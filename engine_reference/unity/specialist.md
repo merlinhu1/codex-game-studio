@@ -1,33 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
+date: 2026-06-17
 source-link: https://docs.unity3d.com/Manual/index.html
+engine: unity
+version-reviewed: 6000.0
+tags: unity,specialist
+roles: unity-specialist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
-# Unity Specialist Reference
+# Unity Engine Specialist Reference
 
-version-applicability: Unity specialist review and implementation across runtime and editor surfaces.
+## Purpose
 
-## Prefer
+Guide the active engine specialist role with bounded, engine-specific review context.
 
-- Anchor advice in scenes, prefabs, packages, assembly definitions, and ProjectSettings.
-- Keep recommendations aligned with the active Unity version.
+## Guidance
 
-## Avoid
+- Review engine idioms, project layout, version risks, plugins/packages, and validation commands.
+- Do not load references for other engines.
+- Escalate engine-version uncertainty instead of guessing.
 
-- Avoid Unreal or Godot concepts unless the task is migration-oriented.
-- Avoid loading all engine docs into general gameplay prompts.
+## Validation
 
-## Pitfalls
-
-- YAML asset diffs can hide meaningful prefab or scene overrides.
-
-## Verification Notes
-
-- Name editor, play-mode, package, or build validation used.
-
-## Role Notes
-
-- `unity-specialist` should use this as the role-specific seed reference.
-
-## Official Links
-
-- https://docs.unity3d.com/Manual/index.html
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

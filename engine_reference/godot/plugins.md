@@ -1,35 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
-source-link: https://docs.godotengine.org/en/stable/tutorials/plugins/editor/index.html
+date: 2026-06-17
+source-link: https://docs.godotengine.org/en/stable/
+engine: godot
+version-reviewed: 4.4
+tags: godot,plugins
+roles: tools-programmer,engine-programmer,godot-specialist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
-# Godot Plugin Reference
+# Godot Plugin And Package Reference
 
-version-applicability: Godot 4.x editor plugins and export tooling.
+## Purpose
 
-## Prefer
+Guide plugin/package use without adding hidden runtime dependencies.
 
-- Keep editor plugins isolated under addon-style folders.
-- Document any editor restart or enablement step.
+## Guidance
 
-## Avoid
+- Prefer package-manager or marketplace sources that are reviewable in the project.
+- Record plugin version, install surface, and rollback risk.
+- Avoid requiring plugins for lightweight prototypes unless explicitly justified.
 
-- Avoid plugin side effects outside the active project.
-- Avoid relying on local editor-only absolute paths.
+## Validation
 
-## Pitfalls
-
-- Plugin activation state can differ between machines.
-- Export presets may hide missing resources until build time.
-
-## Verification Notes
-
-- Open the editor or run a documented export check after plugin changes.
-- Record plugin enablement and export preset changes.
-
-## Role Notes
-
-- Tools programmers and engine programmers receive this when relevant.
-
-## Official Links
-
-- https://docs.godotengine.org/en/stable/tutorials/plugins/editor/index.html
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

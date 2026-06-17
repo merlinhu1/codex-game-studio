@@ -1,35 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
-source-link: https://dev.epicgames.com/documentation/en-us/unreal-engine
+date: 2026-06-17
+source-link: https://dev.epicgames.com/documentation/en-us/unreal-engine/
+engine: unreal
+version-reviewed: 5.5
+tags: unreal,VERSION
+roles: gameplay-programmer,engine-programmer,tools-programmer,technical-artist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
 # Unreal Version Reference
 
-version-applicability: Unreal Engine 5.x projects unless project files state otherwise.
+## Purpose
 
-## Prefer
+Use this file to confirm the reviewed engine version, official documentation root, and version-sensitive assumptions before making implementation claims.
 
-- Keep C++, Blueprint, module, and plugin changes explicit in handoff notes.
-- Treat `.uproject`, `.uplugin`, and build file edits as engine-level changes.
+## Guidance
 
-## Avoid
+- Match generated project engine version against this reviewed baseline.
+- Prefer official docs for version-specific APIs.
+- Record any project-local engine version drift in the handoff.
 
-- Do not edit DerivedDataCache, Intermediate, or Saved outputs.
-- Do not assume Blueprint behavior from C++ diffs alone.
+## Validation
 
-## Pitfalls
-
-- Reflection macros, module dependencies, and asset references can fail late.
-- Blueprint assets may need editor validation even after C++ compiles.
-
-## Verification Notes
-
-- Run the configured Unreal build/test command or document an editor smoke check.
-- Report maps, Blueprints, modules, plugins, and config files touched.
-
-## Role Notes
-
-- Programmers should identify whether changes affect runtime, editor, or build tooling.
-
-## Official Links
-
-- https://dev.epicgames.com/documentation/en-us/unreal-engine
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.

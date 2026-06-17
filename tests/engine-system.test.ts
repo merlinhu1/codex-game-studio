@@ -50,12 +50,23 @@ describe("engine registry", () => {
     for (const [engine, pack] of Object.entries(engineReferenceRegistry)) {
       expect(pack.packageRoot).toBe(`engine_reference/${engine}`);
       expect(pack.projectRoot).toBe(`docs/engine-reference/${engine}`);
-      expect(pack.requiredFiles).toContain("VERSION.md");
+      expect(pack.requiredFiles).toEqual(expect.arrayContaining(["VERSION.md", "current-best-practices.md", "deprecated-apis.md", "breaking-changes.md", "gameplay.md", "specialist.md"]));
+      expect(pack.moduleFiles).toEqual([
+        "modules/animation.md",
+        "modules/audio.md",
+        "modules/input.md",
+        "modules/navigation.md",
+        "modules/networking.md",
+        "modules/physics.md",
+        "modules/rendering.md",
+        "modules/ui.md"
+      ]);
       expect(pack.promptReferences.some((reference) => reference.path === "VERSION.md" && reference.required)).toBe(true);
-      for (const file of pack.requiredFiles) {
+      expect(pack.promptReferences.some((reference) => reference.path === "current-best-practices.md" && reference.required)).toBe(true);
+      for (const file of [...pack.requiredFiles, ...pack.moduleFiles, ...pack.pluginFiles]) {
         expect(pack.projectPath(file)).toBe(`docs/engine-reference/${engine}/${file}`);
       }
-      expect(pack.validation.requiredMetadata).toEqual(["reviewer", "date", "source-link"]);
+      expect(pack.validation.requiredMetadata).toEqual(["reviewer", "date", "source-link", "engine", "version-reviewed", "tags", "roles", "workflows"]);
       expect(pack.packageSmokeFiles.length).toBeGreaterThan(0);
     }
   });
@@ -64,8 +75,8 @@ describe("engine registry", () => {
     const checks = validateEngineReferencePacks(packageAssetPath("."));
     expect(checks.filter((check) => check.status === "fail")).toEqual([]);
     expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.godot.VERSION.md.metadata", status: "pass" }));
-    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.unity.VERSION.md.metadata", status: "pass" }));
-    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.unreal.VERSION.md.metadata", status: "pass" }));
+    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.unity.modules/networking.md.metadata", status: "pass" }));
+    expect(checks).toContainEqual(expect.objectContaining({ id: "engine_reference.unreal.plugins/gas.md.metadata", status: "pass" }));
   });
 
   test("engine reference assets are included in npm pack", () => {
@@ -73,9 +84,11 @@ describe("engine registry", () => {
     const packInfo = JSON.parse(raw)[0] as { filename: string; files: { path: string }[] };
     try {
       const packed = new Set(packInfo.files.map((file) => file.path));
-      expect(packed.has("engine_reference/godot/VERSION.md")).toBe(true);
-      expect(packed.has("engine_reference/unity/VERSION.md")).toBe(true);
-      expect(packed.has("engine_reference/unreal/VERSION.md")).toBe(true);
+      for (const pack of Object.values(engineReferenceRegistry)) {
+        for (const file of [...pack.requiredFiles, ...pack.moduleFiles, ...pack.pluginFiles, ...pack.specialistFiles]) {
+          expect(packed.has(`${pack.packageRoot}/${file}`)).toBe(true);
+        }
+      }
     } finally {
       unlinkSync(path.join(process.cwd(), packInfo.filename));
     }

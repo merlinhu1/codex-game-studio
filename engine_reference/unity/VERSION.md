@@ -1,35 +1,26 @@
 reviewer: Open Game Studio seed review
-date: 2026-06-14
+date: 2026-06-17
 source-link: https://docs.unity3d.com/Manual/index.html
+engine: unity
+version-reviewed: 6000.0
+tags: unity,VERSION
+roles: gameplay-programmer,engine-programmer,tools-programmer,technical-artist
+workflows: prototype,bugfix,architecture-review,qa-plan
 
 # Unity Version Reference
 
-version-applicability: Unity 2022 LTS and Unity 6 style projects unless project files state otherwise.
+## Purpose
 
-## Prefer
+Use this file to confirm the reviewed engine version, official documentation root, and version-sensitive assumptions before making implementation claims.
 
-- Use component-oriented scripts and keep serialized fields inspectable.
-- Treat ProjectSettings and package manifest changes as reviewable engine changes.
+## Guidance
 
-## Avoid
+- Match generated project engine version against this reviewed baseline.
+- Prefer official docs for version-specific APIs.
+- Record any project-local engine version drift in the handoff.
 
-- Do not edit Library or other generated Unity cache folders.
-- Do not assume package APIs without checking the manifest.
+## Validation
 
-## Pitfalls
-
-- Scene and prefab YAML changes can be noisy and order-sensitive.
-- Assembly definitions and packages can change compile boundaries.
-
-## Verification Notes
-
-- Run the configured Unity command or document an editor play-mode smoke check.
-- Report scenes, prefabs, scripts, packages, and settings touched.
-
-## Role Notes
-
-- Programmers should distinguish runtime script changes from editor or package changes.
-
-## Official Links
-
-- https://docs.unity3d.com/Manual/index.html
+- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
+- Keep this reference selected by relevance; do not load every engine reference for one task.
