@@ -53,6 +53,16 @@ describe("behavioral evaluation", () => {
     }
   });
 
+  test("workflow scenarios include selected templates without a project root", () => {
+    const results = runBehavioralEvaluations().filter((result) => result.id.startsWith("workflow."));
+    expect(results).toHaveLength(3);
+    for (const result of results) {
+      expect(result.status).toBe("pass");
+      expect(result.missingTemplateIds).toEqual([]);
+      expect(result.prompt).toContain("## Workflow Templates");
+    }
+  });
+
   test("negative checks fail when required text is missing or forbidden drift appears", () => {
     const scenario = behavioralEvaluationScenarios[0];
     const missing = evaluateBehavioralScenario({ ...scenario, requiredPhrases: ["this phrase is intentionally absent"] });
