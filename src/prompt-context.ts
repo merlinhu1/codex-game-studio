@@ -2,6 +2,8 @@ import type { CodexStudioSession } from "./codex-session.js";
 import type { ContextManifestEntry } from "./context-manifest.js";
 import type { StudioProjectState } from "./projects.js";
 
+type ContextContractSession = Pick<CodexStudioSession, "phase" | "writePolicy" | "sandbox" | "allowFileEdits">;
+
 function formatEntries(entries: ContextManifestEntry[]): string[] {
   const selected = entries.filter((entry) => entry.status === "selected");
   if (!selected.length) return ["- None"];
@@ -15,7 +17,7 @@ function formatOmissions(entries: ContextManifestEntry[]): string[] {
 }
 
 export function renderContextContract(args: {
-  session: CodexStudioSession;
+  session: ContextContractSession;
   projectStage: StudioProjectState["mode"];
   studioMode: StudioProjectState["studioMode"];
   entries: ContextManifestEntry[];
