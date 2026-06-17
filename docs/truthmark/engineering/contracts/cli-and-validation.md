@@ -55,7 +55,7 @@ This bounded leaf truth doc owns the repository CLI command contract, package sc
 - Approval grant output includes the new approval ID, normalized role, objective/hash information, scopes, and the approval-store path for inspection. The stored record includes baseline metadata as part of the approval store contract.
 - Dry-run role-run output includes eligibility, write policy, Codex sandbox, file-edit permission, approval/override/advisory provenance, project stage, studio mode, diagnostic approval scopes, the current objective hash, matched/no-match status, and per-record authorization reasons such as role, normalized objective, scope, project stage, studio mode, expiry, revocation, and stage mismatches.
 - Validation emits one line per check in `STATUS id: message (path)` shape and exits non-zero when any check fails.
-- Behavioral evaluation check IDs use `behavioral.scenario.<scenario-id>` and fail when a built-in role/workflow prompt misses required obligations, includes unnegated forbidden future-only drift, exceeds the prompt-size bound, lacks expected selected-context categories, or selects forbidden templates.
+- Behavioral evaluation check IDs use `behavioral.scenario.<scenario-id>` and fail when a built-in role/workflow prompt misses required obligations, includes unnegated forbidden future-only drift, exceeds the prompt-size bound, lacks expected selected-context categories, misses required workflow templates, or selects forbidden templates.
 - Package smoke validation builds and exercises the packed package bin and template loading behavior, including all template paths registered in `src/templates.ts`.
 - Package validation checks every engine reference asset registered for Godot, Unity, and Unreal packs is included in `npm pack`.
 

@@ -2,7 +2,7 @@ import { createCodexStudioSession, type CodexStudioPhase } from "./codex-session
 import { renderCodexPrompt } from "./codex-prompts.js";
 import { renderWorkflowPrompt, workflowRegistry, type WorkflowId } from "./workflows.js";
 import { rolePackages, type StudioRoleId } from "./roles.js";
-import type { TemplateId } from "./templates.js";
+import { renderSelectedTemplates, type TemplateId } from "./templates.js";
 
 export type BehavioralEvaluationTarget =
   | { kind: "role"; role: StudioRoleId; phase: CodexStudioPhase; objective: string; contextFiles?: string[] }
@@ -126,15 +126,17 @@ function renderScenarioPrompt(scenario: BehavioralEvaluationScenario, options: {
   if (scenario.target.kind === "workflow") {
     const definition = workflowRegistry[scenario.target.workflow];
     if (options.projectRoot) return renderWorkflowPrompt(options.projectRoot, scenario.target.workflow);
-    return renderCodexPrompt(
-      createCodexStudioSession({
-        projectRoot: options.projectRoot ?? process.cwd(),
-        role: definition.role,
-        objective: definition.objective,
-        phase: definition.phase,
-        engine: "godot",
-        contextFiles: definition.contextFiles
-      })
+    return (
+      renderCodexPrompt(
+        createCodexStudioSession({
+          projectRoot: options.projectRoot ?? process.cwd(),
+          role: definition.role,
+          objective: definition.objective,
+          phase: definition.phase,
+          engine: "godot",
+          contextFiles: definition.contextFiles
+        })
+      ) + renderSelectedTemplates(definition.templateIds ?? [], "## Workflow Templates")
     );
   }
 
@@ -187,7 +189,7 @@ export function evaluateBehavioralScenario(scenario: BehavioralEvaluationScenari
   const missingRequiredPhrases = scenario.requiredPhrases.filter((phrase) => !prompt.includes(phrase));
   const presentForbiddenPhrases = scenario.forbiddenPhrases.filter((phrase) => containsForbiddenDrift(prompt, phrase));
   const missingContextCategories = scenario.expectedContextCategories.filter((category) => !categories.includes(category));
-  const missingTemplateIds = (scenario.requiredTemplateIds ?? []).filter((id) => options.projectRoot && !prompt.includes(templateToken(id)));
+  const missingTemplateIds = (scenario.requiredTemplateIds ?? []).filter((id) => !prompt.includes(templateToken(id)));
   const presentForbiddenTemplateIds = (scenario.forbiddenTemplateIds ?? []).filter((id) => prompt.includes(templateToken(id)));
   const tooLong = prompt.length > (scenario.maxPromptLength ?? 15000);
   const status = missingRequiredPhrases.length || presentForbiddenPhrases.length || missingContextCategories.length || missingTemplateIds.length || presentForbiddenTemplateIds.length || tooLong ? "fail" : "pass";
