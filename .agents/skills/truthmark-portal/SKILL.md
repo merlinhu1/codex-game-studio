@@ -3,7 +3,6 @@ name: truthmark-portal
 description: Use when the user explicitly asks to generate, refresh, or update the Truthmark Portal static HTML site. Not for code change sync, route repair, truth validation/checking, documenting behavior, realizing docs into code, or machine-readable agent context.
 argument-hint: Optional portal generation focus
 user-invocable: true
-truthmark-version: 2.2.1
 ---
 
 # Truthmark Portal
@@ -14,7 +13,7 @@ Invocations: OpenCode /skill truthmark-portal; Codex /truthmark-portal or $truth
 
 Quick procedure:
 - Follow repository instruction files that exist in this checkout; do not assume any optional policy path exists.
-- Truthmark Portal is manual-only; never run it as a completion gate and never treat it as Truth Sync.
+- Truthmark Portal is manual-only; never run it automatically at completion and never treat it as Truth Sync.
 - Markdown remains canonical; generated HTML is non-canonical presentation only.
 - Read Markdown directly; the workflow does not require the truthmark CLI or package.
 - Generate committed, generated non-canonical static files for humans.
@@ -25,5 +24,5 @@ Quick procedure:
 - Read support/report-template.md before the final report.
 
 Progressive disclosure:
-- support/procedure.md — read before edits or detailed auditing; contains core quality gates
+- support/procedure.md — read before edits or detailed auditing; contains core review questions
 - support/report-template.md — read before the final report
