@@ -8,74 +8,132 @@ last_reviewed: 2026-06-25
 
 ## Purpose
 
-The CLI and validation contracts define the public `opengamestudio` command surface, package entrypoints, hard-failing validation checks, and future-surface guardrails for this repository.
+The CLI and validation contracts define the public `opengamestudio` command surface.
+
+They also define package entrypoints, hard-failing validation checks, and future-surface guardrails.
 
 ## Scope
 
-This bounded leaf truth doc owns the repository CLI command contract, package scripts/bin/files expectations, validation check behavior, and documented public-surface claims. It does not own the internal details of project scaffolding, role prompt content, or Codex runtime lifecycle beyond the options exposed through the CLI.
+This leaf doc owns the repository CLI command contract, package scripts, package bin/files expectations, validation checks, and documented public-surface claims.
+
+It does not own project scaffolding internals, role prompt content, or Codex runtime lifecycle details. Runtime details appear here only when they are exposed as CLI options.
 
 ## Current Implementation Behavior
 
-- The repository exposes a package CLI named `opengamestudio` from the built `dist/cli.js` entrypoint.
-- The CLI currently supports project initialization/status, template discovery, project-local customization inspection, role execution, task management, approval-store management, workflow prompt rendering, workflow shortcut aliases, and validation surfaces.
-- Repository validation is executable through `npm run validate`, which builds the package and runs the built CLI validation command.
-- Repository validation includes local deterministic behavioral-evaluation scenarios for representative role and workflow prompt contracts; these subchecks render prompts and inspect obligations without hosted evaluators, telemetry, hidden memory, or LLM calls.
+- The repository exposes a package CLI named `opengamestudio`.
+- The built entrypoint is `dist/cli.js`.
+- The CLI supports project initialization and status commands.
+- It supports template discovery and project-local customization inspection.
+- It supports role execution, file-backed tasks, approval-store management, workflow prompt rendering, workflow shortcut aliases, and validation.
+- Repository validation is executable through `npm run validate`.
+- `npm run validate` builds the package and runs the built CLI validation command.
+- Validation includes deterministic behavioral-evaluation scenarios for representative prompts.
+- Behavioral-evaluation subchecks render prompts and inspect obligations locally.
+- They do not use hosted evaluators, telemetry, hidden memory, or LLM calls.
 
 ## Contract Surface
 
 - Package name: `open-gamestudio`.
 - Package bin: `opengamestudio` points to `./dist/cli.js`.
 - Primary scripts include `build`, `typecheck`, `test`, `validate`, `init`, `manage`, and `templates`.
-- Public CLI command groups include initialization/status commands, template discovery, role run execution, file-backed tasks, approval management, generic workflow prompt rendering, and render-only workflow shortcuts.
-- `opengamestudio templates list --project <path>` and `opengamestudio templates show <template-id> --project <path>` include project-local custom templates from `.codex/studio/config.json` alongside built-in package templates.
-- `opengamestudio workflow <workflow-id> --project <path>` renders either a built-in workflow ID or an extend-only project-local custom workflow ID/alias.
-- Render-only workflow shortcut commands include market, analytics, design-spec, feel-review, art-direction, ui-review, milestone, handoff, review, ship-check, start, onboard, brainstorm, prototype, architecture-decision, architecture-review, create-epics, create-stories, sprint-plan, sprint-status, story-readiness, story-done, qa-plan, regression-suite, security-audit, perf-profile, release-checklist, hotfix, and localization-plan.
-- `opengamestudio init` and `opengamestudio new` accept `--studio-mode fast-prototype|guided-studio|strict-studio`, default to `guided-studio` when omitted, and persist that value as `studioMode` in generated `.codex/studio.json`.
-- `opengamestudio approval grant --project <path> --role <role> --task <id-or-hash> --scope <glob>` appends a scoped approval record when the role is a built-in studio role or syntactically valid `custom-*` role ID, the scope is safe and non-empty, and the task reference is either an existing task ID assigned to the same role or a 64-character SHA-256 objective hash.
-- `opengamestudio approval list --project <path>` prints approval history, including revoked and expired records as visible non-authorizing records.
-- `opengamestudio approval revoke --project <path> --approval-id <id>` sets `revokedAt` on the matching record and preserves approval history.
-- `opengamestudio run <role> --project <path> --dry-run --approval-scope <glob>` prints approval mismatch diagnostics for guided and strict studio modes without writing prompt cache or run metadata.
-- `opengamestudio run <role>` and `opengamestudio task run` expose `--approved-by-user` for guided-studio local override and `--constrained-sandbox` for the explicit `workspace-write` sandbox override. Without the constrained override, allowed mutating runs use `danger-full-access`.
-- `opengamestudio task run` accepts `--approval-scope <glob>` for shared approval matching diagnostics and eligibility.
-- Repository validation is exposed through `opengamestudio validate` and the `npm run validate` script.
+- Public command groups include initialization and status commands.
+- Public command groups also include template discovery, role runs, file-backed tasks, approval management, generic workflow rendering, and render-only workflow shortcuts.
+- `opengamestudio templates list --project <path>` includes project-local custom templates beside built-in templates.
+- `opengamestudio templates show <template-id> --project <path>` can show project-local custom templates.
+- `opengamestudio workflow <workflow-id> --project <path>` renders built-in workflow IDs.
+- The same command also renders extend-only project-local custom workflow IDs and aliases.
+- Render-only discovery shortcuts include market, analytics, start, onboard, brainstorm, and prototype.
+- Render-only design shortcuts include design-spec, feel-review, art-direction, ui-review, architecture-decision, and architecture-review.
+- Render-only production shortcuts include milestone, handoff, review, ship-check, release-checklist, and hotfix.
+- Render-only planning shortcuts include create-epics, create-stories, sprint-plan, sprint-status, story-readiness, and story-done.
+- Render-only QA and operations shortcuts include qa-plan, regression-suite, security-audit, perf-profile, and localization-plan.
+- `opengamestudio init` and `opengamestudio new` accept `--studio-mode fast-prototype|guided-studio|strict-studio`.
+- Omitted `--studio-mode` defaults to `guided-studio`.
+- Generated `.codex/studio.json` persists the value as `studioMode`.
+- `opengamestudio approval grant --project <path> --role <role> --task <id-or-hash> --scope <glob>` appends a scoped approval record.
+- Approval grant accepts built-in roles and syntactically valid `custom-*` role IDs.
+- Approval grant requires a safe, non-empty scope.
+- Approval grant accepts either an existing same-role task ID or a 64-character SHA-256 objective hash.
+- `opengamestudio approval list --project <path>` prints approval history.
+- Approval history includes revoked and expired records as visible non-authorizing records.
+- `opengamestudio approval revoke --project <path> --approval-id <id>` sets `revokedAt` on the matching record.
+- Revocation preserves approval history.
+- `opengamestudio run <role> --project <path> --dry-run --approval-scope <glob>` prints approval mismatch diagnostics.
+- The dry-run approval diagnostics apply to guided and strict studio modes.
+- Dry-run approval diagnostics do not write prompt cache or run metadata.
+- `opengamestudio run <role>` and `opengamestudio task run` expose `--approved-by-user` for guided-studio local override.
+- They expose `--constrained-sandbox` for explicit `workspace-write` sandbox use.
+- Without the constrained override, allowed mutating runs use `danger-full-access`.
+- `opengamestudio task run` accepts `--approval-scope <glob>`.
+- Repository validation is exposed through `opengamestudio validate` and `npm run validate`.
 
 ## Inputs
 
 - CLI options and arguments parsed by Commander in `src/cli.ts`.
-- Repository files checked by validation, including package metadata, source files, templates, generated build output, engine configs, engine reference packs, deterministic behavioral-evaluation scenarios, and optional project paths.
+- Repository files checked by validation.
+- Checked files include package metadata, source files, templates, generated build output, engine configs, and engine reference packs.
+- Checked inputs also include behavioral-evaluation scenarios and optional project paths.
 - Project validation input when `--project <path>` is supplied.
-- Project-local customization config at `.codex/studio/config.json`, plus any referenced local prompt, context, workflow, and template files.
+- Project-local customization config at `.codex/studio/config.json`.
+- Referenced local prompt, context, workflow, and template files.
 
 ## Outputs
 
 - CLI commands print human-readable status, prompt, task, validation, or workflow output.
-- Approval grant output includes the new approval ID, normalized role, objective/hash information, scopes, and the approval-store path for inspection. The stored record includes baseline metadata as part of the approval store contract.
-- Dry-run role-run output includes eligibility, write policy, Codex sandbox, file-edit permission, approval/override/advisory provenance, project stage, studio mode, diagnostic approval scopes, the current objective hash, matched/no-match status, and per-record authorization reasons such as role, normalized objective, scope, project stage, studio mode, expiry, revocation, and stage mismatches.
-- Validation emits one line per check in `STATUS id: message (path)` shape and exits non-zero when any check fails.
-- Behavioral evaluation check IDs use `behavioral.scenario.<scenario-id>` and fail when a built-in role/workflow prompt misses required obligations, includes unnegated forbidden future-only drift, exceeds the prompt-size bound, lacks expected selected-context categories, misses required workflow templates, or selects forbidden templates.
-- Package smoke validation builds and exercises the packed package bin and template loading behavior, including all template paths registered in `src/templates.ts`.
-- Package validation checks every engine reference asset registered for Godot, Unity, and Unreal packs is included in `npm pack`.
+- Approval grant output includes the new approval ID, normalized role, objective/hash information, scopes, and approval-store path.
+- Stored approval records include baseline metadata.
+- Dry-run role-run output includes eligibility, write policy, Codex sandbox, file-edit permission, provenance, project stage, and studio mode.
+- It also includes approval scopes, current objective hash, match status, and authorization reasons.
+- Authorization reasons include role, objective, scope, project stage, studio mode, expiry, revocation, and stage mismatches.
+- Validation emits one line per check in `STATUS id: message (path)` shape.
+- Validation exits non-zero when any check fails.
+- Behavioral evaluation check IDs use `behavioral.scenario.<scenario-id>`.
+- Behavioral checks fail when prompts miss required obligations.
+- They also fail on unnegated future-only drift, prompt-size overflow, missing selected-context categories, missing required templates, or forbidden templates.
+- Package smoke validation builds and exercises the packed package bin.
+- Package smoke validation also checks template loading behavior.
+- Package validation checks every registered engine reference asset is included in `npm pack`.
 
 ## Errors And Diagnostics
 
 - Unknown roles fail with a message naming Codex-native hyphenated role IDs.
-- Approval grant rejects empty scopes, unsafe scopes, broad scopes such as `**`, `**/*`, `*`, or `.` unless `--allow-broad-scope` is supplied, invalid roles, unknown task IDs, existing task IDs assigned to a different role, and malformed canonical expiry timestamps.
+- Approval grant rejects empty scopes.
+- Approval grant rejects unsafe scopes.
+- Approval grant rejects broad scopes unless `--allow-broad-scope` is supplied.
+- Broad scopes include `**`, `**/*`, `*`, and `.`.
+- Approval grant rejects invalid roles, unknown task IDs, wrong-role task IDs, and malformed canonical expiry timestamps.
 - Approval revoke fails clearly for unknown approval IDs.
 - Unapproved strict-studio mutating `run <role>` and `task run` fail before Codex launch, run metadata writes, or task mutation.
-- Missing package scripts, missing package bin/files, missing source files, unavailable Codex CLI, invalid role packages or templates, missing engine reference pack files or reviewer/date/source-link/engine/version-reviewed/tags/roles/workflows metadata, exposed future surfaces, missing build output, and package smoke failures are validation failures.
-- Project validation fails for invalid `.codex/studio.json` including invalid `studioMode`, missing or malformed `.codex/approvals.json`, missing or malformed `.codex/context-manifest.json` or `.codex/context-manifest.meta.json`, stale context-manifest hashes or stage/mode inputs, invalid `.codex/studio/config.json`, custom IDs that override built-ins or omit the `custom-*` prefix, unsafe custom file paths, missing custom prompt/template files, missing custom template sections, custom references to unknown roles/workflows/templates, missing generated project files, missing any materialized active-engine reference files, missing active-engine-specialist prompt files, materialized wrong-engine-specialist prompt files, missing workflow/prompt sections, stale or tampered generated-surface metadata, current-renderer mismatches, malformed or incomplete generated-surface metadata markers, forbidden generated surfaces, or read-only command mutations.
-- Project validation reports generated prompt or workflow files with no generated-surface metadata markers as legacy skip diagnostics that require regeneration before relying on freshness checks.
+- Validation fails on missing package scripts, package bin/files, source files, Codex CLI, role packages, templates, and engine reference assets.
+- It also fails on missing build output or broken package smoke behavior.
+- Validation fails when engine reference metadata is missing reviewer, date, source link, engine, reviewed version, tags, roles, or workflows.
+- Validation fails when future surfaces are exposed early.
+- Project validation fails when `.codex/studio.json` is invalid.
+- It fails when `.codex/approvals.json` is missing, malformed, or schema-invalid.
+- It fails when `.codex/context-manifest.json` or its metadata sidecar is missing, malformed, or stale.
+- It fails when `.codex/studio/config.json` is invalid.
+- It fails when custom IDs override built-ins or omit the `custom-*` prefix.
+- It fails for unsafe custom paths, missing custom files, missing custom template sections, and unknown custom references.
+- It fails for missing generated project files and missing active-engine references.
+- It fails for missing active-engine specialist prompts or materialized wrong-engine specialist prompts.
+- It fails for missing workflow/prompt sections, stale generated metadata, tampered metadata, and current-renderer mismatches.
+- It also fails for forbidden generated surfaces and read-only command mutations.
+- Generated prompt or workflow files with no metadata markers are legacy skip diagnostics.
+- Legacy skip diagnostics require regeneration before freshness checks can be trusted.
 
 ## Compatibility Rules
 
-- The TypeScript project uses NodeNext ESM semantics; relative TypeScript imports must use emitted `.js` specifiers.
+- The TypeScript project uses NodeNext ESM semantics.
+- Relative TypeScript imports must use emitted `.js` specifiers.
 - Node support requires a package engine floor that includes Node >=20.
-- Packaged files must include `dist/`, `engine_configs/`, `engine_reference/`, and `templates/` so the installed bin can load runtime assets.
-- Future-only command surfaces such as `next`, `telemetry`, `parallel`, and ownership enforcement must stay hidden until implemented intentionally.
+- Packaged files must include `dist/`, `engine_configs/`, `engine_reference/`, and `templates/`.
+- Future-only command surfaces stay hidden until implemented intentionally.
+- Future-only examples include `next`, `telemetry`, `parallel`, and ownership enforcement.
 
 ## Versioning And Migration
 
-- Current package version is managed in `package.json` and rendered by Commander.
+- Current package version is managed in `package.json`.
+- Commander renders the package version.
 - CLI contract changes should update README claims, validation expectations, and tests in the same change.
 
 ## Product Truth Links
@@ -84,33 +142,48 @@ This bounded leaf truth doc owns the repository CLI command contract, package sc
 
 ## Engineering Decisions
 
-- Decision (2026-05-28): Keep `validate` as the hard-failing parity gate before claiming repository or project readiness.
-- Decision (2026-05-28): Document and test that future planner/telemetry/parallel/ownership surfaces are not exposed by the CLI.
-- Decision (2026-05-30): Validate generated-surface source metadata, rendered-body hashes, and current renderer output for new generated prompt/workflow files, fail malformed or partial generated metadata with the stable freshness/body check IDs, and treat only fully absent metadata as a legacy skip diagnostic.
-- Decision (2026-06-13): Treat `.codex/approvals.json` as a required generated project contract and fail project validation with `codex.project.approvals` when the store is missing, malformed JSON, or schema-invalid.
-- Decision (2026-06-13): Expose approval grant/list/revoke as audit-store management commands and wire approval matching into `run <role>` and `task run` eligibility for mutating execution.
-- Decision (2026-06-13): Expose approval mismatch information through dry-run diagnostics, and fail non-dry unapproved strict-studio mutation before side effects.
-- Decision (2026-06-13): Treat `.codex/context-manifest.json` and `.codex/context-manifest.meta.json` as required generated project contracts and validate manifest schema plus sidecar freshness.
-- Decision (2026-06-14): Validate engine reference packs structurally by registered file presence and seed-review metadata shape, and validate all active-engine materialized reference files in generated projects without judging prose quality.
-- Decision (2026-06-17): Expose the expanded workflow catalog as render-only CLI shortcut commands while keeping future planner/next, telemetry, parallel orchestration, and ownership-enforcement surfaces hidden.
-- Decision (2026-06-17): Add local deterministic behavioral-evaluation validation subchecks for representative role/workflow prompt contracts rather than hosted evaluators, telemetry, hidden memory, or LLM judges.
-- Decision (2026-06-17): Support project-local customization as an extend-only `custom-*` overlay with schema validation, project-safe paths, generic workflow rendering, and template inspection rather than mutable replacement of built-in registries.
+- Decision (2026-05-28): Keep `validate` as the hard-failing parity gate before readiness claims.
+- Decision (2026-05-28): Test that future planner, telemetry, parallel, and ownership surfaces are not exposed.
+- Decision (2026-05-30): Validate generated-surface source metadata and rendered-body hashes for new generated files.
+- Decision (2026-05-30): Fail malformed or partial generated metadata with stable freshness/body check IDs.
+- Decision (2026-05-30): Treat only fully absent metadata as a legacy skip diagnostic.
+- Decision (2026-06-13): Treat `.codex/approvals.json` as a required generated project contract.
+- Decision (2026-06-13): Fail project validation with `codex.project.approvals` when the approval store is missing, malformed, or schema-invalid.
+- Decision (2026-06-13): Expose approval grant/list/revoke as audit-store management commands.
+- Decision (2026-06-13): Wire approval matching into mutating `run <role>` and `task run` eligibility.
+- Decision (2026-06-13): Expose approval mismatch information through dry-run diagnostics.
+- Decision (2026-06-13): Fail unapproved strict-studio mutation before side effects.
+- Decision (2026-06-13): Treat context manifest and sidecar metadata as required generated project contracts.
+- Decision (2026-06-13): Validate manifest schema and sidecar freshness.
+- Decision (2026-06-14): Validate engine reference packs by registered file presence and seed-review metadata shape.
+- Decision (2026-06-14): Validate active-engine materialized references without judging prose quality.
+- Decision (2026-06-17): Expose the expanded workflow catalog as render-only CLI shortcuts.
+- Decision (2026-06-17): Keep future planner, next, telemetry, parallel orchestration, and ownership enforcement hidden.
+- Decision (2026-06-17): Add local deterministic behavioral-evaluation subchecks.
+- Decision (2026-06-17): Do not use hosted evaluators, telemetry, hidden memory, or LLM judges for those checks.
+- Decision (2026-06-17): Support project-local customization as an extend-only `custom-*` overlay.
+- Decision (2026-06-17): Validate customization schema, project-safe paths, generic workflow rendering, and template inspection.
+- Decision (2026-06-17): Do not allow customization to replace built-in registries.
 
 ## Rationale
 
-The CLI is the stable integration boundary for humans, package installs, and generated project smoke checks. Validation makes those claims executable so prompt-surface and packaging drift fail before release or parity claims.
+The CLI is the stable integration boundary for humans, package installs, and generated project smoke checks.
+
+Validation makes those claims executable. Prompt-surface drift and packaging drift should fail before release or parity claims.
 
 ## Non-Goals
 
-- This contract does not document every generated prompt body; those belong to the Codex role/workflow truth doc.
-- This contract does not define approval matching, revocation, expiry, or scope normalization rules; those belong to the Approval Stores truth doc.
-- This contract does not define the internal runtime lifecycle implementation; runtime approval enforcement details belong to the Runtime And Task Execution truth doc.
+- This contract does not document every generated prompt body.
+- This contract does not define approval matching, revocation, expiry, or scope normalization rules.
+- This contract does not define the internal runtime lifecycle.
 - This contract does not define npm audit remediation policy.
 
 ## Maintenance Notes
 
-- Update this doc with changes to `src/cli.ts`, `src/validation.ts`, `src/customization.ts`, `src/behavioral-evaluation.ts`, `src/context-manifest.ts`, `src/engine-reference.ts`, package metadata, README public command claims, or validation check IDs.
-- Relevant verification includes `npm run validate`, CLI help smoke checks, customization tests, behavioral-evaluation tests, validation tests, package dry-run/smoke checks, and future-surface guard tests.
+- Update this doc when CLI behavior, validation behavior, behavioral-evaluation checks, context-manifest checks, or engine-reference checks change.
+- Also update it when package metadata, README claims, or validation IDs change.
+- Relevant verification includes `npm run validate`, CLI help smoke checks, customization tests, and behavioral-evaluation tests.
+- It also includes validation tests, package smoke checks, and future-surface guard tests.
 
 ## Source References
 

@@ -8,59 +8,128 @@ last_reviewed: 2026-06-25
 
 ## Purpose
 
-Codex roles and workflows provide the role-specific prompt contracts, context boundaries, templates, and render-only workflow shortcuts that make Open Game Studio a Codex-native game-development layer.
+Codex roles and workflows turn the generic Codex CLI into a bounded game-studio prompt surface.
+
+They define role contracts, context boundaries, reusable templates, and render-only workflow shortcuts.
 
 ## Scope
 
-This bounded leaf truth doc owns studio role IDs, role package metadata, Codex session prompt rendering, workflow registry entries, template registry behavior, selected engine reference prompt entries, and generated workflow prompt content. It does not own process execution, task persistence, package installation, or generated project initialization side effects.
+This leaf doc owns role IDs, role package metadata, Codex session prompt rendering, workflow registry entries, and template registry behavior.
+
+It also owns engine-reference prompt selection and generated workflow prompt content.
+
+It does not own process execution, task persistence, package installation, or generated project initialization side effects.
 
 This doc was created from the editable engineering-behavior template at docs/truthmark/templates/engineering-behavior.md.
 
 ## Current Implementation Behavior
 
-- The canonical studio role roster is defined by hyphenated Codex-native role IDs such as `producer`, `gameplay-programmer`, `network-programmer`, `audio-director`, `accessibility-specialist`, `qa-playtester`, and `studio-orchestrator`.
-- The canonical studio role roster covers bounded specialist clusters for audio, level/world/content, systems/economy, live ops/community/localization/accessibility, and security/devops/performance/network/AI/UI programming.
-- The canonical studio role roster includes compact engine specialist prompt roles `godot-specialist`, `unity-specialist`, and `unreal-specialist`; generated projects add only the active engine specialist to their project-scoped role roster and active-role list.
-- Each role package contains a display name, system prompt, context strategy, structured responsibilities, expected inputs, expected outputs, optional output schema, quality gates, collaboration notes, stop conditions, shared compact guidance fragments, handoff wording, and a review checklist.
-- Shared role-contract guidance lives in reusable fragments for scope control, verification evidence, write-policy behavior, handoff discipline, and release readiness; role packages select the fragments they need instead of copy-pasting the same prose into every role definition.
-- Generated project role prompts include each role's display name, context strategy, role instructions, structured role-contract sections, selected active-engine reference paths, expected outputs, review checklist, and handoff template. Relevant programming and technical art roles receive active-engine version, current-best-practices, and gameplay references; engine/tools roles receive active-engine plugin references; engine specialists receive the matching active-engine specialist reference; module and plugin references remain task-keyword-selected rather than default prompt payload; unrelated engine references are excluded.
-- Codex session prompts render the role display name, role ID, context strategy, phase, project root, objective, engine context, sandbox, active write policy when provided, file-edit permission, context files, structured role-contract sections, expected outputs, verification command, review checklist, and completion-report instructions.
-- When a caller supplies a context contract, the standard prompt renderer includes a `# Context Contract` section with selected context, context omissions/blockers, project stage, studio mode, phase, write policy, sandbox, and file-edit permission.
-- Workflow prompt rendering computes the same phase and studio-mode eligibility fields used by role runs so the context contract's write policy, sandbox, and file-edit permission remain consistent; render-only plan/review/ship workflows stay read-only, while eligible implement workflows render with matching write permissions.
-- The workflow registry defines a curated prompt-only catalog across onboarding/discovery, design/architecture, implementation planning, QA/testing, release/hotfix, localization/accessibility, and team coordination categories.
-- Built-in workflow prompts include vertical-slice, bugfix, playtest, market-analysis, analytics-setup, design-spec, game-feel-tuning, art-direction, ui-ux-review, production-milestone, handoff, review, ship-check, onboard, brainstorm, prototype, architecture-decision, architecture-review, create-epics, create-stories, sprint-plan, sprint-status, story-readiness, story-done, qa-plan, regression-suite, security-audit, perf-profile, release-checklist, hotfix, and localization-plan.
-- Selected workflows include CLI aliases for render-only shortcuts, including market, analytics, design-spec, feel-review, art-direction, ui-review, milestone, handoff, start, onboard, brainstorm, prototype, architecture-decision, architecture-review, create-epics, create-stories, sprint-plan, sprint-status, story-readiness, story-done, qa-plan, regression-suite, security-audit, perf-profile, release-checklist, hotfix, and localization-plan.
-- Template selection is task-, workflow-, role-, and project-pack-sensitive; built-in template files are read from package assets, project-local template files are read from `.codex/studio/config.json` references, and selected templates are embedded into applicable workflow prompts and role-run prompts without loading the entire template pack.
-- Behavioral evaluation scenarios cover representative role/workflow prompt contracts by rendering prompts locally and checking required obligations, output-contract fields, selected context categories, required workflow templates, forbidden templates, forbidden future-only drift, and prompt-size bounds without LLM judges or hosted evaluators. Workflow scenarios without a project root still append the selected built-in workflow template bodies so repository-level behavioral validation exercises template rendering without requiring a temporary initialized project.
-- Market analyst, data scientist, game-feel, UI/UX, QA, release, audio, content, systems/economy, accessibility/localization/live-ops/community, and technical specialist roles have bounded default role packages; reusable template selection remains task-specific rather than loading every role or template.
-- Project-local customization packs may add `custom-*` role, workflow, and template IDs through `.codex/studio/config.json`; these overlays are extend-only and cannot replace built-in role/workflow/template IDs.
-- Custom role prompts render the same visible role ID, context strategy, expected outputs, review checklist, write-policy, sandbox, and selected-template sections as built-in role runs. Custom role review/fix prompt rendering reuses the built-in QA review prompt surface for read-only review and appends the project-local custom role prompt for bounded fix passes. Custom workflow prompts use the generic `workflow <id>` command, require the declared workflow markdown file to exist, include that file as selected context, and render its body as workflow instructions rather than adding unbounded shortcut commands. Custom workflows may target either a built-in studio role or a project-local custom role; built-in targets render through the standard Codex session prompt and role contract, while custom targets append the project-local custom role prompt.
-- Generated workflow files carry deterministic source-input and rendered-body hash metadata that covers workflow definition fields and the owning role display name, expected outputs, and review checklist used in the rendered workflow body.
+- Studio role IDs are canonical hyphenated strings.
+- Examples include `producer`, `gameplay-programmer`, `network-programmer`, `audio-director`, `accessibility-specialist`, `qa-playtester`, and `studio-orchestrator`.
+- The roster covers audio, level, world, content, systems, and economy clusters.
+- It also covers live ops, community, localization, accessibility, security, devops, performance, networking, AI, and UI programming clusters.
+- Engine specialist role IDs are `godot-specialist`, `unity-specialist`, and `unreal-specialist`.
+- Generated projects include only the specialist prompt for the active project engine.
+- Each role package has a display name, system prompt, context strategy, responsibilities, expected inputs, and expected outputs.
+- Role packages may also include an output schema, quality gates, collaboration notes, stop conditions, handoff wording, and review checklist.
+- Shared role-contract guidance lives in reusable fragments.
+- Fragments cover scope control, verification evidence, write-policy behavior, handoff discipline, and release readiness.
+- Role packages select fragments instead of copying the same prose into every role.
+- Generated project role prompts include the role display name, context strategy, role instructions, and structured sections.
+- They also include selected active-engine references, expected outputs, review checklist, and handoff template.
+- Programming and technical-art roles receive active-engine version, best-practice, and gameplay references.
+- Engine and tools roles receive active-engine plugin references.
+- Engine specialists receive the matching active-engine specialist reference.
+- Module and plugin references remain task-keyword-selected.
+- Unrelated engine references are excluded.
+- Codex session prompts render role identity, phase, project root, objective, and engine context.
+- They also render sandbox, write policy, file-edit permission, context files, expected outputs, verification command, review checklist, and completion-report instructions.
+- When a context contract exists, the prompt includes a `# Context Contract` section.
+- The context contract lists selected context, omissions, blockers, project stage, studio mode, phase, write policy, sandbox, and file-edit permission.
+- Workflow prompt rendering uses the same phase and studio-mode eligibility fields as role runs.
+- Render-only plan, review, and ship workflows stay read-only.
+- Eligible implement workflows render with matching write permissions.
+- The workflow registry is a curated prompt-only catalog.
+- It covers onboarding, discovery, design, architecture, implementation planning, QA, testing, release, hotfix, localization, accessibility, and team coordination.
+- Built-in production workflows include vertical-slice, production-milestone, handoff, review, ship-check, release-checklist, and hotfix.
+- Built-in discovery and design workflows include market-analysis, analytics-setup, design-spec, game-feel-tuning, art-direction, ui-ux-review, onboard, brainstorm, and prototype.
+- Built-in planning workflows include architecture-decision, architecture-review, create-epics, create-stories, sprint-plan, sprint-status, story-readiness, and story-done.
+- Built-in QA and operations workflows include playtest, bugfix, qa-plan, regression-suite, security-audit, perf-profile, and localization-plan.
+- Selected workflows expose local CLI aliases for render-only shortcuts.
+- Template selection is task-, workflow-, role-, and project-pack-sensitive.
+- Built-in templates are read from package assets.
+- Project-local templates are read from `.codex/studio/config.json` references.
+- Only selected templates are embedded into workflow prompts and role-run prompts.
+- Behavioral evaluation scenarios render representative prompts locally.
+- Scenario checks inspect required obligations, output-contract fields, selected context categories, and required workflow templates.
+- They also inspect forbidden templates, forbidden future-only drift, and prompt-size bounds.
+- Behavioral evaluation does not use LLM judges, hosted evaluators, telemetry, or hidden memory.
+- Workflow scenarios without a project root still append selected built-in workflow templates.
+- Project-local customization packs may add `custom-*` role, workflow, and template IDs.
+- Custom overlays are extend-only and cannot replace built-in IDs.
+- Custom role prompts render visible role ID, context strategy, expected outputs, review checklist, write policy, sandbox, and selected templates.
+- Custom role review prompts reuse the built-in QA review surface.
+- Custom role fix prompts append the configured custom role prompt.
+- Custom workflow prompts use the generic `workflow <id>` command.
+- Custom workflow prompts require the declared workflow Markdown file to exist.
+- Custom workflow prompts include that file as selected context and render its body as workflow instructions.
+- Custom workflows may target either a built-in role or a project-local custom role.
+- Built-in targets render through the standard Codex session prompt and role contract.
+- Custom targets append the project-local custom role prompt.
+- Generated workflow files carry deterministic source-input and rendered-body hash metadata.
+- Workflow hashes cover workflow definition fields plus the owning role display name, expected outputs, and review checklist.
 
 ## Core Rules
 
-- Unknown role errors must point users toward Codex-native hyphenated role IDs rather than legacy agent names.
-- Prompt rendering must include the role display name, project/session metadata, and the bounded structured role contract, including explicit sandbox and write-policy context when available, needed by Codex to operate without hidden state.
-- Templates that require Markdown sections must have non-empty required sections; every built-in template records a description plus role/workflow use hints, and the project config template must parse as JSON.
-- Workflow shortcuts render prompts; they do not imply hidden parallel orchestration or future planner behavior.
-- Customization overlays are extend-only: custom IDs must use the `custom-*` prefix, required role prompt, workflow prompt, and template files must exist at project-safe relative paths, and custom entries must not replace built-in role/workflow/template IDs.
-- Workflow prompt rendering may append only selected workflow templates and must not load every template.
-- Role prompt rendering may list only selected active-engine reference paths and must not load every engine reference pack by default.
-- Generated project prompt materialization may include only the specialist prompt matching the active project engine.
+- Unknown role errors point users toward Codex-native hyphenated role IDs.
+- Prompt rendering includes role identity, project/session metadata, and a bounded role contract.
+- Prompt rendering includes sandbox and write-policy context when available.
+- Templates with required Markdown sections must have non-empty required sections.
+- Every built-in template records description and role/workflow use hints.
+- The project config template must parse as JSON.
+- Workflow shortcuts render prompts only.
+- Workflow shortcuts do not imply hidden planner, telemetry, ownership, or parallel orchestration behavior.
+- Custom IDs must use the `custom-*` prefix.
+- Custom file references must be project-safe relative paths.
+- Custom entries must not replace built-in role, workflow, or template IDs.
+- Workflow prompt rendering may append only selected workflow templates.
+- Role prompt rendering may list only selected active-engine references.
+- Generated projects may include only the active engine specialist prompt.
 
 ## Flows And States
 
-- Workflow prompt flow: read project stage, studio mode, and engine from `.codex/studio.json`, select the workflow's declared context files through the path-safe selector, compute phase/studio-mode eligibility, create a Codex studio session for the owning role and phase, render the standard prompt with a context contract, then append any workflow template bodies.
-- Custom workflow prompt flow: resolve the workflow or alias from `.codex/studio/config.json`, accept a validated built-in studio role or project-local custom role target, select the declared workflow file plus other project-safe context files, render the workflow file body as workflow instructions, render the built-in session role contract or custom role prompt for the target role, then append only the custom workflow's template IDs.
-- Template selection flow: match role and task text against bounded keyword rules and return only matching template IDs.
+- Workflow prompt flow reads project stage, studio mode, and engine from `.codex/studio.json`.
+- Workflow prompt flow selects declared context files through the path-safe selector.
+- It computes phase and studio-mode eligibility.
+- It creates a Codex studio session for the owning role and phase.
+- It renders the standard prompt with a context contract and appends selected workflow templates.
+- Custom workflow prompt flow resolves the workflow or alias from `.codex/studio/config.json`.
+- It accepts a validated built-in role or project-local custom role target.
+- It selects the declared workflow file plus other project-safe context files.
+- It renders the workflow file body as workflow instructions.
+- It renders either the built-in session role contract or the custom role prompt.
+- It appends only the custom workflow's selected template IDs.
+- Template selection matches role and task text against bounded keyword rules.
+- Template selection returns only matching template IDs.
 
 ## Contracts
 
-- Role IDs are stable strings exported from `src/roles.ts` and reused by config validation, project state, prompt generation, workflow routing, and task creation. Role-package structured-contract fields are also rendered into both standard Codex session prompts and generated project role prompts, and generated role-prompt freshness inputs include those fields so stale prompt bodies fail validation.
-- Engine reference prompt selection maps role IDs, optional task/workflow keywords, and the active project engine to generated project paths under `docs/engine-reference/<engine>/`; every engine pack includes version, current best practices, deprecated API, breaking-change, gameplay, specialist, module, and plugin references with seed-review metadata.
-- Workflow IDs map to `.codex/workflows/<workflow>.md` files, expected context-file lists, taxonomy categories, CCGS-derived gap coverage notes, and optional CLI aliases.
-- Behavioral scenario IDs map to representative built-in roles or workflows in `src/behavioral-evaluation.ts`; each scenario declares required phrases, forbidden drift phrases, selected-context categories, and workflow template expectations, and required template expectations are enforced for both project-backed and no-project workflow scenario rendering.
-- Template IDs map to package template paths, project-local template paths, descriptions, role/workflow applicability hints, tags, and required-section validation. Current reusable built-in templates include GDD, feature spec, handoff, analytics setup, engine setup, market analysis, project config, game-feel tuning, art direction, UI/UX review, production milestone, playtest report, ship check, ADR, technical design, architecture traceability, art bible, sound bible, UX spec, accessibility requirements, test plan, test evidence, sprint plan, vertical-slice report, release notes, postmortem, risk register, economy model, difficulty curve, player journey, and pitch document.
+- Role IDs are stable strings exported from `src/roles.ts`.
+- Role IDs are reused by config validation, project state, prompt generation, workflow routing, and task creation.
+- Role-package structured-contract fields are rendered into standard Codex session prompts.
+- The same fields are rendered into generated project role prompts.
+- Generated role-prompt freshness inputs include those fields so stale prompt bodies fail validation.
+- Engine reference prompt selection maps role IDs, optional task/workflow keywords, and active project engine to generated project paths under `docs/engine-reference/<engine>/`.
+- Every engine pack includes version, current best practices, deprecated API, breaking-change, gameplay, specialist, module, and plugin references.
+- Engine reference assets carry seed-review metadata.
+- Workflow IDs map to `.codex/workflows/<workflow>.md` files, expected context files, taxonomy categories, gap-coverage notes, and optional CLI aliases.
+- Behavioral scenario IDs map to representative roles or workflows in `src/behavioral-evaluation.ts`.
+- Each scenario declares required phrases, forbidden drift phrases, selected-context categories, and workflow template expectations.
+- Required template expectations apply to both project-backed and no-project workflow rendering.
+- Template IDs map to package paths, project-local paths, descriptions, role/workflow hints, tags, and required-section validation.
+- Current built-in templates cover design, analytics, engine setup, market analysis, feel tuning, art direction, UI/UX, production, playtest, and ship checks.
+- They also cover ADRs, technical design, traceability, art, audio, UX, accessibility, testing, and sprints.
+- Additional templates cover release, postmortems, risk, economy, difficulty, player journeys, and pitches.
 
 ## Product Truth Links
 
@@ -68,33 +137,48 @@ This doc was created from the editable engineering-behavior template at docs/tru
 
 ## Engineering Decisions
 
-- Decision (2026-05-28): Use Codex-native hyphenated role IDs as the canonical user- and project-facing role contract.
-- Decision (2026-05-28): Keep workflow shortcuts render-only for this pass; future planner, next, telemetry, ownership enforcement, and parallel orchestration surfaces remain hidden.
-- Decision (2026-06-13): Workflow prompts use the same context-contract renderer as role-run prompts and include only selected workflow context instead of broad prompt material.
-- Decision (2026-06-14): Add only one specialist role ID per supported engine and keep engine reference prompt selection active-engine scoped.
-- Decision (2026-06-14): Keep engine specialist IDs canonical while scoping generated project specialist prompts and active specialist eligibility to the active engine.
-- Decision (2026-06-17): Expand role coverage through bounded Codex-native specialist clusters rather than mirroring CCGS file-for-file; each new role remains a renderable role package with selected context strategy, expected outputs, and review checklist.
-- Decision (2026-06-17): Expand workflow coverage as a categorized, prompt-only Codex-native catalog with local aliases and generated workflow metadata rather than importing slash-command lifecycle machinery.
-- Decision (2026-06-17): Expand production template depth as package-shipped, metadata-rich templates selected by role/workflow relevance rather than broad prompt loading.
-- Decision (2026-06-17): Expand engine reference depth as package-shipped, metadata-validated active-engine assets with default role references plus task/workflow-keyword-selected module and plugin references.
-- Decision (2026-06-17): Expand role prompt depth through structured compact role contracts and reusable shared fragments rendered in both standard Codex session prompts and generated project role prompts, while keeping role/task context bounded.
-- Decision (2026-06-17): Add representative behavioral-evaluation fixtures as deterministic prompt-contract checks instead of adopting hosted/LLM agent-evaluation infrastructure.
-- Decision (2026-06-17): Add project-local customization as an extend-only overlay so users can define local `custom-*` roles, workflows, and templates while preserving built-in registries and bounded context selection; custom workflows may reuse built-in roles rather than requiring duplicate local role definitions.
-- Decision (2026-06-17): Reuse the built-in QA review prompt surface for custom role review passes and the configured custom role prompt for custom fix passes, preserving extend-only customization without adding custom review-role schema.
+- Decision (2026-05-28): Use Codex-native hyphenated role IDs as the user- and project-facing role contract.
+- Decision (2026-05-28): Keep workflow shortcuts render-only for this pass.
+- Decision (2026-05-28): Keep future planner, next, telemetry, ownership enforcement, and parallel orchestration hidden.
+- Decision (2026-06-13): Workflow prompts use the same context-contract renderer as role-run prompts.
+- Decision (2026-06-13): Workflow prompts include only selected workflow context.
+- Decision (2026-06-14): Add one specialist role ID per supported engine.
+- Decision (2026-06-14): Keep engine reference prompt selection scoped to the active engine.
+- Decision (2026-06-14): Keep engine specialist IDs canonical.
+- Decision (2026-06-14): Scope generated project specialist prompts to the active engine.
+- Decision (2026-06-17): Expand role coverage through bounded specialist clusters instead of mirroring CCGS file-for-file.
+- Decision (2026-06-17): Keep each new role as a renderable package with selected context, expected outputs, and a review checklist.
+- Decision (2026-06-17): Expand workflow coverage as a prompt-only catalog with local aliases and generated metadata.
+- Decision (2026-06-17): Do not import slash-command lifecycle machinery.
+- Decision (2026-06-17): Expand production templates as package-shipped, metadata-rich templates selected by relevance.
+- Decision (2026-06-17): Expand engine reference depth as package-shipped, metadata-validated active-engine assets.
+- Decision (2026-06-17): Select module and plugin references by task or workflow keywords.
+- Decision (2026-06-17): Expand role prompt depth through compact structured contracts and reusable shared fragments.
+- Decision (2026-06-17): Render shared fragments in both standard session prompts and generated project prompts.
+- Decision (2026-06-17): Add deterministic behavioral-evaluation fixtures instead of hosted or LLM-based evaluators.
+- Decision (2026-06-17): Add project-local customization as an extend-only overlay for `custom-*` roles, workflows, and templates.
+- Decision (2026-06-17): Let custom workflows reuse built-in roles instead of requiring duplicate local role definitions.
+- Decision (2026-06-17): Reuse the built-in QA review surface for custom role review passes.
+- Decision (2026-06-17): Use the configured custom role prompt for custom fix passes.
 
 ## Rationale
 
-Role and workflow prompt generation is the user-facing contract that turns a generic Codex CLI into a specialized game-studio workflow. Keeping it render-only and declarative avoids overclaiming automation that is not implemented while still making the workflow packages inspectable and testable.
+Role and workflow prompt generation is the user-facing contract that makes Codex act like a game-studio workflow.
+
+Keeping the system render-only avoids overclaiming automation that is not implemented.
+
+Declarative packages also keep role and workflow surfaces inspectable and testable.
 
 ## Non-Goals
 
 - This doc does not own whether Codex is installed or authenticated.
-- This doc does not own task lifecycle mutations or verification command execution.
+- This doc does not own task lifecycle mutations.
+- This doc does not own verification command execution.
 
 ## Maintenance Notes
 
-- Update this doc with changes to `src/roles.ts`, `src/codex-session.ts`, `src/codex-prompts.ts`, `src/customization.ts`, `src/workflows.ts`, `src/engine-reference.ts`, `src/templates.ts`, or `templates/**`.
-- Relevant verification includes role, Codex prompt/session, workflow, customization, template, and functionality-gap tests.
+- Update this doc when role, prompt, workflow, customization, engine-reference, or template behavior changes.
+- Relevant verification includes role tests, Codex prompt/session tests, workflow tests, customization tests, template tests, and functionality-gap tests.
 
 ## Source References
 
