@@ -1,10 +1,7 @@
 ---
 status: active
-doc_type: contract
 truth_kind: engineering-contract
-last_reviewed: 2026-06-17
-source_of_truth:
-  - ../../routes/areas/repository.md
+last_reviewed: 2026-06-25
 ---
 
 # CLI And Validation Contracts
@@ -118,3 +115,16 @@ The CLI is the stable integration boundary for humans, package installs, and gen
 ## Source References
 
 - ../../routes/areas/repository.md
+- ../../../../package.json
+- ../../../../src/cli.ts
+- ../../../../src/validation.ts
+- ../../../../src/customization.ts
+- ../../../../src/context-manifest.ts
+- ../../../../src/engine-reference.ts
+- ../../../../src/generated-surfaces.ts
+- ../../../../src/behavioral-evaluation.ts
+- ../../../../tests/cli-prompt-surface.test.ts
+- ../../../../tests/validation.test.ts
+- ../../../../tests/functionality-gap-pass.test.ts
+- ../../../../tests/customization.test.ts
+- ../../../../tests/behavioral-evaluation.test.ts

@@ -1,9 +1,7 @@
 ---
 status: active
 doc_type: route-index
-last_reviewed: 2026-05-28
-source_of_truth:
-  - ../../../.truthmark/config.yml
+last_reviewed: 2026-06-25
 ---
 
 # Truthmark Areas
@@ -29,3 +27,7 @@ Code surface:
 Update truth when:
 - repository CLI behavior, Codex prompt/workflow behavior, generated project layout, validation, packaging, or task execution changes
 - code or tests move between bounded behavior owners
+
+## Source References
+
+- ../../../.truthmark/config.yml

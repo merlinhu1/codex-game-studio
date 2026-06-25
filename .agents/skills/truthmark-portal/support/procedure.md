@@ -6,8 +6,6 @@ Truthmark-managed generated file. Refresh with truthmark init when truthmark che
 
 Truthmark Portal is a manual-only presentation workflow. It is never an automatic completion workflow, never Truth Sync, and runs only when the user explicitly asks to generate, refresh, or update the committed static HTML Portal.
 
-Invocations: OpenCode /skill truthmark-portal; Codex /truthmark-portal or $truthmark-portal; Claude Code /truthmark-portal; GitHub Copilot /truthmark-portal; Gemini CLI /truthmark:portal.
-
 Core rules:
 
 - Markdown remains canonical; generated HTML is presentation only.

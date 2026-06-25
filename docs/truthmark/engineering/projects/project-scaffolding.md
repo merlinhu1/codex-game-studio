@@ -1,10 +1,7 @@
 ---
 status: active
-doc_type: behavior
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-14
-source_of_truth:
-  - ../../routes/areas/repository.md
+last_reviewed: 2026-06-25
 ---
 
 # Project Scaffolding
@@ -89,3 +86,18 @@ A deterministic project scaffold gives Codex a stable context package without in
 ## Source References
 
 - ../../routes/areas/repository.md
+- ../../../../src/projects.ts
+- ../../../../src/context-manifest.ts
+- ../../../../src/config.ts
+- ../../../../src/engines.ts
+- ../../../../src/engine-reference.ts
+- ../../../../src/agents.ts
+- ../../../../src/paths.ts
+- ../../../../src/generated-surfaces.ts
+- ../../../../src/customization.ts
+- ../../../../engine_configs/**
+- ../../../../engine_reference/**
+- ../../../../tests/project-workflow.test.ts
+- ../../../../tests/agents-templates.test.ts
+- ../../../../tests/engine-system.test.ts
+- ../../../../tests/codex-context-files.test.ts

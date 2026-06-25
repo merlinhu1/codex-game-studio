@@ -1,11 +1,7 @@
 ---
 status: active
-doc_type: behavior
 truth_kind: engineering-behavior
-last_reviewed: 2026-05-30
-source_of_truth:
-  - ../../routes/areas/repository.md
-  - ../../../architecture/repository-structure.md
+last_reviewed: 2026-06-25
 ---
 
 # Repository Overview
@@ -81,3 +77,12 @@ The repository combines scaffolding, prompt generation, runtime execution, and v
 
 - ../../routes/areas/repository.md
 - ../../../architecture/repository-structure.md
+- ../../../architecture/flows/project-initialization.md
+- ../../../architecture/flows/role-run-lifecycle.md
+- ../../../architecture/flows/workflow-prompt-rendering.md
+- ../../../architecture/flows/validation-and-repository-truth.md
+- ../../../../package.json
+- ../../../../src/cli.ts
+- ../../../../src/projects.ts
+- ../../../../src/runner.ts
+- ../../../../src/validation.ts

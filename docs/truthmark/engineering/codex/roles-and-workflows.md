@@ -1,10 +1,7 @@
 ---
 status: active
-doc_type: behavior
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-17
-source_of_truth:
-  - ../../routes/areas/repository.md
+last_reviewed: 2026-06-25
 ---
 
 # Codex Roles And Workflows
@@ -102,6 +99,20 @@ Role and workflow prompt generation is the user-facing contract that turns a gen
 ## Source References
 
 - ../../routes/areas/repository.md
+- ../../../../src/roles.ts
+- ../../../../src/codex-session.ts
+- ../../../../src/codex-prompts.ts
 - ../../../../src/workflows.ts
+- ../../../../src/templates.ts
 - ../../../../src/customization.ts
+- ../../../../src/prompt-context.ts
+- ../../../../src/engine-reference.ts
+- ../../../../src/behavioral-evaluation.ts
+- ../../../../src/generated-surfaces.ts
+- ../../../../templates/**
+- ../../../../tests/roles.test.ts
+- ../../../../tests/codex-session.test.ts
+- ../../../../tests/codex-prompts.test.ts
+- ../../../../tests/behavioral-evaluation.test.ts
 - ../../../../tests/customization.test.ts
+- ../../../../tests/functionality-gap-pass.test.ts
