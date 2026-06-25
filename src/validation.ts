@@ -229,7 +229,7 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
   }
   checks.push(scripts.build === "tsc -p tsconfig.build.json" ? pass("package.build", "build uses tsconfig.build.json") : fail("package.build", "build must use tsconfig.build.json", pkgPath));
   checks.push(pkg.bin?.opengamestudio === "./dist/cli.js" && !pkg.bin?.["open-gamestudio"] ? pass("package.bin", "opengamestudio bin points to dist/cli.js") : fail("package.bin", "opengamestudio bin must point to ./dist/cli.js and replace open-gamestudio", pkgPath));
-  checks.push(pkg.engines?.node?.includes(">=20") ? pass("package.node", "node floor declared") : fail("package.node", "node >=20 must be declared", pkgPath));
+  checks.push(pkg.engines?.node?.includes(">=24") ? pass("package.node", "node 24 floor declared") : fail("package.node", "node >=24 must be declared", pkgPath));
   for (const file of ["dist/", "engine_configs/", "engine_reference/", "templates/"]) {
     checks.push(pkg.files?.includes(file) ? pass(`pkg.files.${file}`, `${file} shipped`) : fail(`pkg.files.${file}`, `${file} missing from package files`, pkgPath));
   }

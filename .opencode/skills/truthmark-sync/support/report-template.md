@@ -11,27 +11,30 @@ Changed code reviewed:
 
 Sync Intent:
 - Changed code reviewed: src/auth/session.ts
-- Affected route/truth owner: docs/truthmark/routes/areas/authentication.md
-- Target truth docs: docs/truthmark/engineering/behaviors/session-timeout.md
+- Affected route/truth owner: docs/truthmark/routes/areas.md
+- Target truth docs: docs/truthmark/engineering/repository/bootstrap-routing.md
 - Intended update: Update session timeout behavior.
-- Evidence to verify: src/auth/session.ts:12 / docs/truthmark/routes/areas/authentication.md:11
+- Evidence to verify: src/auth/session.ts:12 / docs/truthmark/routes/areas.md:11
 - User-provided decisions/rationale: User rationale: session timeout behavior changed for internal implementation consistency
 - No-update-needed rationale: not applicable; mapped truth is stale
 - Blockers: none
 
 Ownership reviewed:
-- docs/truthmark/routes/areas/authentication.md
+- docs/truthmark/routes/areas.md
 
 Truth docs updated:
-- docs/truthmark/engineering/behaviors/session-timeout.md
+- docs/truthmark/engineering/repository/bootstrap-routing.md
 
 Decision/rationale captured:
-- Placed user rationale in the bounded authentication behavior truth doc under Engineering Decisions/Rationale.
+- Placed user rationale in the mapped engineering truth doc under Engineering Decisions/Rationale.
 
 Evidence checked:
-- Claim: Session timeout behavior is documented in the bounded authentication behavior truth doc.
-  Evidence: src/auth/session.ts:12 / docs/truthmark/routes/areas/authentication.md:11
+- Claim: Session timeout behavior is documented in the mapped repository truth doc.
+  Evidence: src/auth/session.ts:12 / docs/truthmark/routes/areas.md:11
   Result: supported
+
+Helper scripts:
+- validate-write-lease: skipped, no write lease used
 
 Notes:
 - Updated session timeout behavior.
@@ -41,12 +44,11 @@ Blocked report example:
 Truth Sync: blocked
 
 Reason:
-- Changed code maps only to the provisional bootstrap route.
+- routing repair is not allowed
 
 Files requiring manual review:
-- src/auth/**
-- docs/truthmark/routes/areas/repository.md
+- docs/truthmark/routes/areas.md
 
 Next action:
-- Run Truth Structure for src/auth/** before updating behavior truth.
+- update routing metadata and rerun Truth Sync
 ```

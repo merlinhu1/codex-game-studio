@@ -1,6 +1,6 @@
 # Setup
 
-Install and verify with Node 20 or newer:
+Install and verify with Node 24 or newer:
 
 ```bash
 npm install
