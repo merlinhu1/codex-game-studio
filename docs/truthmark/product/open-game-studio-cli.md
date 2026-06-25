@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: product-capability
-last_reviewed: 2026-06-16
+last_reviewed: 2026-06-25
 ---
 
 # Open Game Studio Codex-Native CLI

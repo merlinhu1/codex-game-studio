@@ -1,10 +1,7 @@
 ---
 status: active
-doc_type: behavior
 truth_kind: engineering-workflow
-last_reviewed: 2026-06-13
-source_of_truth:
-  - ../../routes/areas/repository.md
+last_reviewed: 2026-06-25
 ---
 
 # Runtime And Task Execution
@@ -120,3 +117,17 @@ Codex execution is intentionally explicit: users can inspect prompts without sid
 ## Source References
 
 - ../../routes/areas/repository.md
+- ../../../../src/runner.ts
+- ../../../../src/studio-policy.ts
+- ../../../../src/context.ts
+- ../../../../src/customization.ts
+- ../../../../src/context-manifest.ts
+- ../../../../src/prompt-context.ts
+- ../../../../src/tasks.ts
+- ../../../../src/codex-runtime.ts
+- ../../../../src/verification.ts
+- ../../../../tests/runner.test.ts
+- ../../../../tests/studio-policy.test.ts
+- ../../../../tests/tasks.test.ts
+- ../../../../tests/verification.test.ts
+- ../../../../tests/codex-runtime.test.ts

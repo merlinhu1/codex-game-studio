@@ -1,9 +1,7 @@
 ---
 status: active
 doc_type: area-route
-last_reviewed: 2026-05-28
-source_of_truth:
-  - ../../../../.truthmark/config.yml
+last_reviewed: 2026-06-25
 ---
 
 # Repository Areas
@@ -190,3 +188,7 @@ Code surface:
 Update truth when:
 - public CLI commands, package scripts/bin/files, validation check IDs, project-local customization checks, engine reference package checks, documentation claims, or package dependency contracts change
 - future-only surfaces become exposed or are intentionally kept hidden
+
+## Source References
+
+- ../../../../.truthmark/config.yml

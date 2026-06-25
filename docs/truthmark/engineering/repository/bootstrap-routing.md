@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: engineering-workflow
-last_reviewed: 2026-06-18
+last_reviewed: 2026-06-25
 ---
 
 # Repository Bootstrap Routing

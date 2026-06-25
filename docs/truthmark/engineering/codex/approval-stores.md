@@ -1,10 +1,7 @@
 ---
 status: active
-doc_type: behavior
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-13
-source_of_truth:
-  - ../../routes/areas/repository.md
+last_reviewed: 2026-06-25
 ---
 
 # Approval Stores
@@ -80,3 +77,8 @@ Separating approval storage from runtime execution keeps approval records audita
 ## Source References
 
 - ../../routes/areas/repository.md
+- ../../../../src/approvals.ts
+- ../../../../src/runner.ts
+- ../../../../src/tasks.ts
+- ../../../../tests/approval-gates.test.ts
+- ../../../../tests/runner.test.ts
