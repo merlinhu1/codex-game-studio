@@ -108,7 +108,8 @@ Code surface:
 - tests/functionality-gap-pass.test.ts
 
 Update truth when:
-- studio role IDs, custom role IDs, role contracts, workflow registry entries, prompt rendering, engine reference prompt selection, context strategies, or template selection rules change
+- studio role IDs, custom role IDs, role contracts, workflow registry entries, or prompt rendering change
+- engine reference prompt selection, context strategies, or template selection rules change
 - Codex-native workflow shortcuts or generated workflow prompt contents change
 
 ## Runtime And Task Execution
@@ -186,7 +187,8 @@ Code surface:
 - tests/functionality-gap-pass.test.ts
 
 Update truth when:
-- public CLI commands, package scripts/bin/files, validation check IDs, project-local customization checks, engine reference package checks, documentation claims, or package dependency contracts change
+- public CLI commands, package scripts/bin/files, validation check IDs, or documentation claims change
+- project-local customization checks, engine reference package checks, or package dependency contracts change
 - future-only surfaces become exposed or are intentionally kept hidden
 
 ## Source References
