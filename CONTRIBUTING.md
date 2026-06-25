@@ -1,6 +1,6 @@
 # Contributing
 
-Use Node 20 or newer.
+Use Node 24 or newer.
 
 Before opening changes:
 

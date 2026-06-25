@@ -125,7 +125,7 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 
 - The TypeScript project uses NodeNext ESM semantics.
 - Relative TypeScript imports must use emitted `.js` specifiers.
-- Node support requires a package engine floor that includes Node >=20.
+- Node support requires a package engine floor that includes Node >=24.
 - Packaged files must include `dist/`, `engine_configs/`, `engine_reference/`, and `templates/`.
 - Future-only command surfaces stay hidden until implemented intentionally.
 - Future-only examples include `next`, `telemetry`, `parallel`, and ownership enforcement.

@@ -1,7 +1,7 @@
 # Open Game Studio
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Node.js >=20](https://img.shields.io/badge/node-%3E%3D20-339933.svg)](package.json)
+[![Node.js >=24](https://img.shields.io/badge/node-%3E%3D24-339933.svg)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-NodeNext-3178c6.svg)](tsconfig.json)
 
 Open Game Studio is a Codex-native command line studio for making games with AI agents without hiding the workflow in a black box.
@@ -48,7 +48,7 @@ A generated project contains the working contract Codex needs: project summary, 
 
 ## Requirements
 
-- Node.js 20 or newer.
+- Node.js 24 or newer.
 - npm.
 - Codex CLI available on `PATH` for normal `run <role>` execution and full validation.
 
