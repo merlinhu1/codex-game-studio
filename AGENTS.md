@@ -12,7 +12,7 @@ Do not load all agents or all templates for a single role task.
 
 `src/agents.ts` is the single owner for generated project `AGENTS.md`.
 
-Direct Codex execution is the default path via `opengamestudio run <role>`. `--dry-run` and `--print-prompt` are inspection-only paths. Telemetry, planner/next, ownership enforcement, and parallel orchestration are future-only.
+Direct Codex execution is the default path via `opengamestudio run <role>`. `--dry-run` and `--print-prompt` are inspection-only paths. Explicit, file-backed task orchestration is now inside the product boundary; telemetry, planner/next, ownership enforcement, hosted orchestration, background loops, and unbounded parallelism remain future-only.
 
 ## Repository Rules
 

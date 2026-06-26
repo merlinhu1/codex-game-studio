@@ -109,7 +109,7 @@ flowchart TD
 - They do not call Codex.
 - They do not write `.codex/runs/` cache files.
 - They do not mutate `.codex/studio.json` or `.codex/tasks.json`.
-- They do not expose hidden planner, telemetry, ownership enforcement, or parallel orchestration behavior.
+- They do not expose hidden planner, telemetry, ownership enforcement, hosted/background orchestration, or unbounded parallel behavior. Explicit task orchestration belongs in task/run lifecycle commands, not render-only shortcut output.
 
 ## Failure Modes And Debugging Cues
 

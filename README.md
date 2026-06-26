@@ -150,9 +150,10 @@ Validation exits nonzero on failure. It checks package contracts, template avail
 | `templates list` | List packaged template IDs. |
 | `templates show <template-id>` | Print a packaged template. |
 | `run <role>` | Prepare one bounded Codex prompt packet and invoke `codex exec` by default. |
-| `task create` / `task run` | Manage file-backed `.codex/tasks.json` tasks. |
+| `task create` / `task run` / `task orchestrate` | Manage file-backed `.codex/tasks.json` tasks and run explicit local bounded orchestration. |
 | `market`, `analytics`, `design-spec`, `feel-review`, `art-direction`, `ui-review`, `milestone`, `handoff` | Render focused workflow prompts. |
 | `review`, `ship-check` | Render baseline review and release-check prompts. |
+| `workflow create-tasks <workflow-id>` | Create explicit file-backed tasks from supported workflow recipes such as `vertical-slice`, `bugfix`, `ui-ux-review`, and `release-checklist`. |
 
 ## Studio roles
 
@@ -187,8 +188,9 @@ Project artifacts:
 - `.codex/studio.json`: project metadata, role roster, workflow IDs, and workflow state.
 - `.codex/prompts/`: generated role prompts.
 - `.codex/workflows/`: generated workflow prompts.
-- `.codex/runs/`: prepared prompt packets and run metadata from non-dry role runs.
-- `.codex/tasks.json`: file-backed task state when you use `task create` or `task run`.
+- `.codex/runs/`: prepared prompt packets, per-task orchestration output, and run metadata from non-dry role or orchestration runs.
+- `.codex/locks/`: transient file-backed locks for bounded parallel task orchestration.
+- `.codex/tasks.json`: file-backed task state when you use `task create`, `task run`, workflow task recipes, or `task orchestrate`.
 - `documentation/`: starter game-design and production documents.
 - `source/project-<slug>/`: engine project location contract.
 
@@ -205,6 +207,9 @@ Implemented:
 - direct `codex exec` role execution;
 - dry-run and prompt-print inspection;
 - file-backed tasks;
+- explicit local task orchestration with bounded `--max-concurrency` and file-backed locks;
+- workflow task recipes for selected high-value workflows;
+- curated CCGS adaptation registry for role/skill/workflow translation decisions;
 - bounded review, verification, and fix-pass options;
 - hard-failing repository and project validation.
 
@@ -212,11 +217,14 @@ Future-only, not exposed as working features:
 
 - planner/`next`;
 - telemetry;
-- parallel orchestration;
 - changed-file tracking;
+- hosted/background orchestration;
+- unbounded parallelism;
 - hard output-ownership enforcement;
 - legacy `.gamestudio` compatibility;
 - generated `CODEX.md` or `project_orchestrator.md` surfaces.
+
+Explicit local task orchestration is now inside the product boundary, but user-facing runtime claims require implementation, tests, and docs.
 
 See [`docs/known-upstream-differences.md`](docs/known-upstream-differences.md) and [`docs/migration-from-claude.md`](docs/migration-from-claude.md) for the detailed migration contract.
 

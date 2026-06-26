@@ -16,9 +16,9 @@ Generated projects materialize project-specific `.codex/prompts/<role>.md` files
 
 Market and analytics are first-class renderable workflows owned by dedicated roles. Workflow prompts and normal role runs inline selected package template bodies instead of pointing Codex at project-relative template paths or loading every template.
 
-Studio orchestration is provided by the `studio-orchestrator` role and the render-only `handoff` workflow shortcut, not by a generated `project_orchestrator.md`.
+Studio orchestration is provided through Codex-native roles, file-backed task state, explicit `task orchestrate` execution, selected workflow task recipes, and bounded workflow surfaces, not by a generated `project_orchestrator.md`.
 
-Richer workflows exist for design specs, game-feel review, art direction, UI/UX review, production milestones, review, ship-check, playtest, bugfix, vertical slice, market, analytics, and handoff. Shortcut workflow commands render prompts only; executable workflow lifecycle support remains future-only.
+Richer workflows exist for design specs, game-feel review, art direction, UI/UX review, production milestones, review, ship-check, playtest, bugfix, vertical slice, market, analytics, and handoff. Shortcut workflow commands render prompts. Supported workflow recipes such as `vertical-slice`, `bugfix`, `ui-ux-review`, and `release-checklist` can explicitly create `.codex/tasks.json` task graphs before `task orchestrate` runs them.
 
 Intentional omissions for the first build: no interactive `menu`, no `startover`, no generated `project_orchestrator.md`, no exact `template_info.md`, no eager competitor reports during init, and no upstream license/authorship/citation parity documents.
 
@@ -26,4 +26,4 @@ Codex-native difference: `run <role>` invokes `codex exec` by default against th
 
 Generated role prompts and workflow files include freshness metadata and rendered-body hashes for new projects. Validation reports legacy missing-metadata files as regeneration-needed skip diagnostics instead of treating them as fresh.
 
-Future-only features are not implemented in this build: planner/`next`, telemetry, parallel orchestration, changed-file tracking, prompt-size metrics, hard output-ownership enforcement, legacy `.gamestudio` compatibility, `CODEX.md`, and `project_orchestrator.md`.
+Future-only features still not implemented in this build include planner/`next`, telemetry, changed-file tracking, prompt-size metrics, hard output-ownership enforcement, hosted/background orchestration, unbounded parallelism, legacy `.gamestudio` compatibility, `CODEX.md`, and `project_orchestrator.md`. Explicit local task orchestration is implemented as foreground, bounded, file-backed CLI behavior.

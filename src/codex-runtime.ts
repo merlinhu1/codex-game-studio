@@ -43,13 +43,28 @@ export async function checkCodexAvailability(options: { codexBin?: string } = {}
   return { ok: true, command, stdout: result.stdout ?? "", stderr: result.stderr ?? "" };
 }
 
-export async function executeCodexPrompt(prompt: string, options: CodexRuntimeOptions): Promise<CodexExecutionResult> {
-  const command = options.codexBin ?? resolveCodexCommand();
-  const args = buildCodexExecArgs(options);
+export async function executeCodexCommand(
+  command: { command: string; args: string[] },
+  input: string,
+  options: { cwd: string; timeoutMs?: number }
+): Promise<CodexExecutionResult> {
   return await new Promise((resolve) => {
-    const child = spawn(command, args, { cwd: options.projectRoot, shell: false, stdio: ["pipe", "pipe", "pipe"] });
+    const child = spawn(command.command, command.args, { cwd: options.cwd, shell: false, stdio: ["pipe", "pipe", "pipe"] });
     let stdout = "";
     let stderr = "";
+    let settled = false;
+    const finish = (result: CodexExecutionResult): void => {
+      if (settled) return;
+      settled = true;
+      if (timer) clearTimeout(timer);
+      resolve(result);
+    };
+    const timer = options.timeoutMs
+      ? setTimeout(() => {
+          child.kill("SIGTERM");
+          finish({ status: null, signal: "SIGTERM", stdout, stderr, error: new Error(`Codex command timed out after ${options.timeoutMs}ms`) });
+        }, options.timeoutMs)
+      : undefined;
     child.stdout.setEncoding("utf8");
     child.stderr.setEncoding("utf8");
     child.stdout.on("data", (chunk: string) => {
@@ -58,8 +73,14 @@ export async function executeCodexPrompt(prompt: string, options: CodexRuntimeOp
     child.stderr.on("data", (chunk: string) => {
       stderr += chunk;
     });
-    child.on("error", (error) => resolve({ status: null, signal: null, stdout, stderr, error }));
-    child.on("close", (status, signal) => resolve({ status, signal, stdout, stderr }));
-    child.stdin.end(prompt);
+    child.on("error", (error) => finish({ status: null, signal: null, stdout, stderr, error }));
+    child.on("close", (status, signal) => finish({ status, signal, stdout, stderr }));
+    child.stdin.end(input);
   });
+}
+
+export async function executeCodexPrompt(prompt: string, options: CodexRuntimeOptions): Promise<CodexExecutionResult> {
+  const command = options.codexBin ?? resolveCodexCommand();
+  const args = buildCodexExecArgs(options);
+  return await executeCodexCommand({ command, args }, prompt, { cwd: options.projectRoot });
 }

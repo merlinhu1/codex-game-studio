@@ -13,4 +13,4 @@ For inspection-only runs, add `--dry-run` or `--print-prompt` to view the genera
 
 Intentional differences: no interactive menu, no `startover`, no exact `template_info.md`, no eager competitor reports during init, no generated `project_orchestrator.md`, no `CODEX.md`, no legacy `.gamestudio` compatibility, and no unsupported upstream underscore role IDs. Supported aliases such as `new` for `init` remain available.
 
-Future-only features are not implemented: `opengamestudio next`, telemetry, parallel orchestration, changed-file tracking, and ownership enforcement.
+Future-only features are not implemented: `opengamestudio next`, telemetry, changed-file tracking, hosted/background orchestration, unbounded parallelism, and ownership enforcement. Explicit local task orchestration is implemented through reviewable `.codex/**` task, lock, and run state.

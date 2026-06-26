@@ -30,7 +30,7 @@ It covers project initialization, role/workflow prompt rendering, direct Codex e
 
 It also covers generated project files and validation.
 
-This capability excludes game-engine functionality and hosted orchestration.
+This capability excludes game-engine functionality and hosted orchestration. It includes explicit local task orchestration when state, approvals, selected context, locks, runs, and failures are reviewable in `.codex/**`.
 
 It also excludes background autonomous control, CI/release enforcement, hidden checkpoint/memory systems, and mandatory studio ceremony for small prototypes.
 
@@ -93,12 +93,14 @@ Production templates are package-shipped assets selected by relevance.
 ## Product Decisions
 
 - 2026-06-13: Open Game Studio is a local-first Codex-native CLI/package for game-development repository workflows.
-- 2026-06-13: Open Game Studio is not a hosted studio service, daemon, general orchestrator, or game engine.
+- 2026-06-13: Open Game Studio is not a hosted studio service, daemon, general-purpose orchestrator, or game engine.
+- 2026-06-25: Explicit local task orchestration is inside the product boundary when it remains Codex-native, file-backed, bounded by selected context, policy-gated, and validated.
+- 2026-06-25: The first orchestration implementation is a foreground `task orchestrate` CLI with bounded concurrency, transient `.codex/locks/`, workflow task recipes, and no hosted/background/unbounded behavior.
 - 2026-06-13: Studio depth is optional and mode-controlled.
 - 2026-06-13: Lifecycle stage must remain separate from process strictness.
 - 2026-06-13: Generated project instruction contracts use `AGENTS.md` and `.codex/**`.
 - 2026-06-13: Generated project instruction contracts do not use `CODEX.md` or legacy compatibility shims.
-- 2026-06-13: Planner/next, telemetry, parallel orchestration, hard ownership enforcement, and similar future-only surfaces remain absent until implemented, tested, and documented.
+- 2026-06-13: Planner/next, telemetry, hard ownership enforcement, hosted/background orchestration, unbounded parallelism, and similar future-only surfaces remain absent until implemented, tested, and documented.
 - 2026-06-13: Truthmark-backed docs guard repository truth in this checkout.
 - 2026-06-13: Truthmark workflow mechanics are not Open Game Studio product features.
 - 2026-06-17: Project-local customization is an extend-only, file-backed overlay for `custom-*` roles, workflows, and templates.

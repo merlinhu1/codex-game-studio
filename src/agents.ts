@@ -102,7 +102,7 @@ Run project validation before claiming parity or readiness.
 
 Use AGENTS.md, .codex/studio.json, the current role prompt, and task-relevant context only.
 Codex is the default runtime for \`opengamestudio run <role>\`; use \`--dry-run\` or \`--print-prompt\` only for inspection.
-Do not use telemetry, planner/next, parallel orchestration, or ownership enforcement in this build.
+Do not use telemetry, planner/next, hosted/background orchestration, unbounded parallelism, or ownership enforcement in this build. Explicit local task orchestration must stay reviewable in .codex state.
 `;
 }
 

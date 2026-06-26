@@ -17,7 +17,9 @@ import { runValidation } from "./validation.js";
 import { executeRunLifecycle, prepareRun } from "./runner.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
 import { createTask, executeTaskRun, readTaskStore, resolveTaskProject } from "./tasks.js";
+import { orchestrateTasks } from "./orchestrator.js";
 import { renderWorkflowPrompt, workflowAliases, workflowRegistry, type WorkflowId } from "./workflows.js";
+import { createWorkflowTasks } from "./workflow-recipes.js";
 import { isStudioRoleId, unknownStudioRoleMessage } from "./roles.js";
 import type { ProjectStage, StudioMode } from "./studio-policy.js";
 
@@ -180,7 +182,7 @@ approval
       if (task.role !== opts.role) throw new Error(`Task ${task.id} is assigned to role ${task.role}; approval role ${opts.role} does not match.`);
       objective = task.title;
       objectiveLabel = task.title;
-      approvedFiles = task.files.length > 0 ? task.files : undefined;
+      approvedFiles = task.writeFiles.length > 0 ? task.writeFiles : undefined;
       objectiveSha256 = canonicalObjectiveSha256({
         role: opts.role,
         objective: task.title,
@@ -310,6 +312,12 @@ task
   .description("Create a ready task in .codex/tasks.json")
   .requiredOption("--project <path>", "project path")
   .requiredOption("--role <role>", "studio role")
+  .option("--file <relative-path>", "read/context file for the task; repeat for multiple files", (value, previous: string[] = []) => [...previous, value], [])
+  .option("--write-file <relative-path>", "literal project-relative file this task may mutate; repeat for multiple files", (value, previous: string[] = []) => [...previous, value], [])
+  .option("--depends-on <task-id>", "task dependency that must be done; repeat for multiple dependencies", (value, previous: string[] = []) => [...previous, value], [])
+  .option("--workflow <workflow-id>", "source workflow id for this task")
+  .option("--group <group-id>", "task group id")
+  .option("--priority <number>", "task priority; higher values run earlier", "0")
   .option("--verify-command <command>", "structured verification command")
   .option("--verify-arg <arg>", "structured verification argument; repeat for multiple args", (value, previous: string[] = []) => [...previous, value], [])
   .argument("<title...>")
@@ -317,7 +325,17 @@ task
     if (!isStudioRoleId(opts.role)) throw new Error(unknownStudioRoleMessage(opts.role));
     const projectRoot = resolveTaskProject(opts.project);
     const verification = opts.verifyCommand ? { command: opts.verifyCommand as string, args: opts.verifyArg as string[] } : undefined;
-    const created = createTask(projectRoot, { title: titleParts.join(" "), role: opts.role, verification });
+    const created = createTask(projectRoot, {
+      title: titleParts.join(" "),
+      role: opts.role,
+      verification,
+      files: opts.file,
+      writeFiles: opts.writeFile,
+      dependencies: opts.dependsOn,
+      workflowId: opts.workflow,
+      groupId: opts.group,
+      priority: Number(opts.priority)
+    });
     console.log(created.id);
   });
 task
@@ -346,19 +364,60 @@ task
     console.log(opts.dryRun ? result.prepared.output : `${result.prepared.output}\n${result.lifecycle?.output ?? ""}\n${taskId} ${result.task.status}`);
     if (result.lifecycle?.finalStatus === "blocked") process.exitCode = 1;
   });
+task
+  .command("orchestrate")
+  .description("Run ready tasks with explicit local orchestration and bounded parallelism")
+  .requiredOption("--project <path>", "project path")
+  .option("--workflow <workflow-id>", "select ready tasks from one workflow")
+  .option("--max-concurrency <count>", "maximum concurrent task runs, capped at 3", "1")
+  .option("--dry-run", "show task waves, locks, approvals, and commands without mutation")
+  .option("--review", "run a schema-driven review pass per task")
+  .option("--fix", "run bounded fix pass prompts when blocked")
+  .option("--max-fix-passes <count>", "maximum automatic fix passes", "1")
+  .option("--approval-scope <glob>", "approval diagnostic scope for task run objective hashing; repeat for multiple scopes", collectScope, [])
+  .option("--approved-by-user", "explicitly approve a guided-studio local override")
+  .option("--constrained-sandbox", "use Codex workspace-write instead of the default full-access sandbox")
+  .argument("[task-id...]", "specific task ids to orchestrate")
+  .action(async (taskIds: string[], opts) => {
+    const result = await orchestrateTasks({
+      project: opts.project,
+      taskIds: taskIds.length ? taskIds : undefined,
+      workflowId: opts.workflow,
+      maxConcurrency: Number(opts.maxConcurrency),
+      dryRun: opts.dryRun,
+      review: opts.review,
+      fix: opts.fix,
+      maxFixPasses: Number(opts.maxFixPasses),
+      approvedByUser: opts.approvedByUser,
+      constrainedSandbox: opts.constrainedSandbox,
+      approvalScope: opts.approvalScope
+    });
+    console.log(result.output);
+    if (result.status === "blocked") process.exitCode = 1;
+  });
 
 function renderWorkflowCommand(workflow: string, opts: { project: string }): void {
   const projectRoot = resolveTaskProject(opts.project);
   console.log(renderWorkflowPrompt(projectRoot, workflow));
 }
 
-program
-  .command("workflow")
+const workflow = program.command("workflow").description("Render a built-in or project-local workflow prompt by id");
+workflow
+  .command("render <workflow-id>", { isDefault: true })
   .description("Render a built-in or project-local workflow prompt by id")
-  .argument("<workflow-id>")
   .requiredOption("--project <path>", "project path")
   .option("--dry-run", "render prompt without launching Codex")
-  .action((workflow: string, opts) => renderWorkflowCommand(workflow, opts));
+  .action((workflowId: string, opts) => renderWorkflowCommand(workflowId, opts));
+
+const workflowTasks = workflow.command("create-tasks <workflow-id>").description("Create explicit file-backed tasks from a workflow recipe");
+workflowTasks
+  .requiredOption("--project <path>", "project path")
+  .option("--dry-run", "show proposed tasks without writing .codex/tasks.json")
+  .action((workflowId: string, opts) => {
+    const projectRoot = resolveTaskProject(opts.project);
+    const result = createWorkflowTasks(projectRoot, workflowId, { dryRun: opts.dryRun });
+    console.log(result.output);
+  });
 
 function addWorkflowCommand(name: "review" | "ship-check"): void {
   program

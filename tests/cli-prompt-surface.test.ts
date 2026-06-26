@@ -78,15 +78,20 @@ describe("built CLI prompt surface", () => {
       path.join(projectRoot, ".codex", "tasks.json"),
       `${JSON.stringify(
         {
-          schemaVersion: 1,
+          schemaVersion: 2,
           tasks: [
             {
               id: "task-001",
               title: "Implement jump feel",
               role: "gameplay-programmer",
               status: "ready",
-              files: ["source/player.gd"],
-              notes: []
+              files: ["documentation/design/gdd.md"],
+              writeFiles: ["source/player.gd"],
+              dependencies: [],
+              priority: 0,
+              notes: [],
+              createdAt: "2026-06-25T00:00:00.000Z",
+              updatedAt: "2026-06-25T00:00:00.000Z"
             }
           ]
         },
@@ -328,5 +333,21 @@ describe("built CLI prompt surface", () => {
 
     const constrained = runCli(["run", "gameplay-programmer", "--project", projectRoot, "--dry-run", "--approved-by-user", "--constrained-sandbox", "Implement jump"], cwd);
     expect(constrained).toContain("Sandbox: workspace-write");
+  });
+
+  test("workflow recipes and task orchestrate are visible through the built CLI", () => {
+    const { cwd, projectRoot } = initCliProject("ogs-cli-orchestrate-", "Orchestrate Game");
+
+    const recipe = runCli(["workflow", "create-tasks", "vertical-slice", "--project", projectRoot, "--dry-run"], cwd);
+    expect(recipe).toContain("Workflow task recipe: vertical-slice");
+
+    const render = runCli(["workflow", "vertical-slice", "--project", projectRoot], cwd);
+    expect(render).toContain("# Codex Game Studio Session");
+
+    const created = runCli(["workflow", "create-tasks", "bugfix", "--project", projectRoot], cwd);
+    expect(created).toContain("Workflow task recipe: bugfix");
+
+    const orchestration = runCli(["task", "orchestrate", "--project", projectRoot, "--dry-run"], cwd);
+    expect(orchestration).toContain("Orchestration plan: 3 task(s), max concurrency 1");
   });
 });
