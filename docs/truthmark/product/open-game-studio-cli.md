@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: product-capability
-last_reviewed: 2026-06-25
+last_reviewed: 2026-06-26
 ---
 
 # Open Game Studio Codex-Native CLI
@@ -95,12 +95,12 @@ Production templates are package-shipped assets selected by relevance.
 - 2026-06-13: Open Game Studio is a local-first Codex-native CLI/package for game-development repository workflows.
 - 2026-06-13: Open Game Studio is not a hosted studio service, daemon, general-purpose orchestrator, or game engine.
 - 2026-06-25: Explicit local task orchestration is inside the product boundary when it remains Codex-native, file-backed, bounded by selected context, policy-gated, and validated.
-- 2026-06-25: The first orchestration implementation is a foreground `task orchestrate` CLI with bounded concurrency, transient `.codex/locks/`, workflow task recipes, and no hosted/background/unbounded behavior.
+- 2026-06-26: Foreground task orchestration is exposed through `task orchestrate` with bounded concurrency, transient `.codex/locks/`, workflow task recipes, and no hosted/background/unbounded behavior.
 - 2026-06-13: Studio depth is optional and mode-controlled.
 - 2026-06-13: Lifecycle stage must remain separate from process strictness.
 - 2026-06-13: Generated project instruction contracts use `AGENTS.md` and `.codex/**`.
 - 2026-06-13: Generated project instruction contracts do not use `CODEX.md` or legacy compatibility shims.
-- 2026-06-13: Planner/next, telemetry, hard ownership enforcement, hosted/background orchestration, unbounded parallelism, and similar future-only surfaces remain absent until implemented, tested, and documented.
+- 2026-06-26: Planner/next, telemetry, hard ownership enforcement, hosted/background orchestration, unbounded parallelism, and similar surfaces remain out of scope unless a later product-boundary decision, implementation, tests, and truth docs bring them in.
 - 2026-06-13: Truthmark-backed docs guard repository truth in this checkout.
 - 2026-06-13: Truthmark workflow mechanics are not Open Game Studio product features.
 - 2026-06-17: Project-local customization is an extend-only, file-backed overlay for `custom-*` roles, workflows, and templates.

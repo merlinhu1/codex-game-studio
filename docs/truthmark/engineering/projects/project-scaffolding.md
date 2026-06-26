@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-25
+last_reviewed: 2026-06-26
 ---
 
 # Project Scaffolding
@@ -19,8 +19,6 @@ This leaf doc owns project initialization, generated project state, engine-speci
 It also owns generated project `AGENTS.md`, generated role prompts, and read-only project status/resume behavior.
 
 It does not own Codex run execution, task lifecycle persistence, or repository-level CLI validation.
-
-This doc was created from the editable engineering-behavior template at docs/truthmark/templates/engineering-behavior.md.
 
 ## Current Implementation Behavior
 

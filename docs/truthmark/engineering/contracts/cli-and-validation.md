@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: engineering-contract
-last_reviewed: 2026-06-25
+last_reviewed: 2026-06-26
 ---
 
 # CLI And Validation Contracts
@@ -158,7 +158,7 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 - Decision (2026-06-14): Validate engine reference packs by registered file presence and seed-review metadata shape.
 - Decision (2026-06-14): Validate active-engine materialized references without judging prose quality.
 - Decision (2026-06-17): Expose the expanded workflow catalog as render-only CLI shortcuts.
-- Decision (2026-06-17): Keep future planner, next, telemetry, hosted/background orchestration, unbounded parallelism, and ownership enforcement hidden.
+- Decision (2026-06-26): Keep planner/next, telemetry, hosted/background orchestration, unbounded parallelism, and ownership enforcement absent from public CLI and validation surfaces.
 - Decision (2026-06-25): Treat explicit local task orchestration as in-boundary once it has CLI behavior, validation, tests, and truth docs; keep hosted/background orchestration and unbounded parallelism hidden.
 - Decision (2026-06-17): Add local deterministic behavioral-evaluation subchecks.
 - Decision (2026-06-17): Do not use hosted evaluators, telemetry, hidden memory, or LLM judges for those checks.

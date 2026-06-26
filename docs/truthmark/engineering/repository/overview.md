@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-25
+last_reviewed: 2026-06-26
 ---
 
 # Repository Overview
@@ -32,7 +32,8 @@ They are listed in `docs/truthmark/routes/areas/repository.md`.
 - Role run commands render deterministic Codex prompts.
 - Unless in inspection mode, role run commands execute Codex with optional verification, review, and bounded fix passes.
 - Workflow shortcut commands are render-only prompt surfaces.
-- Workflow shortcuts do not imply hidden planner, hosted orchestration, background loops, unbounded parallelism, telemetry, or ownership enforcement behavior. Explicit local task orchestration is now allowed by the product boundary only when backed by reviewable `.codex/**` state.
+- Workflow shortcuts do not imply hidden planner, hosted orchestration, background loops, unbounded parallelism, telemetry, or ownership enforcement behavior.
+- Explicit local task orchestration is limited to reviewable `.codex/**` state.
 - Validation checks package metadata, source files, templates, role/workflow rendering, behavioral-evaluation scenarios, and customization packs.
 - It also checks future-surface guardrails, build output, and package install smoke behavior.
 
