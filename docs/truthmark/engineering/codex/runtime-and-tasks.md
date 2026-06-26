@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: engineering-workflow
-last_reviewed: 2026-06-25
+last_reviewed: 2026-06-26
 ---
 
 # Runtime And Task Execution
@@ -10,7 +10,7 @@ last_reviewed: 2026-06-25
 
 Runtime and task execution connects prepared Codex Game Studio prompts to the Codex CLI.
 
-It also preserves explicit task state and runs bounded verification, review, and fix loops. The product boundary now allows local, file-backed task orchestration when task state, locks, approvals, selected context, run metadata, and failures stay reviewable.
+It also preserves explicit task state and runs bounded verification, review, fix, and local task orchestration loops when task state, locks, approvals, selected context, run metadata, and failures stay reviewable.
 
 ## Scope
 
@@ -48,7 +48,7 @@ Runtime execution prepares bounded Codex prompts before side effects.
 
 It evaluates studio write policy before mutation.
 
-It records visible run and task state for non-inspection paths. It reports verification, review, and fix outcomes without hidden orchestration; future orchestration work must keep those outcomes explicit in `.codex/**` state.
+It records visible run, task, orchestration, verification, review, and fix outcomes in `.codex/**` state for non-inspection paths.
 
 ## Execution Model
 

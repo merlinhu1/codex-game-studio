@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-25
+last_reviewed: 2026-06-26
 ---
 
 # Approval Stores
@@ -17,8 +17,6 @@ This leaf doc owns the approval-store data model and helper behavior.
 It covers canonical objective hashing, scope normalization, approval matching, expiry, and revocation.
 
 It also covers reads, writes, and mutations. It does not own approval CLI syntax, runner/task eligibility, project initialization, or validation diagnostics.
-
-This doc was created from the editable engineering-behavior template at docs/truthmark/templates/engineering-behavior.md.
 
 ## Current Implementation Behavior
 

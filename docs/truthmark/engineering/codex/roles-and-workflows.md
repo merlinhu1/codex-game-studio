@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-25
+last_reviewed: 2026-06-26
 ---
 
 # Codex Roles And Workflows
@@ -19,8 +19,6 @@ This leaf doc owns role IDs, role package metadata, Codex session prompt renderi
 It also owns engine-reference prompt selection and generated workflow prompt content.
 
 It does not own process execution, task persistence, package installation, or generated project initialization side effects.
-
-This doc was created from the editable engineering-behavior template at docs/truthmark/templates/engineering-behavior.md.
 
 ## Current Implementation Behavior
 
@@ -139,9 +137,9 @@ This doc was created from the editable engineering-behavior template at docs/tru
 ## Engineering Decisions
 
 - Decision (2026-05-28): Use Codex-native hyphenated role IDs as the user- and project-facing role contract.
-- Decision (2026-05-28): Keep workflow shortcuts render-only for this pass.
-- Decision (2026-05-28): Keep future planner, next, telemetry, ownership enforcement, hosted orchestration, background loops, and unbounded parallelism hidden.
-- Decision (2026-06-25): Allow explicit local task orchestration as a product-boundary feature area when implemented through bounded selected context, file-backed task state, run metadata, locks, approvals, validation, and docs.
+- Decision (2026-06-26): Workflow shortcut aliases render prompts and do not execute Codex.
+- Decision (2026-06-26): Keep planner/next, telemetry, ownership enforcement, hosted orchestration, background loops, and unbounded parallelism absent from role and workflow prompt surfaces.
+- Decision (2026-06-26): Keep local task orchestration ownership in runtime/task execution; role and workflow surfaces provide prompt and recipe inputs.
 - Decision (2026-06-13): Workflow prompts use the same context-contract renderer as role-run prompts.
 - Decision (2026-06-13): Workflow prompts include only selected workflow context.
 - Decision (2026-06-14): Add one specialist role ID per supported engine.
