@@ -1,7 +1,6 @@
 version: 2
 platforms:
   - codex
-  - opencode
 truthmark:
   workspace: docs/truthmark
   generated:

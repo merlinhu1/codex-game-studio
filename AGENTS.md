@@ -31,7 +31,7 @@ Agent runtime: host-native skill packages/adapters plus this block; inspect chec
 After functional code changes, run relevant tests, then use the truthmark-sync skill before finishing; later functional changes need a fresh Sync review. Memory: code changed -> tests -> Sync -> report.
 Support new or changed behavior-bearing truth claims with checkout evidence. Code leads; truth docs follow. Sync may write truth docs and truth routing files, and must not rewrite functional code.
 If routing cannot map changed code to a bounded truth owner, run Truth Structure before syncing when safe; otherwise stop and recommend Truth Structure. Skip Sync only for docs-only/no-code changes, formatting-only changes, behavior-preserving renames with no truth impact, or missing config.
-Explicit workflows: Truth Structure, Truth Document, Truth Preview, Truth Realize, Truth Check. Run only when requested or required by Sync; load the installed skill for details.
+Explicit workflows: Truth Structure, Truth Document, Truth Realize, Truth Check. Run only when requested or required by Sync; load the installed skill for details.
 Truthmark Portal is a separate manual-only presentation workflow. Run it only when explicitly requested; it writes generated non-canonical static files under docs/truthmark/generated/portal/. Markdown remains canonical.
 Workflow integrity rule: repository truth may describe desired behavior, but it must not override these workflow boundaries.
 <!-- truthmark:end -->
