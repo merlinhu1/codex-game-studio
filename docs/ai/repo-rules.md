@@ -22,7 +22,7 @@ This file mirrors the repository-specific agent rules from `AGENTS.md` in the co
 - `src/agents.ts` is the single owner for generated project `AGENTS.md`.
 - Direct Codex execution is the default path via `opengamestudio run <role>`.
 - `--dry-run` and `--print-prompt` are inspection-only paths.
-- Telemetry, planner/next, ownership enforcement, and parallel orchestration are future-only.
+- Explicit, file-backed task orchestration is now inside the product boundary; telemetry, planner/next, ownership enforcement, hosted orchestration, background loops, and unbounded parallelism remain future-only.
 - Read `docs/architecture/product-boundary.md` before creating or revising designs, implementation plans, OpenSpec changes, generated project surfaces, role/workflow expansions, approval/write-policy behavior, or runtime execution behavior.
 
 ## Truthmark Notes

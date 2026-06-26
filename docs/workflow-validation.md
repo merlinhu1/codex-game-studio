@@ -2,7 +2,7 @@
 
 Validation exits nonzero when any check fails.
 
-Repo validation checks package scripts, build output, package assets, engine configs, expanded role rendering, canonical workflow rendering, deterministic behavioral-evaluation scenarios, templates, package packing, installed-bin asset loading, future-only CLI surfaces, and Codex CLI readiness.
+Repo validation checks package scripts, build output, package assets, engine configs, expanded role rendering, canonical workflow rendering, deterministic behavioral-evaluation scenarios, templates, package packing, installed-bin asset loading, future-only CLI surfaces, and Codex CLI readiness. Tests also cover explicit task orchestration, workflow task recipes, and curated CCGS adaptation registry consistency.
 
 Project validation checks `.codex/studio.json` full `roles`, mode-specific `activeRoles`, registry-derived `workflows`, `.codex/studio/config.json` customization packs, `AGENTS.md`, generated project-specific role prompts, workflow files, engine source files, starter docs, timeline sections, forbidden legacy artifacts, and read-only `status`/`resume` behavior.
 
@@ -13,7 +13,7 @@ npm exec opengamestudio -- run --help | grep -- "--dry-run"
 ! npm exec opengamestudio -- --help | grep -E " next|telemetry"
 ```
 
-Workflow shortcut commands such as `market`, `analytics`, `design-spec`, `feel-review`, `art-direction`, `ui-review`, `milestone`, and `handoff` render prompts only. They do not launch Codex or create run records.
+Workflow shortcut commands such as `market`, `analytics`, `design-spec`, `feel-review`, `art-direction`, `ui-review`, `milestone`, and `handoff` render prompts only. They do not launch Codex or create run records. `workflow create-tasks <workflow-id>` is the explicit path for turning supported workflow recipes into `.codex/tasks.json` tasks; it still does not launch Codex.
 
 Behavioral evaluation scenarios are local deterministic validation subchecks. They render built-in role and workflow prompts, assert required prompt obligations, selected context categories, relevant templates, output-contract coverage, and forbidden future-only drift. They do not call hosted evaluators, telemetry, hidden memory, or LLM judges.
 

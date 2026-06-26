@@ -15,4 +15,4 @@ npm run validate
 
 Keep generated projects under `projects/<slug>/`.
 
-The current build invokes Codex by default through `run <role>`. Use `--dry-run` or `--print-prompt` for inspection-only paths. It still intentionally excludes planner commands, telemetry, parallel orchestration, changed-file tracking, and ownership enforcement.
+The current build invokes Codex by default through `run <role>`. Use `--dry-run` or `--print-prompt` for inspection-only paths. Explicit local task orchestration is now inside the product boundary, but runtime claims require implementation and validation. The build still intentionally excludes planner commands, telemetry, changed-file tracking, hosted/background orchestration, unbounded parallelism, and ownership enforcement.

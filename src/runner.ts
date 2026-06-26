@@ -1,9 +1,8 @@
-import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { explainApprovalMismatch, normalizeApprovalScope, readApprovalStore, type ApprovalMismatchDiagnostic } from "./approvals.js";
 import { readProjectAgentPrompt } from "./agents.js";
-import { buildCodexExecArgs, resolveCodexCommand, type CodexExecutionResult } from "./codex-runtime.js";
+import { buildCodexExecArgs, executeCodexCommand, resolveCodexCommand, type CodexExecutionResult } from "./codex-runtime.js";
 import { renderCodexPrompt } from "./codex-prompts.js";
 import { createCodexStudioSession, type VerificationCommand } from "./codex-session.js";
 import { selectContextEntries, type ContextManifestEntry, type ContextRequestEntry } from "./context-manifest.js";
@@ -24,6 +23,7 @@ export type RunOptions = {
   dryRun?: boolean;
   codexBin?: string;
   includeArtifact?: string[];
+  approvedFiles?: string[];
   approvalScope?: string[];
   allowBroadContext?: boolean;
   verifyCommand?: VerificationCommand;
@@ -32,6 +32,7 @@ export type RunOptions = {
   maxFixPasses?: number;
   approvedByUser?: boolean;
   constrainedSandbox?: boolean;
+  noWrite?: boolean;
 };
 
 export type PreparedRun = {
@@ -92,24 +93,12 @@ export function codexExecInvocation(projectRoot: string, codexBin = resolveCodex
   return { command: codexBin, args, display: [codexBin, ...args.map((arg) => JSON.stringify(arg))].join(" ") };
 }
 
-export function executeCodexPromptSync(run: PreparedRun, prompt: string, command = run.codexCommand): CodexExecutionResult {
-  const result = spawnSync(command.command, command.args, {
-    cwd: run.projectRoot,
-    encoding: "utf8",
-    input: prompt,
-    shell: false
-  });
-  return {
-    status: result.status,
-    signal: result.signal,
-    stdout: result.stdout ?? "",
-    stderr: result.stderr ?? "",
-    error: result.error
-  };
+export async function executeCodexPromptForRun(run: PreparedRun, prompt: string, command = run.codexCommand): Promise<CodexExecutionResult> {
+  return await executeCodexCommand(command, prompt, { cwd: run.projectRoot });
 }
 
-export function executeCodexRun(run: PreparedRun): CodexExecutionResult {
-  return executeCodexPromptSync(run, run.prompt);
+export async function executeCodexRun(run: PreparedRun): Promise<CodexExecutionResult> {
+  return await executeCodexPromptForRun(run, run.prompt);
 }
 
 function safeArtifact(projectRoot: string, artifact: string): { full: string; display: string } {
@@ -212,10 +201,10 @@ export function parseReviewJson(raw: string): ReviewResult {
   return { blockers: parsed.blockers, warnings: parsed.warnings, summary: parsed.summary, needsFix: parsed.needsFix };
 }
 
-function runReviewPass(run: PreparedRun, previousSummary = ""): ReviewPassResult | undefined {
+async function runReviewPass(run: PreparedRun, previousSummary = ""): Promise<ReviewPassResult | undefined> {
   if (!run.reviewPrompt) return undefined;
   const prompt = `${run.reviewPrompt}\n\n# Implementation and verification output\n\n${previousSummary}\n`;
-  const execution = executeCodexPromptSync(run, prompt, run.reviewCodexCommand ?? run.codexCommand);
+  const execution = await executeCodexPromptForRun(run, prompt, run.reviewCodexCommand ?? run.codexCommand);
   const raw = execution.stdout.trim() || execution.stderr.trim();
   if (executionFailed(execution)) return { execution, raw, malformed: execution.error?.message ?? `review exited with status ${execution.status}` };
   try {
@@ -269,7 +258,7 @@ function blockedAfter(implementation: CodexExecutionResult, verification?: Verif
 
 export async function executeRunLifecycle(run: PreparedRun): Promise<RunLifecycleResult> {
   const output: string[] = [];
-  const implementation = executeCodexRun(run);
+  const implementation = await executeCodexRun(run);
   output.push(...formatCodex("implementation", implementation));
 
   let verification: VerificationResult | undefined;
@@ -278,7 +267,7 @@ export async function executeRunLifecycle(run: PreparedRun): Promise<RunLifecycl
     verification = await runVerificationIfConfigured(run);
     if (verification) output.push(...formatVerification(verification));
     if (!verification || !verificationFailed(verification)) {
-      review = runReviewPass(run, output.join("\n\n"));
+      review = await runReviewPass(run, output.join("\n\n"));
       output.push(...formatReview(review));
     }
   }
@@ -287,7 +276,7 @@ export async function executeRunLifecycle(run: PreparedRun): Promise<RunLifecycl
   let blocked = blockedAfter(implementation, verification, review);
   while (blocked && run.fixPrompt && fixPasses.length < run.maxFixPasses) {
     const pass = fixPasses.length + 1;
-    const fixExecution = executeCodexPromptSync(run, `${run.fixPrompt}\n\n# Previous run summary\n\n${output.join("\n\n")}\n`);
+    const fixExecution = await executeCodexPromptForRun(run, `${run.fixPrompt}\n\n# Previous run summary\n\n${output.join("\n\n")}\n`);
     output.push(...formatCodex(`fix pass ${pass}`, fixExecution));
     let fixVerification: VerificationResult | undefined;
     let fixReview: ReviewPassResult | undefined;
@@ -295,7 +284,7 @@ export async function executeRunLifecycle(run: PreparedRun): Promise<RunLifecycl
       fixVerification = await runVerificationIfConfigured(run);
       if (fixVerification) output.push(...formatVerification(fixVerification));
       if (!fixVerification || !verificationFailed(fixVerification)) {
-        fixReview = runReviewPass(run, output.join("\n\n"));
+        fixReview = await runReviewPass(run, output.join("\n\n"));
         output.push(...formatReview(fixReview));
       }
     }
@@ -340,7 +329,7 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
     role: role.id,
     objective: task,
     approvedGlobs: approvalScopes,
-    approvedFiles: artifactDisplays.length ? artifactDisplays : undefined,
+    approvedFiles: options.approvedFiles ?? (artifactDisplays.length ? artifactDisplays : undefined),
     projectStage: studio.mode,
     studioMode: studio.studioMode
   });
@@ -447,7 +436,7 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role.id}`);
   const promptPath = path.join(runDir, "prompt.md");
   const metadataPath = path.join(runDir, "metadata.json");
-  if (!options.printPrompt && !options.dryRun) {
+  if (!options.printPrompt && !options.dryRun && !options.noWrite) {
     mkdirSync(runDir, { recursive: true });
     writeFileSync(promptPath, prompt);
     writeFileSync(
@@ -515,7 +504,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
     role,
     objective: task,
     approvedGlobs: approvalScopes,
-    approvedFiles: artifactDisplays.length ? artifactDisplays : undefined,
+    approvedFiles: options.approvedFiles ?? (artifactDisplays.length ? artifactDisplays : undefined),
     projectStage: studio.mode,
     studioMode: studio.studioMode
   });
@@ -616,7 +605,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role}`);
   const promptPath = path.join(runDir, "prompt.md");
   const metadataPath = path.join(runDir, "metadata.json");
-  if (!options.printPrompt && !options.dryRun) {
+  if (!options.printPrompt && !options.dryRun && !options.noWrite) {
     mkdirSync(runDir, { recursive: true });
     writeFileSync(promptPath, prompt);
     writeFileSync(

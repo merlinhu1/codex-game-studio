@@ -10,7 +10,7 @@ last_reviewed: 2026-06-25
 
 Runtime and task execution connects prepared Codex Game Studio prompts to the Codex CLI.
 
-It also preserves explicit task state and runs bounded verification, review, and fix loops without hidden orchestration.
+It also preserves explicit task state and runs bounded verification, review, and fix loops. The product boundary now allows local, file-backed task orchestration when task state, locks, approvals, selected context, run metadata, and failures stay reviewable.
 
 ## Scope
 
@@ -25,6 +25,8 @@ It does not own role prompt content, project scaffolding, or public CLI help wor
 - A user invokes `run <role> ... --project <path>` to render or execute a role prompt.
 - A user creates a file-backed task through `task create`.
 - A user runs a file-backed task through `task run`.
+- A user orchestrates ready file-backed tasks through `task orchestrate`.
+- A user creates explicit task graphs through `workflow create-tasks <workflow-id>`.
 - A run includes structured verification, review, or bounded fix-pass options.
 
 ## Inputs
@@ -35,6 +37,8 @@ It does not own role prompt content, project scaffolding, or public CLI help wor
 - A studio role ID or task ID.
 - A non-empty task or objective.
 - Optional included artifacts.
+- Optional declared write files for task approval and orchestration locks.
+- Optional task dependencies, workflow IDs, group IDs, and priority.
 - Optional verification command and arguments.
 - Optional review flag, fix flag, and max fix-pass count.
 
@@ -44,7 +48,7 @@ Runtime execution prepares bounded Codex prompts before side effects.
 
 It evaluates studio write policy before mutation.
 
-It records visible run and task state for non-inspection paths. It reports verification, review, and fix outcomes without hidden orchestration.
+It records visible run and task state for non-inspection paths. It reports verification, review, and fix outcomes without hidden orchestration; future orchestration work must keep those outcomes explicit in `.codex/**` state.
 
 ## Execution Model
 
@@ -100,6 +104,11 @@ It records visible run and task state for non-inspection paths. It reports verif
 - Implementation and fix phases classify mutating eligibility.
 - Allowed mutating policies map to `danger-full-access` unless constrained sandbox is explicitly requested.
 - Task runs mutate task status only for non-dry execution.
+- Task orchestration preflights selected tasks without writing run, lock, or task state.
+- Non-dry task orchestration records an orchestration run under `.codex/runs/<run-id>/`, writes per-task prompt/output metadata under `tasks/<task-id>/`, and uses `.codex/locks/` for transient write locks.
+- Bounded parallel orchestration caps `--max-concurrency` at 3.
+- Mutating orchestrated tasks without declared `writeFiles` use a conservative project-wide write lock.
+- `files` are read/context inputs; `writeFiles` are mutation approval and lock inputs.
 
 ## Steps
 
@@ -122,9 +131,11 @@ It records visible run and task state for non-inspection paths. It reports verif
 ## State, Retry, And Failure Behavior
 
 - Task stores live at `.codex/tasks.json`.
-- Task stores use schema version 1 and unique `task-###` IDs.
+- Task stores use schema version 2 and unique `task-###` IDs; schema version 1 stores are normalized on read and rewritten as version 2 when saved.
 - `task create` requires a valid studio project before writing task state.
-- Task statuses are `ready`, `running`, `blocked`, and `done`.
+- Task statuses are `ready`, `running`, `blocked`, `done`, `cancelled`, and `skipped`.
+- Task dependency records require dependent tasks to reach `done`.
+- Orchestration serializes task-store writes while bounded tasks execute.
 - Verification commands use bounded stdout and stderr capture.
 - Verification commands use a default timeout.
 - Timed-out verification receives SIGTERM, then SIGKILL after the configured grace period.
@@ -140,6 +151,8 @@ It records visible run and task state for non-inspection paths. It reports verif
 - Print-prompt output is the deterministic prompt body.
 - Non-dry run output reports implementation, verification, review, fix-pass, and final-status summaries.
 - Task creation prints the new task ID.
+- Task orchestration dry-runs print planned tasks, dependencies, locks, selected context, and Codex commands.
+- Non-dry orchestration output reports per-task status and final orchestration status.
 
 ## Product Truth Links
 
@@ -165,6 +178,9 @@ It records visible run and task state for non-inspection paths. It reports verif
 - Decision (2026-06-17): Route custom role runs through the same write-policy, sandbox, context, cache, and template contracts as built-in roles.
 - Decision (2026-06-17): Do not introduce a separate plugin runtime for custom roles.
 - Decision (2026-06-17): Honor review/fix flags for custom role runs with real lifecycle prompts.
+- Decision (2026-06-25): Move explicit local task orchestration into the product boundary while keeping hosted orchestration, background loops, hidden planners, and unbounded parallelism out of scope.
+- Decision (2026-06-25): Implement orchestration as a foreground `task orchestrate` command with side-effect-free preflight, schema-version-2 task state, transient `.codex/locks/`, and bounded concurrency capped at 3.
+- Decision (2026-06-25): Bind task approval and orchestration locks to declared `writeFiles`; keep `files` as read/context inputs.
 - Decision (2026-06-17): Use a read-only QA review prompt and a bounded custom-role fix prompt.
 
 ## Rationale
@@ -175,7 +191,8 @@ Non-dry runs use visible cache paths and verification output. Read-only review p
 
 ## Non-Goals
 
-- This workflow does not implement hidden parallel execution.
+- This workflow implements explicit bounded local task orchestration; it does not implement hidden parallel execution.
+- This workflow does not implement hosted orchestration, background autonomous loops, or unbounded parallelism.
 - This workflow does not implement telemetry.
 - This workflow does not implement ownership enforcement.
 - This workflow does not implement a planner or next queue.
@@ -197,10 +214,17 @@ Non-dry runs use visible cache paths and verification output. Read-only review p
 - ../../../../src/context-manifest.ts
 - ../../../../src/prompt-context.ts
 - ../../../../src/tasks.ts
+- ../../../../src/orchestrator.ts
+- ../../../../src/orchestrator-locks.ts
+- ../../../../src/workflow-recipes.ts
+- ../../../../src/ccgs-adaptation.ts
 - ../../../../src/codex-runtime.ts
 - ../../../../src/verification.ts
 - ../../../../tests/runner.test.ts
 - ../../../../tests/studio-policy.test.ts
 - ../../../../tests/tasks.test.ts
+- ../../../../tests/orchestrator.test.ts
+- ../../../../tests/workflow-recipes.test.ts
+- ../../../../tests/ccgs-adaptation.test.ts
 - ../../../../tests/verification.test.ts
 - ../../../../tests/codex-runtime.test.ts

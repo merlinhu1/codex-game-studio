@@ -88,7 +88,8 @@ This doc was created from the editable engineering-behavior template at docs/tru
 - Every built-in template records description and role/workflow use hints.
 - The project config template must parse as JSON.
 - Workflow shortcuts render prompts only.
-- Workflow shortcuts do not imply hidden planner, telemetry, ownership, or parallel orchestration behavior.
+- `workflow create-tasks` is a separate explicit recipe path that writes file-backed tasks for supported workflows without launching Codex.
+- Workflow shortcuts do not imply hidden planner, telemetry, ownership, hosted orchestration, background loops, or unbounded parallel behavior. Explicit local task orchestration is provided only through reviewable `.codex/**` task, lock, and run state.
 - Custom IDs must use the `custom-*` prefix.
 - Custom file references must be project-safe relative paths.
 - Custom entries must not replace built-in role, workflow, or template IDs.
@@ -139,7 +140,8 @@ This doc was created from the editable engineering-behavior template at docs/tru
 
 - Decision (2026-05-28): Use Codex-native hyphenated role IDs as the user- and project-facing role contract.
 - Decision (2026-05-28): Keep workflow shortcuts render-only for this pass.
-- Decision (2026-05-28): Keep future planner, next, telemetry, ownership enforcement, and parallel orchestration hidden.
+- Decision (2026-05-28): Keep future planner, next, telemetry, ownership enforcement, hosted orchestration, background loops, and unbounded parallelism hidden.
+- Decision (2026-06-25): Allow explicit local task orchestration as a product-boundary feature area when implemented through bounded selected context, file-backed task state, run metadata, locks, approvals, validation, and docs.
 - Decision (2026-06-13): Workflow prompts use the same context-contract renderer as role-run prompts.
 - Decision (2026-06-13): Workflow prompts include only selected workflow context.
 - Decision (2026-06-14): Add one specialist role ID per supported engine.

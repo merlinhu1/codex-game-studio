@@ -173,7 +173,7 @@ flowchart TD
 
 ## Rationale
 
-Separating inspection, implementation, verification, review, and fix branches makes the Codex lifecycle auditable without inventing hidden planner, telemetry, ownership enforcement, or parallel orchestration behavior.
+Separating inspection, implementation, verification, review, and fix branches makes the Codex lifecycle auditable without inventing hidden planner, telemetry, ownership enforcement, hosted/background orchestration, or unbounded parallel behavior.
 
 ## Truth Sources
 

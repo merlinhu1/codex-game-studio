@@ -35,7 +35,7 @@ export type BehavioralEvaluationResult = {
   presentForbiddenTemplateIds: TemplateId[];
 };
 
-const defaultForbiddenDrift = ["CODEX.md", "telemetry", "parallel orchestration", "hidden memory", "hosted service", "planner/next"];
+const defaultForbiddenDrift = ["CODEX.md", "telemetry", "hidden memory", "hosted service", "hosted orchestration", "background loop", "unbounded parallel", "planner/next"];
 
 function withDefaultForbidden(extra: string[] = []): string[] {
   return [...new Set([...defaultForbiddenDrift, ...extra])];

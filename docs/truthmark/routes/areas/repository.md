@@ -132,11 +132,18 @@ Code surface:
 - src/context-manifest.ts
 - src/prompt-context.ts
 - src/tasks.ts
+- src/orchestrator.ts
+- src/orchestrator-locks.ts
+- src/workflow-recipes.ts
+- src/ccgs-adaptation.ts
 - src/codex-runtime.ts
 - src/verification.ts
 - tests/runner.test.ts
 - tests/studio-policy.test.ts
 - tests/tasks.test.ts
+- tests/orchestrator.test.ts
+- tests/workflow-recipes.test.ts
+- tests/ccgs-adaptation.test.ts
 - tests/verification.test.ts
 - tests/codex-runtime.test.ts
 

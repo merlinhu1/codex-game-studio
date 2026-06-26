@@ -128,7 +128,7 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 - Node support requires a package engine floor that includes Node >=24.
 - Packaged files must include `dist/`, `engine_configs/`, `engine_reference/`, and `templates/`.
 - Future-only command surfaces stay hidden until implemented intentionally.
-- Future-only examples include `next`, `telemetry`, `parallel`, and ownership enforcement.
+- Future-only examples include `next`, `telemetry`, hosted/background orchestration, unbounded parallelism, and ownership enforcement.
 
 ## Versioning And Migration
 
@@ -158,7 +158,8 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 - Decision (2026-06-14): Validate engine reference packs by registered file presence and seed-review metadata shape.
 - Decision (2026-06-14): Validate active-engine materialized references without judging prose quality.
 - Decision (2026-06-17): Expose the expanded workflow catalog as render-only CLI shortcuts.
-- Decision (2026-06-17): Keep future planner, next, telemetry, parallel orchestration, and ownership enforcement hidden.
+- Decision (2026-06-17): Keep future planner, next, telemetry, hosted/background orchestration, unbounded parallelism, and ownership enforcement hidden.
+- Decision (2026-06-25): Treat explicit local task orchestration as in-boundary once it has CLI behavior, validation, tests, and truth docs; keep hosted/background orchestration and unbounded parallelism hidden.
 - Decision (2026-06-17): Add local deterministic behavioral-evaluation subchecks.
 - Decision (2026-06-17): Do not use hosted evaluators, telemetry, hidden memory, or LLM judges for those checks.
 - Decision (2026-06-17): Support project-local customization as an extend-only `custom-*` overlay.
