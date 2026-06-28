@@ -81,7 +81,7 @@ It also covers reads, writes, and mutations. It does not own approval CLI syntax
 
 ## Product Truth Links
 
-- docs/truthmark/product/open-game-studio-cli.md
+- docs/truthmark/product/codex-game-studio-cli.md
 
 ## Engineering Decisions
 

@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+set -eu
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+if [ ! -f "$SCRIPT_DIR/dist/cli.js" ]; then
+  echo "Codex Game Studio needs a built checkout. Run: npm install && npm run build" >&2
+  exit 1
+fi
+exec node "$SCRIPT_DIR/dist/cli.js" "$@"

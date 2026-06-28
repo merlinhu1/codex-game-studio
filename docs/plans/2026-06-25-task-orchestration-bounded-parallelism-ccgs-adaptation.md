@@ -2,9 +2,9 @@
 
 > **For Hermes:** Use subagent-driven-development skill to implement this plan task-by-task.
 
-**Goal:** Add explicit local task orchestration with bounded parallel execution, and adapt the useful Claude Code Game Studios (CCGS) role/skill/workflow surface into Open Game Studio without importing Claude-specific machinery or unbounded orchestration.
+**Goal:** Add explicit local task orchestration with bounded parallel execution, and adapt the useful Claude Code Game Studios (CCGS) role/skill/workflow surface into Codex Game Studio without importing Claude-specific machinery or unbounded orchestration.
 
-**Architecture:** Keep Open Game Studio local-first and Codex-native. Extend the existing `.codex/tasks.json`, `.codex/runs/**`, role packages, workflow registry, template registry, approvals, and validation systems. Orchestration is a foreground CLI command that plans, locks, executes, verifies, reviews, and records bounded task runs; it is not a daemon, hosted scheduler, hidden planner, or generic workflow DAG engine.
+**Architecture:** Keep Codex Game Studio local-first and Codex-native. Extend the existing `.codex/tasks.json`, `.codex/runs/**`, role packages, workflow registry, template registry, approvals, and validation systems. Orchestration is a foreground CLI command that plans, locks, executes, verifies, reviews, and records bounded task runs; it is not a daemon, hosted scheduler, hidden planner, or generic workflow DAG engine.
 
 **Tech Stack:** TypeScript ESM on Node 24, Commander CLI, Vitest, existing Codex runtime, existing project validation, Truthmark-backed docs.
 
@@ -14,7 +14,7 @@
 
 ### 1.1 In scope
 
-- `opengamestudio task orchestrate --project <path>` as the primary orchestration entrypoint.
+- `codex-game-studio task orchestrate --project <path>` as the primary orchestration entrypoint.
 - Bounded task DAG execution using explicit task dependencies.
 - Bounded parallelism with an explicit `--max-concurrency` flag and a hard product cap.
 - Local reviewable state in `.codex/tasks.json`, `.codex/locks/**`, and `.codex/runs/<run-id>/**`.
@@ -37,7 +37,7 @@
 3. **Parallel mutating tasks require declared write sets.** A task without declared `writeFiles` uses a conservative project-wide write lock when file edits are allowed.
 4. **No separate scheduler process.** Orchestration runs in the current foreground CLI process and exits when the bounded run completes.
 5. **No hidden task generation.** CCGS workflow adaptation may create task graphs only through explicit commands that show the planned tasks before writing or executing them.
-6. **CCGS adaptation is curated, not mirrored.** Use CCGS as source material, but translate into existing Codex-native IDs, bounded context selection, and Open Game Studio's role/workflow/template contracts.
+6. **CCGS adaptation is curated, not mirrored.** Use CCGS as source material, but translate into existing Codex-native IDs, bounded context selection, and Codex Game Studio's role/workflow/template contracts.
 
 ### 1.4 Review follow-up constraints
 
@@ -135,7 +135,7 @@ export type TaskStore = {
 Extend `task create`:
 
 ```bash
-opengamestudio task create --project projects/demo \
+codex-game-studio task create --project projects/demo \
   --role gameplay-programmer \
   --file documentation/design/gdd.md \
   --write-file source/project-demo/player.gd \
@@ -351,7 +351,7 @@ Testing requirement:
 ### 7.1 New command
 
 ```bash
-opengamestudio task orchestrate --project <path> [task-id...]
+codex-game-studio task orchestrate --project <path> [task-id...]
 ```
 
 Options:
@@ -371,10 +371,10 @@ Options:
 Examples:
 
 ```bash
-opengamestudio task orchestrate --project projects/demo --dry-run
-opengamestudio task orchestrate --project projects/demo --max-concurrency 2 --review --fix
-opengamestudio task orchestrate --project projects/demo --workflow vertical-slice --max-concurrency 2
-opengamestudio task orchestrate --project projects/demo task-001 task-002 task-003 --dry-run
+codex-game-studio task orchestrate --project projects/demo --dry-run
+codex-game-studio task orchestrate --project projects/demo --max-concurrency 2 --review --fix
+codex-game-studio task orchestrate --project projects/demo --workflow vertical-slice --max-concurrency 2
+codex-game-studio task orchestrate --project projects/demo task-001 task-002 task-003 --dry-run
 ```
 
 ### 7.2 Help surface guardrails
@@ -409,8 +409,8 @@ export type WorkflowTaskRecipe = {
 Add CLI:
 
 ```bash
-opengamestudio workflow create-tasks <workflow-id> --project <path> --dry-run
-opengamestudio workflow create-tasks <workflow-id> --project <path>
+codex-game-studio workflow create-tasks <workflow-id> --project <path> --dry-run
+codex-game-studio workflow create-tasks <workflow-id> --project <path>
 ```
 
 Rules:
@@ -458,7 +458,7 @@ Reference source inspected for this design:
 - `.claude/hooks`: Claude hook runtime files
 - `.claude/rules`: Claude-specific rule files
 
-Important translation principle: CCGS is a rich reference library, not an implementation contract. Open Game Studio adapts outcomes into local Codex-native primitives.
+Important translation principle: CCGS is a rich reference library, not an implementation contract. Codex Game Studio adapts outcomes into local Codex-native primitives.
 
 ### 9.2 Role adaptation policy
 
@@ -466,14 +466,14 @@ Role decisions use four categories:
 
 | Decision | Meaning |
 |---|---|
-| `built-in-existing` | Already represented by an Open Game Studio role package. Improve prompt depth only if tests show a gap. |
-| `built-in-add` | Add a new canonical hyphenated Open Game Studio role. |
+| `built-in-existing` | Already represented by an Codex Game Studio role package. Improve prompt depth only if tests show a gap. |
+| `built-in-add` | Add a new canonical hyphenated Codex Game Studio role. |
 | `specialty-context` | Do not add a role; adapt as engine/module/plugin reference context selected by task keywords. |
 | `custom-pack-example` | Keep as project-local `custom-*` example or docs, not built-in product surface. |
 
 ### 9.3 CCGS role mapping
 
-| CCGS role | Open Game Studio target | Decision |
+| CCGS role | Codex Game Studio target | Decision |
 |---|---|---|
 | `producer` | `producer` | built-in-existing |
 | `creative-director` | `creative-director` | built-in-existing |
@@ -525,9 +525,9 @@ Do not add every engine sub-specialist as a first-class role. Use active-engine 
 
 ### 9.4 CCGS skill adaptation policy
 
-Do not generate `.claude/skills` or implement a Claude skill runtime. Convert CCGS skills into one of these Open Game Studio surfaces:
+Do not generate `.claude/skills` or implement a Claude skill runtime. Convert CCGS skills into one of these Codex Game Studio surfaces:
 
-| CCGS skill kind | Open Game Studio surface |
+| CCGS skill kind | Codex Game Studio surface |
 |---|---|
 | Planning or review skill | built-in workflow prompt or workflow task recipe |
 | Structured output document | package template |
@@ -811,7 +811,7 @@ Defer or keep out of product:
 
 ### Task 11: Add CLI command
 
-**Objective:** Expose orchestration through `opengamestudio task orchestrate`.
+**Objective:** Expose orchestration through `codex-game-studio task orchestrate`.
 
 **Files:**
 

@@ -6,12 +6,12 @@ last_reviewed: 2026-06-25
 
 # Repository Areas
 
-## Open Game Studio Product Capability
+## Codex Game Studio Product Capability
 
 Truth documents:
 ```yaml
 truth_documents:
-  - path: docs/truthmark/product/open-game-studio-cli.md
+  - path: docs/truthmark/product/codex-game-studio-cli.md
     lane: product
     kind: product-capability
     realized_by:
@@ -40,7 +40,7 @@ Code surface:
 - tests/validation.test.ts
 
 Update truth when:
-- Open Game Studio's mission, user-visible CLI/package capability, Codex-native product boundary, generated-project contract, product non-goals, or acceptance criteria change
+- Codex Game Studio's mission, user-visible CLI/package capability, Codex-native product boundary, generated-project contract, product non-goals, or acceptance criteria change
 - user-facing behavior crosses from optional/local repository workflow support into hosted orchestration, hidden memory, CI/release governance, or non-Codex runtime replacement
 
 ## Project Scaffolding
@@ -52,7 +52,7 @@ truth_documents:
     lane: engineering
     kind: engineering-behavior
     realizes:
-      - docs/truthmark/product/open-game-studio-cli.md
+      - docs/truthmark/product/codex-game-studio-cli.md
 ```
 
 Code surface:
@@ -85,7 +85,7 @@ truth_documents:
     lane: engineering
     kind: engineering-behavior
     realizes:
-      - docs/truthmark/product/open-game-studio-cli.md
+      - docs/truthmark/product/codex-game-studio-cli.md
 ```
 
 Code surface:
@@ -121,7 +121,7 @@ truth_documents:
     lane: engineering
     kind: engineering-workflow
     realizes:
-      - docs/truthmark/product/open-game-studio-cli.md
+      - docs/truthmark/product/codex-game-studio-cli.md
 ```
 
 Code surface:
@@ -160,7 +160,7 @@ truth_documents:
     lane: engineering
     kind: engineering-behavior
     realizes:
-      - docs/truthmark/product/open-game-studio-cli.md
+      - docs/truthmark/product/codex-game-studio-cli.md
 ```
 
 Code surface:
@@ -179,7 +179,7 @@ truth_documents:
     lane: engineering
     kind: engineering-contract
     realizes:
-      - docs/truthmark/product/open-game-studio-cli.md
+      - docs/truthmark/product/codex-game-studio-cli.md
 ```
 
 Code surface:

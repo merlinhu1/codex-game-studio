@@ -13,4 +13,4 @@ Document engine setup work for the selected game engine.
 
 # Validation
 
-Run `npm run validate -- --project <project>` and verify engine project files exist.
+Run `./codex-game-studio validate --project <project>` and verify engine project files exist.

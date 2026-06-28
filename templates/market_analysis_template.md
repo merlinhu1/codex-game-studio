@@ -13,4 +13,4 @@ Analyze market positioning using configured competitors as seeds.
 
 # Validation
 
-Run `npm run validate -- --project <project>` and preserve competitor names in project config.
+Run `./codex-game-studio validate --project <project>` and preserve competitor names in project config.

@@ -117,7 +117,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     id: "project_config",
     category: "config",
     path: "templates/project_config_template.json",
-    description: "Canonical project configuration JSON seed used to initialize Open Game Studio projects.",
+    description: "Canonical project configuration JSON seed used to initialize Codex Game Studio projects.",
     roles: ["producer", "creative-director"],
     workflows: ["onboard", "prototype"],
     tags: ["config", "setup"],

@@ -86,7 +86,7 @@ function parseCustomizationFile(projectRoot: string): { ok: true; value: Project
 
 export function readProjectCustomization(projectRoot: string): ProjectCustomization {
   const parsed = parseCustomizationFile(projectRoot);
-  if (!parsed.ok) throw new Error(`Invalid Open Game Studio customization config: ${parsed.error}`);
+  if (!parsed.ok) throw new Error(`Invalid Codex Game Studio customization config: ${parsed.error}`);
   return parsed.value;
 }
 

@@ -13,4 +13,4 @@ Plan analytics instrumentation for the game.
 
 # Validation
 
-Run `npm run validate -- --project <project>` and verify analytics docs are consistent with project goals.
+Run `./codex-game-studio validate --project <project>` and verify analytics docs are consistent with project goals.

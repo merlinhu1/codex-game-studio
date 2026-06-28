@@ -8,7 +8,7 @@ last_reviewed: 2026-06-26
 
 ## Purpose
 
-Open Game Studio is a Codex-native workflow layer for game-development projects.
+Codex Game Studio is a Codex-native workflow layer for game-development projects.
 
 The repository packages a TypeScript CLI.
 
@@ -26,7 +26,7 @@ They are listed in `docs/truthmark/routes/areas/repository.md`.
 
 ## Current Implementation Behavior
 
-- The package exposes the `opengamestudio` CLI from `dist/cli.js`.
+- The package exposes the `codex-game-studio` CLI from the built `dist/cli.js` entrypoint, and the source checkout exposes `./codex-game-studio` as a thin wrapper over built TypeScript output.
 - Initialization commands create deterministic game project structure under `projects/<slug>`.
 - Generated projects contain `.codex/studio.json`, role prompt files, workflow markdown, starter docs, engine markers, and `AGENTS.md`.
 - Role run commands render deterministic Codex prompts.
@@ -47,7 +47,7 @@ They are listed in `docs/truthmark/routes/areas/repository.md`.
 - Dry-run and print-prompt modes are inspection paths.
 - Non-dry runs write prompt/run metadata before executing Codex.
 - Truthmark is an injected repository-truth workflow/tooling layer.
-- Truthmark is not an Open Game Studio runtime feature unless product code implements Truthmark-facing behavior.
+- Truthmark is not an Codex Game Studio runtime feature unless product code implements Truthmark-facing behavior.
 
 ## Flows And States
 

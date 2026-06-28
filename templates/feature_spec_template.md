@@ -13,4 +13,4 @@ Define a focused feature specification.
 
 # Validation
 
-Run `npm run validate -- --project <project>` and include feature-specific checks.
+Run `./codex-game-studio validate --project <project>` and include feature-specific checks.

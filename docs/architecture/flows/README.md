@@ -12,7 +12,7 @@ source_of_truth:
 
 ## Purpose
 
-These Architecture Flow Guides document Open Game Studio's important runtime scenarios, branching logic, failure paths, and code/truth-doc traceability. They are Markdown docs-as-code runtime views: readable in GitHub/VS Code, reviewable in pull requests, and detailed enough to guide humans and agents through the system.
+These Architecture Flow Guides document Codex Game Studio's important runtime scenarios, branching logic, failure paths, and code/truth-doc traceability. They are Markdown docs-as-code runtime views: readable in GitHub/VS Code, reviewable in pull requests, and detailed enough to guide humans and agents through the system.
 
 ## Professional Framing
 

@@ -85,15 +85,15 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 
 ## Contracts
 
-- `open-gamestudio init --name <name> --engine <engine> --mode <mode> --non-interactive [--studio-mode <mode>]` creates a project and prints the created path.
-- `open-gamestudio new` is an alias for initialization.
-- `open-gamestudio status --project <path>` reads `.codex/studio.json`.
-- `open-gamestudio resume --project <path>` reads `.codex/studio.json`.
-- `open-gamestudio freeze --project <path>` operates on `.codex/studio.json` and changes status.
+- `codex-game-studio init --name <name> --engine <engine> --mode <mode> --non-interactive [--studio-mode <mode>]` creates a project and prints the created path.
+- `codex-game-studio new` is an alias for initialization.
+- `codex-game-studio status --project <path>` reads `.codex/studio.json`.
+- `codex-game-studio resume --project <path>` reads `.codex/studio.json`.
+- `codex-game-studio freeze --project <path>` operates on `.codex/studio.json` and changes status.
 
 ## Product Truth Links
 
-- docs/truthmark/product/open-game-studio-cli.md
+- docs/truthmark/product/codex-game-studio-cli.md
 
 ## Engineering Decisions
 
