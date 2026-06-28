@@ -12,7 +12,7 @@ import {
   revokeApprovalRecord
 } from "./approvals.js";
 import { formatTemplateShow, listTemplates, templateRegistry, type TemplateId } from "./templates.js";
-import { freezeProject, initProject, readStudioProject, resumeProject, statusProject } from "./projects.js";
+import { freezeProject, initProject, readStudioProject, refreshContextManifestProject, resumeProject, statusProject } from "./projects.js";
 import { runValidation } from "./validation.js";
 import { executeRunLifecycle, prepareRun } from "./runner.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
@@ -33,7 +33,7 @@ function collectScope(value: string, previous: string[] = []): string[] {
   return [...previous, value];
 }
 
-program.name("opengamestudio").description("Codex Game Studio: a Codex-native game-development workflow layer").version("0.1.0");
+program.name("codex-game-studio").description("Codex Game Studio: a Codex-native game-development workflow layer").version("0.1.0");
 
 const sha256Pattern = /^[a-f0-9]{64}$/i;
 const customRoleIdPattern = /^custom-[a-z0-9][a-z0-9-]*$/;
@@ -109,6 +109,12 @@ program
   .description("Print a read-only continuation summary")
   .requiredOption("--project <path>", "project path")
   .action((opts) => console.log(resumeProject(opts.project)));
+
+program
+  .command("refresh-context")
+  .description("Regenerate the project context manifest and freshness metadata")
+  .requiredOption("--project <path>", "project path")
+  .action((opts) => console.log(refreshContextManifestProject(opts.project)));
 
 program
   .command("freeze")

@@ -12,15 +12,15 @@ source_of_truth:
   - ../truthmark/engineering/contracts/cli-and-validation.md
 ---
 
-# Open Game Studio Product Boundary
+# Codex Game Studio Product Boundary
 
-**Audience:** humans and agents designing, planning, or changing Open Game Studio.
+**Audience:** humans and agents designing, planning, or changing Codex Game Studio.
 
 **Use:** read this before creating or revising product designs, implementation plans, OpenSpec changes, role/workflow expansions, approval policy, generated project surfaces, or runtime execution behavior.
 
 ## Mission
 
-Open Game Studio helps developers use Codex as a practical game-development studio inside a local repository.
+Codex Game Studio helps developers use Codex as a practical game-development studio inside a local repository.
 
 The product should make it easier to start, plan, build, review, and ship games by providing a package-friendly TypeScript CLI that creates project scaffolds, renders bounded Codex prompts, manages game-studio roles and workflows, records auditable project state, and validates the generated surfaces.
 
@@ -28,7 +28,7 @@ The product exists to expand what a developer can do with Codex for game creatio
 
 ## Product Shape
 
-Open Game Studio is:
+Codex Game Studio is:
 
 - a local-first CLI and package for game-development repository workflows;
 - Codex-native in its primary execution path;
@@ -37,7 +37,7 @@ Open Game Studio is:
 - allowed to provide bounded task orchestration for role-scoped Codex runs when it remains local, explicit, file-backed, policy-gated, and validated;
 - explicit about when it is rendering prompts, planning tasks, orchestrating task runs, running Codex, mutating project state, or only inspecting planned behavior.
 
-Open Game Studio is not:
+Codex Game Studio is not:
 
 - a game engine or replacement for engine tooling;
 - a hosted service, daemon, IDE, or background workflow controller;
@@ -47,11 +47,11 @@ Open Game Studio is not:
 - a requirements-management system or heavyweight studio-process mandate;
 - a clone of any reference game-studio framework or workflow library.
 
-External tools, reference workflows, and comparison projects may inspire improvements, but designs must translate those ideas into Open Game Studio's local, Codex-native, package-friendly boundary.
+External tools, reference workflows, and comparison projects may inspire improvements, but designs must translate those ideas into Codex Game Studio's local, Codex-native, package-friendly boundary.
 
 ## Core Behavior Expectations
 
-1. **Codex-native by default.** Direct Codex execution through `opengamestudio run <role>` remains the primary runtime path. Inspection paths such as `--dry-run` and `--print-prompt` must stay non-mutating.
+1. **Codex-native by default.** Direct Codex execution through `codex-game-studio run <role>` remains the primary runtime path. Inspection paths such as `--dry-run` and `--print-prompt` must stay non-mutating.
 2. **Orchestration is now in scope when explicit.** The CLI may coordinate multiple role-scoped Codex task runs, including dependencies and bounded sequences, only when task state, selected context, approvals, locks, run metadata, and failure outcomes are visible in `.codex/**` or deterministic CLI output.
 3. **Local repository files stay reviewable.** Project state, prompts, tasks, approvals, templates, and validation evidence should be visible in the working tree or deterministic CLI output, not hidden in off-repo services.
 4. **Developer control comes first.** Studio depth is optional and mode-controlled. Fast prototype workflows must remain lightweight; orchestration and strict approval flows must be explicit rather than silently imposed on every project.
@@ -61,7 +61,7 @@ External tools, reference workflows, and comparison projects may inspire improve
 8. **Mutation is policy-gated and visible.** Any design that lets Codex or the CLI mutate files must specify write policy, approval/override behavior, sandbox selection, dry-run diagnostics, and where provenance is recorded.
 9. **Future-only surfaces must remain absent until built.** Planner/next, telemetry, hard output-ownership enforcement, hosted orchestration, background autonomous loops, and unbounded parallelism must not appear as user-facing behavior before they have implementation, tests, and docs.
 10. **Validation is part of the product.** New generated surfaces, package assets, CLI commands, orchestration behavior, and behavior-bearing docs need repo-native validation and tests before readiness or parity claims.
-11. **Truthmark is repository workflow tooling here, not the product.** Truthmark-backed docs may guard Open Game Studio's repository truth, but Open Game Studio should not present Truthmark workflow mechanics as game-studio product features.
+11. **Truthmark is repository workflow tooling here, not the product.** Truthmark-backed docs may guard Codex Game Studio's repository truth, but Codex Game Studio should not present Truthmark workflow mechanics as game-studio product features.
 
 ## In Scope
 
@@ -106,4 +106,4 @@ If a design or plan cannot answer these questions, it is not ready to implement.
 
 ## Maintenance Notes
 
-Update this boundary when Open Game Studio's mission, runtime model, generated-surface contract, approval/write-policy model, package boundary, or explicit non-goals change. Keep it human-facing: concise enough to read before planning, concrete enough to stop product drift.
+Update this boundary when Codex Game Studio's mission, runtime model, generated-surface contract, approval/write-policy model, package boundary, or explicit non-goals change. Keep it human-facing: concise enough to read before planning, concrete enough to stop product drift.

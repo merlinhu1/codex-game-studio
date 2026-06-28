@@ -1,4 +1,4 @@
-reviewer: Open Game Studio seed review
+reviewer: Codex Game Studio seed review
 date: 2026-06-17
 source-link: https://docs.unity3d.com/Manual/index.html
 engine: unity
@@ -22,6 +22,6 @@ Apply current engine-native defaults without turning the task into broad process
 
 ## Validation
 
-- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Prefer project-local engine commands and Codex Game Studio project validation before readiness claims.
 - Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
 - Keep this reference selected by relevance; do not load every engine reference for one task.

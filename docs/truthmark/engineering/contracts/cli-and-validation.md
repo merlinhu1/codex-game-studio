@@ -1,14 +1,14 @@
 ---
 status: active
 truth_kind: engineering-contract
-last_reviewed: 2026-06-26
+last_reviewed: 2026-06-27
 ---
 
 # CLI And Validation Contracts
 
 ## Purpose
 
-The CLI and validation contracts define the public `opengamestudio` command surface.
+The CLI and validation contracts define the public `codex-game-studio` command surface.
 
 They also define package entrypoints, hard-failing validation checks, and future-surface guardrails.
 
@@ -20,52 +20,57 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 
 ## Current Implementation Behavior
 
-- The repository exposes a package CLI named `opengamestudio`.
-- The built entrypoint is `dist/cli.js`.
+- The repository exposes a package CLI named `codex-game-studio`.
+- The source checkout exposes a root `./codex-game-studio` wrapper.
+- The wrapper executes built TypeScript output at `dist/cli.js` and tells users to run `npm install && npm run build` when it is missing.
+- The TypeScript build entrypoint remains `dist/cli.js` for contributor and package validation.
 - The CLI supports project initialization and status commands.
 - It supports template discovery and project-local customization inspection.
-- It supports role execution, file-backed tasks, approval-store management, workflow prompt rendering, workflow shortcut aliases, and validation.
+- It supports role execution, file-backed tasks, approval-store management, workflow prompt rendering, workflow shortcut aliases, context-manifest refresh, and validation.
 - Repository validation is executable through `npm run validate`.
-- `npm run validate` builds the package and runs the built CLI validation command.
+- `npm run validate` builds TypeScript output and runs the built CLI validation command.
 - Validation includes deterministic behavioral-evaluation scenarios for representative prompts.
 - Behavioral-evaluation subchecks render prompts and inspect obligations locally.
 - They do not use hosted evaluators, telemetry, hidden memory, or LLM calls.
 
 ## Contract Surface
 
-- Package name: `open-gamestudio`.
-- Package bin: `opengamestudio` points to `./dist/cli.js`.
+- Package name: `codex-game-studio`.
+- Package bin: `codex-game-studio` points to `./dist/cli.js`.
+- Package bin also keeps `opengamestudio` as a compatibility alias to the same built entrypoint.
 - Primary scripts include `build`, `typecheck`, `test`, `validate`, `init`, `manage`, and `templates`.
+- Source checkout usage requires `npm install && npm run build`, then goes through `./codex-game-studio`.
 - Public command groups include initialization and status commands.
 - Public command groups also include template discovery, role runs, file-backed tasks, approval management, generic workflow rendering, and render-only workflow shortcuts.
-- `opengamestudio templates list --project <path>` includes project-local custom templates beside built-in templates.
-- `opengamestudio templates show <template-id> --project <path>` can show project-local custom templates.
-- `opengamestudio workflow <workflow-id> --project <path>` renders built-in workflow IDs.
+- `codex-game-studio templates list --project <path>` includes project-local custom templates beside built-in templates.
+- `codex-game-studio templates show <template-id> --project <path>` can show project-local custom templates.
+- `codex-game-studio workflow <workflow-id> --project <path>` renders built-in workflow IDs.
 - The same command also renders extend-only project-local custom workflow IDs and aliases.
 - Render-only discovery shortcuts include market, analytics, start, onboard, brainstorm, and prototype.
 - Render-only design shortcuts include design-spec, feel-review, art-direction, ui-review, architecture-decision, and architecture-review.
 - Render-only production shortcuts include milestone, handoff, review, ship-check, release-checklist, and hotfix.
 - Render-only planning shortcuts include create-epics, create-stories, sprint-plan, sprint-status, story-readiness, and story-done.
 - Render-only QA and operations shortcuts include qa-plan, regression-suite, security-audit, perf-profile, and localization-plan.
-- `opengamestudio init` and `opengamestudio new` accept `--studio-mode fast-prototype|guided-studio|strict-studio`.
+- `codex-game-studio init` and `codex-game-studio new` accept `--studio-mode fast-prototype|guided-studio|strict-studio`.
 - Omitted `--studio-mode` defaults to `guided-studio`.
 - Generated `.codex/studio.json` persists the value as `studioMode`.
-- `opengamestudio approval grant --project <path> --role <role> --task <id-or-hash> --scope <glob>` appends a scoped approval record.
+- `codex-game-studio approval grant --project <path> --role <role> --task <id-or-hash> --scope <glob>` appends a scoped approval record.
 - Approval grant accepts built-in roles and syntactically valid `custom-*` role IDs.
 - Approval grant requires a safe, non-empty scope.
 - Approval grant accepts either an existing same-role task ID or a 64-character SHA-256 objective hash.
-- `opengamestudio approval list --project <path>` prints approval history.
+- `codex-game-studio approval list --project <path>` prints approval history.
 - Approval history includes revoked and expired records as visible non-authorizing records.
-- `opengamestudio approval revoke --project <path> --approval-id <id>` sets `revokedAt` on the matching record.
+- `codex-game-studio approval revoke --project <path> --approval-id <id>` sets `revokedAt` on the matching record.
 - Revocation preserves approval history.
-- `opengamestudio run <role> --project <path> --dry-run --approval-scope <glob>` prints approval mismatch diagnostics.
+- `codex-game-studio run <role> --project <path> --dry-run --approval-scope <glob>` prints approval mismatch diagnostics.
 - The dry-run approval diagnostics apply to guided and strict studio modes.
 - Dry-run approval diagnostics do not write prompt cache or run metadata.
-- `opengamestudio run <role>` and `opengamestudio task run` expose `--approved-by-user` for guided-studio local override.
+- `codex-game-studio run <role>` and `codex-game-studio task run` expose `--approved-by-user` for guided-studio local override.
 - They expose `--constrained-sandbox` for explicit `workspace-write` sandbox use.
 - Without the constrained override, allowed mutating runs use `danger-full-access`.
-- `opengamestudio task run` accepts `--approval-scope <glob>`.
-- Repository validation is exposed through `opengamestudio validate` and `npm run validate`.
+- `codex-game-studio task run` accepts `--approval-scope <glob>`.
+- Repository validation is exposed through `codex-game-studio validate` and `npm run validate`.
+- Context-manifest refresh is exposed through `codex-game-studio refresh-context --project <path>`.
 
 ## Inputs
 
@@ -86,11 +91,12 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 - It also includes approval scopes, current objective hash, match status, and authorization reasons.
 - Authorization reasons include role, objective, scope, project stage, studio mode, expiry, revocation, and stage mismatches.
 - Validation emits one line per check in `STATUS id: message (path)` shape.
+- Context refresh prints the refreshed project name and both context manifest paths.
 - Validation exits non-zero when any check fails.
 - Behavioral evaluation check IDs use `behavioral.scenario.<scenario-id>`.
 - Behavioral checks fail when prompts miss required obligations.
 - They also fail on unnegated future-only drift, prompt-size overflow, missing selected-context categories, missing required templates, or forbidden templates.
-- Package smoke validation builds and exercises the packed package bin.
+- Package smoke validation builds TypeScript output and exercises the packed package bin.
 - Package smoke validation also checks template loading behavior.
 - Package validation checks every registered engine reference asset is included in `npm pack`.
 
@@ -104,7 +110,7 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 - Approval grant rejects invalid roles, unknown task IDs, wrong-role task IDs, and malformed canonical expiry timestamps.
 - Approval revoke fails clearly for unknown approval IDs.
 - Unapproved strict-studio mutating `run <role>` and `task run` fail before Codex launch, run metadata writes, or task mutation.
-- Validation fails on missing package scripts, package bin/files, source files, Codex CLI, role packages, templates, and engine reference assets.
+- Validation fails on missing package scripts, package bin/files, source wrapper, source files, Codex CLI, role packages, templates, and engine reference assets.
 - It also fails on missing build output or broken package smoke behavior.
 - Validation fails when engine reference metadata is missing reviewer, date, source link, engine, reviewed version, tags, roles, or workflows.
 - Validation fails when future surfaces are exposed early.
@@ -126,7 +132,7 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 - The TypeScript project uses NodeNext ESM semantics.
 - Relative TypeScript imports must use emitted `.js` specifiers.
 - Node support requires a package engine floor that includes Node >=24.
-- Packaged files must include `dist/`, `engine_configs/`, `engine_reference/`, and `templates/`.
+- Packaged files must include `dist/`, `engine_configs/`, `engine_reference/`, and `templates`.
 - Future-only command surfaces stay hidden until implemented intentionally.
 - Future-only examples include `next`, `telemetry`, hosted/background orchestration, unbounded parallelism, and ownership enforcement.
 
@@ -138,7 +144,7 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 
 ## Product Truth Links
 
-- docs/truthmark/product/open-game-studio-cli.md
+- docs/truthmark/product/codex-game-studio-cli.md
 
 ## Engineering Decisions
 
@@ -191,6 +197,7 @@ Validation makes those claims executable. Prompt-surface drift and packaging dri
 - ../../routes/areas/repository.md
 - ../../../../package.json
 - ../../../../src/cli.ts
+- ../../../../src/projects.ts
 - ../../../../src/validation.ts
 - ../../../../src/customization.ts
 - ../../../../src/context-manifest.ts
@@ -198,6 +205,7 @@ Validation makes those claims executable. Prompt-surface drift and packaging dri
 - ../../../../src/generated-surfaces.ts
 - ../../../../src/behavioral-evaluation.ts
 - ../../../../tests/cli-prompt-surface.test.ts
+- ../../../../tests/project-workflow.test.ts
 - ../../../../tests/validation.test.ts
 - ../../../../tests/functionality-gap-pass.test.ts
 - ../../../../tests/customization.test.ts

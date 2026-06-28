@@ -156,7 +156,7 @@ It records visible run, task, orchestration, verification, review, and fix outco
 
 ## Product Truth Links
 
-- docs/truthmark/product/open-game-studio-cli.md
+- docs/truthmark/product/codex-game-studio-cli.md
 
 ## Engineering Decisions
 

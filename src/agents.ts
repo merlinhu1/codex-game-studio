@@ -55,7 +55,7 @@ export const projectAgentsMdRequiredSections = [
 
 export function generateProjectAgentsMd(config: ProjectConfig): string {
   const hash = guidanceConfigHash(config);
-  return `<!-- generated-by: open-gamestudio src/agents.ts schema=1.0 -->
+  return `<!-- generated-by: codex-game-studio src/agents.ts schema=1.0 -->
 <!-- source-config-sha256: ${hash} -->
 # ${config.project.name} Agents
 
@@ -74,7 +74,8 @@ ${config.project.engine} ${config.project.engine_version}
 
 ## Commands
 
-- Validate: \`npm run validate -- --project projects/${config.project.slug}\`
+- Validate: \`./codex-game-studio validate --project projects/${config.project.slug}\`
+- Refresh context manifest after editing selected project context: \`./codex-game-studio refresh-context --project projects/${config.project.slug}\`
 
 ## Coding Conventions
 
@@ -101,7 +102,7 @@ Run project validation before claiming parity or readiness.
 ## Rules
 
 Use AGENTS.md, .codex/studio.json, the current role prompt, and task-relevant context only.
-Codex is the default runtime for \`opengamestudio run <role>\`; use \`--dry-run\` or \`--print-prompt\` only for inspection.
+Codex is the default runtime for \`codex-game-studio run <role>\`; use \`--dry-run\` or \`--print-prompt\` only for inspection.
 Do not use telemetry, planner/next, hosted/background orchestration, unbounded parallelism, or ownership enforcement in this build. Explicit local task orchestration must stay reviewable in .codex state.
 `;
 }

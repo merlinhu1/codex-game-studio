@@ -1,14 +1,14 @@
 ---
 status: active
 truth_kind: product-capability
-last_reviewed: 2026-06-26
+last_reviewed: 2026-06-27
 ---
 
-# Open Game Studio Codex-Native CLI
+# Codex Game Studio CLI
 
 ## Capability Promise
 
-Open Game Studio provides a local-first TypeScript CLI for Codex-assisted game development inside a repository.
+Codex Game Studio provides a local-first TypeScript CLI for Codex-assisted game development inside a repository.
 
 The CLI must let developers scaffold projects, render bounded Codex-native prompts, run selected studio roles and workflows, and record reviewable project state.
 
@@ -24,7 +24,7 @@ The product protects lightweight prototype work by keeping studio depth optional
 
 ## Capability Scope
 
-This capability includes the user-visible Open Game Studio package and CLI.
+This capability includes the user-visible Codex Game Studio package and CLI.
 
 It covers project initialization, role/workflow prompt rendering, direct Codex execution, task state, approval/write-policy primitives, and engine reference packaging.
 
@@ -34,15 +34,19 @@ This capability excludes game-engine functionality and hosted orchestration. It 
 
 It also excludes background autonomous control, CI/release enforcement, hidden checkpoint/memory systems, and mandatory studio ceremony for small prototypes.
 
-Truthmark is repository workflow tooling for this checkout. Open Game Studio must not present Truthmark mechanics as game-studio product features.
+Truthmark is repository workflow tooling for this checkout. Codex Game Studio must not present Truthmark mechanics as game-studio product features.
 
 ## Current Product Behavior
 
-Open Game Studio exposes npm package scripts and a built CLI for initialization, management, template listing, validation, and Codex-oriented role execution.
+Codex Game Studio exposes a checked-in source checkout wrapper at `./codex-game-studio` for initialization, management, template listing, validation, context-manifest refresh, and Codex-oriented role execution.
+
+The source checkout wrapper runs built TypeScript output from `dist/cli.js` after `npm install && npm run build`.
+
+Contributor npm scripts remain available for rebuilding TypeScript output and validating package behavior.
 
 Generated projects use `AGENTS.md` and `.codex/**` surfaces instead of legacy `CODEX.md` contracts.
 
-Direct Codex execution through `opengamestudio run <role>` is the default runtime path.
+Direct Codex execution through `codex-game-studio run <role>` is the default runtime path.
 
 `--dry-run` and `--print-prompt` remain inspection-only paths.
 
@@ -78,7 +82,8 @@ Production templates are package-shipped assets selected by relevance.
 
 ## Acceptance Criteria
 
-- Developers can initialize and manage project scaffolds through the package CLI.
+- Developers can initialize and manage project scaffolds through the source checkout wrapper without npm installation.
+- Published or linked packages expose the same CLI as the `codex-game-studio` package bin.
 - Generated project files remain reviewable in the repository.
 - Role and workflow execution stays Codex-native by default.
 - Role and workflow execution does not require a hosted service, daemon, or alternate agent runtime.
@@ -92,17 +97,19 @@ Production templates are package-shipped assets selected by relevance.
 
 ## Product Decisions
 
-- 2026-06-13: Open Game Studio is a local-first Codex-native CLI/package for game-development repository workflows.
-- 2026-06-13: Open Game Studio is not a hosted studio service, daemon, general-purpose orchestrator, or game engine.
+- 2026-06-13: Codex Game Studio is a local-first Codex-native CLI/package for game-development repository workflows.
+- 2026-06-13: Codex Game Studio is not a hosted studio service, daemon, general-purpose orchestrator, or game engine.
 - 2026-06-25: Explicit local task orchestration is inside the product boundary when it remains Codex-native, file-backed, bounded by selected context, policy-gated, and validated.
 - 2026-06-26: Foreground task orchestration is exposed through `task orchestrate` with bounded concurrency, transient `.codex/locks/`, workflow task recipes, and no hosted/background/unbounded behavior.
+- 2026-06-28: The product name is Codex Game Studio and the package name is `codex-game-studio`.
+- 2026-06-28: The user-facing source checkout path is clone plus `./codex-game-studio`; npm install is contributor setup, not project-use setup.
 - 2026-06-13: Studio depth is optional and mode-controlled.
 - 2026-06-13: Lifecycle stage must remain separate from process strictness.
 - 2026-06-13: Generated project instruction contracts use `AGENTS.md` and `.codex/**`.
 - 2026-06-13: Generated project instruction contracts do not use `CODEX.md` or legacy compatibility shims.
 - 2026-06-26: Planner/next, telemetry, hard ownership enforcement, hosted/background orchestration, unbounded parallelism, and similar surfaces remain out of scope unless a later product-boundary decision, implementation, tests, and truth docs bring them in.
 - 2026-06-13: Truthmark-backed docs guard repository truth in this checkout.
-- 2026-06-13: Truthmark workflow mechanics are not Open Game Studio product features.
+- 2026-06-13: Truthmark workflow mechanics are not Codex Game Studio product features.
 - 2026-06-17: Project-local customization is an extend-only, file-backed overlay for `custom-*` roles, workflows, and templates.
 - 2026-06-17: Project-local customization must remain Codex-native, reviewable, path-safe, and non-hosted.
 

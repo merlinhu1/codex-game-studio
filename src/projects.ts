@@ -292,7 +292,14 @@ export function statusProject(project?: string, cwd = process.cwd()): string {
 export function resumeProject(project?: string, cwd = process.cwd()): string {
   const root = resolveProjectRoot(project, cwd);
   const config = readStudioProject(root);
-  return `Resume ${config.name}\nphase: ${config.phase}\nstatus: ${config.status}\nSuggested next command: npm run build && node dist/cli.js run producer --project ${path.relative(cwd, root) || "."} "Summarize current project state"`;
+  return `Resume ${config.name}\nphase: ${config.phase}\nstatus: ${config.status}\nSuggested next command: ./codex-game-studio run producer --project ${path.relative(cwd, root) || "."} "Summarize current project state"`;
+}
+
+export function refreshContextManifestProject(project?: string, cwd = process.cwd()): string {
+  const root = resolveProjectRoot(project, cwd);
+  const config = readStudioProject(root);
+  writeContextManifest(root, config);
+  return [`Refreshed context manifest for ${config.name}`, path.join(root, ".codex", "context-manifest.json"), path.join(root, ".codex", "context-manifest.meta.json")].join("\n");
 }
 
 export function freezeProject(project?: string, cwd = process.cwd()): string {

@@ -1,26 +1,26 @@
-# Open Game Studio
+# Codex Game Studio
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node.js >=24](https://img.shields.io/badge/node-%3E%3D24-339933.svg)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-NodeNext-3178c6.svg)](tsconfig.json)
 
-Open Game Studio is a Codex-native command line studio for making games with AI agents without hiding the workflow in a black box.
+Codex Game Studio is a Codex-native command line studio for making games with AI agents without hiding the workflow in a black box.
 
 Create a local game project, generate Codex-ready role prompts, hand focused work to a studio role, then validate the project artifacts before you trust them. The state lives in your repository under `.codex/`; generated games live under `projects/<slug>/`; normal execution goes through `codex exec`.
 
 ```sh
-npm run init -- --name "Signal Cartographer" --engine godot --mode prototype --non-interactive \
+./codex-game-studio init --name "Signal Cartographer" --engine godot --mode prototype --non-interactive \
   --concept "A compact puzzle game about routing trains through haunted switchyards"
 
-node dist/cli.js run producer --project projects/signal-cartographer \
+./codex-game-studio run producer --project projects/signal-cartographer \
   "Create the initial market overview."
 
-npm run validate -- --project projects/signal-cartographer
+./codex-game-studio validate --project projects/signal-cartographer
 ```
 
 ## Why developers use it
 
-Open Game Studio gives game teams a repeatable way to work with Codex across design, production, engineering, art, QA, and release tasks.
+Codex Game Studio gives game teams a repeatable way to work with Codex across design, production, engineering, art, QA, and release tasks.
 
 - Local-first project state. No hosted planner, hidden queue, or opaque database.
 - Codex-native instructions in generated `AGENTS.md` and `.codex/prompts/<role>.md` files.
@@ -49,33 +49,36 @@ A generated project contains the working contract Codex needs: project summary, 
 ## Requirements
 
 - Node.js 24 or newer.
-- npm.
 - Codex CLI available on `PATH` for normal `run <role>` execution and full validation.
 
-## Install from source
+## Use from source checkout
+
+Codex Game Studio uses the normal source-checkout path: clone the repo, install dependencies, build TypeScript, then run the local CLI wrapper. The repository does not commit generated bundled CLI artifacts.
 
 ```sh
-git clone git@github.com:merlinhu1/open-gamestudio.git
-cd open-gamestudio
+git clone git@github.com:merlinhu1/codex-game-studio.git
+cd codex-game-studio
 npm install
 npm run build
-node dist/cli.js --help
+./codex-game-studio --help
+./codex-game-studio init --name "My Game" --engine godot --mode prototype --non-interactive
 ```
 
-For package use after installing or linking the package:
+For package use after publishing, installing, or linking the package:
 
 ```sh
-npm exec opengamestudio -- --help
-npm exec opengamestudio -- templates list
+npm exec codex-game-studio -- --help
+npm exec codex-game-studio -- templates list
 ```
 
-For local development from this checkout, prefer the npm scripts. They build first and exercise the built CLI through `node dist/cli.js`:
+For contributor development on Codex Game Studio itself, use npm scripts. They install developer dependencies, rebuild TypeScript output, and run validation:
 
 ```sh
-npm run init -- --name "My Game" --engine godot --mode prototype --non-interactive
-npm run manage -- --project projects/my-game
-npm run templates -- list
-npm run validate -- --project projects/my-game
+npm install
+npm run build
+npm run typecheck
+npm test
+npm run validate
 ```
 
 ## Quick start
@@ -83,17 +86,17 @@ npm run validate -- --project projects/my-game
 ### 1. Create a project
 
 ```sh
-npm run init -- --name "My Game" --engine godot --mode prototype --non-interactive \
+./codex-game-studio init --name "My Game" --engine godot --mode prototype --non-interactive \
   --concept "A compact puzzle game about routing trains"
 ```
 
-Open Game Studio creates `projects/my-game/` with engine markers, starter docs, `.codex/studio.json`, generated role prompts, generated workflow prompts, and a project-level `AGENTS.md`.
+Codex Game Studio creates `projects/my-game/` with engine markers, starter docs, `.codex/studio.json`, generated role prompts, generated workflow prompts, and a project-level `AGENTS.md`.
 
 ### 2. Inspect the project
 
 ```sh
-npm run manage -- --project projects/my-game
-node dist/cli.js resume --project projects/my-game
+./codex-game-studio status --project projects/my-game
+./codex-game-studio resume --project projects/my-game
 ```
 
 `status` and `resume` are read-only. `freeze` is the explicit command that changes project status.
@@ -101,10 +104,10 @@ node dist/cli.js resume --project projects/my-game
 ### 3. Choose a template or workflow
 
 ```sh
-npm run templates -- list
-npm run templates -- show gdd
-node dist/cli.js market --project projects/my-game
-node dist/cli.js ship-check --project projects/my-game
+./codex-game-studio templates list
+./codex-game-studio templates show gdd
+./codex-game-studio market --project projects/my-game
+./codex-game-studio ship-check --project projects/my-game
 ```
 
 Workflow shortcuts render prompts only. They do not launch Codex.
@@ -112,18 +115,17 @@ Workflow shortcuts render prompts only. They do not launch Codex.
 ### 4. Run a studio role through Codex
 
 ```sh
-npm run build --silent
-node dist/cli.js run producer --project projects/my-game \
+./codex-game-studio run producer --project projects/my-game \
   "Create the initial market overview."
 ```
 
 Want to see exactly what Codex will receive first?
 
 ```sh
-node dist/cli.js run producer --project projects/my-game \
+./codex-game-studio run producer --project projects/my-game \
   "Create the initial market overview." --dry-run
 
-node dist/cli.js run producer --project projects/my-game \
+./codex-game-studio run producer --project projects/my-game \
   "Create the initial market overview." --print-prompt
 ```
 
@@ -132,8 +134,8 @@ node dist/cli.js run producer --project projects/my-game \
 ### 5. Validate before relying on output
 
 ```sh
-npm run validate
-npm run validate -- --project projects/my-game
+./codex-game-studio validate
+./codex-game-studio validate --project projects/my-game
 ```
 
 Validation exits nonzero on failure. It checks package contracts, template availability, forbidden future surfaces, build output, project state, generated-surface freshness metadata, rendered-body hashes, and stale or tampered generated prompt/workflow files.
@@ -145,6 +147,7 @@ Validation exits nonzero on failure. It checks package contracts, template avail
 | `init` / `new` | Create a project under `projects/<slug>/`. |
 | `status` | Print project phase, status, engine, and the next validation command. |
 | `resume` | Print a read-only continuation summary. |
+| `refresh-context` | Regenerate `.codex/context-manifest.json` and its freshness metadata after selected context files change. |
 | `freeze` | Mark a project as frozen. |
 | `validate` | Run hard-failing repository or project validation. |
 | `templates list` | List packaged template IDs. |
@@ -157,7 +160,7 @@ Validation exits nonzero on failure. It checks package contracts, template avail
 
 ## Studio roles
 
-Open Game Studio ships a Codex-native role roster with hyphenated IDs:
+Codex Game Studio ships a Codex-native role roster with hyphenated IDs:
 
 | Area | Roles |
 | --- | --- |
@@ -198,7 +201,7 @@ Generated role prompts and workflow files carry deterministic freshness metadata
 
 ## Current boundaries
 
-Open Game Studio is intentionally narrow right now.
+Codex Game Studio is intentionally narrow right now.
 
 Implemented:
 
@@ -243,4 +246,4 @@ Before opening changes, run the checks in [`CONTRIBUTING.md`](CONTRIBUTING.md). 
 
 ## License
 
-Open Game Studio is released under the MIT License. See [`LICENSE`](LICENSE).
+Codex Game Studio is released under the MIT License. See [`LICENSE`](LICENSE).

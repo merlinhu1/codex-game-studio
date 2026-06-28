@@ -13,4 +13,4 @@ Create or update the game design document.
 
 # Validation
 
-Run `npm run validate -- --project <project>` after updating design docs.
+Run `./codex-game-studio validate --project <project>` after updating design docs.

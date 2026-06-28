@@ -1,4 +1,4 @@
-reviewer: Open Game Studio seed review
+reviewer: Codex Game Studio seed review
 date: 2026-06-17
 source-link: https://docs.godotengine.org/en/stable/
 engine: godot
@@ -21,6 +21,6 @@ Avoid stale APIs and migration traps when editing or reviewing engine code.
 
 ## Validation
 
-- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Prefer project-local engine commands and Codex Game Studio project validation before readiness claims.
 - Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
 - Keep this reference selected by relevance; do not load every engine reference for one task.

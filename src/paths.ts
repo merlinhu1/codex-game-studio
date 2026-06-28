@@ -8,11 +8,11 @@ export function packageRoot(metaUrl: string = import.meta.url): string {
     const manifest = path.join(current, "package.json");
     if (existsSync(manifest)) {
       const parsed = JSON.parse(readFileSync(manifest, "utf8")) as { name?: string };
-      if (parsed.name === "open-gamestudio") return current;
+      if (parsed.name === "codex-game-studio" || parsed.name === "open-gamestudio") return current;
     }
     const parent = path.dirname(current);
     if (parent === current) {
-      throw new Error("Could not find open-gamestudio package root");
+      throw new Error("Could not find codex-game-studio package root");
     }
     current = parent;
   }

@@ -224,15 +224,20 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
   const pkgPath = path.join(root, "package.json");
   const pkg = JSON.parse(readFileSync(pkgPath, "utf8")) as { scripts?: Record<string, string>; bin?: Record<string, string>; files?: string[]; engines?: { node?: string } };
   const scripts = pkg.scripts ?? {};
-  for (const script of ["init", "manage", "test", "validate", "templates"]) {
+  for (const script of ["build", "init", "manage", "test", "validate", "templates"]) {
     checks.push(scripts[script] ? pass(`pkg.script.${script}`, `script ${script} exists`) : fail(`pkg.script.${script}`, `missing script ${script}`, pkgPath));
   }
   checks.push(scripts.build === "tsc -p tsconfig.build.json" ? pass("package.build", "build uses tsconfig.build.json") : fail("package.build", "build must use tsconfig.build.json", pkgPath));
-  checks.push(pkg.bin?.opengamestudio === "./dist/cli.js" && !pkg.bin?.["open-gamestudio"] ? pass("package.bin", "opengamestudio bin points to dist/cli.js") : fail("package.bin", "opengamestudio bin must point to ./dist/cli.js and replace open-gamestudio", pkgPath));
+  checks.push(
+    pkg.bin?.["codex-game-studio"] === "./dist/cli.js" && pkg.bin?.opengamestudio === "./dist/cli.js"
+      ? pass("package.bin", "codex-game-studio bin points to built dist CLI with opengamestudio compatibility alias")
+      : fail("package.bin", "codex-game-studio and opengamestudio bins must point to ./dist/cli.js", pkgPath)
+  );
   checks.push(pkg.engines?.node?.includes(">=24") ? pass("package.node", "node 24 floor declared") : fail("package.node", "node >=24 must be declared", pkgPath));
   for (const file of ["dist/", "engine_configs/", "engine_reference/", "templates/"]) {
     checks.push(pkg.files?.includes(file) ? pass(`pkg.files.${file}`, `${file} shipped`) : fail(`pkg.files.${file}`, `${file} missing from package files`, pkgPath));
   }
+  checks.push(existsSync(path.join(root, "codex-game-studio")) ? pass("source.wrapper", "source checkout wrapper exists") : fail("source.wrapper", "source checkout wrapper missing", path.join(root, "codex-game-studio")));
   for (const file of ["src/cli.ts", "src/behavioral-evaluation.ts", "src/customization.ts", "src/codex-runtime.ts", "src/codex-session.ts", "src/codex-prompts.ts", "src/prompt-context.ts", "src/context-manifest.ts", "src/roles.ts", "src/tasks.ts", "src/orchestrator.ts", "src/orchestrator-locks.ts", "src/workflow-recipes.ts", "src/ccgs-adaptation.ts", "src/workflows.ts", "src/verification.ts", "src/projects.ts", "src/runner.ts", "src/validation.ts"]) {
     checks.push(existsSync(path.join(root, file)) ? pass(`src.${file}`, `${file} exists`) : fail(`src.${file}`, `${file} missing`, file));
   }
@@ -294,13 +299,14 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
   }
   if (templateFailures.length === 0) checks.push(pass("templates", "all templates exist"));
 
-  const cliHelp = existsSync(path.join(root, "src", "cli.ts")) ? execFileSync(path.join(root, "node_modules", ".bin", "tsx"), [path.join(root, "src", "cli.ts"), "--help"], { cwd: root, encoding: "utf8" }) : "";
+  const builtCli = path.join(root, "dist", "cli.js");
+  const cliHelp = existsSync(builtCli) ? execFileSync("node", [builtCli, "--help"], { cwd: root, encoding: "utf8" }) : "";
   checks.push(/\bnext\b/.test(cliHelp) ? fail("codex.surface.future.next", "future next command exposed") : pass("codex.surface.future.next", "future next command is not exposed"));
   checks.push(/\btelemetry\b/.test(cliHelp) ? fail("codex.surface.future.telemetry", "future telemetry command exposed") : pass("codex.surface.future.telemetry", "future telemetry command is not exposed"));
   checks.push(/\bparallel\b/.test(cliHelp) ? fail("codex.surface.future.parallel", "future parallel command exposed") : pass("codex.surface.future.parallel", "future parallel command is not exposed"));
   checks.push(/ownership/i.test(cliHelp) ? fail("codex.surface.future.ownership", "future ownership enforcement surface exposed") : pass("codex.surface.future.ownership", "future ownership enforcement surface is not exposed"));
 
-  checks.push(existsSync(path.join(root, "dist", "cli.js")) ? pass("build.output", "dist/cli.js exists") : fail("build.output", "dist/cli.js missing; run npm run build", path.join(root, "dist", "cli.js")));
+  checks.push(existsSync(builtCli) ? pass("build.output", "dist/cli.js exists") : fail("build.output", "dist/cli.js missing; run npm run build", builtCli));
   if (existsSync(path.join(root, "dist", "cli.js"))) {
     try {
       const packRaw = execFileSync("npm", ["pack", "--json"], { cwd: root, encoding: "utf8", shell: false });
@@ -316,10 +322,10 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
       ]) {
         checks.push(packed.has(need) ? pass(`pack.${need}`, `${need} packed`) : fail(`pack.${need}`, `${need} missing from npm pack`));
       }
-      const temp = mkdtempSync(path.join(tmpdir(), "open-gamestudio-pack-"));
+      const temp = mkdtempSync(path.join(tmpdir(), "codex-game-studio-pack-"));
       try {
         execFileSync("npm", ["install", "--silent", "--prefix", temp, path.join(root, packInfo.filename)], { cwd: root, encoding: "utf8", shell: false });
-        execFileSync("npm", ["exec", "--prefix", temp, "opengamestudio", "--", "templates", "list"], { cwd: temp, encoding: "utf8", shell: false });
+        execFileSync("npm", ["exec", "--prefix", temp, "codex-game-studio", "--", "templates", "list"], { cwd: temp, encoding: "utf8", shell: false });
         checks.push(pass("pack.install_smoke", "installed package bin loads templates from temp cwd"));
       } finally {
         rmSync(temp, { recursive: true, force: true });

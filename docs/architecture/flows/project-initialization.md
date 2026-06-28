@@ -13,7 +13,7 @@ source_of_truth:
 
 ## Purpose
 
-This architecture flow guide documents the runtime scenario for `opengamestudio init` and `opengamestudio new`. Both commands use the same initialization path to create a deterministic Codex Game Studio project under `projects/<slug>/`.
+This architecture flow guide documents the runtime scenario for `codex-game-studio init` and `codex-game-studio new`. Both commands use the same initialization path to create a deterministic Codex Game Studio project under `projects/<slug>/`.
 
 ## Scope
 
@@ -29,8 +29,8 @@ Project initialization owns generated project creation and initial `.codex` stat
 
 | Entry point | Role in flow | Code |
 | --- | --- | --- |
-| `opengamestudio init` | Primary project initialization command. | `src/cli.ts` |
-| `opengamestudio new` | Alias that delegates to the same initialization path. | `src/cli.ts` |
+| `codex-game-studio init` | Primary project initialization command. | `src/cli.ts` |
+| `codex-game-studio new` | Alias that delegates to the same initialization path. | `src/cli.ts` |
 | `initProject(...)` | Creates project config, directories, state, docs, workflows, and prompts. | `src/projects.ts` |
 
 ## Preconditions

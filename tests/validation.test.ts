@@ -26,10 +26,19 @@ const validApprovalRecord = {
 };
 
 describe("validation", () => {
-  test("package exposes opengamestudio as the canonical installed CLI", () => {
-    const pkg = JSON.parse(readFileSync(path.join(process.cwd(), "package.json"), "utf8")) as { bin?: Record<string, string> };
+  test("package exposes codex-game-studio as the canonical installed CLI", () => {
+    const pkg = JSON.parse(readFileSync(path.join(process.cwd(), "package.json"), "utf8")) as { name?: string; bin?: Record<string, string> };
+    expect(pkg.name).toBe("codex-game-studio");
+    expect(pkg.bin?.["codex-game-studio"]).toBe("./dist/cli.js");
     expect(pkg.bin?.opengamestudio).toBe("./dist/cli.js");
     expect(pkg.bin?.["open-gamestudio"]).toBeUndefined();
+  });
+
+  test("source checkout wrapper uses built dist output instead of a generated bundle", () => {
+    const wrapper = readFileSync(path.join(process.cwd(), "codex-game-studio"), "utf8");
+    expect(wrapper).toContain("dist/cli.js");
+    expect(wrapper).toContain("npm install && npm run build");
+    expect(wrapper).not.toContain("bin/codex-game-studio.mjs");
   });
 
   test("fresh initialized projects validate and failures are explicit", () => {
@@ -270,7 +279,7 @@ describe("validation", () => {
 
     const { projectRoot: malformedProject } = initProject({ name: "Malformed Surface Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     const malformedPrompt = path.join(malformedProject, ".codex", "prompts", "market-analyst.md");
-    writeFileSync(malformedPrompt, readFileSync(malformedPrompt, "utf8").replace(/^<!-- generated-by: open-gamestudio surface=.* -->\n/m, "<!-- generated-by: open-gamestudio -->\n"));
+    writeFileSync(malformedPrompt, readFileSync(malformedPrompt, "utf8").replace(/^<!-- generated-by: codex-game-studio surface=.* -->\n/m, "<!-- generated-by: codex-game-studio -->\n"));
     const malformedFailures = validateProject(malformedProject).filter((c) => c.status === "fail").map((c) => c.id);
     expect(malformedFailures).toContain("codex.role.market-analyst.prompt.freshness");
 

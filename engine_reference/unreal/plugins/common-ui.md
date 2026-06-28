@@ -1,4 +1,4 @@
-reviewer: Open Game Studio seed review
+reviewer: Codex Game Studio seed review
 date: 2026-06-17
 source-link: https://dev.epicgames.com/documentation/en-us/unreal-engine/
 engine: unreal
@@ -21,6 +21,6 @@ Common UI activatable widgets, input routing, platform prompts, and menu-stack b
 
 ## Validation
 
-- Prefer project-local engine commands and Open Game Studio project validation before readiness claims.
+- Prefer project-local engine commands and Codex Game Studio project validation before readiness claims.
 - Record unknown version-specific behavior as a risk instead of presenting it as confirmed.
 - Keep this reference selected by relevance; do not load every engine reference for one task.

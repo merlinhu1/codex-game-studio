@@ -7,22 +7,21 @@ npm test -- --run tests/behavioral-evaluation.test.ts tests/customization.test.t
 npm run typecheck
 npm run build
 npm test
-node dist/cli.js --help
-node dist/cli.js validate
-npm exec opengamestudio -- --help
-npm exec opengamestudio -- validate
-npm exec opengamestudio -- run --help
+./codex-game-studio --help
+./codex-game-studio validate
 npm run validate
 ```
+
+`npm run validate` includes the temporary packed-package install smoke for the published `codex-game-studio` bin.
 
 Engine smoke:
 
 ```bash
-npm run init -- --name "Codex Godot Smoke" --engine godot --mode prototype --non-interactive
-npm run init -- --name "Codex Unity Smoke" --engine unity --mode design --non-interactive
-npm run init -- --name "Codex Unreal Smoke" --engine "Unreal Engine" --mode development --non-interactive
-npm run validate -- --project projects/codex-godot-smoke
-npm run validate -- --project projects/codex-unity-smoke
-npm run validate -- --project projects/codex-unreal-smoke
+./codex-game-studio init --name "Codex Godot Smoke" --engine godot --mode prototype --non-interactive
+./codex-game-studio init --name "Codex Unity Smoke" --engine unity --mode design --non-interactive
+./codex-game-studio init --name "Codex Unreal Smoke" --engine "Unreal Engine" --mode development --non-interactive
+./codex-game-studio validate --project projects/codex-godot-smoke
+./codex-game-studio validate --project projects/codex-unity-smoke
+./codex-game-studio validate --project projects/codex-unreal-smoke
 rm -rf projects/codex-godot-smoke projects/codex-unity-smoke projects/codex-unreal-smoke
 ```

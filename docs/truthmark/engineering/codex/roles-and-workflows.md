@@ -132,7 +132,7 @@ It does not own process execution, task persistence, package installation, or ge
 
 ## Product Truth Links
 
-- docs/truthmark/product/open-game-studio-cli.md
+- docs/truthmark/product/codex-game-studio-cli.md
 
 ## Engineering Decisions
 

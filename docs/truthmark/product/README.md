@@ -14,7 +14,7 @@ README.md files are indexes, not Truth Sync targets. Keep product truth in bound
 
 ## Product Capability Docs
 
-- [Open Game Studio Codex-Native CLI](open-game-studio-cli.md)
+- [Codex Game Studio CLI](codex-game-studio-cli.md)
 
 ## Source References
 

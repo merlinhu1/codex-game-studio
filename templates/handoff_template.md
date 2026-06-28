@@ -13,4 +13,4 @@ Transfer context between agents without broad project scanning.
 
 # Validation
 
-Run `npm run validate -- --project <project>` before handing off.
+Run `./codex-game-studio validate --project <project>` before handing off.
