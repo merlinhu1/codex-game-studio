@@ -37,7 +37,7 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 
 - Package name: `codex-game-studio`.
 - Package bin: `codex-game-studio` points to `./dist/cli.js`.
-- Package bin also keeps `opengamestudio` as a compatibility alias to the same built entrypoint.
+- No legacy package bin aliases are exposed.
 - Primary scripts include `build`, `typecheck`, `test`, `validate`, `init`, `manage`, and `templates`.
 - Source checkout usage requires `npm install && npm run build`, then goes through `./codex-game-studio`.
 - Public command groups include initialization and status commands.

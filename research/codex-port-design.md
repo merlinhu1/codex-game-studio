@@ -15,7 +15,7 @@ This document is split into three scopes:
 ## Ground Rules
 
 - Build the port as TypeScript/Node only.
-- Use `open-gamestudio` as the canonical CLI.
+- Use `codex-game-studio` as the canonical CLI.
 - Preserve upstream user-facing capabilities unless explicitly documented as an intentional known difference.
 - Do not copy legacy source during the research/design phase.
 - Do not preserve Python internals, Python package metadata, or shell alias assumptions.
@@ -29,10 +29,10 @@ The port may intentionally regress upstream implementation or UX details that ad
 
 Allowed differences:
 
-- **No duplicate script-wrapper implementation.** Upstream-style script wrappers are not part of the core parity promise. The port should preserve npm/package discoverability and the canonical `opengamestudio` CLI, but it does not need separate wrapper files such as `scripts/init_project.mjs` or `scripts/project_manager.mjs` unless they are demonstrably useful. If wrappers are added, they must be thin pass-throughs to the canonical CLI and must not own logic.
+- **No duplicate script-wrapper implementation.** Upstream-style script wrappers are not part of the core parity promise. The port should preserve npm/package discoverability and the canonical `codex-game-studio` CLI, but it does not need separate wrapper files such as `scripts/init_project.mjs` or `scripts/project_manager.mjs` unless they are demonstrably useful. If wrappers are added, they must be thin pass-throughs to the canonical CLI and must not own logic.
 - **No interactive menu.** Do not port upstream's interactive `menu` flow. It creates a second UI surface with extra state and terminal complexity. Non-interactive CLI commands are the supported interface.
 - **No `project_orchestrator.md` file parity.** Preserve the orchestration and handoff behavior through project `AGENTS.md`, the materialized `master_orchestrator` agent, and handoff templates/docs. Do not generate a separate upstream-style `project_orchestrator.md` file.
-- **No exact `template_info.md` parity.** Replace the static upstream template-info document with a machine-readable template registry and/or `opengamestudio templates` commands. Generated docs may exist later, but exact file parity is not required.
+- **No exact `template_info.md` parity.** Replace the static upstream template-info document with a machine-readable template registry and/or `codex-game-studio templates` commands. Generated docs may exist later, but exact file parity is not required.
 - **No eager competitor report generation during init.** Initialization should record competitor names in config and create a market overview/seed document. Full competitor analysis reports should be created by the market analyst workflow when requested, not as init clutter.
 - **No upstream license/authorship/citation doc parity.** This is a port/rewrite with project-owned licensing. Do not copy upstream license, authorship, or citation docs as parity artifacts. Use only this repository's chosen license outside the parity contract.
 - **No `startover` command.** Do not implement upstream `startover`; the name is ambiguous and encourages destructive semantics. If revision/reset workflows are needed later, design them under explicit non-destructive names.
@@ -191,7 +191,7 @@ development:
 
 ## Project Initialization
 
-`opengamestudio init` must preserve upstream project-creation outcomes while using a cleaner Node implementation.
+`codex-game-studio init` must preserve upstream project-creation outcomes while using a cleaner Node implementation.
 
 Required initialization outputs:
 
@@ -275,7 +275,7 @@ The port must preserve upstream template categories:
 - `market_analysis` -> `market_analysis_template.md`
 - `project_config` -> `project_config_template.json`
 
-The TypeScript port may rename files only if the migration is documented and validation knows the new paths. Do not preserve exact `template_info.md` file parity; expose template discoverability through a typed registry and/or `opengamestudio templates` commands.
+The TypeScript port may rename files only if the migration is documented and validation knows the new paths. Do not preserve exact `template_info.md` file parity; expose template discoverability through a typed registry and/or `codex-game-studio templates` commands.
 
 Template selection must be deterministic and bounded: `market_analyst` selects `market_analysis`, `data_scientist` selects `analytics_setup`, designer/spec tasks select `gdd`/`feature_spec`, engine/project setup tasks select `engine_setup`/`project_config`, and `handoff` is selected only for handoff/coordination tasks. QA does not load all templates by default.
 
@@ -297,13 +297,13 @@ The port must preserve useful upstream project-management capabilities while int
 Canonical CLI commands should include equivalents for:
 
 ```bash
-opengamestudio status [--project projects/my-game]
-opengamestudio new
-opengamestudio resume --project projects/my-game
-opengamestudio freeze --project projects/my-game
+codex-game-studio status [--project projects/my-game]
+codex-game-studio new
+codex-game-studio resume --project projects/my-game
+codex-game-studio freeze --project projects/my-game
 ```
 
-`opengamestudio init` may be the canonical implementation behind `new`.
+`codex-game-studio init` may be the canonical implementation behind `new`.
 
 Interactive `menu` behavior is intentionally not implemented. Users should rely on documented non-interactive commands.
 
@@ -346,7 +346,7 @@ Required package metadata excerpt:
 }
 ```
 
-Separate thin Node wrappers such as `scripts/init_project.mjs`, `scripts/project_manager.mjs`, and `scripts/validate.mjs` are optional known differences. Prefer package scripts that call the built CLI via `node dist/cli.js`, plus explicit smoke tests for the canonical `opengamestudio` binary through `npm exec opengamestudio -- ...` after build/link/install. Do not rely on a bare self-bin name inside the package's own npm scripts before install/link. If wrappers exist, they must call the same command handlers as the canonical CLI and must not fork logic.
+Separate thin Node wrappers such as `scripts/init_project.mjs`, `scripts/project_manager.mjs`, and `scripts/validate.mjs` are optional known differences. Prefer package scripts that call the built CLI via `node dist/cli.js`, plus explicit smoke tests for the canonical `codex-game-studio` binary through `npm exec codex-game-studio -- ...` after build/link/install. Do not rely on a bare self-bin name inside the package's own npm scripts before install/link. If wrappers exist, they must call the same command handlers as the canonical CLI and must not fork logic.
 
 The build config must keep the package bin stable: `tsconfig.json` may typecheck both `src/**/*.ts` and `tests/**/*.ts`, but `tsconfig.build.json` must emit `src/cli.ts` to `dist/cli.js` rather than `dist/src/cli.js`. Relative TypeScript imports must use emitted `.js` specifiers under NodeNext, for example `import { loadConfig } from "./config.js"`.
 
@@ -358,7 +358,7 @@ Package shipping must be tested, not assumed. `npm pack --json` must include the
 
 Validation is a first-class product surface, not a copied legacy behavior.
 
-`opengamestudio validate` must:
+`codex-game-studio validate` must:
 
 - return exit code `0` only when all selected checks pass;
 - return non-zero when any selected check fails;
@@ -417,7 +417,7 @@ The clean parity contract is satisfied when all are true:
 - TypeScript package builds.
 - Typecheck passes.
 - Tests pass.
-- `opengamestudio init` can create Godot, Unity, and Unreal projects.
+- `codex-game-studio init` can create Godot, Unity, and Unreal projects.
 - Each generated engine project validates.
 - All 12 base agents exist and can be materialized for a project.
 - Materialized prompts include the selected engine's prompt-overlay content, not just generic engine text.
@@ -437,31 +437,31 @@ These are improvements over upstream that are useful for a Codex-native port, bu
 
 ## Canonical TypeScript CLI
 
-`opengamestudio` is the canonical public interface. Npm scripts should call into it. Separate script wrappers are optional and should be avoided unless they provide clear compatibility value.
+`codex-game-studio` is the canonical public interface. Npm scripts should call into it. Separate script wrappers are optional and should be avoided unless they provide clear compatibility value.
 
 Recommended core commands:
 
 ```bash
-opengamestudio init
-opengamestudio status
-opengamestudio resume --project projects/my-game
-opengamestudio freeze --project projects/my-game
-opengamestudio validate
-opengamestudio run <agent> --project projects/my-game --task "..."
+codex-game-studio init
+codex-game-studio status
+codex-game-studio resume --project projects/my-game
+codex-game-studio freeze --project projects/my-game
+codex-game-studio validate
+codex-game-studio run <agent> --project projects/my-game --task "..."
 ```
 
 ## Codex Runner
 
 Upstream relies on users manually telling an AI CLI which project and agent files to read. The Codex-native port should add a bounded runner that assembles a structured prompt packet for one agent and one task.
 
-Default `opengamestudio run <agent> --project <path> --task <text>` behavior:
+Default `codex-game-studio run <agent> --project <path> --task <text>` behavior:
 
 - assemble one structured prompt packet;
 - write prompt cache and minimal metadata;
 - print the exact prompt path and next manual/Codex command;
 - not execute Codex or modify project artifacts beyond the prompt cache.
 
-`opengamestudio run` should:
+`codex-game-studio run` should:
 
 - load one selected agent;
 - load the project config summary;
@@ -535,7 +535,7 @@ Project `AGENTS.md` must be a compact index and rules file, not a full prompt bu
 Generated files must include provenance markers so validation can prove they came from the generator:
 
 ```md
-<!-- generated-by: open-gamestudio src/agents.ts schema=1.0 -->
+<!-- generated-by: codex-game-studio src/agents.ts schema=1.0 -->
 <!-- source-config-sha256: <hash> -->
 ```
 
@@ -561,11 +561,11 @@ Bounded-context validation should check the generated prompt packet, not only so
 
 # Part 3: Future Optional Layer
 
-These features are not present upstream and are not required for the initial implementation. They should stay out of the first build unless explicitly requested later. First-build validation/docs must include explicit absence checks: no `opengamestudio next`, no `run --exec`, no telemetry command/files, no parallel orchestration surface, and no hard ownership-enforcement behavior.
+These features are not present upstream and are not required for the initial implementation. They should stay out of the first build unless explicitly requested later. First-build validation/docs must include explicit absence checks: no `codex-game-studio next`, no `run --exec`, no telemetry command/files, no parallel orchestration surface, and no hard ownership-enforcement behavior.
 
 ## Planner / `next`
 
-A real `opengamestudio next` can be useful, but it is easy to overbuild and easy to make stale recommendations.
+A real `codex-game-studio next` can be useful, but it is easy to overbuild and easy to make stale recommendations.
 
 Until project state, validation, run metadata, and handoff summaries are mature, the CLI should print simple static next-step suggestions rather than pretending to have a planner.
 
@@ -658,7 +658,7 @@ hard-failing validation
 ## Add as Bounded Codex Improvements
 
 ```text
-canonical open-gamestudio CLI
+canonical codex-game-studio CLI
 project AGENTS.md
 bounded run command
 prompt cache

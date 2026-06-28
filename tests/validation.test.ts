@@ -30,8 +30,7 @@ describe("validation", () => {
     const pkg = JSON.parse(readFileSync(path.join(process.cwd(), "package.json"), "utf8")) as { name?: string; bin?: Record<string, string> };
     expect(pkg.name).toBe("codex-game-studio");
     expect(pkg.bin?.["codex-game-studio"]).toBe("./dist/cli.js");
-    expect(pkg.bin?.opengamestudio).toBe("./dist/cli.js");
-    expect(pkg.bin?.["open-gamestudio"]).toBeUndefined();
+    expect(Object.keys(pkg.bin ?? {})).toEqual(["codex-game-studio"]);
   });
 
   test("source checkout wrapper uses built dist output instead of a generated bundle", () => {
