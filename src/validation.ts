@@ -229,9 +229,9 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
   }
   checks.push(scripts.build === "tsc -p tsconfig.build.json" ? pass("package.build", "build uses tsconfig.build.json") : fail("package.build", "build must use tsconfig.build.json", pkgPath));
   checks.push(
-    pkg.bin?.["codex-game-studio"] === "./dist/cli.js" && pkg.bin?.opengamestudio === "./dist/cli.js"
-      ? pass("package.bin", "codex-game-studio bin points to built dist CLI with opengamestudio compatibility alias")
-      : fail("package.bin", "codex-game-studio and opengamestudio bins must point to ./dist/cli.js", pkgPath)
+    pkg.bin?.["codex-game-studio"] === "./dist/cli.js" && Object.keys(pkg.bin ?? {}).length === 1
+      ? pass("package.bin", "codex-game-studio bin points to built dist CLI without legacy aliases")
+      : fail("package.bin", "codex-game-studio must be the only package bin and must point to ./dist/cli.js", pkgPath)
   );
   checks.push(pkg.engines?.node?.includes(">=24") ? pass("package.node", "node 24 floor declared") : fail("package.node", "node >=24 must be declared", pkgPath));
   for (const file of ["dist/", "engine_configs/", "engine_reference/", "templates/"]) {

@@ -37,7 +37,7 @@ export function hashGeneratedBody(bodyWithoutMetadata: string): string {
 
 export function stripGeneratedMetadata(body: string): string {
   return body.replace(
-    /^<!-- generated-by: (?:open-gamestudio|codex-game-studio) surface=.* -->\n<!-- source-input-sha256: .* -->\n<!-- rendered-body-sha256: .* -->\n/,
+    /^<!-- generated-by: codex-game-studio surface=.* -->\n<!-- source-input-sha256: .* -->\n<!-- rendered-body-sha256: .* -->\n/,
     ""
   );
 }
@@ -59,10 +59,10 @@ export function parseGeneratedSurfaceMetadata(body: string): GeneratedSurfaceMet
 }
 
 export function parseGeneratedSurfaceMetadataParts(body: string): GeneratedSurfaceMetadataParts {
-  const generated = /^<!-- generated-by: (?:open-gamestudio|codex-game-studio) surface=(\S+)(?: id=(\S+))?(?: role=(\S+))? schema=(\S+) -->\n/.exec(body);
-  const source = /^<!-- generated-by: (?:open-gamestudio|codex-game-studio) surface=.* -->\n<!-- source-input-sha256: ([a-f0-9]+) -->\n/.exec(body);
-  const rendered = /^<!-- generated-by: (?:open-gamestudio|codex-game-studio) surface=.* -->\n<!-- source-input-sha256: [a-f0-9]+ -->\n<!-- rendered-body-sha256: ([a-f0-9]+) -->\n/.exec(body);
-  const hasAnyMarker = /^<!-- generated-by: (?:open-gamestudio|codex-game-studio)\b.*-->$/m.test(body) || /^<!-- source-input-sha256: .*-->$/m.test(body) || /^<!-- rendered-body-sha256: .*-->$/m.test(body);
+  const generated = /^<!-- generated-by: codex-game-studio surface=(\S+)(?: id=(\S+))?(?: role=(\S+))? schema=(\S+) -->\n/.exec(body);
+  const source = /^<!-- generated-by: codex-game-studio surface=.* -->\n<!-- source-input-sha256: ([a-f0-9]+) -->\n/.exec(body);
+  const rendered = /^<!-- generated-by: codex-game-studio surface=.* -->\n<!-- source-input-sha256: [a-f0-9]+ -->\n<!-- rendered-body-sha256: ([a-f0-9]+) -->\n/.exec(body);
+  const hasAnyMarker = /^<!-- generated-by: codex-game-studio\b.*-->$/m.test(body) || /^<!-- source-input-sha256: .*-->$/m.test(body) || /^<!-- rendered-body-sha256: .*-->$/m.test(body);
   return {
     generated: generated ? { surface: generated[1], id: generated[2], role: generated[3], schema: generated[4] } : undefined,
     sourceInputSha256: source?.[1],
