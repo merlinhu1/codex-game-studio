@@ -1,5 +1,7 @@
 # Setup
 
+This is the short setup reference. For full command usage, see the [User Guide](user-guide.md).
+
 ## Use from source checkout
 
 Clone the repository, install dependencies, build TypeScript output, and then run the checked-in CLI wrapper. Generated bundled CLI artifacts are not committed.
@@ -17,7 +19,7 @@ npm run build
 
 ## Contributor development
 
-Install npm dependencies when using or modifying Codex Game Studio from a source checkout. Development validation rebuilds TypeScript output before running checks.
+Contributor workflow lives in [Development](development.md).
 
 ```bash
 npm install

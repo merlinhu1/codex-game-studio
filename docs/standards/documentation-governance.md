@@ -14,6 +14,8 @@ source_of_truth:
 - Each class of fact should have one canonical source.
 - Current implementation, reusable standards, and future proposals should be stored separately.
 - Generated helper output is never canonical truth.
+- The root README is the concise human storefront; command reference, role catalog, generated-file detail, and contributor workflow detail belong in linked subdocs.
+- Material root README changes should update localized README storefronts under `docs/readmes/` in the same change or state why they intentionally differ.
 - Architecture docs describe structure, ownership, and runtime views; truth docs describe current product behavior and remain the canonical behavior reference.
 - Architecture flow guides may explain branching logic and failure paths, but they must trace back to the owning truth docs rather than becoming a competing source of behavior truth.
 
