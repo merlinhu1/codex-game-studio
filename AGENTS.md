@@ -6,7 +6,7 @@ This project uses `"type": "module"`, `module: "NodeNext"`, and `moduleResolutio
 
 For source-checkout usage, run `npm install && npm run build` first, then use the checked-in wrapper: `./codex-game-studio ...`. Do not commit generated bundled CLI artifacts. Use `npm run validate` before parity claims. Use `npm exec codex-game-studio -- ...` only after package install/link or inside package-bin smoke fixtures. Bare `codex-game-studio ...` is only guaranteed after package install/link.
 
-Keep generated game projects under `projects/<slug>/`.
+Keep generated game project surfaces in the repository root; do not reintroduce nested `projects/<slug>/` initialization.
 
 Do not load all agents or all templates for a single role task.
 

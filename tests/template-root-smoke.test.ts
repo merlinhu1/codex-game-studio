@@ -2,7 +2,8 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { describe, expect, test } from "vitest";
+import { describe, test } from "node:test";
+import { expect } from "expect";
 import { checkCodexAvailability } from "../src/codex-runtime.js";
 
 const repoRoot = process.cwd();

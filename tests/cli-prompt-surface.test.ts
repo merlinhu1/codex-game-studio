@@ -2,7 +2,8 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { afterEach, beforeAll, describe, expect, test } from "vitest";
+import { afterEach, before, describe, test } from "node:test";
+import { expect } from "expect";
 
 const repoRoot = process.cwd();
 const cli = path.join(repoRoot, "dist", "cli.js");
@@ -30,7 +31,7 @@ function initCliProject(prefix: string, name: string): { cwd: string; projectRoo
   return { cwd, projectRoot: cwd };
 }
 
-beforeAll(() => {
+before(() => {
   execFileSync("npm", ["run", "build", "--silent"], { cwd: repoRoot, encoding: "utf8" });
 });
 

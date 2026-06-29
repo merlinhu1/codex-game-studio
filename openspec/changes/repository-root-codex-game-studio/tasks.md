@@ -7,7 +7,7 @@
 ## 2. Root Initialization Behavior
 
 - [x] 2.1 Add failing tests in `tests/project-workflow.test.ts` proving default `init` writes `.codex/studio.json` under a temp cwd and does not create `projects/<slug>/`.
-- [x] 2.2 Implement root-mode project resolution in `src/projects.ts` and `src/paths.ts` while keeping explicit nested mode available.
+- [x] 2.2 Implement root-mode project resolution in `src/projects.ts` and `src/paths.ts`.
 - [x] 2.3 Add protection tests for re-running `init` over an existing different root project without an explicit force-refresh option.
 - [x] 2.4 Run `npm test -- tests/project-workflow.test.ts` and confirm root-mode tests pass.
 
@@ -44,7 +44,7 @@
 
 - [x] 6.1 Add failing `tests/runner.test.ts` coverage that root-mode `run --dry-run` resolves cwd when `.codex/studio.json` exists.
 - [x] 6.2 Update dry-run output to show the runtime prompt path, custom-agent TOML path, and selected skill paths.
-- [x] 6.3 Preserve explicit `--project` support for legacy nested projects during migration.
+- [x] 6.3 Preserve explicit `--project` support for existing project checkouts during migration.
 - [x] 6.4 Add `status` output that points to root `.codex/agents/` and `.agents/skills/` catalogs.
 - [x] 6.5 Run `npm test -- tests/runner.test.ts tests/project-workflow.test.ts`.
 
@@ -59,7 +59,7 @@
 ## 8. Public Docs, Truth, and Final Validation
 
 - [x] 8.1 Update user-facing setup docs and README to show `git clone <repo> my-game` as the primary install path.
-- [x] 8.2 Document nested project mode only as a legacy migration escape hatch.
+- [x] 8.2 Document root project mode as the supported initialization path.
 - [x] 8.3 Update truth docs only after functional code and tests land; keep Truthmark maintenance docs out of game-facing root `docs/`.
 - [x] 8.4 Run `npm run validate` before any parity or completion claim.
 - [x] 8.5 Run `truthmark check --json`, `truthmark index --json`, `git diff --check`, `openspec validate repository-root-codex-game-studio --strict --json`, and `openspec status --change repository-root-codex-game-studio --json`.

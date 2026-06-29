@@ -1,7 +1,8 @@
 import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { describe, expect, test } from "vitest";
+import { describe, test } from "node:test";
+import { expect } from "expect";
 import { initProject } from "../src/projects.js";
 import { prepareRun } from "../src/runner.js";
 import { createTask, renderTaskRun } from "../src/tasks.js";

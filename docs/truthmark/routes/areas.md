@@ -17,6 +17,8 @@ Code surface:
 - engine_configs/**
 - engine_reference/**
 - templates/**
+- scripts/**
+- references/**
 - package.json
 - package-lock.json
 - docs/architecture/**

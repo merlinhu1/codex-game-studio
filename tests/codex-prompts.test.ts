@@ -1,4 +1,5 @@
-import { describe, expect, test } from "vitest";
+import { describe, test } from "node:test";
+import { expect } from "expect";
 import { createCodexStudioSession } from "../src/codex-session.js";
 import { renderCodexPrompt } from "../src/codex-prompts.js";
 

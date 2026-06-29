@@ -1,7 +1,7 @@
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { activeAgentsForProject, slugify, type ProjectConfig, type ProjectMode } from "./config.js";
-import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, projectClassName, sourceRoot, unrealProjectFileName } from "./engines.js";
+import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, sourceRoot, unrealProjectFileName } from "./engines.js";
 import { writeDefaultProjectCustomization, readProjectCustomization } from "./customization.js";
 import { materializeEngineReferences } from "./engine-reference.js";
 import { materializeAgents } from "./agents.js";
@@ -11,6 +11,7 @@ import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { packageAssetPath, resolveProjectRoot } from "./paths.js";
 import { projectRoleIdsForEngine, rolePackages, type StudioRoleId } from "./roles.js";
 import { workflowAliases, workflowIds, workflowRegistry, type WorkflowId } from "./workflows.js";
+import { workflowCatalogSummary } from "./workflow-catalog.js";
 import { materializeSkills } from "./skills.js";
 import type { StudioMode } from "./studio-policy.js";
 
@@ -28,7 +29,6 @@ export type InitProjectOptions = {
   timeline?: string;
   engineVersion?: string;
   nonInteractive?: boolean;
-  nested?: boolean;
   forceRefresh?: boolean;
 };
 
@@ -118,27 +118,6 @@ function writeStarterDocs(projectRoot: string, config: ProjectConfig): void {
     path.join(projectRoot, "docs", "market-overview.md"),
     `# Market Overview\n\nAudience: ${config.project.audience}\n\nCompetitors: ${config.project.competitors.join(", ") || "none configured"}\n\nThis is a seed, not a full competitor report.\n`
   );
-}
-
-function assertNoSameParentCollision(parent: string, config: ProjectConfig): void {
-  if (!existsSync(parent)) return;
-  const nextClass = projectClassName(config.project.name);
-  for (const entry of readdirSync(parent, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue;
-    const studioPath = path.join(parent, entry.name, ".codex", "studio.json");
-    if (!existsSync(studioPath)) continue;
-    const existing = readStudioProject(path.join(parent, entry.name));
-    if (existing.name === config.project.name) continue;
-    if (existing.slug === config.project.slug) {
-      throw new Error(`Project name "${config.project.name}" collides with existing slug "${existing.slug}" in ${parent}`);
-    }
-    if (existing.engine === "unreal" || config.project.engine === "unreal") {
-      const existingClass = projectClassName(existing.name);
-      if (existingClass === nextClass) {
-        throw new Error(`Project name "${config.project.name}" collides with existing Unreal class name "${existingClass}" in ${parent}`);
-      }
-    }
-  }
 }
 
 export function studioStateFromConfig(config: ProjectConfig): StudioProjectState {
@@ -261,7 +240,7 @@ function writeCodexWorkflowFiles(projectRoot: string): void {
 
 export function initProject(options: InitProjectOptions, cwd = process.cwd()): { projectRoot: string; config: ProjectConfig } {
   const config = defaultProjectConfig(options);
-  const projectRoot = path.resolve(cwd, options.nested ? path.join("projects", config.project.slug) : ".");
+  const projectRoot = path.resolve(cwd, ".");
   const studioPath = path.join(projectRoot, ".codex", "studio.json");
   if (existsSync(studioPath) && !options.forceRefresh) {
     const existing = readStudioProject(projectRoot);
@@ -269,8 +248,6 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
       throw new Error(`Project root already contains ${existing.name}; pass --force-refresh to reinitialize`);
     }
   }
-  if (!existsSync(studioPath) && existsSync(projectRoot) && options.nested) throw new Error(`Project path already exists or collides: ${projectRoot}`);
-  if (options.nested) assertNoSameParentCollision(path.dirname(projectRoot), config);
   const engines = loadEngineConfigs(packageAssetPath("engine_configs"));
   mkdirSync(projectRoot, { recursive: true });
   createEngineFolders({ projectRoot, projectSlug: config.project.slug, projectName: config.project.name, engine: config.project.engine, registry: engines });
@@ -302,6 +279,7 @@ export function statusProject(project?: string, cwd = process.cwd()): string {
     `active roles: ${(config.activeRoles ?? config.roles).join(", ")}`,
     `custom agents: .codex/agents/*.toml`,
     `skills: .agents/skills/*/SKILL.md`,
+    workflowCatalogSummary(root),
     `custom roles: ${customization.roles.length}, workflows: ${customization.workflows.length}, templates: ${customization.templates.length}`
   ].join("\n");
 }

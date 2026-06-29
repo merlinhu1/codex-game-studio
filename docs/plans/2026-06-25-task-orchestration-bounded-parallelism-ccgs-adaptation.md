@@ -6,7 +6,7 @@
 
 **Architecture:** Keep Codex Game Studio local-first and Codex-native. Extend the existing `.codex/tasks.json`, `.codex/runs/**`, role packages, workflow registry, template registry, approvals, and validation systems. Orchestration is a foreground CLI command that plans, locks, executes, verifies, reviews, and records bounded task runs; it is not a daemon, hosted scheduler, hidden planner, or generic workflow DAG engine.
 
-**Tech Stack:** TypeScript ESM on Node 24, Commander CLI, Vitest, existing Codex runtime, existing project validation, Truthmark-backed docs.
+**Tech Stack:** TypeScript ESM on Node 24, Commander CLI, node:test plus standalone expect, existing Codex runtime, existing project validation, Truthmark-backed docs.
 
 ---
 
@@ -616,7 +616,7 @@ Defer or keep out of product:
 2. Add a test that `writeTaskStore()` writes `schemaVersion: 2`.
 3. Run:
    ```bash
-   npx vitest run tests/tasks.test.ts -t "task store"
+   npm test -- tests/tasks.test.ts -t "task store"
    ```
 4. Expected before implementation: failure because schema v2 is not implemented.
 
@@ -637,7 +637,7 @@ Defer or keep out of product:
 4. Ensure status validation accepts `cancelled` and `skipped`.
 5. Run:
    ```bash
-   npx vitest run tests/tasks.test.ts
+   npm test -- tests/tasks.test.ts
    ```
 6. Expected: pass.
 
@@ -660,7 +660,7 @@ Defer or keep out of product:
 4. Test duplicate dependencies and unknown dependency IDs.
 5. Run:
    ```bash
-   npx vitest run tests/tasks.test.ts tests/cli-prompt-surface.test.ts
+   npm test -- tests/tasks.test.ts tests/cli-prompt-surface.test.ts
    ```
 
 ### Task 4: Add asynchronous Codex execution
@@ -682,7 +682,7 @@ Defer or keep out of product:
 4. Keep current output formatting unchanged.
 5. Run:
    ```bash
-   npx vitest run tests/codex-runtime.test.ts tests/runner.test.ts
+   npm test -- tests/codex-runtime.test.ts tests/runner.test.ts
    ```
 
 ### Task 5: Add lock acquisition tests
@@ -702,7 +702,7 @@ Defer or keep out of product:
 4. Test released locks are removed or marked released according to final implementation choice.
 5. Run:
    ```bash
-   npx vitest run tests/orchestrator-locks.test.ts
+   npm test -- tests/orchestrator-locks.test.ts
    ```
 6. Expected before implementation: failure because module does not exist.
 
@@ -723,7 +723,7 @@ Defer or keep out of product:
 4. Implement stale lock diagnostics but do not auto-clean stale locks yet.
 5. Run:
    ```bash
-   npx vitest run tests/orchestrator-locks.test.ts
+   npm test -- tests/orchestrator-locks.test.ts
    ```
 
 ### Task 7: Add orchestration graph tests
@@ -743,7 +743,7 @@ Defer or keep out of product:
 4. Test `--max-concurrency 4` fails because first cap is 3.
 5. Run:
    ```bash
-   npx vitest run tests/orchestrator.test.ts
+   npm test -- tests/orchestrator.test.ts
    ```
 
 ### Task 8: Implement dry-run orchestration planning
@@ -765,7 +765,7 @@ Defer or keep out of product:
 5. Assert dry-run writes no `.codex/runs/**`, locks, or task status changes.
 6. Run:
    ```bash
-   npx vitest run tests/orchestrator.test.ts
+   npm test -- tests/orchestrator.test.ts
    ```
 
 ### Task 9: Implement serial orchestration execution
@@ -786,7 +786,7 @@ Defer or keep out of product:
 5. Mark downstream tasks skipped when blockers occur.
 6. Run:
    ```bash
-   npx vitest run tests/orchestrator.test.ts tests/tasks.test.ts
+   npm test -- tests/orchestrator.test.ts tests/tasks.test.ts
    ```
 
 ### Task 10: Implement bounded parallel orchestration
@@ -806,7 +806,7 @@ Defer or keep out of product:
 4. Add fake Codex sleep tests proving concurrency without hosted calls.
 5. Run:
    ```bash
-   npx vitest run tests/orchestrator.test.ts
+   npm test -- tests/orchestrator.test.ts
    ```
 
 ### Task 11: Add CLI command
@@ -827,7 +827,7 @@ Defer or keep out of product:
 4. Update future-surface tests so `parallel` is not blanket-forbidden, but hosted/unbounded/background surfaces remain forbidden.
 5. Run:
    ```bash
-   npx vitest run tests/cli-prompt-surface.test.ts tests/functionality-gap-pass.test.ts
+   npm test -- tests/cli-prompt-surface.test.ts tests/functionality-gap-pass.test.ts
    ```
 
 ### Task 12: Add workflow recipe tests
@@ -846,7 +846,7 @@ Defer or keep out of product:
 3. Test recipe creation does not call Codex.
 4. Run:
    ```bash
-   npx vitest run tests/workflow-recipes.test.ts
+   npm test -- tests/workflow-recipes.test.ts
    ```
 
 ### Task 13: Implement initial workflow recipes
@@ -866,7 +866,7 @@ Defer or keep out of product:
 3. Keep workflow shortcut commands render-only.
 4. Run:
    ```bash
-   npx vitest run tests/workflow-recipes.test.ts tests/functionality-gap-pass.test.ts
+   npm test -- tests/workflow-recipes.test.ts tests/functionality-gap-pass.test.ts
    ```
 
 ### Task 14: Add CCGS adaptation registry tests
@@ -885,7 +885,7 @@ Defer or keep out of product:
 3. Test high-value skill additions are categorized as workflow/template/recipe/deferred.
 4. Run:
    ```bash
-   npx vitest run tests/ccgs-adaptation.test.ts
+   npm test -- tests/ccgs-adaptation.test.ts
    ```
 
 ### Task 15: Implement CCGS adaptation registry
@@ -906,7 +906,7 @@ Defer or keep out of product:
 4. Optionally add validation diagnostics for registry consistency.
 5. Run:
    ```bash
-   npx vitest run tests/ccgs-adaptation.test.ts tests/validation.test.ts
+   npm test -- tests/ccgs-adaptation.test.ts tests/validation.test.ts
    ```
 
 ### Task 16: Add first curated roles only if justified
@@ -928,7 +928,7 @@ Defer or keep out of product:
 3. Do not add engine sub-specialist roles.
 4. Run:
    ```bash
-   npx vitest run tests/roles.test.ts tests/functionality-gap-pass.test.ts
+   npm test -- tests/roles.test.ts tests/functionality-gap-pass.test.ts
    ```
 
 ### Task 17: Add high-value CCGS-derived workflows/templates
@@ -950,7 +950,7 @@ Defer or keep out of product:
 3. Keep template selection bounded.
 4. Run:
    ```bash
-   npx vitest run tests/functionality-gap-pass.test.ts tests/agents-templates.test.ts
+   npm test -- tests/functionality-gap-pass.test.ts tests/agents-templates.test.ts
    ```
 
 ### Task 18: Update validation and future-surface guards
@@ -971,7 +971,7 @@ Defer or keep out of product:
 3. Add absence checks for daemon/hosted/unbounded CLI/help/config surfaces.
 4. Run:
    ```bash
-   npx vitest run tests/validation.test.ts tests/behavioral-evaluation.test.ts
+   npm test -- tests/validation.test.ts tests/behavioral-evaluation.test.ts
    ```
 
 ### Task 19: Update docs and generated truth surfaces

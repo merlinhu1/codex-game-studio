@@ -3,7 +3,8 @@ import { execFileSync } from "node:child_process";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { describe, expect, test } from "vitest";
+import { describe, test } from "node:test";
+import { expect } from "expect";
 import { guidanceConfigHash } from "../src/config.js";
 import { freezeProject, initProject, resumeProject, statusProject } from "../src/projects.js";
 
@@ -103,12 +104,6 @@ describe("project workflow", () => {
     expect(() => initProject({ name: "Second Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd)).toThrow(/already contains/i);
   });
 
-  test("explicit nested mode preserves legacy projects slug layout", () => {
-    const cwd = tempRoot("ogs-nested-");
-    const { projectRoot } = initProject({ name: "Nested Game", engine: "godot", mode: "prototype", nonInteractive: true, nested: true }, cwd);
-    expect(projectRoot).toBe(path.join(cwd, "projects", "nested-game"));
-    expect(existsSync(path.join(projectRoot, ".codex", "studio.json"))).toBe(true);
-  });
 
   test("CLI init writes root studio state by default and accepts repeated competitor flags", () => {
     const cwd = tempRoot("ogs-cli-");

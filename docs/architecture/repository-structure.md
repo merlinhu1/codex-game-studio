@@ -38,7 +38,7 @@ Project scaffolding writes generated project files but does not execute Codex. C
 - `src/runner.ts`, `src/tasks.ts`, `src/codex-runtime.ts`, and `src/verification.ts` own Codex execution, task persistence, runtime checks, and verification processes.
 - `src/validation.ts` owns repository and generated-project validation checks.
 - `engine_configs/**` and `templates/**` are package runtime assets.
-- `tests/**` mirrors those behavior boundaries with Vitest coverage.
+- `tests/**` mirrors those behavior boundaries with node:test coverage.
 - `docs/architecture/flows/**` contains Markdown runtime views for project initialization, role runs, workflow prompt rendering, and validation/repository-truth workflows.
 
 ## Product Decisions

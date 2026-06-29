@@ -23,17 +23,6 @@ The `init` command SHALL configure the current working directory as the game pro
 - **WHEN** `init` runs in a directory with an existing `.codex/studio.json` for a different project
 - **THEN** the command fails unless an explicit force-refresh option is provided
 
-### Requirement: Legacy nested mode is explicit
-The system SHALL keep nested `projects/<slug>` generation only behind an explicit legacy or sandbox option if nested generation remains supported.
-
-#### Scenario: Nested mode is requested
-- **WHEN** the user runs `init` with the explicit nested option
-- **THEN** the command creates `projects/<slug>/` using the legacy layout
-
-#### Scenario: Nested mode is not requested
-- **WHEN** the user runs default `init`
-- **THEN** no `projects/<slug>/` directory is created
-
 ### Requirement: Runtime commands default to root mode
 Runtime commands SHALL resolve the current directory as the project root when `.codex/studio.json` exists there.
 
@@ -41,6 +30,6 @@ Runtime commands SHALL resolve the current directory as the project root when `.
 - **WHEN** `codex-game-studio run gameplay-programmer --dry-run` runs from a root-mode project
 - **THEN** dry-run output uses the current directory as the project root
 
-#### Scenario: Legacy project option still works during migration
-- **WHEN** `codex-game-studio run gameplay-programmer --project projects/legacy --dry-run` is provided during the compatibility window
-- **THEN** the command resolves the explicit legacy project path
+#### Scenario: Explicit project option still works
+- **WHEN** `codex-game-studio run gameplay-programmer --project ../existing-game --dry-run` is provided
+- **THEN** the command resolves the explicit project path

@@ -97,14 +97,20 @@ Code surface:
 - src/customization.ts
 - src/prompt-context.ts
 - src/workflows.ts
+- src/workflow-catalog.ts
+- src/ccgs-parity.ts
+- scripts/audit-ccgs-surfaces.ts
 - src/engine-reference.ts
 - src/templates.ts
 - src/generated-surfaces.ts
+- references/ccgs-surface-parity-matrix.*
 - templates/**
 - tests/roles.test.ts
 - tests/codex-session.test.ts
 - tests/codex-prompts.test.ts
 - tests/behavioral-evaluation.test.ts
+- tests/ccgs-parity-audit.test.ts
+- tests/workflow-catalog.test.ts
 - tests/customization.test.ts
 - tests/functionality-gap-pass.test.ts
 

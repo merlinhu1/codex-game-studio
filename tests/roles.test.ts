@@ -1,4 +1,5 @@
-import { describe, expect, test } from "vitest";
+import { describe, test } from "node:test";
+import { expect } from "expect";
 import { isStudioRoleId, rolePackages, studioRoleIds, unknownStudioRoleMessage } from "../src/roles.js";
 
 describe("Codex role packages", () => {

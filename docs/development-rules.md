@@ -13,6 +13,6 @@ npm test
 npm run validate
 ```
 
-Keep generated projects under `projects/<slug>/`.
+Keep generated game project surfaces in the repository root.
 
 The current build invokes Codex by default through `run <role>`. Use `--dry-run` or `--print-prompt` for inspection-only paths. Explicit local task orchestration is now inside the product boundary, but runtime claims require implementation and validation. The build still intentionally excludes planner commands, telemetry, changed-file tracking, hosted/background orchestration, unbounded parallelism, and ownership enforcement.

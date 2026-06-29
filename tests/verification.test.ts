@@ -2,7 +2,8 @@ import { writeFileSync, chmodSync } from "node:fs";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { describe, expect, test } from "vitest";
+import { describe, test } from "node:test";
+import { expect } from "expect";
 import { runVerificationCommand } from "../src/verification.js";
 
 describe("verification runner", () => {

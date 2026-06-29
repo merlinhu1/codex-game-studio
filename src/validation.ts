@@ -234,6 +234,20 @@ function customAgentChecks(projectRoot: string, role: StudioRoleId, studio: Stud
   ];
 }
 
+
+function slugCheckId(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "marker";
+}
+
+function sectionBody(body: string, heading: string): string {
+  const marker = `## ${heading}`;
+  const start = body.indexOf(marker);
+  if (start === -1) return "";
+  const after = body.slice(start + marker.length);
+  const next = after.search(/\n## /);
+  return next === -1 ? after : after.slice(0, next);
+}
+
 function skillChecks(projectRoot: string, studio: StudioProjectState): ValidationCheck[] {
   const checks: ValidationCheck[] = [];
   for (const definition of generatedSkillDefinitions(configFromStudio(studio))) {
@@ -247,6 +261,12 @@ function skillChecks(projectRoot: string, studio: StudioProjectState): Validatio
     checks.push(body.includes(`\nname: ${definition.name}\n`) ? pass(`codex.skill.${definition.name}.name`, `${definition.name} metadata has name`, file) : fail(`codex.skill.${definition.name}.name`, `${definition.name} metadata missing name`, file));
     checks.push(body.includes("\ndescription: ") ? pass(`codex.skill.${definition.name}.description`, `${definition.name} metadata has description`, file) : fail(`codex.skill.${definition.name}.description`, `${definition.name} metadata missing description`, file));
     checks.push(body === renderGeneratedSkill(definition) ? pass(`codex.skill.${definition.name}.freshness`, `${definition.name} skill is fresh`, file) : fail(`codex.skill.${definition.name}.freshness`, `${definition.name} skill is stale`, file));
+    const qualityGates = sectionBody(body, "Quality Gates");
+    for (const marker of definition.requiredMarkers ?? []) {
+      const id = `codex.skill.${definition.name}.marker.${slugCheckId(marker)}`;
+      const expectedBullet = `- ${marker}`;
+      checks.push(qualityGates.includes(expectedBullet) ? pass(id, `${definition.name} includes ${marker}`, file) : fail(id, `${definition.name} missing required marker ${marker}`, file));
+    }
   }
   return checks;
 }

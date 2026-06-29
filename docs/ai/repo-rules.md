@@ -17,7 +17,7 @@ This file mirrors the repository-specific agent rules from `AGENTS.md` in the co
 - Use `npm run validate` before any parity claim.
 - This project uses `"type": "module"`, `module: "NodeNext"`, and `moduleResolution: "NodeNext"`; relative TypeScript imports must use emitted `.js` specifiers.
 - For source-checkout usage, run `npm install && npm run build` first, then use `./codex-game-studio ...`; generated bundled CLI artifacts are not committed.
-- Keep generated game projects under `projects/<slug>/`.
+- Keep generated game project surfaces in the repository root.
 - Do not load all agents or all templates for a single role task.
 - `src/agents.ts` is the single owner for generated project `AGENTS.md`.
 - Direct Codex execution is the default path via `codex-game-studio run <role>`.

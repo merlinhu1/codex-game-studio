@@ -27,7 +27,7 @@ They are listed in `docs/truthmark/routes/areas/repository.md`.
 ## Current Implementation Behavior
 
 - The package exposes the `codex-game-studio` CLI from the built `dist/cli.js` entrypoint, and the source checkout exposes `./codex-game-studio` as a thin wrapper over built TypeScript output.
-- Initialization commands create deterministic game project structure in the current repository root by default; `--nested` preserves the legacy `projects/<slug>` layout.
+- Initialization commands create deterministic game project structure in the current repository root.
 - Generated projects contain `.codex/studio.json`, role prompt files, workflow markdown, starter docs, engine markers, and `AGENTS.md`.
 - Role run commands render deterministic Codex prompts.
 - Unless in inspection mode, role run commands execute Codex with optional verification, review, and bounded fix passes.

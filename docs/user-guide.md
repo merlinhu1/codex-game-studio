@@ -6,7 +6,7 @@ Use the README for quick orientation. Use this guide for installation, commands,
 
 ## How Codex Game Studio runs
 
-Codex Game Studio runs locally against the current repository checkout. By default, `init` turns the current repository root into the game workspace and keeps project state in files that can be reviewed in Git. Use `--nested` only as a legacy migration escape hatch for `projects/<slug>/`.
+Codex Game Studio runs locally against the current repository checkout. `init` turns the current repository root into the game workspace and keeps project state in files that can be reviewed in Git.
 
 The checked-in wrapper runs the built TypeScript entrypoint at `dist/cli.js`. This repository does not commit generated bundled CLI artifacts.
 
@@ -105,7 +105,7 @@ Project validation checks project state, generated prompt/workflow freshness, re
 
 | Command | What it does |
 | --- | --- |
-| `init` / `new` | Initialize the current repository root as the game workspace; pass `--nested` only for the legacy `projects/<slug>/` layout. |
+| `init` / `new` | Initialize the current repository root as the game workspace. |
 | `status` | Print project phase, status, engine, and the next validation command. |
 | `resume` | Print a read-only continuation summary. |
 | `refresh-context` | Regenerate `.codex/context-manifest.json` after selected context files change. |

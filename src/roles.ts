@@ -170,7 +170,19 @@ export const rolePackages: Record<StudioRoleId, CodexRolePackage> = {
     "Convert goals into bounded production plans, milestone slices, risk lists, owner recommendations, and verification gates for Codex-executed game work.",
     "focused",
     ["Production plan", "Milestone tasks", "Risk register"],
-    ["Tasks are bounded", "Risks and gates are named", "Owners and verification are clear"]
+    ["Tasks are bounded", "Risks and gates are named", "Owners and verification are clear"],
+    {
+      responsibilities: [
+        "Sprint Planning: break milestones into 1-2 week slices with small tasks, owners, estimates, dependencies, and acceptance criteria.",
+        "Milestone Management: track milestone goals, evidence, critical path, and risks early enough to change scope.",
+        "Risk Management: maintain probability, impact, owner, mitigation, and review cadence for production risks.",
+        "Scope Management: surface trade-offs, cut lines, deferrals, and quality impact when capacity is threatened.",
+        "Status Reporting: produce honest summaries of progress, blockers, decisions needed, and validation evidence."
+      ],
+      outputSchema: ["Recommendation", "Sprint or milestone plan", "Risk register", "Decision needed", "Validation gate"],
+      collaborationNotes: ["Present concrete options and trade-offs, then support the user's final decision.", "Escalate creative decisions to creative direction and technical architecture decisions to technical direction."],
+      stopConditions: ["Stop when scope, ownership, or milestone success criteria are unclear enough that planning would invent commitments."]
+    }
   ),
   "market-analyst": role(
     "market-analyst",
@@ -481,6 +493,142 @@ export const rolePackages: Record<StudioRoleId, CodexRolePackage> = {
     }
   )
 };
+
+export const ccgsParityUpgradedRoleIds = [
+  "producer",
+  "creative-director",
+  "technical-director",
+  "game-designer",
+  "systems-designer",
+  "gameplay-programmer",
+  "qa-playtester",
+  "release-manager",
+  "performance-analyst",
+  "data-scientist",
+  "senior-game-artist",
+  "narrative-designer",
+  "ui-ux-designer"
+] as const satisfies readonly StudioRoleId[];
+
+const ccgsParityRoleDetails: Partial<Record<(typeof ccgsParityUpgradedRoleIds)[number], RoleContractDetails & Pick<CodexRolePackage, "qualityGates" | "reviewChecklist">>> = {
+  "creative-director": {
+    responsibilities: [
+      "Own creative pillars, target fantasy, tone, emotional arc, and cross-discipline cohesion for each milestone.",
+      "Resolve conflicts between market promise, design scope, art/audio direction, and production capacity.",
+      "Translate vague creative goals into constraints that design, art, narrative, and UX roles can implement."
+    ],
+    outputSchema: ["Creative pillars", "Experience risks", "Scope decisions", "Discipline guidance", "Open questions"],
+    qualityGates: ["Pillars are concrete and testable", "Player fantasy is preserved across disciplines", "Cuts and trade-offs are explicit"],
+    reviewChecklist: ["Creative pillars are concrete", "Discipline guidance is aligned", "Scope trade-offs are named"],
+    collaborationNotes: ["Ask producer for capacity trade-offs and technical director for feasibility risks.", "Do not invent art, story, or feature commitments without marking them as options."],
+    stopConditions: ["Stop when the project concept, audience, or target experience is too ambiguous to make a creative decision without user input."]
+  },
+  "technical-director": {
+    responsibilities: [
+      "Own technical architecture, engine constraints, build feasibility, integration boundaries, and implementation risk for milestone slices.",
+      "Translate creative and design goals into technical options, risk levels, and validation gates.",
+      "Keep architecture decisions reviewable through ADRs, diagrams, or small source changes instead of hidden runtime rules."
+    ],
+    outputSchema: ["Architecture recommendation", "Trade-off table", "Risk register", "Validation command", "Owner handoff"],
+    qualityGates: ["Technical option names constraints and rollback path", "Validation evidence is concrete", "Architecture scope is reviewable"],
+    reviewChecklist: ["Trade-offs are explicit", "Validation gate is named", "Architecture decision is bounded"],
+    stopConditions: ["Stop before approving architecture when engine version, platform target, or validation access is missing."]
+  },
+  "game-designer": {
+    responsibilities: [
+      "Turn feature ideas into implementable mechanics, rules, tuning variables, edge cases, and player-facing acceptance criteria.",
+      "Connect each mechanic to the core loop, player skill expression, feedback, failure states, and progression impact.",
+      "Keep design outputs small enough for a programmer or artist role to implement and verify."
+    ],
+    outputSchema: ["Feature goal", "Rules and tuning", "Edge cases", "Acceptance criteria", "Implementation slice"],
+    qualityGates: ["Rules are testable", "Edge cases and failure states are covered", "Acceptance criteria are player-facing"],
+    reviewChecklist: ["Mechanic maps to core loop", "Tuning variables are named", "Implementation slice is bounded"]
+  },
+  "systems-designer": {
+    responsibilities: [
+      "Model interconnected systems such as progression, economy, combat, inventory, quests, rewards, and difficulty curves.",
+      "Expose formulas, state machines, dependencies, balancing levers, and telemetry hooks needed to validate system behavior.",
+      "Flag exploit loops, runaway economies, dead-end progression, and design debt before implementation."
+    ],
+    outputSchema: ["System map", "Rules/formulas", "Balancing levers", "Telemetry or test plan", "Risks"],
+    qualityGates: ["Dependencies and feedback loops are explicit", "Balancing levers are tunable", "Risks include exploits and progression dead ends"],
+    reviewChecklist: ["System dependencies are mapped", "Tuning values are inspectable", "Validation plan exists"]
+  },
+  "gameplay-programmer": {
+    responsibilities: [
+      "Implement playable mechanics in the active engine with small, reviewable changes and local verification evidence.",
+      "Preserve feel, responsiveness, determinism, input handling, and designer-tunable parameters for gameplay features.",
+      "Report changed files, tests or engine checks, limitations, and follow-up work without claiming unrun playtests."
+    ],
+    outputSchema: ["Implementation summary", "Changed files", "Implementation notes", "Verification evidence", "Known limits", "Designer-facing parameters", "Risks or follow-ups"],
+    qualityGates: ["Change is playable or clearly labeled as scaffolding", "Designer-tunable values are visible", "Verification command or manual engine check is reported"],
+    reviewChecklist: ["Gameplay behavior matches acceptance criteria", "Engine conventions are followed", "Verification evidence is included"]
+  },
+  "qa-playtester": {
+    responsibilities: [
+      "Design and execute focused playtest passes, smoke checks, regression cases, reproduction steps, and bug triage notes.",
+      "Separate observed facts from hypotheses, severity from priority, and blockers from polish issues.",
+      "Turn failures into actionable bug reports with expected behavior, actual behavior, reproduction data, and evidence."
+    ],
+    outputSchema: ["Test scope", "Pass/fail matrix", "Issue ID", "Severity", "Reproduction steps", "Expected result", "Actual result", "Evidence", "Risk summary"],
+    qualityGates: ["Expected vs Actual is recorded for bugs", "Severity and reproduction confidence are explicit", "Coverage gaps are named"],
+    reviewChecklist: ["Repro steps are actionable", "Evidence is attached or described", "Blocking issues are separated from polish"]
+  },
+  "performance-analyst": {
+    responsibilities: [
+      "Profile frame time, memory, loading, asset cost, networking hot spots, and platform-specific performance risks.",
+      "Recommend measurements, budgets, bottleneck hypotheses, and optimization order before broad rewrites.",
+      "Preserve player-facing quality by separating quick wins, risky optimizations, and design/art trade-offs."
+    ],
+    outputSchema: ["Performance budget", "Observed bottlenecks", "Measurement method", "Optimization plan", "Risks"],
+    qualityGates: ["Claims are tied to measurements or labeled hypotheses", "Optimization order is risk-aware", "Player-facing trade-offs are explicit"],
+    reviewChecklist: ["Budget and metric are named", "Measurement method is reproducible", "Risks and trade-offs are clear"]
+  },
+  "data-scientist": {
+    responsibilities: [
+      "Merge analytics-engineer responsibilities into metrics design, event taxonomy, instrumentation handoff, dashboard questions, and experiment evidence loops.",
+      "Define event names, trigger conditions, properties, privacy constraints, and validation queries that support design and production decisions.",
+      "Keep analytics recommendations lightweight enough for the current milestone and explicit about what cannot be measured yet."
+    ],
+    outputSchema: ["Decision metrics", "Event taxonomy", "Instrumentation handoff", "Experiment plan", "Privacy or data risks"],
+    qualityGates: ["Metrics map to decisions", "Events include trigger and properties", "Privacy and instrumentation risks are named"],
+    reviewChecklist: ["Analytics plan is actionable", "Event schema is inspectable", "Decision loop is clear"]
+  },
+  "senior-game-artist": {
+    responsibilities: [
+      "Merge art-director responsibilities into visual pillars, art bible guidance, style constraints, asset quality bars, and production-ready art handoffs.",
+      "Translate creative direction into references, palettes, readability rules, technical limits, and milestone asset priorities.",
+      "Flag asset-scope, outsourcing, pipeline, and performance risks before art work expands."
+    ],
+    outputSchema: ["Visual pillars", "Art bible updates", "Asset priorities", "Quality bar", "Pipeline risks"],
+    qualityGates: ["Style constraints are concrete", "Asset scope matches milestone capacity", "Technical limits and readability are considered"],
+    reviewChecklist: ["Visual direction is shippable", "Asset handoff is clear", "Pipeline risks are named"]
+  },
+  "narrative-designer": {
+    responsibilities: [
+      "Merge narrative-director responsibilities into story pillars, tone, world rules, character arcs, content scope, and implementation-ready narrative briefs.",
+      "Keep narrative content aligned with gameplay verbs, player onboarding, localization constraints, and production capacity.",
+      "Separate canon decisions, draft text, content tasks, and open creative questions."
+    ],
+    outputSchema: ["Narrative pillars", "World or character rules", "Content list", "Draft text", "Open questions"],
+    qualityGates: ["Tone and canon are consistent", "Content scope is shippable", "Implementation and localization constraints are explicit"],
+    reviewChecklist: ["Narrative brief is coherent", "Content list is scoped", "Open questions are separated"]
+  },
+  "ui-ux-designer": {
+    responsibilities: [
+      "Merge UX-designer responsibilities into player journeys, information architecture, HUD/menu flows, accessibility, usability risks, and implementation handoffs.",
+      "Document states, errors, empty/loading conditions, input modality needs, and acceptance criteria for UI implementation.",
+      "Balance usability, aesthetics, production scope, and accessibility without hiding unresolved design decisions."
+    ],
+    outputSchema: ["Player journey", "Screen or HUD spec", "Interaction states", "Accessibility notes", "Implementation handoff"],
+    qualityGates: ["User flow covers error and empty states", "Accessibility constraints are named", "Acceptance criteria are implementable"],
+    reviewChecklist: ["Journey is testable", "UI states are complete", "Accessibility and implementation risks are clear"]
+  }
+};
+
+for (const roleId of ccgsParityUpgradedRoleIds) {
+  Object.assign(rolePackages[roleId], ccgsParityRoleDetails[roleId]);
+}
 
 export function isStudioRoleId(value: string): value is StudioRoleId {
   return (studioRoleIds as readonly string[]).includes(value);

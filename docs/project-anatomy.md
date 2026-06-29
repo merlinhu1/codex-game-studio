@@ -1,6 +1,6 @@
 # Project Anatomy
 
-Codex Game Studio projects are ordinary directories under `projects/<slug>/`. The generated files are the contract between humans, Codex, validation, and later role runs.
+Codex Game Studio projects are ordinary repository-root workspaces. The generated files are the contract between humans, Codex, validation, and later role runs.
 
 ## Generated project tree
 
@@ -77,7 +77,7 @@ Codex Game Studio does not recursively dump the whole project into every prompt.
 | `engine_configs/` | Engine overlays for Godot, Unity, and Unreal. |
 | `engine_reference/` | Curated engine reference packs selected by role and task. |
 | `docs/` | Setup, migration, validation, architecture, and truth docs. |
-| `tests/` | Vitest coverage for projects, prompts, templates, validation, runner behavior, engine behavior, and orchestration. |
+| `tests/` | node:test coverage for projects, prompts, templates, validation, runner behavior, engine behavior, and orchestration. |
 
 ## Validation-sensitive surfaces
 
