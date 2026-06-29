@@ -26,9 +26,11 @@ Codex Game Studio should adapt that idea, not the Claude implementation. The CCG
 1. Rule packs are a Codex Game Studio surface, not a Claude compatibility surface.
 2. Built-in package rule packs are the canonical defaults.
 3. Generated project rule packs may be materialized under `.codex/studio/rules/**` when the project needs local reviewable copies or overrides.
-4. Rule selection is explicit and deterministic. It is based on declared task context, not ambient editor hooks.
-5. Mechanically checkable rules become validation checks. Subjective guidance remains selected prompt context.
-6. No `.claude/hooks`, `.claude/rules`, Git hooks, background daemons, or hidden lifecycle triggers are introduced.
+4. Generated project role agents should be visible as clone-injectable `.codex/agents/**` files in addition to the runtime `.codex/prompts/**` prompts.
+5. Workflow skills should be visible as clone-injectable `.agents/skills/**` packages when they are meant to behave like reusable agent workflows.
+6. Rule selection is explicit and deterministic. It is based on declared task context, not ambient editor hooks.
+7. Mechanically checkable rules become validation checks. Subjective guidance remains selected prompt context.
+8. No `.claude/hooks`, `.claude/rules`, Git hooks, background daemons, or hidden lifecycle triggers are introduced.
 
 ## Non-goals
 
@@ -107,6 +109,50 @@ Generated local rule packs must include provenance metadata so validation can de
 <!-- source-registry-version: 1 -->
 <!-- source-sha256: <hash> -->
 ```
+
+### Clone-injectable agents and skills
+
+Codex Game Studio should make generated projects self-describing after a plain `git clone`. The generated project should carry the role and workflow surfaces that a host can inject without requiring the original package checkout.
+
+Proposed generated project layout:
+
+```text
+projects/<slug>/
+  AGENTS.md
+  .codex/
+    agents/
+      producer.md
+      gameplay-programmer.md
+      qa-playtester.md
+    prompts/
+      producer.md
+      gameplay-programmer.md
+      qa-playtester.md
+    workflows/
+      bugfix.md
+      vertical-slice.md
+    studio.json
+  .agents/
+    skills/
+      bugfix/SKILL.md
+      vertical-slice/SKILL.md
+      ui-ux-review/SKILL.md
+```
+
+`AGENTS.md` remains the primary Codex instruction surface. `.codex/agents/**` is the browseable, clone-injectable agent catalog. `.codex/prompts/**` remains the runtime prompt surface used by `run <role>` and selected context contracts. The first implementation may make `.codex/agents/<role>.md` and `.codex/prompts/<role>.md` identical files or one may be a generated wrapper pointing to the other, but validation must keep both fresh if both are materialized.
+
+`.agents/skills/**` is for reusable workflow packages, not for hidden hooks. A workflow skill package contains a `SKILL.md` with the workflow goal, required role, selected templates, validation expectations, and handoff format. It may include support files only when those files reduce prompt bloat or make the workflow auditable after clone.
+
+Generated agent and skill files must include provenance metadata:
+
+```markdown
+<!-- generated-by: codex-game-studio -->
+<!-- surface: role-agent | workflow-skill -->
+<!-- source-id: gameplay-programmer -->
+<!-- source-sha256: <hash> -->
+```
+
+This gives the CCGS-style "clone the repo and see the studio" experience while preserving Codex Game Studio's explicit runtime. A host may inject `.codex/agents/**` or `.agents/skills/**` directly, but Codex Game Studio still executes through explicit CLI commands and validates generated surface freshness.
 
 ## Selection inputs
 
@@ -311,7 +357,33 @@ Verification:
 npm test -- tests/rule-selection.test.ts
 ```
 
-### Task 3: Wire selection into run preparation
+### Task 3: Materialize clone-injectable agent and skill surfaces
+
+Files:
+
+- Modify: `src/agents.ts`
+- Modify: `src/generated-surfaces.ts`
+- Modify: `src/projects.ts`
+- Modify: `src/workflows.ts`
+- Modify: `tests/project-workflow.test.ts`
+- Modify: `tests/agents-templates.test.ts`
+- Modify: `tests/validation.test.ts`
+
+Behavior:
+
+- materialize active-engine role agents under `.codex/agents/**` during `init`;
+- keep runtime role prompts under `.codex/prompts/**` until a later migration proves one surface can replace the other;
+- materialize workflow skill packages under `.agents/skills/<workflow-id>/SKILL.md` for reusable built-in workflows;
+- include provenance metadata for every generated agent and skill file;
+- validate freshness and reject wrong-engine generated agents just like wrong-engine prompts.
+
+Verification:
+
+```bash
+npm test -- tests/project-workflow.test.ts tests/agents-templates.test.ts tests/validation.test.ts
+```
+
+### Task 4: Wire selection into run preparation
 
 Files:
 
@@ -325,6 +397,7 @@ Behavior:
 - include selected standards in `--dry-run` output;
 - include selected standards in prompt packets;
 - record selected and omitted pack metadata in run metadata;
+- make selected `.codex/agents/**` and `.agents/skills/**` paths visible in dry-run diagnostics when those files are used as context;
 - preserve non-mutating behavior for `--dry-run` and `--print-prompt`.
 
 Verification:
@@ -333,7 +406,7 @@ Verification:
 npm test -- tests/runner.test.ts tests/codex-prompts.test.ts
 ```
 
-### Task 4: Wire selection into task orchestration diagnostics
+### Task 5: Wire selection into task orchestration diagnostics
 
 Files:
 
@@ -355,7 +428,7 @@ Verification:
 npm test -- tests/orchestrator.test.ts tests/workflow-recipes.test.ts
 ```
 
-### Task 5: Add validation checks and package shipping coverage
+### Task 6: Add validation checks and package shipping coverage
 
 Files:
 
@@ -369,6 +442,7 @@ Behavior:
 - validate built-in registry shape;
 - validate project-local rule-pack overrides;
 - validate generated local provenance when local packs are materialized;
+- validate generated `.codex/agents/**` and `.agents/skills/**` provenance and freshness;
 - fail on missing package assets;
 - keep subjective guidance as advisory output only.
 
@@ -380,7 +454,7 @@ npm test
 npm run validate
 ```
 
-### Task 6: Update truth and user docs
+### Task 7: Update truth and user docs
 
 Files:
 
@@ -393,6 +467,7 @@ Files:
 Behavior:
 
 - document rule-pack selection as explicit selected context;
+- document clone-injectable `.codex/agents/**` and `.agents/skills/**` surfaces;
 - document validation severity split;
 - document project-local override behavior;
 - avoid describing Truthmark workflow mechanics as a product feature.
@@ -410,6 +485,9 @@ git diff --check
 - Built-in rule packs are package assets and load from installed-bin execution.
 - A project can run without local rule packs and still receive built-in selected standards.
 - A project can materialize local `.codex/studio/rules/**` rule packs with provenance.
+- A generated project materializes clone-injectable `.codex/agents/**` files for active-engine roles.
+- A generated project materializes clone-injectable `.agents/skills/**` packages for reusable workflow skills.
+- Validation detects stale or wrong-engine generated agents and stale generated workflow skills.
 - Selection can use path, role, engine, project stage, studio strictness, workflow, and declared write files.
 - `run --dry-run` shows selected and omitted standards without writing state.
 - Prompt packets include only selected guidance within budget caps.
@@ -421,17 +499,22 @@ git diff --check
 ## Open questions
 
 1. Should local rule packs be materialized by default during `init`, or only when a project enables customization?
-2. Should built-in rules be engine-neutral first, with engine-specific overlays later, or should the first pass include Godot/Unity/Unreal overlays?
-3. Should `strict-studio` require declared write files for every mutating task, or should it allow a conservative project-wide write scope with a warning?
+2. Should `.codex/agents/**` duplicate `.codex/prompts/**` in the first pass, or should one surface become a lightweight wrapper pointing to the canonical body?
+3. Which workflows deserve `.agents/skills/**` packages in the first pass: all built-in workflows, only task-recipe workflows, or only high-value reusable workflows?
+4. Should built-in rules be engine-neutral first, with engine-specific overlays later, or should the first pass include Godot/Unity/Unreal overlays?
+5. Should `strict-studio` require declared write files for every mutating task, or should it allow a conservative project-wide write scope with a warning?
 
 ## Recommended first implementation slice
 
-Build the read-only selection path first:
+Build the visible generated-surface and read-only selection path first:
 
 1. package registry;
-2. selector;
-3. `run --dry-run` selected/omitted diagnostics;
-4. prompt inclusion;
-5. registry validation.
+2. `.codex/agents/**` materialization for active-engine roles;
+3. `.agents/skills/**` materialization for a small workflow-skill set;
+4. generated-surface provenance validation;
+5. selector;
+6. `run --dry-run` selected/omitted diagnostics;
+7. prompt inclusion;
+8. registry validation.
 
-Defer local rule-pack materialization and strict-studio hard failures until the built-in selector is proven with tests.
+Defer local rule-pack materialization, full workflow-skill coverage, and strict-studio hard failures until the built-in selector and generated agent/skill surfaces are proven with tests.
