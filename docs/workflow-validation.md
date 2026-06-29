@@ -20,3 +20,7 @@ Behavioral evaluation scenarios are local deterministic validation subchecks. Th
 Project-local customization uses `.codex/studio/config.json` as an extend-only overlay. Custom role, workflow, and template IDs must use `custom-*`, must not override built-ins, and all referenced prompt/context/template paths must remain inside the project root.
 
 No generated `CODEX.md`, `.gamestudio/runs`, or `project_orchestrator.md` is required or produced.
+
+## Codex prompt model routing
+
+Prompt surfaces declare exact Codex model policy in tracked template files. Complex design, architecture, production, and release-gate surfaces use `gpt-5.5`; moderate implementation, QA, docs, bugfix, and bounded workflow surfaces use `gpt-5.4`; simple help, status, classification, checklist, and lookup surfaces use `gpt-5.4-mini`. Runtime dry-runs and run metadata expose the selected model and reasoning effort, and Codex execution receives the exact selected model instead of a generic tier name.

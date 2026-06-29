@@ -1,0 +1,10 @@
+display_name: "Prototype"
+short_description: "Codex Game Studio Prototype skill invocation metadata."
+default_prompt: "Use cgs-prototype for the current repository task. Include target files, constraints, and required verification evidence."
+invocation_policy: "user-invocable; no hidden lifecycle behavior; respects repository write policy"
+dependencies:
+  agents:
+    - producer
+  files:
+    - AGENTS.md
+    - .codex/studio.json

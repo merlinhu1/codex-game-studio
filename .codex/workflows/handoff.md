@@ -1,3 +1,16 @@
+---
+model: gpt-5.5
+model_reasoning_effort: high
+primary-agent: studio-orchestrator
+linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
+phase: plan
+risk: high
+argument-hint: Describe the handoff goal, target milestone/files, constraints, and required evidence.
+source-reference: .codex/workflows/handoff.md
+source-hash: e307052ed5c98b2c7db097b17c27cb580f9d1253884e3d9154650cece91cca91
+output-artifacts: [plan, changed-files, verification-evidence, handoff]
+---
+
 # Handoff Workflow
 
 ## Purpose
@@ -35,3 +48,36 @@ CLI aliases:
 - Next role and reason are explicit
 - Scope and blockers are separated
 - No hidden planner or parallel execution is implied
+
+## Phase Gates
+
+- Confirm project state, owner role, write policy, and selected context.
+- Name acceptance criteria before implementation or review work.
+- Do not advance to handoff until evidence is recorded or a blocker is explicit.
+
+## Required Artifacts
+
+- Summary of the workflow result.
+- Files, assets, tasks, or docs changed or proposed.
+- Verification evidence and unresolved risks.
+
+## Context Contract
+
+- Load AGENTS.md, .codex/studio.json, this workflow, the primary agent, linked skills, and only task-relevant project files.
+- Avoid broad context unless the user explicitly approves it.
+
+## Output Contract
+
+- Decision or change summary.
+- Step-by-step work performed or planned.
+- Evidence, blockers, warnings, and next owner.
+
+## Stop Conditions
+
+- Required project state, approval, target files, or verification path is missing.
+- The task crosses into another role without an explicit handoff.
+- The workflow would require generated prompt mirrors or hidden automation.
+
+## Handoff
+
+Report changed files, validation evidence, residual risks, and the next owner only when ownership changes.

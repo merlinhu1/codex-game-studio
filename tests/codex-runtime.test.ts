@@ -14,8 +14,10 @@ describe("codex runtime", () => {
   });
 
   test("builds structured codex exec args with cwd, sandbox, and stdin prompt", () => {
-    const args = buildCodexExecArgs({ projectRoot: "/repo", sandbox: "read-only" });
+    const args = buildCodexExecArgs({ projectRoot: "/repo", sandbox: "read-only", model: "gpt-5.5" });
     expect(args).toContain("exec");
+    expect(args).toContain("--model");
+    expect(args).toContain("gpt-5.5");
     expect(args).toContain("--cd");
     expect(args).toContain("/repo");
     expect(args).toContain("--sandbox");

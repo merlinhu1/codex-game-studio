@@ -96,14 +96,18 @@ Code surface:
 - src/behavioral-evaluation.ts
 - src/customization.ts
 - src/prompt-context.ts
+- src/prompt-surface-metadata.ts
 - src/workflows.ts
 - src/workflow-catalog.ts
 - src/ccgs-parity.ts
 - scripts/audit-ccgs-surfaces.ts
+- scripts/audit-prompt-surfaces.ts
 - src/engine-reference.ts
 - src/templates.ts
 - src/generated-surfaces.ts
 - references/ccgs-surface-parity-matrix.*
+- references/prompt-surface-uplift-matrix.*
+- references/prompt-uplift-eval-protocol.md
 - templates/**
 - tests/roles.test.ts
 - tests/codex-session.test.ts
@@ -112,6 +116,9 @@ Code surface:
 - tests/workflow-catalog.test.ts
 - tests/functionality-gap-pass.test.ts
 - tests/template-repository-surfaces.test.ts
+- tests/prompt-surface-audit.test.ts
+- tests/prompt-surface-metadata.test.ts
+- tests/prompt-surface-validation.test.ts
 
 Update truth when:
 - studio role IDs, custom role IDs, role contracts, workflow registry entries, or prompt rendering change

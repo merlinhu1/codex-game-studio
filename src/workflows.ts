@@ -11,6 +11,7 @@ import { evaluateStudioRunEligibility } from "./studio-policy.js";
 import { engineReferenceContextRequests } from "./engine-reference.js";
 import { renderSelectedTemplates, type TemplateId } from "./templates.js";
 import { findCustomRole, findCustomWorkflow, projectRelativePath, renderCustomRolePrompt, type CustomWorkflowDefinition } from "./customization.js";
+import { defaultModelPolicyForId, type CodexModelName, type ReasoningEffort } from "./prompt-surface-metadata.js";
 
 export type WorkflowCategory =
   | "onboarding-discovery"
@@ -66,17 +67,22 @@ export type WorkflowDefinition = {
   templateIds?: TemplateId[];
   cliAlias?: string;
   cliAliases?: string[];
+  model: CodexModelName;
+  modelReasoningEffort: ReasoningEffort;
 };
 
-type WorkflowInput = Omit<WorkflowDefinition, "file" | "contextFiles"> & {
+type WorkflowInput = Omit<WorkflowDefinition, "file" | "contextFiles" | "model" | "modelReasoningEffort"> & {
   extraContextFiles?: string[];
 };
 
 function workflow(input: WorkflowInput): WorkflowDefinition {
+  const modelPolicy = defaultModelPolicyForId(input.id);
   return {
     ...input,
     file: `.codex/workflows/${input.id}.md`,
-    contextFiles: ["AGENTS.md", ".codex/studio.json", `.codex/workflows/${input.id}.md`, ...(input.extraContextFiles ?? [])]
+    contextFiles: ["AGENTS.md", ".codex/studio.json", `.codex/workflows/${input.id}.md`, ...(input.extraContextFiles ?? [])],
+    model: modelPolicy.model,
+    modelReasoningEffort: modelPolicy.effort
   };
 }
 

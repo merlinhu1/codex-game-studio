@@ -108,3 +108,7 @@ Validation checks clone-ready template surfaces before project state exists and 
 Template validation checks tracked agents, workflows, and skills for expected structure and for absence of maintenance-only surfaces. Project validation checks starter docs, engine source markers, context manifests, read-only command behavior, forbidden legacy artifacts, and future-only CLI drift.
 
 See [Workflow Validation](workflow-validation.md) for the full validation contract.
+
+## Codex prompt model routing
+
+Prompt surfaces declare exact Codex model policy in tracked template files. Complex design, architecture, production, and release-gate surfaces use `gpt-5.5`; moderate implementation, QA, docs, bugfix, and bounded workflow surfaces use `gpt-5.4`; simple help, status, classification, checklist, and lookup surfaces use `gpt-5.4-mini`. Runtime dry-runs and run metadata expose the selected model and reasoning effort, and Codex execution receives the exact selected model instead of a generic tier name.

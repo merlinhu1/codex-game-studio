@@ -1,3 +1,16 @@
+---
+model: gpt-5.5
+model_reasoning_effort: high
+primary-agent: technical-director
+linked-skills: [cgs-architecture-decision, cgs-vertical-slice]
+phase: plan
+risk: high
+argument-hint: Describe the architecture-decision goal, target milestone/files, constraints, and required evidence.
+source-reference: .codex/workflows/architecture-decision.md
+source-hash: f0d51d1e058c54bd34c0bedcb7ee79098aebc3605b581447aedaffcf0a4193f2
+output-artifacts: [plan, changed-files, verification-evidence, handoff]
+---
+
 # Architecture Decision Workflow
 
 ## Purpose
@@ -36,3 +49,36 @@ CLI aliases:
 - Trade-offs are explicit
 - Validation gate is named
 - Architecture decision is bounded
+
+## Phase Gates
+
+- Confirm project state, owner role, write policy, and selected context.
+- Name acceptance criteria before implementation or review work.
+- Do not advance to handoff until evidence is recorded or a blocker is explicit.
+
+## Required Artifacts
+
+- Summary of the workflow result.
+- Files, assets, tasks, or docs changed or proposed.
+- Verification evidence and unresolved risks.
+
+## Context Contract
+
+- Load AGENTS.md, .codex/studio.json, this workflow, the primary agent, linked skills, and only task-relevant project files.
+- Avoid broad context unless the user explicitly approves it.
+
+## Output Contract
+
+- Decision or change summary.
+- Step-by-step work performed or planned.
+- Evidence, blockers, warnings, and next owner.
+
+## Stop Conditions
+
+- Required project state, approval, target files, or verification path is missing.
+- The task crosses into another role without an explicit handoff.
+- The workflow would require generated prompt mirrors or hidden automation.
+
+## Handoff
+
+Report changed files, validation evidence, residual risks, and the next owner only when ownership changes.

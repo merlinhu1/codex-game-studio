@@ -178,3 +178,7 @@ Use `--dry-run` or `--print-prompt` when you only need to inspect the prompt pac
 Inspect the relevant tracked template surface or project-state file before trusting the output. Project validation is intentionally strict about missing template files, malformed context metadata, and malformed project state.
 
 See [Workflow Validation](workflow-validation.md) for the detailed validation contract.
+
+## Codex prompt model routing
+
+Prompt surfaces declare exact Codex model policy in tracked template files. Complex design, architecture, production, and release-gate surfaces use `gpt-5.5`; moderate implementation, QA, docs, bugfix, and bounded workflow surfaces use `gpt-5.4`; simple help, status, classification, checklist, and lookup surfaces use `gpt-5.4-mini`. Runtime dry-runs and run metadata expose the selected model and reasoning effort, and Codex execution receives the exact selected model instead of a generic tier name.
