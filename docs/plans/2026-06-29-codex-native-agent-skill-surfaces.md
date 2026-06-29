@@ -8,44 +8,77 @@ source_of_truth:
   - "https://developers.openai.com/codex/guides/agents-md"
   - "https://developers.openai.com/codex/rules"
   - "https://developers.openai.com/codex/hooks"
+  - "../../../../Claude-Code-Game-Studios@984023d"
   - ../architecture/product-boundary.md
   - ../../AGENTS.md
 ---
 
-# Codex-Native Agent and Skill Surfaces Implementation Design
+# Codex-Native Repository-Root Game Studio Implementation Plan
 
 > **For Hermes:** Use subagent-driven-development skill to implement this plan task-by-task.
 
-**Goal:** Generate Codex-native project agents and workflow skills that become visible and usable after a plain `git clone`.
+**Goal:** Make Codex Game Studio install and behave like CCGS: cloning the repository creates the game root, with Codex-native agents and skills already discoverable.
 
-**Architecture:** Codex Game Studio keeps its TypeScript registries as package source of truth, but `init` materializes official Codex surfaces into each generated project: `.codex/agents/*.toml` for custom agents, `.agents/skills/*/SKILL.md` for reusable workflow and standards skills, and `AGENTS.md` for repository instructions. Existing `.codex/prompts/**` and `.codex/workflows/**` remain Codex Game Studio runtime artifacts until a later migration proves they can be removed.
+**Architecture:** The repository root is the game project. Codex surfaces live at root-level `AGENTS.md`, `.codex/agents/*.toml`, and `.agents/skills/*/SKILL.md`. Product-maintenance material that explains the Codex Game Studio implementation must not live in game-facing paths such as `docs/` or `src/`, because those paths should describe the user's game, not the tool that produced the template.
 
-**Tech Stack:** TypeScript, NodeNext, Codex CLI native project files, generated-surface provenance, Vitest, Truthmark.
+**Tech Stack:** TypeScript, NodeNext, Codex CLI native project files, repository-template layout, generated-surface provenance, Vitest, Truthmark.
 
 ---
 
-## Online Codex documentation findings
+## CCGS reference findings
 
-The previous `.codex/agents/*.md` idea was wrong. Current Codex docs define different native surfaces:
+Latest CCGS main was fetched at `/opt/data/repos/Claude-Code-Game-Studios`, commit `984023d`.
 
-1. **Custom agents are TOML files.** Project-scoped custom agents live under `.codex/agents/`. Each standalone agent file must define `name`, `description`, and `developer_instructions`. Optional fields include `model`, `model_reasoning_effort`, `sandbox_mode`, `mcp_servers`, and `skills.config`. Source: <https://developers.openai.com/codex/subagents>.
-2. **Skills live under `.agents/skills`.** For repositories, Codex scans `.agents/skills` from the current working directory up to the repository root. A skill is a directory with `SKILL.md` plus optional `scripts/`, `references/`, `assets/`, and `agents/openai.yaml`. Codex initially sees each skill's name, description, and path, then loads full `SKILL.md` only when the skill is selected. Source: <https://developers.openai.com/codex/skills>.
-3. **`AGENTS.md` is the instruction surface.** Codex reads global and project `AGENTS.md` or `AGENTS.override.md` files before work. Project discovery starts at the repository root and walks down to the current working directory. Files closer to the working directory appear later and override broader guidance. Source: <https://developers.openai.com/codex/guides/agents-md>.
-4. **Codex rules are permission rules, not coding standards.** Project-local command permission rules live under `<repo>/.codex/rules/*.rules` and control whether commands can run outside the sandbox. They are experimental. They should not be used for gameplay/UI/test coding standards. Source: <https://developers.openai.com/codex/rules>.
-5. **Codex hooks are official but trusted lifecycle automation.** Project hooks can live in `<repo>/.codex/hooks.json` or `<repo>/.codex/config.toml`, but non-managed command hooks must be reviewed and trusted before they run. Matching hooks from multiple files all run. Source: <https://developers.openai.com/codex/hooks>.
+CCGS installation behavior is template-root behavior, not nested project generation:
+
+```bash
+git clone https://github.com/Donchitos/Claude-Code-Game-Studios.git my-game
+cd my-game
+claude
+/start
+```
+
+The cloned repository is the game root. There is no separate installer that creates `projects/<slug>/`. CCGS root contains game-oriented runtime surfaces:
+
+```text
+CLAUDE.md
+.claude/agents/**
+.claude/skills/**
+.claude/hooks/**
+.claude/rules/**
+src/                 # game source, initially nearly empty
+design/              # game design docs
+docs/                # game technical docs and engine reference
+production/          # game production state
+```
+
+The important adaptation is not Claude-specific hooks. The important adaptation is that the repo itself is a prepared game workspace. The first Codex session should see game-development instructions, game roles, and game workflows, not package-maintainer plans about the tool implementation.
+
+## Current CGS mismatch
+
+Current Codex Game Studio still behaves like a package that generates child projects:
+
+- `initProject()` writes into `projects/<slug>/`.
+- Root `src/` contains the TypeScript CLI implementation, but a game root `src/` should contain game source.
+- Root `docs/` contains product architecture, implementation plans, Truthmark docs, migration docs, and development rules. A game root `docs/` should contain game technical docs, engine reference, ADRs, postmortems, and player-facing project documentation.
+- Root `AGENTS.md` tells agents how to maintain the Codex Game Studio package, not how to build a game.
+- Root `.codex/agents/` currently contains Truthmark repository-maintenance agents, which are wrong for a game workspace.
+
+This layout can derail a game-development Codex session because automatic guidance and normal file search point at tool-maintenance material.
 
 ## Correct target layout
 
-A generated project should look like this after `init`:
+A fresh clone should already be a usable game root:
 
 ```text
-projects/<slug>/
+my-game/
   AGENTS.md
   .codex/
     agents/
       producer.toml
       gameplay-programmer.toml
       qa-playtester.toml
+      godot-specialist.toml
     prompts/
       producer.md
       gameplay-programmer.md
@@ -53,38 +86,123 @@ projects/<slug>/
     workflows/
       bugfix.md
       vertical-slice.md
+      setup-engine.md
     studio.json
     tasks.json
     context-manifest.json
   .agents/
     skills/
+      cgs-start/SKILL.md
+      cgs-setup-engine/SKILL.md
       cgs-bugfix/SKILL.md
       cgs-vertical-slice/SKILL.md
-      cgs-ui-ux-review/SKILL.md
       cgs-standards-gameplay/SKILL.md
       cgs-standards-tests/SKILL.md
+  src/
+    .gitkeep
+  assets/
+    .gitkeep
+  design/
+    gdd.md
+  docs/
+    engine-reference/
+      godot/VERSION.md
+    architecture/
+      README.md
+  tests/
+    .gitkeep
+  tools/
+    .gitkeep
+  production/
+    session-state/.gitkeep
 ```
 
 Canonical meanings:
 
-- `AGENTS.md`: Codex instruction surface loaded automatically.
+- `AGENTS.md`: Codex instruction surface loaded automatically for game development.
 - `.codex/agents/*.toml`: official project-scoped Codex custom agents.
 - `.agents/skills/*/SKILL.md`: official repository skill packages.
-- `.codex/prompts/*.md`: Codex Game Studio runtime prompt artifacts used by `codex-game-studio run <role>` until the CLI is migrated to direct custom-agent orchestration.
-- `.codex/workflows/*.md`: Codex Game Studio workflow prompt artifacts, not Codex-native skills.
-- `.codex/rules/*.rules`: reserved for sandbox command permission rules only.
-- `.codex/hooks.json`: optional future surface for trust-reviewed lifecycle hooks; not part of the first implementation slice.
+- `.codex/prompts/*.md`: CGS runtime prompt artifacts used by `run <role>` until direct custom-agent orchestration is stable.
+- `.codex/workflows/*.md`: CGS workflow prompt artifacts, not Codex-native skills.
+- `src/`, `assets/`, `design/`, `docs/`, `tests/`, `tools/`, and `production/`: game project paths.
+- Codex Game Studio implementation docs and package-maintainer plans do not belong in game-facing root paths.
 
 ## Design decisions
 
-1. Generate `.codex/agents/*.toml`, not `.codex/agents/*.md`.
-2. Generate workflow and standards skills under `.agents/skills/**`, not `.codex/skills/**`.
-3. Use `cgs-` prefixes for generated skill names to avoid collisions with user or global skills. Public docs say duplicate skill names are not merged and can both appear.
-4. Keep `AGENTS.md` concise. It should point to available agents and skills, not embed all role or workflow bodies.
-5. Keep `.codex/prompts/**` for current runtime compatibility. Do not pretend it is the Codex custom-agent format.
-6. Do not use Codex `rules` for coding standards. Encode standards as skills and selected prompt/context guidance. Use `.codex/rules/*.rules` only for permission-policy rules if a later design needs them.
-7. Do not generate hooks by default. Add `<project>/.codex/hooks.json` only in a later explicit design that handles Codex hook trust and user review.
-8. Validate all generated surfaces with source hashes and schema versions.
+1. The primary install path is now `git clone <repo> my-game`, then run Codex from `my-game`.
+2. `init` configures the current repository root by default. It no longer creates `projects/<slug>/` in the primary path.
+3. Nested `projects/<slug>/` creation becomes a legacy or explicit sandbox mode only, guarded by an option such as `init --nested` if kept at all.
+4. Generate `.codex/agents/*.toml`, not `.codex/agents/*.md`.
+5. Generate workflow and standards skills under `.agents/skills/**`, not `.codex/skills/**`.
+6. Use `cgs-` prefixes for generated skill names to avoid collisions with user or global skills. Public Codex docs say duplicate skill names are not merged and can both appear.
+7. Keep `AGENTS.md` concise. It should point to available agents and skills, not embed every role or workflow body.
+8. Do not use Codex `rules` for coding standards. Official Codex rules are sandbox command permission rules. Encode coding standards as skills and selected prompt/context guidance.
+9. Do not generate hooks by default. Add `.codex/hooks.json` only in a later design that handles Codex hook trust review.
+10. Root `/docs` is game documentation. Product docs, implementation plans, Truthmark repository docs, and migration notes must move out of game-facing root paths or out of the distributed template.
+
+## Documentation boundary
+
+The root game template may contain these documentation classes:
+
+- `docs/engine-reference/**`: version-pinned engine references useful to the game project;
+- `docs/architecture/**`: game architecture docs and ADRs;
+- `docs/api/**`: game API docs;
+- `docs/postmortems/**`: game postmortems;
+- `design/**`: game design docs;
+- `production/**`: game production records.
+
+The root game template must not contain these CGS maintainer classes:
+
+- `docs/plans/**` implementation plans for Codex Game Studio itself;
+- `docs/truthmark/**` repository-truth workflow docs;
+- `docs/architecture/product-boundary.md` for the tool package;
+- `docs/ai/repo-rules.md` for maintaining the tool repo;
+- `docs/migration-from-claude.md` as a package-maintainer document;
+- `docs/development*.md` that explain the package implementation;
+- generated Truthmark agents under root `.codex/agents/**`.
+
+First implementation choice: move CGS maintainer docs into a clearly non-game maintenance area that is excluded from the template export, such as `tooling/codex-game-studio/docs/**`, or split them to a separate maintainer branch/repository. Do not leave them under root `docs/`.
+
+## Runtime behavior
+
+### Clone-root path
+
+After a plain clone, a user can launch Codex in the repository root and Codex can discover:
+
+- game instructions from `AGENTS.md`;
+- custom game agents from `.codex/agents/*.toml`;
+- game workflow skills from `.agents/skills/*/SKILL.md`.
+
+This path should not require running the CGS CLI before the first Codex session. A `/start`-style skill or `cgs-start` skill can guide configuration if the game has no engine or concept yet.
+
+### CLI path
+
+`codex-game-studio init --non-interactive ...` configures the current directory by default:
+
+```bash
+git clone <repo> my-game
+cd my-game
+./codex-game-studio init --non-interactive --name "My Game" --engine godot --mode prototype
+```
+
+The command writes or refreshes root files. It must refuse to run if the current directory looks like an unrelated source checkout unless the user passes an explicit force or template-maintenance flag.
+
+`codex-game-studio run <role>` defaults to the current repository root when `.codex/studio.json` exists. `--project` remains accepted for legacy nested projects during migration.
+
+### Development-maintenance path
+
+Maintaining the CGS package is a different mode from building a game. If the repository keeps package source in the same Git history, maintenance files must be isolated away from game-facing paths and root game instructions must not ask game agents to read them.
+
+Candidate maintenance locations:
+
+```text
+tooling/codex-game-studio/src/**
+tooling/codex-game-studio/tests/**
+tooling/codex-game-studio/docs/**
+tooling/codex-game-studio/truthmark/**
+```
+
+Long-term cleaner option: keep the game template repository separate from the package-maintenance repository. The template repository should contain only game-root files.
 
 ## Agent generation contract
 
@@ -98,10 +216,10 @@ Each generated role agent is a TOML file:
 # schema-version: 1
 
 name = "gameplay_programmer"
-description = "Game development implementation agent for gameplay-programmer tasks in this project. Use for gameplay feature code, mechanics integration, and implementation verification."
+description = "Game development implementation agent for gameplay-programmer tasks in this repository. Use for gameplay feature code, mechanics integration, and implementation verification."
 model_reasoning_effort = "medium"
 developer_instructions = """
-You are the gameplay-programmer role for this Codex Game Studio project.
+You are the gameplay-programmer role for this Codex Game Studio repository.
 Follow AGENTS.md, .codex/studio.json, and selected task context.
 Keep changes bounded to the requested task.
 Report changed files and verification evidence.
@@ -114,7 +232,7 @@ Mapping rules:
 - TOML `name` uses a safe Codex agent identifier derived from the role ID by replacing `-` with `_`.
 - `description` front-loads trigger words for when Codex should use the agent.
 - `developer_instructions` reuses the role package contract but is formatted for a custom Codex agent, not for a one-shot prompt.
-- Only active-engine roles are materialized. A Godot project gets `godot-specialist.toml` and must not get `unity-specialist.toml` or `unreal-specialist.toml`.
+- Only active-engine roles are materialized. A Godot repository gets `godot-specialist.toml` and must not get `unity-specialist.toml` or `unreal-specialist.toml`.
 - Optional `skills.config` is deferred until tested with relative project paths. The first pass relies on repository skill discovery from `.agents/skills`.
 
 ## Skill generation contract
@@ -124,12 +242,12 @@ Each generated workflow or standards skill is a directory with `SKILL.md`:
 ```markdown
 ---
 name: cgs-bugfix
-description: Use for Codex Game Studio bugfix workflow tasks: reproduce, repair, verify, and report a bounded defect.
+description: Use for Codex Game Studio bugfix workflow tasks in a game repository: reproduce, repair, verify, and report a bounded defect.
 ---
 
 # Codex Game Studio Bugfix Workflow
 
-Use this skill when the task is a bounded defect repair in this generated game project.
+Use this skill when the task is a bounded defect repair in this game repository.
 
 ## Inputs
 
@@ -149,85 +267,193 @@ Use this skill when the task is a bounded defect repair in this generated game p
 
 Skill categories:
 
+- Onboarding skills: `cgs-start`, `cgs-setup-engine`, `cgs-adopt`.
 - Workflow skills: `cgs-bugfix`, `cgs-vertical-slice`, `cgs-ui-ux-review`, `cgs-release-checklist` in the first pass because these already have task recipes.
 - Standards skills: `cgs-standards-gameplay`, `cgs-standards-tests`, `cgs-standards-prototype`, `cgs-standards-ui` in the first pass.
 - Later workflow skills can be generated for all built-in workflows after prompt-budget and selector behavior is verified.
 
 ## AGENTS.md contract
 
-Generated `AGENTS.md` remains the primary project guidance file. It should include:
+Root `AGENTS.md` is game-facing and should include:
 
 - project identity;
 - engine and mode;
 - validation commands;
-- the active role-agent catalog path `.codex/agents/*.toml`;
-- the generated skill catalog path `.agents/skills/*/SKILL.md`;
+- expected game directory layout;
+- active role-agent catalog path `.codex/agents/*.toml`;
+- generated skill catalog path `.agents/skills/*/SKILL.md`;
 - the rule that coding standards are skills, not Codex permission rules;
-- current no-hidden-hooks boundary.
+- current no-hidden-hooks boundary;
+- an explicit ignore rule for any retained maintenance/tooling tree.
 
-It should not embed every role prompt, workflow prompt, template, or standards body. Codex docs state `AGENTS.md` discovery has a default combined size cap, so `AGENTS.md` must stay a compact index and contract.
-
-## Runtime behavior
-
-### Current runtime path
-
-`codex-game-studio run <role>` continues to prepare and execute a bounded Codex prompt from existing role packages and `.codex/prompts/<role>.md`.
-
-Dry-run must show both runtime and native Codex surfaces:
-
-```text
-Runtime role prompt: .codex/prompts/gameplay-programmer.md
-Codex custom agent: .codex/agents/gameplay-programmer.toml
-Relevant skills:
-- .agents/skills/cgs-standards-gameplay/SKILL.md
-- .agents/skills/cgs-bugfix/SKILL.md
-```
-
-### Clone-injectable path
-
-After a plain `git clone`, a user can launch Codex in the generated project and Codex can discover:
-
-- project instructions from `AGENTS.md`;
-- custom agents from `.codex/agents/*.toml`;
-- skills from `.agents/skills/*/SKILL.md`.
-
-This path does not require `codex-game-studio` to be installed, though validation and regeneration still require the CLI.
+It must not include CGS package-maintainer instructions unless the user intentionally enters a maintainer mode.
 
 ## Validation contract
 
-Repository validation must check package assets and generators.
+Repository validation must check the root game template:
 
-Project validation must check generated project surfaces:
-
-- `AGENTS.md` exists and has fresh provenance;
+- `AGENTS.md` is game-facing and does not contain package-maintainer instructions;
+- root `src/` is game source, not TypeScript CLI source, in the distributed template;
+- root `docs/` contains only game-facing docs;
 - active-engine `.codex/agents/*.toml` files exist;
 - wrong-engine `.codex/agents/*.toml` files are absent;
 - every generated agent TOML parses and contains `name`, `description`, and `developer_instructions`;
-- generated agent source hashes match current role package inputs;
-- `.agents/skills/<name>/SKILL.md` exists for required first-pass workflow and standards skills;
+- generated agent source hashes match current role inputs;
+- `.agents/skills/<name>/SKILL.md` exists for required first-pass onboarding, workflow, and standards skills;
 - generated skill `SKILL.md` files include `name` and `description` metadata;
 - generated skill hashes match current workflow or standards source inputs;
 - `.codex/rules/**` is absent unless a permission-rules feature is explicitly enabled;
-- `.codex/hooks.json` is absent unless a hooks feature is explicitly enabled.
+- `.codex/hooks.json` is absent unless a hooks feature is explicitly enabled;
+- no root Truthmark maintenance agents are shipped in `.codex/agents/**` for game use.
 
 Optional Codex CLI smoke validation, when Codex is available:
 
 ```bash
-codex debug prompt-input "probe generated project skills" > /tmp/cgs-prompt-input.json
+codex debug prompt-input "probe generated repository skills" > /tmp/cgs-prompt-input.json
 ```
 
 The probe should confirm generated skill names appear in the skill list. A later test can inspect custom agent availability once the CLI exposes a stable debug shape for custom agents.
 
 ## Implementation tasks
 
-### Task 1: Add generated custom-agent renderer
+### Task 1: Capture CCGS install behavior as a fixture
 
-**Objective:** Convert existing role packages into Codex custom agent TOML.
+**Objective:** Add a regression fixture documenting that the reference strategy is clone-root installation.
 
 **Files:**
 
-- Modify: `src/agents.ts`
-- Modify: `src/generated-surfaces.ts`
+- Create: `tooling/codex-game-studio/docs/reference/ccgs-installation.md`
+- Test: `tooling/codex-game-studio/tests/reference-layout.test.ts`
+
+**Steps:**
+
+1. Record the CCGS commit and root layout facts from `/opt/data/repos/Claude-Code-Game-Studios`.
+2. Assert the reference setup command is clone-to-game-root, not nested project generation.
+3. Assert CCGS `src/` is game source and CCGS `docs/` is game/workflow docs, not package-maintainer docs.
+4. Keep this fixture out of root game-facing `docs/`.
+
+**Verification:**
+
+```bash
+npm test -- tooling/codex-game-studio/tests/reference-layout.test.ts
+```
+
+### Task 2: Introduce template-root mode
+
+**Objective:** Change project initialization so the default project root is the current repository root.
+
+**Files:**
+
+- Modify: `src/projects.ts` or its moved path under `tooling/codex-game-studio/src/projects.ts`
+- Modify: `src/paths.ts` or moved equivalent
+- Test: `tests/project-workflow.test.ts`
+
+**Steps:**
+
+1. Add a `rootMode` project initializer path that resolves `projectRoot = cwd`.
+2. Make root mode the default for `init`.
+3. Preserve nested `projects/<slug>/` only behind an explicit legacy option.
+4. Refuse root initialization if `.codex/studio.json` already exists with a different project name unless `--force-refresh` is passed.
+5. Test that `init` writes `.codex/studio.json` directly under the temp cwd.
+6. Test that no `projects/<slug>/` directory is created in default mode.
+
+**Verification:**
+
+```bash
+npm test -- tests/project-workflow.test.ts
+```
+
+### Task 3: Move package implementation out of game-facing root paths
+
+**Objective:** Prevent game sessions from reading tool-maintenance source as game source.
+
+**Files:**
+
+- Move: `src/**` to `tooling/codex-game-studio/src/**`
+- Move: `tests/**` to `tooling/codex-game-studio/tests/**`
+- Move: package config files if needed: `package.json`, `tsconfig*.json`, `vitest.config.ts`
+- Modify: package scripts and imports after the move
+- Test: full package test suite
+
+**Steps:**
+
+1. Move CLI implementation source out of root `src/`.
+2. Leave root `src/.gitkeep` as the game source placeholder.
+3. Update package scripts to run from the new tooling package root.
+4. Update TypeScript config paths.
+5. Build once to catch broken NodeNext imports.
+6. Test that a clean template root has no TypeScript package source under root `src/`.
+
+**Verification:**
+
+```bash
+npm run build
+npm test
+```
+
+### Task 4: Move CGS maintainer docs out of root `docs/`
+
+**Objective:** Make root `docs/` safe for game development.
+
+**Files:**
+
+- Move: `docs/plans/**` to `tooling/codex-game-studio/docs/plans/**`
+- Move: `docs/truthmark/**` to `tooling/codex-game-studio/docs/truthmark/**` or remove from the template repository
+- Move: `docs/architecture/product-boundary.md` to tooling docs
+- Move: `docs/ai/repo-rules.md` to tooling docs
+- Move: `docs/development*.md` to tooling docs
+- Keep or rewrite: `docs/engine-reference/**` as game-facing reference
+- Keep or rewrite: `docs/architecture/**` only for game architecture
+- Test: new layout validation
+
+**Steps:**
+
+1. Classify every current root `docs/**` file as game-facing or maintainer-facing.
+2. Move maintainer-facing docs out of root `docs/`.
+3. Rewrite root `docs/README.md` to describe game documentation only.
+4. Update any internal links from moved docs.
+5. Add a validation check that root `docs/` cannot contain `doc_type: implementation-design`, Truthmark route docs, package development docs, or CGS product-boundary docs.
+6. Test the validator with one forbidden fixture.
+
+**Verification:**
+
+```bash
+npm test -- tests/validation.test.ts
+```
+
+### Task 5: Replace root AGENTS.md with game-facing guidance
+
+**Objective:** Make Codex start in game-development mode after clone.
+
+**Files:**
+
+- Modify: `AGENTS.md`
+- Move old maintainer instructions to: `tooling/codex-game-studio/AGENTS.md`
+- Test: `tests/agents-templates.test.ts`
+
+**Steps:**
+
+1. Generate or write root `AGENTS.md` as a game project contract.
+2. Include references to `.codex/agents/*.toml`, `.agents/skills/**`, and game validation commands.
+3. Add a short rule: ignore `tooling/codex-game-studio/**` unless the task explicitly says to maintain Codex Game Studio.
+4. Move package-maintainer rules into tooling-local `AGENTS.md`.
+5. Test that root `AGENTS.md` does not mention NodeNext, Truthmark, or package release rules.
+6. Test that tooling `AGENTS.md` retains package-maintainer rules.
+
+**Verification:**
+
+```bash
+npm test -- tests/agents-templates.test.ts
+```
+
+### Task 6: Generate root `.codex/agents/*.toml`
+
+**Objective:** Materialize Codex custom agents at the game root.
+
+**Files:**
+
+- Modify: `src/agents.ts` or moved equivalent
+- Modify: `src/generated-surfaces.ts` or moved equivalent
 - Test: `tests/agents-templates.test.ts`
 
 **Steps:**
@@ -236,7 +462,9 @@ The probe should confirm generated skill names appear in the skill list. A later
 2. Serialize TOML with required fields: `name`, `description`, `developer_instructions`.
 3. Add provenance comments with source role ID, schema version, and source hash.
 4. Use active-engine filtering through `projectRoleIdsForEngine`.
-5. Test that a Godot project renders `godot-specialist.toml` and does not render Unity or Unreal agents.
+5. Write agents under root `.codex/agents/`.
+6. Test that a Godot project renders `godot-specialist.toml` and does not render Unity or Unreal agents.
+7. Test that Truthmark maintenance agents are absent from the game template.
 
 **Verification:**
 
@@ -244,220 +472,129 @@ The probe should confirm generated skill names appear in the skill list. A later
 npm test -- tests/agents-templates.test.ts
 ```
 
-### Task 2: Materialize `.codex/agents/*.toml` during init
+### Task 7: Generate root `.agents/skills/**`
 
-**Objective:** Write project-scoped custom agents into generated projects.
-
-**Files:**
-
-- Modify: `src/agents.ts`
-- Modify: `src/projects.ts`
-- Test: `tests/project-workflow.test.ts`
-
-**Steps:**
-
-1. Update `materializeAgents` to create `.codex/agents`.
-2. Write one TOML file per active project role.
-3. Keep existing `.codex/prompts/*.md` writes unchanged.
-4. Update generated `AGENTS.md` to reference `.codex/agents/*.toml`.
-5. Test generated file existence and wrong-engine omission.
-
-**Verification:**
-
-```bash
-npm test -- tests/project-workflow.test.ts
-```
-
-### Task 3: Add workflow skill renderer
-
-**Objective:** Convert first-pass built-in workflows into Codex skills.
+**Objective:** Materialize Codex skills at the game root.
 
 **Files:**
 
-- Create: `src/skills.ts`
-- Modify: `src/workflows.ts` if helper exports are needed
+- Create or modify: `src/skills.ts` or moved equivalent
+- Modify: `src/projects.ts` or moved equivalent
 - Test: `tests/skills.test.ts`
+- Test: `tests/project-workflow.test.ts`
 
 **Steps:**
 
 1. Add `GeneratedSkillDefinition` with `name`, `description`, `sourceId`, `body`, and `sourceHash`.
 2. Render `SKILL.md` with frontmatter `name` and `description`.
-3. Generate first-pass workflow skills for `bugfix`, `vertical-slice`, `ui-ux-review`, and `release-checklist`.
-4. Include references to existing `.codex/workflows/<id>.md` files instead of duplicating the full workflow body when a pointer is enough.
-5. Test frontmatter, trigger descriptions, and provenance.
+3. Generate onboarding skills for start/setup/adopt.
+4. Generate first-pass workflow skills for bugfix, vertical-slice, UI/UX review, and release checklist.
+5. Generate standards skills for gameplay, tests, prototype, and UI.
+6. Write skills under root `.agents/skills/<skill-name>/SKILL.md`.
+7. Test generated skill paths after root `init`.
 
 **Verification:**
 
 ```bash
-npm test -- tests/skills.test.ts
+npm test -- tests/skills.test.ts tests/project-workflow.test.ts
 ```
 
-### Task 4: Add standards skills, not Codex rules
+### Task 8: Update dry-run, status, and validation for root mode
 
-**Objective:** Encode path/domain coding standards as skills rather than `.codex/rules`.
+**Objective:** Make CLI inspection report root-mode Codex-native surfaces.
 
 **Files:**
 
-- Modify: `src/skills.ts`
-- Create: `tests/standards-skills.test.ts`
-
-**Steps:**
-
-1. Add standards skill definitions for gameplay, tests, prototype, and UI.
-2. Put path and domain trigger words in each skill description.
-3. Keep deterministic checks in validation, not in the subjective `SKILL.md` body.
-4. Do not create `.codex/rules/*.rules`.
-5. Test that generated skills have clear `description` triggers and valid frontmatter.
-
-**Verification:**
-
-```bash
-npm test -- tests/standards-skills.test.ts
-```
-
-### Task 5: Materialize `.agents/skills/**` during init
-
-**Objective:** Write generated skills into the project so Codex discovers them after clone.
-
-**Files:**
-
-- Modify: `src/projects.ts`
-- Modify: `src/skills.ts`
-- Test: `tests/project-workflow.test.ts`
-
-**Steps:**
-
-1. Create `.agents/skills/<skill-name>/`.
-2. Write `SKILL.md` for each first-pass workflow and standards skill.
-3. Keep skill names stable and `cgs-` prefixed.
-4. Update `AGENTS.md` to list `.agents/skills` as the workflow and standards skill catalog.
-5. Test generated skill paths after `init`.
-
-**Verification:**
-
-```bash
-npm test -- tests/project-workflow.test.ts tests/skills.test.ts
-```
-
-### Task 6: Validate generated Codex-native surfaces
-
-**Objective:** Add hard validation for generated agents and skills.
-
-**Files:**
-
-- Modify: `src/validation.ts`
+- Modify: `src/runner.ts` or moved equivalent
+- Modify: `src/projects.ts` or moved equivalent
+- Modify: `src/validation.ts` or moved equivalent
+- Test: `tests/runner.test.ts`
 - Test: `tests/validation.test.ts`
 
 **Steps:**
 
-1. Validate `.codex/agents/*.toml` presence for active roles.
-2. Validate wrong-engine agent absence.
-3. Validate TOML required fields. If no TOML parser exists, add a narrow parser for generated scalar/string fields or use simple structural validation for generated files only.
-4. Validate skill directories and `SKILL.md` frontmatter.
-5. Validate provenance hashes for generated agent and skill files.
-6. Fail if `.codex/rules/**` or `.codex/hooks.json` appears without an explicit future feature flag.
+1. Make `run --dry-run` default to cwd when `.codex/studio.json` exists.
+2. Print `Codex custom agent: .codex/agents/<role>.toml`.
+3. Print selected skill paths under `.agents/skills/**`.
+4. Add root layout validation for game-facing `src/` and `docs/`.
+5. Add validation failure for root `.codex/agents/truth-*.toml` in game mode.
+6. Preserve legacy `--project` behavior until migration is complete.
 
 **Verification:**
 
 ```bash
-npm test -- tests/validation.test.ts
-npm run validate
+npm test -- tests/runner.test.ts tests/validation.test.ts
 ```
 
-### Task 7: Show native surfaces in dry-run and status output
+### Task 9: Add package/template smoke tests
 
-**Objective:** Make the clone-injectable surfaces discoverable without reading source code.
+**Objective:** Prove a clone-style game root is usable without reading maintainer docs.
 
 **Files:**
 
-- Modify: `src/runner.ts`
-- Modify: `src/projects.ts`
-- Modify: `docs/user-guide.md`
-- Test: `tests/runner.test.ts`
+- Create: `tests/template-root-smoke.test.ts`
+- Modify: package test script as needed
 
 **Steps:**
 
-1. Add `Codex custom agent: .codex/agents/<role>.toml` to `run --dry-run` output.
-2. Add selected generated skill paths to dry-run output when a workflow or standards skill is relevant.
-3. Add `status` output that points to `.codex/agents` and `.agents/skills`.
-4. Update user docs with official Codex path names.
-5. Test dry-run and status strings.
+1. Create a temp directory representing a fresh clone.
+2. Run root `init` in the temp directory.
+3. Assert root `.codex/agents/*.toml`, `.agents/skills/**`, `AGENTS.md`, game `src/`, and game `docs/` exist.
+4. Assert no root `projects/<slug>/` exists.
+5. Assert no forbidden maintainer docs exist under root `docs/`.
+6. If `codex` is available, run the optional skill discovery probe from the temp root.
 
 **Verification:**
 
 ```bash
-npm test -- tests/runner.test.ts tests/project-workflow.test.ts
+npm test -- tests/template-root-smoke.test.ts
 ```
 
-### Task 8: Add optional Codex debug smoke probe
+### Task 10: Update public docs and migration docs
 
-**Objective:** Verify generated repository skills are visible to Codex when Codex CLI is available.
+**Objective:** Document the new CCGS-style install path.
 
 **Files:**
 
-- Modify: `src/validation.ts` or add a dev-only test helper
-- Test: focused integration test, skipped when `codex` is unavailable
+- Modify: `README.md`
+- Modify or move: `docs/setup.md`
+- Modify or move: `docs/user-guide.md`
+- Modify: `UPGRADING.md` if present after layout cleanup
 
 **Steps:**
 
-1. Create a temp project with generated `.agents/skills`.
-2. Run `codex debug prompt-input "probe generated project skills"` from the generated project root.
-3. Parse JSON or text for `cgs-bugfix` and one standards skill.
-4. Skip with an explicit diagnostic if Codex is not installed or authenticated.
+1. Replace `projects/<slug>` setup examples with clone-root setup examples.
+2. Explain that root `docs/` is for game docs.
+3. Explain that maintainer/tooling docs are not part of the game-facing template.
+4. Document legacy nested projects only as a migration escape hatch.
+5. Avoid parity claims unless `npm run validate` passes.
 
 **Verification:**
 
 ```bash
-npm test -- tests/codex-skill-discovery.test.ts
-```
-
-### Task 9: Update truth and architecture docs
-
-**Objective:** Record the corrected Codex-native surface contract.
-
-**Files:**
-
-- Modify: `docs/architecture/product-boundary.md` only if product boundary wording needs clarification.
-- Modify: `docs/truthmark/engineering/projects/project-scaffolding.md`
-- Modify: `docs/truthmark/engineering/codex/roles-and-workflows.md`
-- Modify: `docs/truthmark/engineering/contracts/cli-and-validation.md`
-- Modify: `docs/project-anatomy.md`
-- Modify: `docs/user-guide.md`
-
-**Steps:**
-
-1. Describe `.codex/agents/*.toml` as native custom-agent files.
-2. Describe `.agents/skills/**` as native Codex skill packages.
-3. Describe `.codex/prompts/**` and `.codex/workflows/**` as CGS runtime artifacts.
-4. State that coding standards are skills or AGENTS.md guidance, not Codex permission rules.
-5. State that hooks are not generated by default.
-6. Run Truthmark checks.
-
-**Verification:**
-
-```bash
-truthmark check --json
-truthmark index --json
 git diff --check
+npm run validate
 ```
 
 ## Acceptance criteria
 
-- Generated projects contain `.codex/agents/*.toml` for active roles.
-- Generated custom-agent TOML files include required Codex fields: `name`, `description`, and `developer_instructions`.
-- Generated projects contain `.agents/skills/<name>/SKILL.md` for first-pass workflow and standards skills.
-- Generated skills include `name` and `description` metadata.
-- Generated `AGENTS.md` points to native agents and skills without embedding all content.
-- Existing `run <role>` behavior still works through `.codex/prompts/**`.
-- Validation fails stale generated agent and skill files.
-- Validation fails wrong-engine generated agents.
+- `git clone <repo> my-game` yields a game root, not a package-maintenance root.
+- Default `init` writes root `.codex/studio.json` and does not create `projects/<slug>/`.
+- Root `src/` is game source, not CGS TypeScript package source.
+- Root `docs/` contains game-facing docs only.
+- Root `AGENTS.md` is game-facing.
+- `.codex/agents/*.toml` contains Codex custom game agents.
+- `.agents/skills/*/SKILL.md` contains Codex repository skill packages.
+- Existing `run <role>` behavior still works through `.codex/prompts/**` during migration.
+- Validation fails if package-maintainer docs appear under root `docs/`.
+- Validation fails if Truthmark maintenance agents appear under root `.codex/agents/**` in game mode.
 - No `.codex/agents/*.md` files are generated.
 - No `.codex/rules/*.rules` files are generated for coding standards.
 - No `.codex/hooks.json` is generated by default.
-- Optional Codex debug probe confirms repository skills are discoverable when Codex CLI is available.
 
 ## Deferred work
 
+- Split the package-maintenance repository from the game-template repository if keeping both in one repository remains confusing.
 - Migrate `run <role>` to use Codex custom agents directly if the CLI exposes a stable noninteractive custom-agent selection contract.
 - Generate workflow skills for all built-in workflows after prompt-budget behavior is measured.
 - Add project-local Codex hooks only after a design covers trust review, hook disablement, and deterministic failure behavior.
@@ -465,4 +602,4 @@ git diff --check
 
 ## Rollback plan
 
-If the generated native surfaces create confusion or Codex discovery changes, keep existing runtime behavior stable by leaving `.codex/prompts/**`, `.codex/workflows/**`, and `AGENTS.md` intact. Disable native surface materialization behind one generator flag, regenerate affected projects, and keep validation focused on the old runtime surfaces until the native surface contract is repaired.
+If root-mode migration breaks existing users, keep `init --nested` and `--project` support for one release. The rollback path restores nested `projects/<slug>/` generation while preserving the corrected Codex-native file formats. Do not roll back to `.codex/agents/*.md` or to coding standards under `.codex/rules/**`.
