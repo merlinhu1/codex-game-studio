@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run",
+    "test": "node --import tsx --test --test-concurrency=1",
     "validate": "npm run build --silent && node dist/cli.js validate",
     "init": "npm run build --silent && node dist/cli.js init",
     "manage": "npm run build --silent && node dist/cli.js status",
@@ -32,9 +32,9 @@
   },
   "devDependencies": {
     "@types/node": "^24.13.2",
+    "expect": "^30.4.1",
     "truthmark": "^2.2.6",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.3",
-    "vitest": "^1.6.1"
+    "typescript": "^5.9.3"
   }
 }

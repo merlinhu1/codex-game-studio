@@ -3,7 +3,7 @@
 Required verification:
 
 ```bash
-npm test -- --run tests/behavioral-evaluation.test.ts tests/customization.test.ts
+npm test -- tests/behavioral-evaluation.test.ts tests/customization.test.ts
 npm run typecheck
 npm run build
 npm test

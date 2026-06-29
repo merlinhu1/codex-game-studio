@@ -330,7 +330,7 @@ Required package metadata excerpt:
     "build": "tsc -p tsconfig.build.json",
     "init": "npm run build --silent && node dist/cli.js init",
     "manage": "npm run build --silent && node dist/cli.js status",
-    "test": "vitest run",
+    "test": "node:test run",
     "validate": "npm run build --silent && node dist/cli.js validate",
     "templates": "npm run build --silent && node dist/cli.js templates"
   },

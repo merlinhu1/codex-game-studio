@@ -27,7 +27,6 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 - Initialization accepts optional `--studio-mode` and defaults it to `guided-studio`.
 - Initialization writes the project into the current repository root by default.
 - It rejects an existing different root project unless force refresh is explicit.
-- Explicit `--nested` keeps the legacy `projects/<slug>/` layout and checks same-parent slug collisions plus Unreal class-name collisions before writing.
 - Project state is written to `.codex/studio.json`.
 - Project state uses schema version 1 and product `codex-game-studio`.
 - Project state records project summary fields, lifecycle `mode`, policy `studioMode`, project-scoped roles, active roles, active engine specialist, and workflow IDs.
@@ -61,7 +60,7 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 - Project creation is deterministic and non-interactive.
 - Missing `--non-interactive` or `--mode` is an error.
 - Omitted `--studio-mode` uses `guided-studio`.
-- Generated projects use the current repository root by default; `--nested` is a legacy migration escape hatch for `projects/<slug>/`.
+- Generated projects use the current repository root as the project workspace.
 - `CODEX.md`, `project_orchestrator.md`, `.gamestudio/runs`, `.codex/hooks.json`, coding-standard `.codex/rules/*.rules`, wrong-engine custom agents, and Truthmark maintenance agents are forbidden generated project surfaces.
 - Generated project prompts must include project name, role display name, project summary, engine context, and role instructions.
 - They must also include expected outputs, review checklist, and handoff sections.
@@ -132,7 +131,7 @@ Generated project instructions live in `AGENTS.md` to align with Codex-native wo
 - Update this doc when context manifest, config, engine, engine reference, agent, path, engine config, or engine reference assets change.
 - Relevant verification includes project workflow, agent/template, engine-system, and project validation tests.
 
-- Decision (2026-06-29): Treat the clone checkout root as the primary game root and keep `--nested` only for legacy migration.
+- Decision (2026-06-29): Treat the clone checkout root as the game root; do not maintain a script-installed or nested project compatibility mode.
 - Decision (2026-06-29): Generate Codex-native custom agents under `.codex/agents/*.toml` and repository skills under `.agents/skills/*/SKILL.md`.
 
 ## Source References

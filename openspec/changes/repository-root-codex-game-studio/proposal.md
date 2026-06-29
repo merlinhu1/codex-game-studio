@@ -1,6 +1,6 @@
 ## Why
 
-Codex Game Studio currently behaves like a package source checkout that creates nested `projects/<slug>` workspaces. CCGS demonstrates a better install strategy for game development: clone the repository as the game root so the first agent session sees game instructions, game roles, and game workflows immediately.
+Codex Game Studio previously behaved like a package source checkout that created nested `projects/<slug>` workspaces. CCGS demonstrates a better strategy for game development: clone the repository as the game root so the first agent session sees game instructions, game roles, and game workflows immediately.
 
 The current root `src/`, `docs/`, `AGENTS.md`, and `.codex/agents/**` also contain package-maintainer material that can derail a game-development Codex session. The repository-root template must separate game-facing surfaces from Codex Game Studio implementation and maintenance surfaces.
 
@@ -14,7 +14,6 @@ The current root `src/`, `docs/`, `AGENTS.md`, and `.codex/agents/**` also conta
 - Keep `.codex/prompts/**` and `.codex/workflows/**` as CGS runtime artifacts during migration.
 - Keep `.codex/rules/*.rules` reserved for Codex sandbox command permission rules, not coding standards.
 - Do not generate Codex hooks by default.
-- Preserve legacy nested project support only behind an explicit migration option if needed.
 
 ## Capabilities
 
@@ -35,4 +34,3 @@ None. This repository did not have existing OpenSpec specs before this change.
 - Generated surfaces: root `AGENTS.md`, `.codex/agents/*.toml`, `.agents/skills/**`, `.codex/prompts/**`, `.codex/workflows/**`, `.codex/studio.json`, and `.codex/context-manifest.json`.
 - Documentation layout: root `docs/` changes from package docs to game docs only.
 - Tests: template-root smoke tests, validation tests, agent/skill rendering tests, runner tests, and optional Codex debug probe.
-- Migration: existing nested `projects/<slug>` users need an explicit compatibility path during the transition.

@@ -13,7 +13,7 @@ source_of_truth:
 
 ## Purpose
 
-This architecture flow guide documents the runtime scenario for `codex-game-studio init` and `codex-game-studio new`. Both commands use the same initialization path to create a deterministic Codex Game Studio project under `projects/<slug>/`.
+This architecture flow guide documents the runtime scenario for `codex-game-studio init` and `codex-game-studio new`. Both commands use the same initialization path to create a deterministic Codex Game Studio project in the current repository root.
 
 ## Scope
 
@@ -37,7 +37,7 @@ Project initialization owns generated project creation and initial `.codex` stat
 
 - The user supplies `--name`, `--engine`, `--mode`, and `--non-interactive`.
 - The selected engine is known by the engine registry.
-- The target `projects/<slug>/` path does not already exist.
+- The target root either has no `.codex/studio.json` or is force-refreshed for the same project intent.
 - Same-parent project slug and Unreal class-name collision checks pass.
 
 ## Inputs
@@ -111,7 +111,7 @@ flowchart TD
 
 The successful flow creates or writes:
 
-- `projects/<slug>/`
+- repository root
 - `.codex/studio.json`
 - `.codex/runs/`
 - `.codex/workflows/*.md`
@@ -128,7 +128,7 @@ Forbidden generated project surfaces remain forbidden: `CODEX.md`, `project_orch
 | --- | --- | --- |
 | Required-option failure | CLI command missing required flags. | `src/cli.ts` command definitions. |
 | Invalid engine | Engine value not recognized or engine registry changed. | `src/engines.ts`, `engine_configs/**`. |
-| Target collision | `projects/<slug>/` already exists. | Project directory and slug derivation in `src/projects.ts`. |
+| Target collision | root `.codex/studio.json` belongs to a different project. | Project state loading in `src/projects.ts`. |
 | Generated file missing in validation | Scaffolding contract drift. | `src/projects.ts`, `src/agents.ts`, `src/validation.ts`. |
 
 ## Code Traceability

@@ -1,4 +1,5 @@
-import { describe, expect, test } from "vitest";
+import { describe, test } from "node:test";
+import { expect } from "expect";
 import { ccgsInventory, ccgsRoleAdaptations, ccgsSkillAdaptations, validateCcgsAdaptation } from "../src/ccgs-adaptation.js";
 import { studioRoleIds } from "../src/roles.js";
 

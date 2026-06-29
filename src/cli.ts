@@ -88,7 +88,6 @@ function addInitCommand(name: "init" | "new"): void {
     .option("--monetization <text>", "monetization model")
     .option("--timeline <text>", "timeline")
     .option("--engine-version <version>", "engine version override")
-    .option("--nested", "legacy: create projects/<slug> instead of configuring the current root")
     .option("--force-refresh", "refresh an existing root project with matching intent")
     .requiredOption("--non-interactive", "use deterministic defaults")
     .action((opts) => {

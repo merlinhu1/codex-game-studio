@@ -2,7 +2,8 @@ import { existsSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { describe, expect, test } from "vitest";
+import { describe, test } from "node:test";
+import { expect } from "expect";
 import { projectRolePromptSourceInput } from "../src/agents.js";
 import { packageAssetPath } from "../src/paths.js";
 import { freezeProject, initProject } from "../src/projects.js";
@@ -292,6 +293,19 @@ describe("validation", () => {
     const legacyPrompt = path.join(legacyProject, ".codex", "prompts", "market-analyst.md");
     writeFileSync(legacyPrompt, readFileSync(legacyPrompt, "utf8").replace(/^<!-- .* -->\n/gm, ""));
     expect(validateProject(legacyProject)).toContainEqual(expect.objectContaining({ id: "codex.role.market-analyst.prompt.freshness", status: "skip" }));
+  });
+
+  test("generated skill content markers are validated", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-skill-depth-"));
+    const { projectRoot } = initProject({ name: "Skill Marker Val", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const file = path.join(projectRoot, ".agents", "skills", "cgs-vertical-slice", "SKILL.md");
+    const body = readFileSync(file, "utf8");
+    const qualityGateStart = body.indexOf("## Quality Gates");
+    writeFileSync(file, body.slice(0, qualityGateStart) + body.slice(qualityGateStart).replace("- Validation Question", "- Removed Question"));
+
+    expect(validateProject(projectRoot).filter((c) => c.status === "fail")).toContainEqual(
+      expect.objectContaining({ id: "codex.skill.cgs-vertical-slice.marker.validation-question" })
+    );
   });
 
   test("generated surface source input covers rendered engine and role display fields", () => {

@@ -35,9 +35,9 @@ Current Codex documentation defines the native surfaces to use:
 
 ### Repository root is the game root
 
-Default installation is `git clone <repo> my-game`, then run Codex from `my-game`. Default `init` resolves `projectRoot = cwd` and writes root `.codex/studio.json`. Nested `projects/<slug>` remains only as explicit legacy mode if retained.
+Default installation is `git clone <repo> my-game`, then run Codex from `my-game`. Default `init` resolves `projectRoot = cwd` and writes root `.codex/studio.json`. Nested `projects/<slug>` generation is not retained.
 
-Alternative rejected: keep nested `projects/<slug>` as the main path. That preserves package-maintenance cleanliness but fails the desired CCGS injection strategy and leaves first-session Codex context pointed at package-maintainer docs.
+Alternative rejected: keep nested `projects/<slug>` generation. That preserves package-maintenance cleanliness but fails the desired CCGS injection strategy and leaves first-session Codex context pointed at package-maintainer docs.
 
 ### Separate game-facing and maintainer-facing paths
 
@@ -65,7 +65,7 @@ Alternative rejected: copy CCGS hook automation immediately. That imports hidden
 
 ## Risks / Trade-offs
 
-- Root-mode migration may break current users who rely on `projects/<slug>` → Keep `init --nested` and `--project` as a transitional compatibility path.
+- Root-mode migration may break current users who rely on `projects/<slug>` → Keep explicit `--project` path selection for existing projects, but do not create new nested projects from init.
 - Moving package source under `tooling/**` may disrupt package scripts and import paths → Add build, package-bin, and temp-cwd smoke tests before merging.
 - Keeping package maintenance and game template in one repository may remain confusing → Treat `tooling/**` isolation as the first step and keep a separate template repository as the long-term option.
 - Codex custom-agent noninteractive selection may not be stable → Keep current `.codex/prompts/**` runtime path until a stable custom-agent execution contract exists.
@@ -75,17 +75,17 @@ Alternative rejected: copy CCGS hook automation immediately. That imports hidden
 
 1. Add OpenSpec-backed requirements and task plan.
 2. Add root-mode tests first.
-3. Implement root `init` behavior while preserving explicit nested compatibility.
+3. Implement root `init` behavior and preserve explicit `--project` path selection for existing projects.
 4. Move package-maintainer implementation/docs out of root game-facing paths.
 5. Generate root Codex-native agents and skills.
 6. Update validation and smoke tests.
 7. Update user docs to show clone-root installation.
 8. Run `npm run validate`, `truthmark check --json`, and `truthmark index --json` before claiming completion.
 
-Rollback: keep the nested generation code path available behind `init --nested` and restore it as default for one release if root-mode migration blocks users. Do not roll back to Markdown custom agents or coding standards under `.codex/rules/**`.
+Rollback: keep explicit `--project` support for existing checkouts if root-mode migration blocks users. Do not roll back to Markdown custom agents or coding standards under `.codex/rules/**`.
 
 ## Open Questions
 
 - Should the package-maintenance source stay under `tooling/codex-game-studio/**` in this repository, or should the game template be split into a separate repository before public release?
-- What exact CLI flags should guard nested mode and root refresh: `--nested`, `--force-refresh`, `--template-maintenance`, or another naming scheme?
+- What exact CLI flags should guard root refresh: `--force-refresh`, `--template-maintenance`, or another naming scheme?
 - Should default clone state include a generic `studio.json`, or should the `cgs-start` skill be responsible for first-time project configuration before `studio.json` exists?

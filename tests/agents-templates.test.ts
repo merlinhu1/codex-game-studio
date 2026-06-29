@@ -1,9 +1,10 @@
 import { existsSync, mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { describe, expect, test } from "vitest";
+import { describe, test } from "node:test";
+import { expect } from "expect";
 import { activeAgentsForMode, canonicalProjectConfigJson, guidanceConfigHash, projectConfigSchema, slugify } from "../src/config.js";
-import { renderProjectRolePrompt, validateBaseAgents } from "../src/agents.js";
+import { renderProjectCustomAgentToml, renderProjectRolePrompt, validateBaseAgents } from "../src/agents.js";
 import { loadEngineConfigs } from "../src/engines.js";
 import { packageAssetPath } from "../src/paths.js";
 import { defaultProjectConfig, initProject } from "../src/projects.js";
@@ -115,6 +116,7 @@ describe("config, agents, and templates", () => {
     const engines = loadEngineConfigs(packageAssetPath("engine_configs"));
     const config = defaultProjectConfig({ name: "Prompt Depth Game", engine: "godot", mode: "development", nonInteractive: true });
     const release = renderProjectRolePrompt("release-manager", config, engines);
+    const producerToml = renderProjectCustomAgentToml("producer", config, engines);
 
     for (const section of [
       "## Responsibilities",
@@ -125,12 +127,18 @@ describe("config, agents, and templates", () => {
       "## Stop Conditions"
     ]) {
       expect(release).toContain(section);
+      expect(producerToml).toContain(section);
     }
     expect(release).toContain("Release decision");
     expect(release).toContain("Blocking issues");
     expect(release).toContain("Validation evidence");
+    expect(producerToml).toContain("Sprint Planning");
+    expect(producerToml).toContain("Risk Management");
+    expect(producerToml).toContain("Scope Management");
+    expect(producerToml).toContain("Validation gate");
     expect(release).toContain("Stop and report a blocker");
     expect(release.length).toBeLessThan(15000);
+    expect(producerToml.length).toBeLessThan(15000);
     expect(release).not.toContain("# Gameplay Programmer");
     expect(release).not.toContain("templates/gdd_template.md");
     expect(release).not.toContain("docs/engine-reference/unity/");

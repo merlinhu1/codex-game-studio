@@ -122,6 +122,11 @@ It does not own process execution, task persistence, package installation, or ge
 - Every engine pack includes version, current best practices, deprecated API, breaking-change, gameplay, specialist, module, and plugin references.
 - Engine reference assets carry seed-review metadata.
 - Workflow IDs map to `.codex/workflows/<workflow>.md` files, expected context files, taxonomy categories, gap-coverage notes, and optional CLI aliases.
+- The CCGS parity audit inventories reference agents, skills, workflow-catalog steps, templates, and rules into JSON and Markdown matrix reports.
+- The parity matrix records source hashes, CGS target paths, target hashes when a generated or registry target exists, decisions, score fields, rationales, owner paths, test paths, and implementation status.
+- The generated workflow catalog models phase progression, required steps, optional steps, repeatable steps, artifact checks, and next-phase links without importing Claude slash-command runtime behavior.
+- Status output includes the next incomplete workflow-catalog phase and required artifact checks.
+- Skill generation renders per-skill phases, context files, write targets, quality gates, handoff/report formats, and required marker validation.
 - Behavioral scenario IDs map to representative roles or workflows in `src/behavioral-evaluation.ts`.
 - Each scenario declares required phrases, forbidden drift phrases, selected-context categories, and workflow template expectations.
 - Required template expectations apply to both project-backed and no-project workflow rendering.

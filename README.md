@@ -54,7 +54,7 @@ Codex Game Studio turns that structure into local project artifacts that Codex c
 
 | Capability | What it means |
 | --- | --- |
-| Local project scaffolding | Initializes the current repository root as the game workspace; `--nested` keeps the legacy `projects/<slug>/` layout available for migration. |
+| Local project scaffolding | Initializes the current repository root as the game workspace so generated skills, workflows, prompts, and project state are reviewable in Git. |
 | Codex-native studio roles | Generates focused role prompts for production, design, engineering, art, QA, localization, and release work. |
 | Workflow prompts | Provides reusable prompts for market review, analytics, specs, handoffs, ship checks, UI review, and more. |
 | Engine overlays | Adds Godot, Unity, or Unreal context without turning this project into an engine wrapper. |

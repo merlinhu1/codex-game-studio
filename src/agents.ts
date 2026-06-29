@@ -136,7 +136,9 @@ export function renderProjectCustomAgentToml(role: StudioRoleId, config: Project
       "Keep changes bounded to the requested game-development task.",
       "Report changed files, verification evidence, and remaining risks.",
       "",
-      pkg.systemPrompt
+      pkg.systemPrompt,
+      "",
+      renderRoleContractSections(pkg)
     ].join("\n"))}`,
     ""
   ].join("\n");
