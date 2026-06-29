@@ -12,7 +12,7 @@ Codex Game Studio is a Codex-native workflow layer for game-development projects
 
 The repository packages a TypeScript CLI.
 
-The CLI scaffolds game projects, renders role/workflow prompts for Codex, runs bounded Codex lifecycles, and validates repository and generated-project contracts.
+The CLI configures cloned game-template repositories, renders role/workflow prompts for Codex, runs bounded Codex lifecycles, and validates repository, template, and project-state contracts.
 
 ## Scope
 
@@ -28,7 +28,7 @@ They are listed in `docs/truthmark/routes/areas/repository.md`.
 
 - The package exposes the `codex-game-studio` CLI from the built `dist/cli.js` entrypoint, and the source checkout exposes `./codex-game-studio` as a thin wrapper over built TypeScript output.
 - Initialization commands create deterministic game project structure in the current repository root.
-- Generated projects contain `.codex/studio.json`, role prompt files, workflow markdown, starter docs, engine markers, and `AGENTS.md`.
+- Template repositories contain tracked `AGENTS.md`, `.codex/agents/*.toml`, `.codex/workflows/*.md`, `.agents/skills/*/SKILL.md`, and initialized project state under `.codex/**`.
 - Role run commands render deterministic Codex prompts.
 - Unless in inspection mode, role run commands execute Codex with optional verification, review, and bounded fix passes.
 - Workflow shortcut commands are render-only prompt surfaces.
@@ -41,7 +41,7 @@ They are listed in `docs/truthmark/routes/areas/repository.md`.
 
 - Repository behavior is grouped by behavior ownership.
 - Truth docs do not mechanically mirror every source file.
-- Generated project instruction contracts use Codex-native `AGENTS.md`.
+- Template instruction contracts use tracked Codex-native `AGENTS.md`.
 - The repository does not introduce `CODEX.md` as a primary instruction contract.
 - Runtime execution is explicit.
 - Dry-run and print-prompt modes are inspection paths.
@@ -55,7 +55,7 @@ Architecture runtime walkthroughs live under `docs/architecture/flows/**`.
 
 They explain branching logic and failure paths. They also link back to the bounded truth docs that own behavior.
 
-- Project initialization parses CLI input, normalizes engine/config, guards collisions, creates files, writes `.codex` state, writes starter docs, and materializes prompts.
+- Project initialization parses CLI input, normalizes engine/config, guards collisions, creates files, writes `.codex` state, writes starter docs, and leaves tracked template instruction files untouched.
 - See `docs/architecture/flows/project-initialization.md`.
 - Role run lifecycle validates role, project, and task.
 - It renders prompt and context, may return inspection output, writes run cache, executes Codex, runs verification/review, may run fix passes, and reports `done` or `blocked`.

@@ -12,7 +12,11 @@
     "dist/",
     "engine_configs/",
     "engine_reference/",
-    "templates/"
+    "templates/",
+    "AGENTS.md",
+    ".codex/agents/",
+    ".codex/workflows/",
+    ".agents/skills/"
   ],
   "bin": {
     "codex-game-studio": "./dist/cli.js"

@@ -4,7 +4,7 @@ import { activeAgentsForProject, slugify, type ProjectConfig, type ProjectMode }
 import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, sourceRoot, unrealProjectFileName } from "./engines.js";
 import { writeDefaultProjectCustomization, readProjectCustomization } from "./customization.js";
 import { materializeEngineReferences } from "./engine-reference.js";
-import { materializeAgents } from "./agents.js";
+
 import { writeApprovalStore } from "./approvals.js";
 import { writeContextManifest } from "./context-manifest.js";
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
@@ -12,7 +12,6 @@ import { packageAssetPath, resolveProjectRoot } from "./paths.js";
 import { projectRoleIdsForEngine, rolePackages, type StudioRoleId } from "./roles.js";
 import { workflowAliases, workflowIds, workflowRegistry, type WorkflowId } from "./workflows.js";
 import { workflowCatalogSummary } from "./workflow-catalog.js";
-import { materializeSkills } from "./skills.js";
 import type { StudioMode } from "./studio-policy.js";
 
 export type InitProjectOptions = {
@@ -232,12 +231,6 @@ export function workflowSourceInput(workflow: WorkflowId): unknown {
   };
 }
 
-function writeCodexWorkflowFiles(projectRoot: string): void {
-  const workflows = path.join(projectRoot, ".codex", "workflows");
-  mkdirSync(workflows, { recursive: true });
-  for (const workflow of workflowIds()) writeFileSync(path.join(projectRoot, workflowRegistry[workflow].file), workflowBody(workflow));
-}
-
 export function initProject(options: InitProjectOptions, cwd = process.cwd()): { projectRoot: string; config: ProjectConfig } {
   const config = defaultProjectConfig(options);
   const projectRoot = path.resolve(cwd, ".");
@@ -256,11 +249,8 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
   writeApprovalStore(projectRoot);
   writeStudioProject(projectRoot, studioStateFromConfig(config));
   writeDefaultProjectCustomization(projectRoot);
-  writeCodexWorkflowFiles(projectRoot);
   writeStarterDocs(projectRoot, config);
   materializeEngineReferences(projectRoot, packageAssetPath("."), config.project.engine);
-  materializeAgents({ projectRoot, config, engines });
-  materializeSkills(projectRoot, config);
   writeContextManifest(projectRoot, readStudioProject(projectRoot));
   return { projectRoot, config };
 }

@@ -48,26 +48,26 @@ A blank AI coding chat is flexible, but game development needs repeatable studio
 - Artists, QA, audio, localization, and live-ops work need their own context.
 - Reviewers need files they can inspect in Git, not decisions trapped in chat history.
 
-Codex Game Studio turns that structure into local project artifacts that Codex can read and humans can review.
+Codex Game Studio keeps that structure in clone-visible template files that Codex can read and humans can review.
 
 ## What you get
 
 | Capability | What it means |
 | --- | --- |
-| Local project scaffolding | Initializes the current repository root as the game workspace so generated skills, workflows, prompts, and project state are reviewable in Git. |
-| Codex-native studio roles | Generates focused role prompts for production, design, engineering, art, QA, localization, and release work. |
-| Workflow prompts | Provides reusable prompts for market review, analytics, specs, handoffs, ship checks, UI review, and more. |
+| Template repository surfaces | Tracks game-facing `AGENTS.md`, `.codex/agents/*.toml`, `.codex/workflows/*.md`, and `.agents/skills/*/SKILL.md` directly in Git. |
+| Codex-native studio roles | Provides focused role contracts for production, design, engineering, art, QA, localization, and release work. |
+| Workflow prompts | Provides tracked reusable workflows for market review, analytics, specs, handoffs, ship checks, UI review, and more. |
 | Engine overlays | Adds Godot, Unity, or Unreal context without turning this project into an engine wrapper. |
 | File-backed task state | Stores explicit tasks, locks, and run metadata under `.codex/**`. |
 | Inspection before execution | Supports dry-run and prompt-print paths before Codex touches a project. |
-| Hard-failing validation | Detects stale generated surfaces, malformed metadata, missing assets, and future-only CLI drift. |
+| Hard-failing validation | Detects missing template surfaces, malformed project state, missing assets, and future-only CLI drift. |
 
 ## The studio loop
 
 ```mermaid
 flowchart LR
-  A[Idea] --> B[Init project]
-  B --> C[Generated studio files]
+  A[Clone template] --> B[Init project state]
+  B --> C[Tracked studio files]
   C --> D[Inspect prompt]
   D --> E[Run Codex role]
   E --> F[Review output]
@@ -75,7 +75,7 @@ flowchart LR
   G --> C
 ```
 
-The generated project is the contract. It contains the project summary, engine context, role prompts, workflow prompts, starter production docs, and validation metadata that keep later Codex sessions grounded.
+The cloned template is the contract. It contains game-facing instructions, agents, workflows, and skills; `init` records project state, starter docs, engine references, and runtime metadata without rewriting those template surfaces.
 
 ## Where details live
 
@@ -83,7 +83,7 @@ The generated project is the contract. It contains the project summary, engine c
 | --- | --- |
 | Install, commands, workflows, validation | [User Guide](docs/user-guide.md) |
 | Role catalog and when to use each role | [Studio Roles](docs/studio-roles.md) |
-| Generated project tree and file ownership | [Project Anatomy](docs/project-anatomy.md) |
+| Template tree and file ownership | [Project Anatomy](docs/project-anatomy.md) |
 | Realistic usage scenarios | [Examples](docs/examples/README.md) |
 | Contributor workflow and checks | [Development](docs/development.md) |
 | Full documentation map | [Docs Index](docs/README.md) |

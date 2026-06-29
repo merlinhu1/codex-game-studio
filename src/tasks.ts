@@ -250,7 +250,7 @@ export function renderTaskRun(projectRoot: string, taskId: string): { task: Stud
     objective: task.title,
     phase: "implement",
     engine: studio.engine,
-    contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/tasks.json", `.codex/prompts/${task.role}.md`, ...task.files],
+    contextFiles: ["AGENTS.md", ".codex/studio.json", ".codex/tasks.json", `.codex/agents/${task.role}.toml`, ...task.files],
     verification: task.verification
   });
   return { task, prompt: renderCodexPrompt(session) };

@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { cpSync, existsSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -12,9 +12,17 @@ function tempRoot(prefix: string): string {
   return mkdtempSync(path.join(tmpdir(), prefix));
 }
 
+function templateRoot(prefix: string): string {
+  const root = tempRoot(prefix);
+  for (const entry of ["AGENTS.md", ".codex/agents", ".codex/workflows", ".agents/skills"]) {
+    cpSync(path.join(process.cwd(), entry), path.join(root, entry), { recursive: true });
+  }
+  return root;
+}
+
 describe("project workflow", () => {
   test("init configures the current repository root as the game root", () => {
-    const cwd = tempRoot("ogs-root-project-");
+    const cwd = templateRoot("ogs-root-project-");
     const { projectRoot, config } = initProject({ name: "Test Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     expect(projectRoot).toBe(cwd);
     expect(existsSync(path.join(cwd, "projects", "test-game"))).toBe(false);
@@ -43,14 +51,14 @@ describe("project workflow", () => {
     );
 
     const agents = readFileSync(path.join(projectRoot, "AGENTS.md"), "utf8");
-    expect(agents).toContain("# Test Game Game Studio");
+    expect(agents).toContain("# Codex Game Studio Template");
     for (const section of ["## Project Goal", "## Engine", "## Commands", "## Coding Conventions", "## Asset Conventions", "## Studio Roles", "## Current Milestone", "## Verification", "## Rules"]) {
       expect(agents).toContain(section);
     }
     expect(agents).not.toContain("CODEX.md");
     expect(agents).not.toContain("NodeNext");
     expect(agents).not.toContain("Truthmark");
-    expect(agents).toContain(guidanceConfigHash(config));
+    expect(agents).not.toContain(guidanceConfigHash(config));
 
     expect(config.project.concept).toBe("Test Game concept");
     expect(config.project.genre).toBe("Unspecified");
@@ -59,8 +67,8 @@ describe("project workflow", () => {
     expect(config.project.competitors).toEqual([]);
   });
 
-  test("init materializes Codex-native custom agents and repository skills", () => {
-    const cwd = tempRoot("ogs-surfaces-");
+  test("init preserves clone-visible Codex-native custom agents and repository skills", () => {
+    const cwd = templateRoot("ogs-surfaces-");
     const { projectRoot } = initProject({ name: "Surface Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     const agent = readFileSync(path.join(projectRoot, ".codex", "agents", "gameplay-programmer.toml"), "utf8");
     expect(agent).toContain('name = "gameplay_programmer"');
@@ -68,8 +76,8 @@ describe("project workflow", () => {
     expect(agent).toContain("developer_instructions = ");
     expect(existsSync(path.join(projectRoot, ".codex", "agents", "gameplay-programmer.md"))).toBe(false);
     expect(existsSync(path.join(projectRoot, ".codex", "agents", "godot-specialist.toml"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unity-specialist.toml"))).toBe(false);
-    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unreal-specialist.toml"))).toBe(false);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unity-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unreal-specialist.toml"))).toBe(true);
     expect(existsSync(path.join(projectRoot, ".codex", "hooks.json"))).toBe(false);
     expect(existsSync(path.join(projectRoot, ".codex", "rules"))).toBe(false);
 
@@ -124,7 +132,7 @@ describe("project workflow", () => {
   });
 
   test("status resume are read-only and freeze only changes operational status", () => {
-    const cwd = tempRoot("ogs-status-");
+    const cwd = templateRoot("ogs-status-");
     const { projectRoot } = initProject({ name: "Freeze Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     const studioPath = path.join(projectRoot, ".codex", "studio.json");
     const before = readFileSync(studioPath, "utf8");

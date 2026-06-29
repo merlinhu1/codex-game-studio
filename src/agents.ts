@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { guidanceConfigHash, type ProjectConfig } from "./config.js";
 import type { EngineConfigRegistry } from "./engines.js";
@@ -6,11 +6,6 @@ import { engineReferenceProjectPath, selectedEngineReferencePrompts } from "./en
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { projectRoleIdsForEngine, renderRoleContractSections, rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
 
-export type MaterializeAgentsInput = {
-  projectRoot: string;
-  config: ProjectConfig;
-  engines: EngineConfigRegistry;
-};
 
 export function validateBaseAgents(): string[] {
   return studioRoleIds.flatMap((role) => {
@@ -35,11 +30,6 @@ export function readAgentPrompt(agent: StudioRoleId, projectRoot?: string): stri
   return rolePackages[agent].systemPrompt;
 }
 
-export function readProjectAgentPrompt(agent: StudioRoleId, projectRoot: string): string {
-  const projectPrompt = path.join(projectRoot, ".codex", "prompts", `${agent}.md`);
-  if (!existsSync(projectPrompt)) throw new Error(`Missing generated project role prompt: ${path.relative(projectRoot, projectPrompt)}`);
-  return readFileSync(projectPrompt, "utf8");
-}
 
 export const projectAgentsMdRequiredSections = [
   "## Project Goal",
@@ -89,7 +79,7 @@ ${config.project.engine} ${config.project.engine_version}
 
 ## Studio Roles
 
-${projectRoleIdsForEngine(config.project.engine).map((role) => `- ${role}: .codex/prompts/${role}.md`).join("\n")}
+${projectRoleIdsForEngine(config.project.engine).map((role) => `- ${role}: .codex/agents/${role}.toml`).join("\n")}
 
 ## Current Milestone
 
@@ -248,26 +238,4 @@ export function projectRolePromptSourceInput(role: StudioRoleId, config: Project
       competitors: config.project.competitors
     }
   };
-}
-
-export function materializeAgents(input: MaterializeAgentsInput): string[] {
-  const written: string[] = [];
-  const agentsMd = path.join(input.projectRoot, "AGENTS.md");
-  writeFileSync(agentsMd, generateProjectAgentsMd(input.config));
-  written.push(agentsMd);
-  const prompts = path.join(input.projectRoot, ".codex", "prompts");
-  mkdirSync(prompts, { recursive: true });
-  for (const role of projectRoleIdsForEngine(input.config.project.engine)) {
-    const prompt = path.join(prompts, `${role}.md`);
-    writeFileSync(prompt, renderProjectRolePrompt(role, input.config, input.engines));
-    written.push(prompt);
-  }
-  const agents = path.join(input.projectRoot, ".codex", "agents");
-  mkdirSync(agents, { recursive: true });
-  for (const role of projectRoleIdsForEngine(input.config.project.engine)) {
-    const agent = path.join(agents, `${role}.toml`);
-    writeFileSync(agent, renderProjectCustomAgentToml(role, input.config, input.engines));
-    written.push(agent);
-  }
-  return written;
 }

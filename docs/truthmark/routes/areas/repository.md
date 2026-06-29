@@ -69,13 +69,13 @@ Code surface:
 - engine_configs/**
 - engine_reference/**
 - tests/project-workflow.test.ts
-- tests/agents-templates.test.ts
+- tests/template-repository-surfaces.test.ts
 - tests/engine-system.test.ts
 - tests/codex-context-files.test.ts
 
 Update truth when:
 - project initialization, generated project state, engine folder creation, engine reference materialization, role prompt materialization, or status/resume/freeze behavior changes
-- generated project AGENTS.md or base prompt package ownership changes
+- template `AGENTS.md`, custom-agent template files, workflow template files, repository skills, or base prompt package ownership changes
 
 ## Codex Role And Workflow Surfaces
 
@@ -108,11 +108,10 @@ Code surface:
 - tests/roles.test.ts
 - tests/codex-session.test.ts
 - tests/codex-prompts.test.ts
-- tests/behavioral-evaluation.test.ts
 - tests/ccgs-parity-audit.test.ts
 - tests/workflow-catalog.test.ts
-- tests/customization.test.ts
 - tests/functionality-gap-pass.test.ts
+- tests/template-repository-surfaces.test.ts
 
 Update truth when:
 - studio role IDs, custom role IDs, role contracts, workflow registry entries, or prompt rendering change
@@ -196,9 +195,9 @@ Code surface:
 - src/context-manifest.ts
 - src/engine-reference.ts
 - src/generated-surfaces.ts
-- tests/cli-prompt-surface.test.ts
 - tests/validation.test.ts
 - tests/functionality-gap-pass.test.ts
+- tests/codex-context-files.test.ts
 
 Update truth when:
 - public CLI commands, package scripts/bin/files, validation check IDs, or documentation claims change

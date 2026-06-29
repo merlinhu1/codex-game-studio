@@ -2,7 +2,7 @@
 
 This document is for contributors working on Codex Game Studio itself.
 
-For user-facing command usage, see the [User Guide](user-guide.md). For generated project layout, see [Project Anatomy](project-anatomy.md).
+For user-facing command usage, see the [User Guide](user-guide.md). For template/project layout, see [Project Anatomy](project-anatomy.md).
 
 ## Setup
 

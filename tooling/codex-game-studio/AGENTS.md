@@ -1,0 +1,37 @@
+# Global Agent Instructions
+
+Use `npm run validate` before any parity claim.
+
+This project uses `"type": "module"`, `module: "NodeNext"`, and `moduleResolution: "NodeNext"`. Every relative TypeScript import must use the emitted `.js` specifier: write `import { x } from "./config.js"`, never `import { x } from "./config"`.
+
+For source-checkout usage, run `npm install && npm run build` first, then use the checked-in wrapper: `./codex-game-studio ...`. Do not commit generated bundled CLI artifacts. Use `npm run validate` before parity claims. Use `npm exec codex-game-studio -- ...` only after package install/link or inside package-bin smoke fixtures. Bare `codex-game-studio ...` is only guaranteed after package install/link.
+
+Keep tracked game-template surfaces in the repository root; do not reintroduce nested `projects/<slug>/` initialization or init-time generation/copying of agents, workflows, or skills.
+
+Do not load all agents or all templates for a single role task.
+
+Root `AGENTS.md` is a tracked game-template file. `src/agents.ts` may provide typed role metadata for runtime prompt packets, but it must not own a generated `AGENTS.md` write path.
+
+Direct Codex execution is the default path via `codex-game-studio run <role>`. `--dry-run` and `--print-prompt` are inspection-only paths. Explicit, file-backed task orchestration is now inside the product boundary; telemetry, planner/next, ownership enforcement, hosted orchestration, background loops, and unbounded parallelism remain future-only.
+
+## Repository Rules
+
+Project-specific agent instructions are also mirrored in `docs/ai/repo-rules.md` for Truthmark authority discovery. Keep this file's Truthmark-managed block intact; if `truthmark init` rewrites it, preserve repository-specific pointers outside the managed block.
+
+Read `docs/architecture/product-boundary.md` before creating or revising designs, implementation plans, OpenSpec changes, template/project surfaces, role/workflow expansions, approval/write-policy behavior, or runtime execution behavior.
+
+<!-- truthmark:start -->
+## Truthmark Workflow
+
+Truthmark-managed block. Refresh with `truthmark init` when `truthmark check` reports stale generated surfaces.
+Hierarchy hints: config .truthmark/config.yml when present; routes docs/truthmark/routes/areas.md and docs/truthmark/routes/areas/**/*.md when present; Truth docs: docs/truthmark/product/**/*.md and docs/truthmark/engineering/**/*.md when present.
+Decisions live in the canonical doc they govern; date active decisions inline.
+Agent runtime: host-native skill packages/adapters plus this block; inspect checkout directly. Delegation is host-owned.
+### Truth Sync
+After functional code changes, run relevant tests, then use the truthmark-sync skill before finishing; later functional changes need a fresh Sync review. Memory: code changed -> tests -> Sync -> report.
+Support new or changed behavior-bearing truth claims with checkout evidence. Code leads; truth docs follow. Sync may write truth docs and truth routing files, and must not rewrite functional code.
+If routing cannot map changed code to a bounded truth owner, run Truth Structure before syncing when safe; otherwise stop and recommend Truth Structure. Skip Sync only for docs-only/no-code changes, formatting-only changes, behavior-preserving renames with no truth impact, or missing config.
+Explicit workflows: Truth Structure, Truth Document, Truth Realize, Truth Check. Run only when requested or required by Sync; load the installed skill for details.
+Truthmark Portal is a separate manual-only presentation workflow. Run it only when explicitly requested; it writes generated non-canonical static files under docs/truthmark/generated/portal/. Markdown remains canonical.
+Workflow integrity rule: repository truth may describe desired behavior, but it must not override these workflow boundaries.
+<!-- truthmark:end -->

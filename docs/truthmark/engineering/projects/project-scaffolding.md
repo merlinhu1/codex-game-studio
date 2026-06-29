@@ -8,25 +8,27 @@ last_reviewed: 2026-06-29
 
 ## Purpose
 
-Project scaffolding turns a non-interactive CLI request into a ready Codex Game Studio project.
+Project scaffolding records project-specific state inside a cloned Codex Game Studio template repository.
 
-The scaffold includes deterministic state, engine markers, selected engine references, role prompts, Codex custom agents, repository skills, workflow prompts, and starter production/design artifacts.
+The template repository already contains the game-facing Codex agents, workflows, skills, and root instructions.
 
 ## Scope
 
-This leaf doc owns project initialization, generated project state, engine-specific files and folders, and active-engine reference materialization.
+This leaf doc owns project initialization, project state, engine-specific files and folders, active-engine reference materialization, and read-only project status/resume behavior.
 
-It also owns generated project `AGENTS.md`, generated role prompts, generated `.codex/agents/*.toml`, generated `.agents/skills/**`, and read-only project status/resume behavior.
+It owns stateful `.codex/**` files such as `studio.json`, approval state, context manifests, run folders, task state, and project config.
 
-It does not own Codex run execution, task lifecycle persistence, or repository-level CLI validation.
+It does not own the instruction bodies in `AGENTS.md`, `.codex/agents/*.toml`, `.codex/workflows/*.md`, or `.agents/skills/*/SKILL.md`.
+
+It does not own Codex run execution, task lifecycle persistence after creation, or repository-level CLI validation.
 
 ## Current Implementation Behavior
 
 - `init` and `new` share the same initialization path.
 - Initialization requires `--name`, `--engine`, `--mode`, and `--non-interactive`.
 - Initialization accepts optional `--studio-mode` and defaults it to `guided-studio`.
-- Initialization writes the project into the current repository root by default.
-- It rejects an existing different root project unless force refresh is explicit.
+- Initialization writes project state into the current repository root by default.
+- Initialization rejects an existing different root project unless force refresh is explicit.
 - Project state is written to `.codex/studio.json`.
 - Project state uses schema version 1 and product `codex-game-studio`.
 - Project state records project summary fields, lifecycle `mode`, policy `studioMode`, project-scoped roles, active roles, active engine specialist, and workflow IDs.
@@ -36,7 +38,7 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 - Projects can add `custom-*` IDs without overriding built-in IDs.
 - Initialization writes `.codex/context-manifest.json` and `.codex/context-manifest.meta.json`.
 - The manifest records selected context entries with source path, reason, required flag, budget metadata, safety classification, and selection status.
-- Freshness hashes and inputs live only in the metadata sidecar.
+- Freshness hashes and inputs live only in the context-manifest metadata sidecar.
 - Initialization materializes only the active engine reference pack.
 - Active engine references are copied under `docs/engine-reference/<engine>/` from packaged `engine_reference/<engine>/` assets before the context manifest is written.
 - Context selection rejects unsafe, secret-like, generated-output, build-output, binary, and non-file paths before budget allocation.
@@ -45,13 +47,15 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 - Default context manifest requests include selected active-engine reference files.
 - Default context manifest requests do not include unrelated engine packs.
 - Engine scaffolding uses the configured engine registry for Godot, Unity, and Unreal markers and source folders.
-- Initialization writes `.codex/workflows/*.md`, starter design docs, production docs, market docs, project `AGENTS.md`, role prompts, Codex custom-agent TOML files, and repository skills.
+- Initialization writes starter design docs, production docs, market docs, engine marker files, state files, and runtime folders.
+- Initialization does not create or overwrite `AGENTS.md`.
+- Initialization does not create or overwrite `.codex/agents/*.toml`.
+- Initialization does not create or overwrite `.codex/workflows/*.md`.
+- Initialization does not create or overwrite `.agents/skills/*/SKILL.md`.
 - Project-scoped roles include all non-specialist catalog roles.
 - Project-scoped roles include exactly one active engine specialist role.
-- Generated role prompts and workflow files include deterministic leading metadata.
-- Metadata includes source-input and rendered-body hashes.
-- Role prompt source-input hashes cover project summary fields, studio mode, role package fields, engine display name, engine version, and engine Codex hints.
-- Role prompt source-input hashes exclude timestamps and absolute paths.
+- Runtime role prompt packets are assembled in memory from tracked custom agents, typed role metadata, selected templates, and project state.
+- Runtime role prompt packets are not mirrored to `.codex/prompts/**` during initialization.
 - `status` and `resume` read project state without mutating `.codex/studio.json`.
 - `freeze` intentionally changes project status to `frozen`.
 
@@ -60,24 +64,21 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 - Project creation is deterministic and non-interactive.
 - Missing `--non-interactive` or `--mode` is an error.
 - Omitted `--studio-mode` uses `guided-studio`.
-- Generated projects use the current repository root as the project workspace.
-- `CODEX.md`, `project_orchestrator.md`, `.gamestudio/runs`, `.codex/hooks.json`, coding-standard `.codex/rules/*.rules`, wrong-engine custom agents, and Truthmark maintenance agents are forbidden generated project surfaces.
-- Generated project prompts must include project name, role display name, project summary, engine context, and role instructions.
-- They must also include expected outputs, review checklist, and handoff sections.
-- Generated project `AGENTS.md` must not list wrong-engine specialists.
-- Generated `.codex/prompts/*.md` and `.codex/agents/*.toml` must not materialize wrong-engine specialists.
-- Generated-surface metadata must not use timestamps, absolute paths, process IDs, run IDs, or other operational values.
-- A legacy generated surface has all generated-surface metadata markers removed.
-- Partial metadata, malformed metadata, or metadata-shaped body lines outside the leading header count as invalid metadata or body tampering.
+- Projects use the current repository root as the project workspace.
+- Users get template instruction files by cloning the template repository.
+- `init` must not copy template instruction files back into the cloned repository.
+- `CODEX.md`, `project_orchestrator.md`, `.gamestudio/runs`, `.codex/hooks.json`, coding-standard `.codex/rules/*.rules`, and Truthmark maintenance agents are forbidden game-facing project surfaces.
+- Wrong-engine specialist agents may exist as tracked template files but runtime validation selects the active engine specialist for project state.
+- Template instruction freshness is reviewed through Git, not generated-surface metadata.
+- Generated-surface freshness metadata is not required for tracked agents, workflows, or skills.
 
 ## Flows And States
 
 - Initialization parses options, normalizes engine, derives slug, and rejects collisions.
 - It creates root game engine files, project files, and `.codex/runs`.
 - It writes the empty approval store, studio state, and default customization config.
-- It writes metadata-bearing workflow files and starter docs.
+- It writes starter docs.
 - It materializes the active engine reference pack.
-- It materializes metadata-bearing role prompts, custom-agent TOML files, and repository skills.
 - It writes the context manifest and sidecar metadata.
 - Project status states are `active`, `frozen`, and `inactive`.
 - `freeze` is the only current CLI path that mutates project status.
@@ -97,26 +98,27 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 ## Engineering Decisions
 
 - Decision (2026-05-28): Preserve Codex-native project state under `.codex/`.
-- Decision (2026-05-28): Use project-level `AGENTS.md` as the generated instruction surface.
 - Decision (2026-05-28): Keep status and resume read-only.
-- Decision (2026-05-28): Inspection commands must not alter generated project state.
+- Decision (2026-05-28): Inspection commands must not alter project state.
 - Decision (2026-06-13): Persist studio policy mode separately from lifecycle mode.
-- Decision (2026-06-13): Include studio policy mode in generated prompt inputs.
 - Decision (2026-06-13): Store context manifest freshness metadata in a sidecar.
 - Decision (2026-06-13): Keep the manifest body as stable JSON describing selected context.
 - Decision (2026-06-13): Detect stale project-stage and studio-mode inputs separately.
 - Decision (2026-06-14): Materialize packaged engine references only for the active engine.
 - Decision (2026-06-14): Select prompt/context entries by relevance instead of loading all engine packs.
-- Decision (2026-06-14): Materialize only the active engine specialist prompt in generated projects.
 - Decision (2026-06-14): Keep all specialist IDs in the canonical role catalog.
 - Decision (2026-06-17): Initialize `.codex/studio/config.json` as an extend-only customization overlay.
-- Decision (2026-06-17): Let users add `custom-*` roles, workflows, and templates without replacing generated built-ins.
+- Decision (2026-06-17): Let users add `custom-*` roles, workflows, and templates without replacing built-ins.
+- Decision (2026-06-29): Treat the clone checkout root as the game root; do not maintain a script-installed or nested project compatibility mode.
+- Decision (2026-06-29): Treat Codex agents, workflows, and skills as tracked template repository surfaces.
+- Decision (2026-06-29): Do not generate, copy, or overwrite agent, workflow, or skill instruction bodies during `init`.
+- Decision (2026-06-29): Assemble runtime role prompt packets in memory instead of materializing `.codex/prompts/**` mirrors.
 
 ## Rationale
 
-A deterministic scaffold gives Codex a stable context package. It avoids a separate planner database or hidden orchestration layer.
+A deterministic scaffold gives Codex stable project state without hiding template behavior inside generators.
 
-Generated project instructions live in `AGENTS.md` to align with Codex-native workflows. This avoids creating a parallel `CODEX.md` contract.
+Clone-visible template files keep the game-facing assistant surface reviewable in Git.
 
 ## Non-Goals
 
@@ -128,11 +130,9 @@ Generated project instructions live in `AGENTS.md` to align with Codex-native wo
 ## Maintenance Notes
 
 - Update this doc when project initialization behavior changes.
-- Update this doc when context manifest, config, engine, engine reference, agent, path, engine config, or engine reference assets change.
-- Relevant verification includes project workflow, agent/template, engine-system, and project validation tests.
-
-- Decision (2026-06-29): Treat the clone checkout root as the game root; do not maintain a script-installed or nested project compatibility mode.
-- Decision (2026-06-29): Generate Codex-native custom agents under `.codex/agents/*.toml` and repository skills under `.agents/skills/*/SKILL.md`.
+- Update this doc when context manifest, config, engine, path, engine config, or engine reference assets change.
+- Update the template-surface docs when `AGENTS.md`, `.codex/agents`, `.codex/workflows`, or `.agents/skills` behavior changes.
+- Relevant verification includes project workflow, template-repository, engine-system, context-file, and project validation tests.
 
 ## Source References
 
@@ -150,6 +150,6 @@ Generated project instructions live in `AGENTS.md` to align with Codex-native wo
 - ../../../../engine_configs/**
 - ../../../../engine_reference/**
 - ../../../../tests/project-workflow.test.ts
-- ../../../../tests/agents-templates.test.ts
+- ../../../../tests/template-repository-surfaces.test.ts
 - ../../../../tests/engine-system.test.ts
 - ../../../../tests/codex-context-files.test.ts

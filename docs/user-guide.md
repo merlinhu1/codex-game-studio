@@ -88,7 +88,7 @@ Inspect first when the task is risky or broad:
   "Create the initial market overview." --print-prompt
 ```
 
-`run <role>` loads the generated project role prompt and selected templates for that role/task. `--allow-broad-context` adds bounded discovery for existing artifacts such as the GDD, production timeline, market overview, `AGENTS.md`, and `.codex/studio.json`; it does not recursively dump the project into the prompt.
+`run <role>` assembles a runtime prompt packet from tracked custom agents, project state, selected templates, and bounded context for that role/task. `--allow-broad-context` adds bounded discovery for existing artifacts such as the GDD, production timeline, market overview, `AGENTS.md`, and `.codex/studio.json`; it does not recursively dump the project into the prompt.
 
 ### Validate before trusting output
 
@@ -99,7 +99,7 @@ Inspect first when the task is risky or broad:
 
 Repository validation checks package contracts, build output, packaged assets, template availability, hidden future-only surfaces, role/workflow rendering, and Codex CLI readiness.
 
-Project validation checks project state, generated prompt/workflow freshness, rendered-body hashes, metadata integrity, starter docs, read-only command behavior, and forbidden legacy artifacts.
+Project validation checks project state, tracked template surfaces, context metadata integrity, starter docs, read-only command behavior, and forbidden legacy artifacts.
 
 ## Command reference
 
@@ -141,7 +141,7 @@ Use `workflow create-tasks <workflow-id>` when you want a supported recipe to be
 
 ## File-backed tasks
 
-Task commands manage work inside the generated project instead of relying on chat memory.
+Task commands manage work inside the project instead of relying on chat memory.
 
 - `task create` adds explicit project tasks.
 - `task run` runs a selected task through the configured role path.
@@ -173,8 +173,8 @@ codex --help
 
 Use `--dry-run` or `--print-prompt` when you only need to inspect the prompt packet.
 
-### Validation fails on generated project files
+### Validation fails on template or project files
 
-Regenerate the relevant project surface or inspect the diff before trusting the output. Project validation is intentionally strict about stale prompt/workflow metadata and malformed project state.
+Inspect the relevant tracked template surface or project-state file before trusting the output. Project validation is intentionally strict about missing template files, malformed context metadata, and malformed project state.
 
 See [Workflow Validation](workflow-validation.md) for the detailed validation contract.

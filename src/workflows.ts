@@ -409,6 +409,11 @@ function renderWorkflowTemplates(workflow: WorkflowId, projectRoot?: string): st
   return renderSelectedTemplates(workflowRegistry[workflow].templateIds ?? [], "## Workflow Templates", projectRoot ? { projectRoot } : {});
 }
 
+function readBuiltInWorkflowBody(projectRoot: string, workflow: WorkflowId): string {
+  const file = path.join(projectRoot, workflowRegistry[workflow].file);
+  return existsSync(file) ? readFileSync(file, "utf8").trim() : `Workflow file missing: ${workflowRegistry[workflow].file}`;
+}
+
 function readStudioEngine(projectRoot: string): EngineId {
   const studio = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "studio.json"), "utf8")) as { engine: EngineId };
   return studio.engine;
@@ -467,7 +472,14 @@ export function renderWorkflowPrompt(projectRoot: string, workflow: string): str
           readOnlyReview: config.phase === "review"
         })
       }
-    ) + renderWorkflowTemplates(workflow as WorkflowId, projectRoot)
+    ) +
+    [
+      "",
+      `## Workflow Instructions: ${config.file}`,
+      "",
+      readBuiltInWorkflowBody(projectRoot, workflow as WorkflowId),
+      renderWorkflowTemplates(workflow as WorkflowId, projectRoot)
+    ].join("\n")
   );
 }
 

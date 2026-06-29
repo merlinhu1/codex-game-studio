@@ -4,7 +4,7 @@ import path from "node:path";
 import type { ProjectConfig } from "./config.js";
 import { ccgsParityUpgradedRoleIds, rolePackages, type StudioRoleId } from "./roles.js";
 import { workflowIds, workflowRegistry } from "./workflows.js";
-import { generatedSkillDefinitions, renderGeneratedSkill } from "./skills.js";
+import { templateSkillDefinitions, renderTemplateSkill } from "./skills.js";
 import { listTemplates } from "./templates.js";
 
 export type CcgsSourceType = "agent" | "skill" | "workflow-step" | "template" | "rule";
@@ -318,8 +318,8 @@ function cgsTargetHash(kind: CgsTargetKind, id: string, config: ProjectConfig): 
   if (!id) return undefined;
   if (kind === "role" && id in rolePackages) return sha256(JSON.stringify(rolePackages[id as StudioRoleId]));
   if (kind === "skill") {
-    const definition = generatedSkillDefinitions(config).find((skill) => skill.name === id);
-    return definition ? sha256(renderGeneratedSkill(definition)) : undefined;
+    const definition = templateSkillDefinitions(config).find((skill) => skill.name === id);
+    return definition ? sha256(renderTemplateSkill(definition)) : undefined;
   }
   if (kind === "workflow" && id in workflowRegistry) return sha256(JSON.stringify(workflowRegistry[id as keyof typeof workflowRegistry]));
   return undefined;
@@ -330,7 +330,7 @@ function target(kind: CgsTargetKind, id: string, targetPath: string, config: Pro
 }
 
 function rowForSource(source: CcgsAgentInventory | CcgsSkillInventory | CcgsWorkflowStepInventory | CcgsTextInventory, config: ProjectConfig): ParityRow {
-  const skillNames = new Set(generatedSkillDefinitions(config).map((skill) => skill.name));
+  const skillNames = new Set(templateSkillDefinitions(config).map((skill) => skill.name));
   const workflowNames = new Set<string>(workflowIds());
   const templateNames = new Set(listTemplates().flatMap((template) => [template.id, template.id.replace(/_/g, "-")]));
   let cgsTarget: ParityRow["cgsTarget"] = target("none", "", "", config);

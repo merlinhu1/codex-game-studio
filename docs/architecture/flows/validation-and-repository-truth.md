@@ -108,7 +108,7 @@ flowchart TD
 | Condition | Branch | Required action | Output/diagnostic | Owner |
 | --- | --- | --- | --- | --- |
 | Source/package behavior changed | Functional validation branch | Run relevant tests and `npm run validate`. | Failing package/project check if contract is broken. | Codex Game Studio repo |
-| Generated project behavior changed | Project validation branch | Validate generated-project contracts. | Missing/invalid generated surface diagnostic. | `src/validation.ts` and scaffold owners |
+| Template/project behavior changed | Project validation branch | Validate template and project-state contracts. | Missing/invalid template or project-state diagnostic. | `src/validation.ts` and scaffold owners |
 | Public CLI claim changed | CLI contract branch | Update contract truth doc and validation/readme claims together. | Validation or doc drift if missed. | `docs/truthmark/engineering/contracts/cli-and-validation.md` |
 | Behavior claim changed | Truth sync branch | Update owning bounded truth doc. | Truthmark may flag stale/unmapped surfaces. | Truthmark docs workflow |
 | Flow comprehension changed | Runtime-view branch | Update affected architecture flow guide after truth doc. | Stale walkthrough if missed. | `docs/architecture/flows/**` |

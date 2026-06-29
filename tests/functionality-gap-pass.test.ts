@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, it } from "node:test";
@@ -10,6 +10,17 @@ import { projectRoleIdsForEngine, rolePackages, studioRoleIds } from "../src/rol
 import { readTemplate, templateRegistry } from "../src/templates.js";
 import { validateProject } from "../src/validation.js";
 import { renderWorkflowPrompt, workflowAliases, workflowRegistry } from "../src/workflows.js";
+
+function seedTemplateRoot(root: string): void {
+  for (const entry of ["AGENTS.md", ".codex/agents", ".codex/workflows", ".agents/skills"]) {
+    cpSync(path.join(process.cwd(), entry), path.join(root, entry), { recursive: true });
+  }
+}
+
+function initTemplateProject(options: Parameters<typeof initProject>[0], cwd: string): ReturnType<typeof initProject> {
+  seedTemplateRoot(cwd);
+  return initProject(options, cwd);
+}
 
 const requiredRoles = [
   "studio-orchestrator",
@@ -164,9 +175,9 @@ describe("functionality gap pass", () => {
     );
   });
 
-  it("materializes project-specific prompts, activeRoles, and registry workflows", () => {
+  it("keeps template surfaces tracked while init records activeRoles and registry workflows", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-gap-"));
-    const { projectRoot } = initProject(
+    const { projectRoot } = initTemplateProject(
       { name: "Test Studio Game", engine: "godot", mode: "prototype", competitors: ["Mini Metro"], nonInteractive: true },
       cwd
     );
@@ -177,32 +188,16 @@ describe("functionality gap pass", () => {
     expect(studio.workflows).toEqual(Object.keys(workflowRegistry));
     expect(statusProject(projectRoot, cwd)).toContain(`active roles: ${activeAgentsForProject("prototype", "godot").join(", ")}`);
 
-    const promptBody = readFileSync(path.join(projectRoot, ".codex", "prompts", "market-analyst.md"), "utf8");
-    expect(promptBody).toContain("Project: Test Studio Game");
-    expect(promptBody).toContain("Role: Market Analyst");
-    expect(promptBody).toContain("Engine:");
-    expect(promptBody).toContain("Current Milestone:");
-    expect(promptBody).toContain("Expected Outputs");
-    expect(promptBody).toContain("Review Checklist");
-    expect(promptBody).toContain("Handoff");
-    expect(promptBody).toContain("Competitors: Mini Metro");
-    expect(promptBody).toContain("source-input-sha256");
-    expect(promptBody).toContain("rendered-body-sha256");
-
-    const networkPromptBody = readFileSync(path.join(projectRoot, ".codex", "prompts", "network-programmer.md"), "utf8");
-    expect(networkPromptBody).toContain("Role: Network Programmer");
-    expect(networkPromptBody).toContain("Context Strategy: broad");
-    expect(networkPromptBody).toContain("Expected Outputs");
-    expect(networkPromptBody).toContain("Review Checklist");
+    expect(existsSync(path.join(projectRoot, ".codex", "prompts"))).toBe(false);
+    expect(readFileSync(path.join(projectRoot, ".codex", "agents", "market-analyst.toml"), "utf8")).toContain('name = "market_analyst"');
 
     for (const workflow of Object.keys(workflowRegistry)) {
       expect(existsSync(path.join(projectRoot, workflowRegistry[workflow as keyof typeof workflowRegistry].file))).toBe(true);
       expect(renderWorkflowPrompt(projectRoot, workflow as keyof typeof workflowRegistry)).toContain(workflow);
     }
     const workflowBody = readFileSync(path.join(projectRoot, ".codex", "workflows", "ui-ux-review.md"), "utf8");
-    expect(workflowBody).toContain("source-input-sha256");
-    expect(workflowBody).toContain("rendered-body-sha256");
     expect(workflowBody).toContain("## Taxonomy");
+    expect(workflowBody).not.toContain("source-input-sha256");
     expect(readFileSync(path.join(projectRoot, ".codex", "workflows", "release-checklist.md"), "utf8")).toContain("release-hotfix");
     expect(readFileSync(path.join(projectRoot, ".codex", "workflows", "localization-plan.md"), "utf8")).toContain("localization-accessibility");
     expect(existsSync(path.join(projectRoot, "project_orchestrator.md"))).toBe(false);
@@ -212,7 +207,7 @@ describe("functionality gap pass", () => {
 
   it("inlines only selected package templates into workflow prompts", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-gap-"));
-    const { projectRoot } = initProject({ name: "Template Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Template Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
 
     for (const workflow of Object.values(workflowRegistry)) {
       for (const templateId of workflow.templateIds ?? []) {
@@ -266,7 +261,7 @@ describe("functionality gap pass", () => {
 
   it("workflow shortcut CLI aliases render prompts only", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-gap-cli-"));
-    const { projectRoot } = initProject({ name: "Shortcut Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Shortcut Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     const cli = path.join(process.cwd(), "src", "cli.ts");
     const tsx = path.join(process.cwd(), "node_modules", ".bin", "tsx");
     const help = execFileSync(tsx, [cli, "--help"], { encoding: "utf8" });
@@ -321,18 +316,14 @@ describe("functionality gap pass", () => {
     }
   });
 
-  it("validation reports stable IDs for missing expanded prompts and workflows", () => {
+  it("validation reports stable IDs for missing tracked agents and workflows", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-gap-val-"));
-    const { projectRoot } = initProject({ name: "Broken Gap Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    rmSync(path.join(projectRoot, ".codex", "prompts", "studio-orchestrator.md"));
+    const { projectRoot } = initTemplateProject({ name: "Broken Gap Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    rmSync(path.join(projectRoot, ".codex", "agents", "studio-orchestrator.toml"));
     rmSync(path.join(projectRoot, ".codex", "workflows", "market-analysis.md"));
     writeFileSync(path.join(projectRoot, ".codex", "workflows", "ui-ux-review.md"), "# UI UX Review\n");
-    const marketPrompt = path.join(projectRoot, ".codex", "prompts", "market-analyst.md");
-    writeFileSync(marketPrompt, readFileSync(marketPrompt, "utf8").replace("Project: Broken Gap Game", "Project: Wrong Game").replace("Role: Market Analyst", "Role: Wrong Role"));
     const failures = validateProject(projectRoot).filter((check) => check.status === "fail").map((check) => check.id);
-    expect(failures).toContain("codex.role.studio-orchestrator.prompt.exists");
-    expect(failures).toContain("codex.role.market-analyst.prompt.project");
-    expect(failures).toContain("codex.role.market-analyst.prompt.role");
+    expect(failures).toContain("codex.agent.studio-orchestrator.exists");
     expect(failures).toContain("codex.workflow.market-analysis.file.exists");
     expect(failures).toContain("codex.workflow.ui-ux-review.sections");
   });

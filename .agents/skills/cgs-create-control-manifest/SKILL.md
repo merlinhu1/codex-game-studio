@@ -1,0 +1,56 @@
+---
+name: cgs-create-control-manifest
+description: Use for Codex Game Studio create control manifest work: Define implementation rules, boundaries, allowed dependencies, validation commands, and review gates.
+---
+
+# Codex Game Studio Create Control Manifest
+
+Use this skill for create control manifest work in Template Game.
+
+## Objective
+
+Define implementation rules, boundaries, allowed dependencies, validation commands, and review gates.
+
+## Inputs
+
+- AGENTS.md
+- .codex/studio.json
+- task-relevant files named by the user or task record
+- docs/architecture/README.md
+- design/gdd.md
+
+## Procedure
+
+1. Clarify the requested define implementation rules, boundaries, allowed dependencies, validation commands, and review gates. and identify the current project stage.
+2. Collect evidence for Layer Rules, Allowed Dependency, Validation Command.
+3. Compare options, choose the smallest reversible technical path, and record consequences.
+4. Produce the requested artifact or review with clear file paths and verification evidence.
+
+## Write Targets
+
+- docs/architecture/
+
+## Output Contract
+
+- Summary
+- Layer Rules
+- Allowed Dependency
+- Validation Command
+- Review Gate
+- Risks
+- Changed files or proposed files
+- Verification evidence
+- Next owner or decision
+
+## Quality Gates
+
+- Layer Rules
+- Allowed Dependency
+- Validation Command
+- Review Gate
+- Scope remains bounded to the current task and project stage.
+- Report labels unverified assumptions separately from evidence.
+
+## Handoff
+
+Report changed files, verification evidence, remaining risks, and the next owner or decision. Do not imply hidden hooks or autonomous background work.
