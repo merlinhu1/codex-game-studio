@@ -119,6 +119,51 @@ export const behavioralEvaluationScenarios: BehavioralEvaluationScenario[] = [
     requiredTemplateIds: ["market_analysis", "pitch_document"],
     forbiddenTemplateIds: ["analytics_setup", "release_notes"],
     maxPromptLength: 15000
+  },
+  {
+    id: "workflow.vertical-slice.uplift-contract",
+    description: "Vertical-slice prompts carry production planning structure, verification evidence, and stop-condition language.",
+    target: { kind: "workflow", workflow: "vertical-slice" },
+    requiredPhrases: ["Role: Producer", workflowRegistry["vertical-slice"].objective, "validation evidence", "Stop Conditions"],
+    forbiddenPhrases: withDefaultForbidden(["Template: market_analysis"]),
+    expectedContextCategories: ["project-instructions", "studio-state", "workflow-file", "project-docs", "role-contract", "output-contract"],
+    maxPromptLength: 15000
+  },
+  {
+    id: "workflow.bugfix.uplift-contract",
+    description: "Bugfix prompts require reproduction, bounded fix output, and verification evidence.",
+    target: { kind: "workflow", workflow: "bugfix" },
+    requiredPhrases: ["Role: Gameplay Programmer", workflowRegistry.bugfix.objective, "Changed files", "Verification evidence", "Stop Conditions"],
+    forbiddenPhrases: withDefaultForbidden(["Template: release_notes"]),
+    expectedContextCategories: ["project-instructions", "studio-state", "workflow-file", "role-contract", "output-contract"],
+    maxPromptLength: 15000
+  },
+  {
+    id: "workflow.prototype.uplift-contract",
+    description: "Prototype prompts require falsifiable experiment framing and cleanup/handoff boundaries.",
+    target: { kind: "workflow", workflow: "prototype" },
+    requiredPhrases: ["Role: Producer", workflowRegistry.prototype.objective, "Expected Outputs", "validation evidence", "Stop Conditions"],
+    forbiddenPhrases: withDefaultForbidden(["Template: release_notes"]),
+    expectedContextCategories: ["project-instructions", "studio-state", "workflow-file", "role-contract", "output-contract"],
+    maxPromptLength: 15000
+  },
+  {
+    id: "workflow.release-checklist.uplift-contract",
+    description: "Release-checklist prompts require blocker separation and release verification evidence.",
+    target: { kind: "workflow", workflow: "release-checklist" },
+    requiredPhrases: ["Role: Release Manager", workflowRegistry["release-checklist"].objective, "Blocking issues", "Validation evidence", "Stop Conditions"],
+    forbiddenPhrases: withDefaultForbidden(["Template: market_analysis"]),
+    expectedContextCategories: ["project-instructions", "studio-state", "workflow-file", "role-contract", "output-contract"],
+    maxPromptLength: 15000
+  },
+  {
+    id: "role.game-designer.design-system-uplift",
+    description: "Design-system prompts require game-designer output structure, quality gates, and handoff evidence.",
+    target: { kind: "role", role: "game-designer", phase: "plan", objective: "Create a design-system update for player-facing ability rules.", contextFiles: ["AGENTS.md", ".codex/studio.json", "documentation/design/gdd.md"] },
+    requiredPhrases: ["Role: Game Designer", "## Responsibilities", "Quality Gates", "Acceptance criteria", "## Verification"],
+    forbiddenPhrases: withDefaultForbidden(["Template: release_notes"]),
+    expectedContextCategories: ["project-instructions", "studio-state", "project-docs", "role-contract", "output-contract"],
+    maxPromptLength: 15000
   }
 ];
 

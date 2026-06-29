@@ -11,6 +11,7 @@ import { loadEngineConfigs } from "./engines.js";
 import { engineReferenceContextRequests } from "./engine-reference.js";
 import { stripGeneratedMetadata } from "./generated-surfaces.js";
 import { renderContextContract } from "./prompt-context.js";
+import { defaultModelPolicyForId, type CodexModelName, type ReasoningEffort } from "./prompt-surface-metadata.js";
 import { readStudioProject, type StudioProjectState } from "./projects.js";
 import { isEngineSpecialistRoleId, isStudioRoleId, projectRoleIdsForEngine, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
 import { customPhaseForRun, customTemplateIdsForRole, findCustomRole, renderCustomRolePrompt } from "./customization.js";
@@ -36,6 +37,7 @@ export type RunOptions = {
   approvedByUser?: boolean;
   constrainedSandbox?: boolean;
   noWrite?: boolean;
+  model?: CodexModelName;
 };
 
 export type PreparedRun = {
@@ -54,6 +56,8 @@ export type PreparedRun = {
   fixPrompt?: string;
   maxFixPasses: number;
   eligibility: StudioRunEligibility;
+  selectedModel: CodexModelName;
+  modelReasoningEffort: ReasoningEffort;
 };
 
 export type ReviewResult = {
@@ -91,8 +95,8 @@ function requireTask(task: string): string {
   return task.trim();
 }
 
-export function codexExecInvocation(projectRoot: string, codexBin = resolveCodexCommand(), sandbox: CodexSandboxMode = "danger-full-access"): { command: string; args: string[]; display: string } {
-  const args = buildCodexExecArgs({ projectRoot, sandbox });
+export function codexExecInvocation(projectRoot: string, codexBin = resolveCodexCommand(), sandbox: CodexSandboxMode = "danger-full-access", model?: CodexModelName): { command: string; args: string[]; display: string } {
+  const args = buildCodexExecArgs({ projectRoot, sandbox, model });
   return { command: codexBin, args, display: [codexBin, ...args.map((arg) => JSON.stringify(arg))].join(" ") };
 }
 
@@ -143,7 +147,9 @@ function configFromStudio(studio: StudioProjectState): ProjectConfig {
 function renderRuntimeContextBlock(role: StudioRoleId, studio: StudioProjectState, task: string): string {
   const projectRolePrompt = stripGeneratedMetadata(renderProjectRolePrompt(role, configFromStudio(studio), loadEngineConfigs(packageAssetPath("engine_configs"))));
   const templateBodies = renderSelectedTemplates(selectTemplates(role, task));
-  return ["", `# Runtime Role Context: ${role}`, "", projectRolePrompt.trim(), templateBodies, ""].join("\n");
+  const modelPolicy = defaultModelPolicyForId(role);
+  const modelBlock = ["## Runtime Model Policy", "", `- Selected model: ${modelPolicy.model}`, `- Reasoning effort: ${modelPolicy.effort}`, `- Source surface: .codex/agents/${role}.toml`, "- Output contract: summary, changed files or proposed files, verification evidence, blockers, risks, and handoff owner when needed.", "- Stop condition: do not continue when required project state, write approval, or verification evidence is missing.", ""].join("\n");
+  return ["", `# Runtime Role Context: ${role}`, "", modelBlock, projectRolePrompt.trim(), templateBodies, ""].join("\n");
 }
 
 function broadContextRequests(): ContextRequestEntry[] {
@@ -464,17 +470,20 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role.id}`);
   const promptPath = path.join(runDir, "prompt.md");
   const metadataPath = path.join(runDir, "metadata.json");
+  const modelPolicy = defaultModelPolicyForId(role.id);
+  const selectedModel = options.model ?? modelPolicy.model;
+  const modelReasoningEffort = modelPolicy.effort;
   if (!options.printPrompt && !options.dryRun && !options.noWrite) {
     mkdirSync(runDir, { recursive: true });
     writeFileSync(promptPath, prompt);
     writeFileSync(
       metadataPath,
-      `${JSON.stringify({ timestamp: new Date().toISOString(), product: "codex-game-studio", project: path.relative(cwd, projectRoot) || ".", role: role.id, task, customRole: true, prompt_chars: prompt.length, prompt_cache_path: path.relative(cwd, promptPath), review: Boolean(reviewPrompt), fix: Boolean(fixPrompt), max_fix_passes: maxFixPasses, writePolicy: eligibility.writePolicy, allowFileEdits: eligibility.allowFileEdits, codexSandbox: eligibility.codexSandbox, eligibility }, null, 2)}\n`
+      `${JSON.stringify({ timestamp: new Date().toISOString(), product: "codex-game-studio", project: path.relative(cwd, projectRoot) || ".", role: role.id, task, customRole: true, prompt_chars: prompt.length, prompt_cache_path: path.relative(cwd, promptPath), selectedModel, modelReasoningEffort, review: Boolean(reviewPrompt), fix: Boolean(fixPrompt), max_fix_passes: maxFixPasses, writePolicy: eligibility.writePolicy, allowFileEdits: eligibility.allowFileEdits, codexSandbox: eligibility.codexSandbox, eligibility }, null, 2)}\n`
     );
   }
   const codexBin = options.codexBin ?? resolveCodexCommand();
-  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox);
-  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only") : undefined;
+  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, selectedModel);
+  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only", "gpt-5.4") : undefined;
   const dryRunExtra = [
     reviewPrompt ? `\n\nReview Codex command: ${reviewCodexCommand?.display}\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
     fixPrompt ? `\n\nFix prompt (max passes: ${maxFixPasses}):\n${fixPrompt}` : ""
@@ -489,9 +498,9 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
   const output = options.printPrompt
     ? prompt
     : options.dryRun
-      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${formatEligibility(eligibility)}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
-      : `Prompt cache written: ${promptPath}\n${formatEligibility(eligibility)}\nExecuting Codex: ${codexCommand.display}`;
-  return { prompt, promptPath, metadataPath, projectRoot, role: roleInput, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility };
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\nSelected model: ${selectedModel} (${modelReasoningEffort})\n${formatEligibility(eligibility)}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
+      : `Prompt cache written: ${promptPath}\nSelected model: ${selectedModel} (${modelReasoningEffort})\n${formatEligibility(eligibility)}\nExecuting Codex: ${codexCommand.display}`;
+  return { prompt, promptPath, metadataPath, projectRoot, role: roleInput, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility, selectedModel, modelReasoningEffort };
 }
 
 export function prepareRun(roleInput: string, options: RunOptions, cwd = process.cwd()): PreparedRun {
@@ -633,6 +642,9 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role}`);
   const promptPath = path.join(runDir, "prompt.md");
   const metadataPath = path.join(runDir, "metadata.json");
+  const modelPolicy = defaultModelPolicyForId(role);
+  const selectedModel = options.model ?? modelPolicy.model;
+  const modelReasoningEffort = modelPolicy.effort;
   if (!options.printPrompt && !options.dryRun && !options.noWrite) {
     mkdirSync(runDir, { recursive: true });
     writeFileSync(promptPath, prompt);
@@ -647,6 +659,8 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
           task,
           prompt_chars: prompt.length,
           prompt_cache_path: path.relative(cwd, promptPath),
+          selectedModel,
+          modelReasoningEffort,
           review: Boolean(reviewPrompt),
           fix: Boolean(fixPrompt),
           max_fix_passes: maxFixPasses,
@@ -661,8 +675,8 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
     );
   }
   const codexBin = options.codexBin ?? resolveCodexCommand();
-  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox);
-  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only") : undefined;
+  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, selectedModel);
+  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only", "gpt-5.4") : undefined;
   const dryRunExtra = [
     reviewPrompt ? `\n\nReview Codex command: ${reviewCodexCommand?.display}\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
     fixPrompt ? `\n\nFix prompt (max passes: ${maxFixPasses}):\n${fixPrompt}` : ""
@@ -679,7 +693,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   const output = options.printPrompt
     ? prompt
     : options.dryRun
-      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${eligibilitySummary}\n${nativeSurfaceSummary}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
-      : `Prompt cache written: ${promptPath}\n${eligibilitySummary}\nExecuting Codex: ${codexCommand.display}`;
-  return { prompt, promptPath, metadataPath, projectRoot, role, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility };
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\nSelected model: ${selectedModel} (${modelReasoningEffort})\n${eligibilitySummary}\n${nativeSurfaceSummary}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
+      : `Prompt cache written: ${promptPath}\nSelected model: ${selectedModel} (${modelReasoningEffort})\n${eligibilitySummary}\nExecuting Codex: ${codexCommand.display}`;
+  return { prompt, promptPath, metadataPath, projectRoot, role, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility, selectedModel, modelReasoningEffort };
 }

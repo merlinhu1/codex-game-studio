@@ -1,0 +1,10 @@
+display_name: "Vertical Slice"
+short_description: "Codex Game Studio Vertical Slice skill invocation metadata."
+default_prompt: "Use cgs-vertical-slice for the current repository task. Include target files, constraints, and required verification evidence."
+invocation_policy: "user-invocable; no hidden lifecycle behavior; respects repository write policy"
+dependencies:
+  agents:
+    - producer
+  files:
+    - AGENTS.md
+    - .codex/studio.json

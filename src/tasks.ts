@@ -7,6 +7,7 @@ import { resolveProjectRoot } from "./paths.js";
 import { readStudioProject } from "./projects.js";
 import { isStudioRoleId, type StudioRoleId } from "./roles.js";
 import { executeRunLifecycle, prepareRun, type PreparedRun, type RunLifecycleResult } from "./runner.js";
+import type { CodexModelName, ReasoningEffort } from "./prompt-surface-metadata.js";
 
 export type StudioTaskStatus = "ready" | "running" | "blocked" | "done" | "cancelled" | "skipped";
 
@@ -38,6 +39,9 @@ export type StudioTask = {
   createdAt: string;
   updatedAt: string;
   lastRunId?: string;
+  lastRunModel?: CodexModelName;
+  lastRunReasoningEffort?: ReasoningEffort;
+  lastRunSurface?: string;
 };
 
 export type TaskStore = {
@@ -130,7 +134,10 @@ function normalizeTask(raw: RawTask, projectRoot: string, timestamp = migrationT
     notes,
     createdAt: raw.createdAt ?? timestamp,
     updatedAt: raw.updatedAt ?? timestamp,
-    lastRunId: raw.lastRunId
+    lastRunId: raw.lastRunId,
+    lastRunModel: raw.lastRunModel,
+    lastRunReasoningEffort: raw.lastRunReasoningEffort,
+    lastRunSurface: raw.lastRunSurface
   };
 }
 
@@ -230,12 +237,15 @@ export function createTask(
   return task;
 }
 
-export function updateTaskStatus(projectRoot: string, taskId: string, status: StudioTaskStatus, note?: string, updates: Partial<Pick<StudioTask, "lastRunId">> = {}): StudioTask {
+export function updateTaskStatus(projectRoot: string, taskId: string, status: StudioTaskStatus, note?: string, updates: Partial<Pick<StudioTask, "lastRunId" | "lastRunModel" | "lastRunReasoningEffort" | "lastRunSurface">> = {}): StudioTask {
   const store = readTaskStore(projectRoot);
   const task = getTask(store, taskId);
   task.status = status;
   task.updatedAt = nowIso();
   if (updates.lastRunId) task.lastRunId = updates.lastRunId;
+  if (updates.lastRunModel) task.lastRunModel = updates.lastRunModel;
+  if (updates.lastRunReasoningEffort) task.lastRunReasoningEffort = updates.lastRunReasoningEffort;
+  if (updates.lastRunSurface) task.lastRunSurface = updates.lastRunSurface;
   if (note?.trim()) task.notes.push(`${new Date().toISOString()} ${note.trim()}`);
   writeTaskStore(projectRoot, store);
   return task;
@@ -280,7 +290,7 @@ export async function executeTaskRun(projectRoot: string, taskId: string, option
   );
   if (options.dryRun || options.noWrite) return { task, prepared };
 
-  updateTaskStatus(projectRoot, taskId, "running", "Codex task run started");
+  updateTaskStatus(projectRoot, taskId, "running", `Codex task run started with ${prepared.selectedModel} (${prepared.modelReasoningEffort})`, { lastRunModel: prepared.selectedModel, lastRunReasoningEffort: prepared.modelReasoningEffort, lastRunSurface: `.codex/agents/${task.role}.toml` });
   try {
     const lifecycle = await executeRunLifecycle(prepared);
     const finalStatus: StudioTaskStatus = lifecycle.finalStatus === "done" ? "done" : "blocked";

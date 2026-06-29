@@ -1,10 +1,12 @@
 import { spawn, spawnSync } from "node:child_process";
 import type { CodexSandboxMode } from "./codex-session.js";
+import type { CodexModelName } from "./prompt-surface-metadata.js";
 
 export type CodexRuntimeOptions = {
   projectRoot: string;
   sandbox?: CodexSandboxMode;
   codexBin?: string;
+  model?: CodexModelName;
 };
 
 export type CodexAvailability = {
@@ -28,7 +30,7 @@ export function resolveCodexCommand(env: NodeJS.ProcessEnv | Record<string, stri
 }
 
 export function buildCodexExecArgs(options: CodexRuntimeOptions): string[] {
-  return ["exec", "--cd", options.projectRoot, "--sandbox", options.sandbox ?? "danger-full-access", "-"];
+  return ["exec", ...(options.model ? ["--model", options.model] : []), "--cd", options.projectRoot, "--sandbox", options.sandbox ?? "danger-full-access", "-"];
 }
 
 export async function checkCodexAvailability(options: { codexBin?: string } = {}): Promise<CodexAvailability> {

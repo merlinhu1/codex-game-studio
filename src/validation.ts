@@ -21,6 +21,7 @@ import { isEngineSpecialistRoleId, projectRoleIdsForEngine, rolePackages, studio
 import { templateRegistry, validateTemplateFiles } from "./templates.js";
 import { renderWorkflowPrompt, workflowIds, workflowRegistry } from "./workflows.js";
 import { templateSkillDefinitions } from "./skills.js";
+import { isCodexModelName, isReasoningEffort, parsePromptSurfaceFrontmatter, parseTomlArrayField, parseTomlStringField, validateModelPolicy } from "./prompt-surface-metadata.js";
 
 export type CheckStatus = "pass" | "fail" | "skip";
 export type ValidationCheck = { id: string; status: CheckStatus; message: string; path?: string };
@@ -237,6 +238,8 @@ export function validateTemplateSurfaces(root = process.cwd()): ValidationCheck[
   checks.push(agentFiles.length > 0 && agentFiles.every((file) => trackedAgents.size === 0 || trackedAgents.has(file)) ? pass("template.agents.tracked", "tracked Codex custom agents are clone-visible", path.join(root, ".codex", "agents")) : fail("template.agents.tracked", "tracked Codex custom agents missing", path.join(root, ".codex", "agents")));
   checks.push(workflowFiles.length > 0 && workflowFiles.every((file) => trackedWorkflows.size === 0 || trackedWorkflows.has(file)) ? pass("template.workflows.tracked", "tracked Codex workflows are clone-visible", path.join(root, ".codex", "workflows")) : fail("template.workflows.tracked", "tracked Codex workflows missing", path.join(root, ".codex", "workflows")));
   checks.push(skillFiles.length > 0 && skillFiles.every((file) => trackedSkills.size === 0 || trackedSkills.has(file)) ? pass("template.skills.tracked", "tracked repository skills are clone-visible", path.join(root, ".agents", "skills")) : fail("template.skills.tracked", "tracked repository skills missing", path.join(root, ".agents", "skills")));
+  checks.push(...promptSurfaceQualityChecks(root, agentFiles, workflowFiles, skillFiles));
+  checks.push(...openAiSkillMetadataChecks(root));
 
   for (const forbidden of [
     ".codex/agents/truth-claim-verifier.toml",
@@ -259,6 +262,107 @@ export function validateTemplateSurfaces(root = process.cwd()): ValidationCheck[
     checks.push(body.includes("template") && body.includes(".codex/agents") && !body.includes("NodeNext") && !body.includes("Truthmark Workflow") ? pass("template.AGENTS.game_facing", "AGENTS.md is game-facing", agentsMd) : fail("template.AGENTS.game_facing", "AGENTS.md must be game-facing template guidance", agentsMd));
   }
   return checks;
+}
+
+
+function scalarMetadata(value: string | string[] | boolean | undefined): string | undefined {
+  return typeof value === "string" ? value : undefined;
+}
+
+function arrayMetadata(value: string | string[] | boolean | undefined): string[] {
+  if (Array.isArray(value)) return value;
+  if (typeof value === "string" && value.startsWith("[") && value.endsWith("]")) return value.slice(1, -1).split(",").map((item) => item.trim()).filter(Boolean);
+  return [];
+}
+
+function hashLooksValid(value: string | undefined): boolean {
+  return !!value && /^[a-f0-9]{64}$/.test(value);
+}
+
+function promptSurfaceDepth(body: string, sections: string[]): number {
+  let score = Math.min(25, Math.floor(body.split("\n").length / 20));
+  for (const section of sections) if (new RegExp(`^## ${section.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*$`, "m").test(body)) score += 8;
+  return Math.min(100, score);
+}
+
+function agentPromptSurfaceChecks(root: string, file: string): ValidationCheck[] {
+  const checks: ValidationCheck[] = [];
+  const full = path.join(root, file);
+  const id = path.basename(file, ".toml");
+  const body = readFileSync(full, "utf8");
+  const model = parseTomlStringField(body, "model");
+  const effort = parseTomlStringField(body, "model_reasoning_effort");
+  const policy = validateModelPolicy({ model: model ?? "", model_reasoning_effort: effort });
+  checks.push(policy.valid ? pass(`prompt_surface.agent.${id}.model`, `${id} uses exact Codex model policy`, full) : fail(`prompt_surface.agent.${id}.model`, `${id} invalid model policy: ${policy.issues.join(", ")}`, full));
+  checks.push(hashLooksValid(parseTomlStringField(body, "source_hash")) && !!parseTomlStringField(body, "source_reference") ? pass(`prompt_surface.agent.${id}.traceability`, `${id} source traceability present`, full) : fail(`prompt_surface.agent.${id}.traceability`, `${id} missing source_reference/source_hash`, full));
+  const skills = parseTomlArrayField(body, "primary_skills");
+  const brokenSkill = skills.find((skill) => !existsSync(path.join(root, ".agents", "skills", skill, "SKILL.md")));
+  checks.push(skills.length && !brokenSkill ? pass(`prompt_surface.agent.${id}.links`, `${id} linked skills resolve`, full) : fail(`prompt_surface.agent.${id}.links`, brokenSkill ? `${id} linked skill missing: ${brokenSkill}` : `${id} missing linked skills`, full));
+  checks.push(parseTomlArrayField(body, "allowed_tool_categories").length ? pass(`prompt_surface.agent.${id}.tool_policy`, `${id} tool policy present`, full) : fail(`prompt_surface.agent.${id}.tool_policy`, `${id} missing tool policy`, full));
+  checks.push(promptSurfaceDepth(body, ["Use When", "Do Not Use When", "Procedure", "Handoff Contract", "Stop Conditions"]) >= 40 ? pass(`prompt_surface.agent.${id}.depth`, `${id} prompt depth sufficient`, full) : fail(`prompt_surface.agent.${id}.depth`, `${id} prompt surface too thin`, full));
+  return checks;
+}
+
+function skillPromptSurfaceChecks(root: string, file: string): ValidationCheck[] {
+  const checks: ValidationCheck[] = [];
+  const full = path.join(root, file);
+  const id = file.split("/")[2];
+  const body = readFileSync(full, "utf8");
+  const { frontmatter } = parsePromptSurfaceFrontmatter(body);
+  const model = scalarMetadata(frontmatter.model);
+  const effort = scalarMetadata(frontmatter.model_reasoning_effort);
+  const policy = validateModelPolicy({ model: model ?? "", model_reasoning_effort: effort });
+  checks.push(policy.valid ? pass(`prompt_surface.skill.${id}.model`, `${id} uses exact Codex model policy`, full) : fail(`prompt_surface.skill.${id}.model`, `${id} invalid model policy: ${policy.issues.join(", ")}`, full));
+  checks.push(hashLooksValid(scalarMetadata(frontmatter["source-hash"]) ?? scalarMetadata(frontmatter.source_hash)) && !!(scalarMetadata(frontmatter["source-reference"]) ?? scalarMetadata(frontmatter.source_reference)) ? pass(`prompt_surface.skill.${id}.traceability`, `${id} source traceability present`, full) : fail(`prompt_surface.skill.${id}.traceability`, `${id} missing source-reference/source-hash`, full));
+  const primaryAgent = scalarMetadata(frontmatter["primary-agent"]) ?? scalarMetadata(frontmatter.primary_agent);
+  checks.push(primaryAgent && existsSync(path.join(root, ".codex", "agents", `${primaryAgent}.toml`)) ? pass(`prompt_surface.skill.${id}.agent_link`, `${id} primary agent resolves`, full) : fail(`prompt_surface.skill.${id}.agent_link`, `${id} primary agent link missing or broken`, full));
+  checks.push(scalarMetadata(frontmatter["argument-hint"]) ? pass(`prompt_surface.skill.${id}.argument_hint`, `${id} argument hint present`, full) : fail(`prompt_surface.skill.${id}.argument_hint`, `${id} missing argument hint`, full));
+  checks.push(promptSurfaceDepth(body, ["Purpose", "Prerequisites", "Arguments", "Phased Procedure", "Decision Gates", "Output Contract", "Quality Gates", "Failure Modes", "Verification", "Handoff"]) >= 55 ? pass(`prompt_surface.skill.${id}.depth`, `${id} prompt depth sufficient`, full) : fail(`prompt_surface.skill.${id}.depth`, `${id} prompt surface too thin`, full));
+  return checks;
+}
+
+function workflowPromptSurfaceChecks(root: string, file: string): ValidationCheck[] {
+  const checks: ValidationCheck[] = [];
+  const full = path.join(root, file);
+  const id = path.basename(file, ".md");
+  const body = readFileSync(full, "utf8");
+  const { frontmatter } = parsePromptSurfaceFrontmatter(body);
+  const model = scalarMetadata(frontmatter.model);
+  const effort = scalarMetadata(frontmatter.model_reasoning_effort);
+  const policy = validateModelPolicy({ model: model ?? "", model_reasoning_effort: effort });
+  checks.push(policy.valid ? pass(`prompt_surface.workflow.${id}.model`, `${id} uses exact Codex model policy`, full) : fail(`prompt_surface.workflow.${id}.model`, `${id} invalid model policy: ${policy.issues.join(", ")}`, full));
+  const agent = scalarMetadata(frontmatter["primary-agent"]) ?? scalarMetadata(frontmatter.primary_agent);
+  checks.push(agent && existsSync(path.join(root, ".codex", "agents", `${agent}.toml`)) ? pass(`prompt_surface.workflow.${id}.agent_link`, `${id} primary agent resolves`, full) : fail(`prompt_surface.workflow.${id}.agent_link`, `${id} primary agent link missing or broken`, full));
+  const linkedSkills = arrayMetadata(frontmatter["linked-skills"] ?? frontmatter.linked_skills);
+  const brokenSkill = linkedSkills.find((skill) => !existsSync(path.join(root, ".agents", "skills", skill, "SKILL.md")));
+  checks.push(linkedSkills.length && !brokenSkill ? pass(`prompt_surface.workflow.${id}.skill_links`, `${id} linked skills resolve`, full) : fail(`prompt_surface.workflow.${id}.skill_links`, brokenSkill ? `${id} linked skill missing: ${brokenSkill}` : `${id} missing linked skills`, full));
+  checks.push(hashLooksValid(scalarMetadata(frontmatter["source-hash"]) ?? scalarMetadata(frontmatter.source_hash)) && !!(scalarMetadata(frontmatter["source-reference"]) ?? scalarMetadata(frontmatter.source_reference)) ? pass(`prompt_surface.workflow.${id}.traceability`, `${id} source traceability present`, full) : fail(`prompt_surface.workflow.${id}.traceability`, `${id} missing source-reference/source-hash`, full));
+  checks.push(promptSurfaceDepth(body, ["Purpose", "Inputs", "Phase Gates", "Required Artifacts", "Context Contract", "Output Contract", "Stop Conditions", "Handoff"]) >= 45 ? pass(`prompt_surface.workflow.${id}.depth`, `${id} prompt depth sufficient`, full) : fail(`prompt_surface.workflow.${id}.depth`, `${id} prompt surface too thin`, full));
+  return checks;
+}
+
+
+function openAiSkillMetadataChecks(root: string): ValidationCheck[] {
+  const checks: ValidationCheck[] = [];
+  for (const skill of ["cgs-prototype", "cgs-vertical-slice", "cgs-bugfix", "cgs-release-checklist", "cgs-help"]) {
+    const file = path.join(root, ".agents", "skills", skill, "agents", "openai.yaml");
+    if (!existsSync(file)) {
+      checks.push(fail(`prompt_surface.skill.${skill}.openai_metadata`, `${skill} optional OpenAI skill metadata missing`, file));
+      continue;
+    }
+    const body = readFileSync(file, "utf8");
+    const required = ["display_name:", "short_description:", "default_prompt:", "invocation_policy:", "dependencies:"];
+    checks.push(required.every((marker) => body.includes(marker)) && body.includes("AGENTS.md") ? pass(`prompt_surface.skill.${skill}.openai_metadata`, `${skill} optional OpenAI skill metadata present`, file) : fail(`prompt_surface.skill.${skill}.openai_metadata`, `${skill} OpenAI metadata incomplete`, file));
+  }
+  return checks;
+}
+
+function promptSurfaceQualityChecks(root: string, agentFiles: string[], workflowFiles: string[], skillFiles: string[]): ValidationCheck[] {
+  return [
+    ...agentFiles.flatMap((file) => agentPromptSurfaceChecks(root, file)),
+    ...workflowFiles.flatMap((file) => workflowPromptSurfaceChecks(root, file)),
+    ...skillFiles.flatMap((file) => skillPromptSurfaceChecks(root, file))
+  ];
 }
 
 function skillChecks(projectRoot: string, studio: StudioProjectState): ValidationCheck[] {
@@ -303,7 +407,7 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
     checks.push(pkg.files?.includes(file) ? pass(`pkg.files.${file}`, `${file} shipped`) : fail(`pkg.files.${file}`, `${file} missing from package files`, pkgPath));
   }
   checks.push(existsSync(path.join(root, "codex-game-studio")) ? pass("source.wrapper", "source checkout wrapper exists") : fail("source.wrapper", "source checkout wrapper missing", path.join(root, "codex-game-studio")));
-  for (const file of ["src/cli.ts", "src/behavioral-evaluation.ts", "src/customization.ts", "src/codex-runtime.ts", "src/codex-session.ts", "src/codex-prompts.ts", "src/prompt-context.ts", "src/context-manifest.ts", "src/roles.ts", "src/tasks.ts", "src/orchestrator.ts", "src/orchestrator-locks.ts", "src/workflow-recipes.ts", "src/ccgs-adaptation.ts", "src/workflows.ts", "src/verification.ts", "src/projects.ts", "src/runner.ts", "src/validation.ts"]) {
+  for (const file of ["src/cli.ts", "src/behavioral-evaluation.ts", "src/customization.ts", "src/codex-runtime.ts", "src/codex-session.ts", "src/codex-prompts.ts", "src/prompt-context.ts", "src/context-manifest.ts", "src/roles.ts", "src/tasks.ts", "src/orchestrator.ts", "src/orchestrator-locks.ts", "src/workflow-recipes.ts", "src/ccgs-adaptation.ts", "src/workflows.ts", "src/verification.ts", "src/prompt-surface-metadata.ts", "src/projects.ts", "src/runner.ts", "src/validation.ts"]) {
     checks.push(existsSync(path.join(root, file)) ? pass(`src.${file}`, `${file} exists`) : fail(`src.${file}`, `${file} missing`, file));
   }
 

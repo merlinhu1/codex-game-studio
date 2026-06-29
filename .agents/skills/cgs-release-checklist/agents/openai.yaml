@@ -1,0 +1,10 @@
+display_name: "Release Checklist"
+short_description: "Codex Game Studio Release Checklist skill invocation metadata."
+default_prompt: "Use cgs-release-checklist for the current repository task. Include target files, constraints, and required verification evidence."
+invocation_policy: "user-invocable; no hidden lifecycle behavior; respects repository write policy"
+dependencies:
+  agents:
+    - producer
+  files:
+    - AGENTS.md
+    - .codex/studio.json

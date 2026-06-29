@@ -212,3 +212,7 @@ Keeping workflow shortcuts render-only avoids overclaiming automation that is no
 - ../../../../tests/codex-context-files.test.ts
 - ../../../../tests/functionality-gap-pass.test.ts
 - ../../../../tests/template-repository-surfaces.test.ts
+
+## Codex prompt model routing
+
+Prompt surfaces declare exact Codex model policy in tracked template files. Complex design, architecture, production, and release-gate surfaces use `gpt-5.5`; moderate implementation, QA, docs, bugfix, and bounded workflow surfaces use `gpt-5.4`; simple help, status, classification, checklist, and lookup surfaces use `gpt-5.4-mini`. Runtime dry-runs and run metadata expose the selected model and reasoning effort, and Codex execution receives the exact selected model instead of a generic tier name.
