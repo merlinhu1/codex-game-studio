@@ -88,6 +88,8 @@ function addInitCommand(name: "init" | "new"): void {
     .option("--monetization <text>", "monetization model")
     .option("--timeline <text>", "timeline")
     .option("--engine-version <version>", "engine version override")
+    .option("--nested", "legacy: create projects/<slug> instead of configuring the current root")
+    .option("--force-refresh", "refresh an existing root project with matching intent")
     .requiredOption("--non-interactive", "use deterministic defaults")
     .action((opts) => {
       const result = initProject({ ...opts, competitors: opts.competitor, studioMode: readApprovalStudioMode(opts.studioMode) });
@@ -107,19 +109,19 @@ program
 program
   .command("resume")
   .description("Print a read-only continuation summary")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .action((opts) => console.log(resumeProject(opts.project)));
 
 program
   .command("refresh-context")
   .description("Regenerate the project context manifest and freshness metadata")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .action((opts) => console.log(refreshContextManifestProject(opts.project)));
 
 program
   .command("freeze")
   .description("Set project status to frozen")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .action((opts) => console.log(freezeProject(opts.project)));
 
 program
@@ -154,7 +156,7 @@ const approval = program.command("approval").description("Manage auditable studi
 approval
   .command("grant")
   .description("Grant a scoped approval for a role and task objective")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .requiredOption("--role <role>", "studio role")
   .requiredOption("--task <id-or-hash>", "task id or precomputed objective sha256")
   .option("--scope <glob>", "approved relative glob; repeat for multiple scopes", collectScope, [])
@@ -227,7 +229,7 @@ approval
 approval
   .command("list")
   .description("List approval records, including revoked and expired history")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .action((opts) => {
     const projectRoot = resolveTaskProject(opts.project);
     const store = readApprovalStore(projectRoot);
@@ -255,7 +257,7 @@ approval
 approval
   .command("revoke")
   .description("Revoke an approval while preserving history")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .requiredOption("--approval-id <id>", "approval id")
   .action((opts) => {
     const projectRoot = resolveTaskProject(opts.project);
@@ -268,7 +270,7 @@ program
   .description("Run a Codex Game Studio role through Codex by default")
   .argument("<role>")
   .argument("[objective...]")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .option("--task <text>", "task text; positional objective is preferred")
   .option("--print-prompt", "print deterministic prompt body")
   .option("--dry-run", "print selected context and Codex command without launching Codex")
@@ -316,7 +318,7 @@ const task = program.command("task").description("Manage file-backed Codex studi
 task
   .command("create")
   .description("Create a ready task in .codex/tasks.json")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .requiredOption("--role <role>", "studio role")
   .option("--file <relative-path>", "read/context file for the task; repeat for multiple files", (value, previous: string[] = []) => [...previous, value], [])
   .option("--write-file <relative-path>", "literal project-relative file this task may mutate; repeat for multiple files", (value, previous: string[] = []) => [...previous, value], [])
@@ -347,7 +349,7 @@ task
 task
   .command("run")
   .description("Run a task through Codex")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .option("--dry-run", "render task prompt without mutation")
   .option("--review", "render/run a schema-driven review pass")
   .option("--fix", "render/run bounded fix pass prompts when blocked")
@@ -373,7 +375,7 @@ task
 task
   .command("orchestrate")
   .description("Run ready tasks with explicit local orchestration and bounded parallelism")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .option("--workflow <workflow-id>", "select ready tasks from one workflow")
   .option("--max-concurrency <count>", "maximum concurrent task runs, capped at 3", "1")
   .option("--dry-run", "show task waves, locks, approvals, and commands without mutation")
@@ -411,13 +413,13 @@ const workflow = program.command("workflow").description("Render a built-in or p
 workflow
   .command("render <workflow-id>", { isDefault: true })
   .description("Render a built-in or project-local workflow prompt by id")
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .option("--dry-run", "render prompt without launching Codex")
   .action((workflowId: string, opts) => renderWorkflowCommand(workflowId, opts));
 
 const workflowTasks = workflow.command("create-tasks <workflow-id>").description("Create explicit file-backed tasks from a workflow recipe");
 workflowTasks
-  .requiredOption("--project <path>", "project path")
+  .option("--project <path>", "project path")
   .option("--dry-run", "show proposed tasks without writing .codex/tasks.json")
   .action((workflowId: string, opts) => {
     const projectRoot = resolveTaskProject(opts.project);
@@ -429,7 +431,7 @@ function addWorkflowCommand(name: "review" | "ship-check"): void {
   program
     .command(name)
     .description(`Render the ${name} workflow prompt`)
-    .requiredOption("--project <path>", "project path")
+    .option("--project <path>", "project path")
     .option("--dry-run", "render prompt without launching Codex")
     .action((opts) => renderWorkflowCommand(name, opts));
 }
@@ -439,7 +441,7 @@ for (const workflow of Object.values(workflowRegistry)) {
     program
       .command(alias)
       .description(`Render the ${workflow.id} workflow prompt`)
-      .requiredOption("--project <path>", "project path")
+      .option("--project <path>", "project path")
       .option("--dry-run", "render prompt without launching Codex")
       .action((opts) => renderWorkflowCommand(workflow.id, opts));
   }

@@ -6,7 +6,7 @@ Use the README for quick orientation. Use this guide for installation, commands,
 
 ## How Codex Game Studio runs
 
-Codex Game Studio runs locally against the current repository checkout. It writes game-project workspaces under `projects/<slug>/` and keeps project state in files that can be reviewed in Git.
+Codex Game Studio runs locally against the current repository checkout. By default, `init` turns the current repository root into the game workspace and keeps project state in files that can be reviewed in Git. Use `--nested` only as a legacy migration escape hatch for `projects/<slug>/`.
 
 The checked-in wrapper runs the built TypeScript entrypoint at `dist/cli.js`. This repository does not commit generated bundled CLI artifacts.
 
@@ -33,8 +33,8 @@ Create a project:
 ./codex-game-studio init --name "My Game" --engine godot --mode prototype --non-interactive \
   --concept "A compact puzzle game about routing trains"
 
-./codex-game-studio status --project projects/my-game
-./codex-game-studio validate --project projects/my-game
+./codex-game-studio status
+./codex-game-studio validate
 ```
 
 ## Package-bin usage
@@ -54,8 +54,8 @@ The package bin is `codex-game-studio` and points to the built `dist/cli.js` ent
 
 ```sh
 ./codex-game-studio init --name "My Game" --engine godot --mode prototype --non-interactive
-./codex-game-studio status --project projects/my-game
-./codex-game-studio resume --project projects/my-game
+./codex-game-studio status
+./codex-game-studio resume
 ```
 
 `status` and `resume` are read-only. `freeze` is the explicit command that changes project status.
@@ -65,8 +65,8 @@ The package bin is `codex-game-studio` and points to the built `dist/cli.js` ent
 ```sh
 ./codex-game-studio templates list
 ./codex-game-studio templates show gdd
-./codex-game-studio market --project projects/my-game
-./codex-game-studio ship-check --project projects/my-game
+./codex-game-studio market
+./codex-game-studio ship-check
 ```
 
 Workflow shortcuts render focused prompts. They do not launch Codex unless you explicitly use `run <role>` or a task execution command.
@@ -74,17 +74,17 @@ Workflow shortcuts render focused prompts. They do not launch Codex unless you e
 ### Run a studio role
 
 ```sh
-./codex-game-studio run producer --project projects/my-game \
+./codex-game-studio run producer \
   "Create the initial market overview."
 ```
 
 Inspect first when the task is risky or broad:
 
 ```sh
-./codex-game-studio run producer --project projects/my-game \
+./codex-game-studio run producer \
   "Create the initial market overview." --dry-run
 
-./codex-game-studio run producer --project projects/my-game \
+./codex-game-studio run producer \
   "Create the initial market overview." --print-prompt
 ```
 
@@ -94,7 +94,7 @@ Inspect first when the task is risky or broad:
 
 ```sh
 ./codex-game-studio validate
-./codex-game-studio validate --project projects/my-game
+./codex-game-studio validate
 ```
 
 Repository validation checks package contracts, build output, packaged assets, template availability, hidden future-only surfaces, role/workflow rendering, and Codex CLI readiness.
@@ -105,7 +105,7 @@ Project validation checks project state, generated prompt/workflow freshness, re
 
 | Command | What it does |
 | --- | --- |
-| `init` / `new` | Create a project under `projects/<slug>/`. |
+| `init` / `new` | Initialize the current repository root as the game workspace; pass `--nested` only for the legacy `projects/<slug>/` layout. |
 | `status` | Print project phase, status, engine, and the next validation command. |
 | `resume` | Print a read-only continuation summary. |
 | `refresh-context` | Regenerate `.codex/context-manifest.json` after selected context files change. |

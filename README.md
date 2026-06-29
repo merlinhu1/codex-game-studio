@@ -17,22 +17,22 @@ It is not a game engine and not a hosted project manager. It gives Codex a clear
 Requirements: Node.js 24 or newer. The Codex CLI is required for `run <role>`.
 
 ```sh
-git clone git@github.com:merlinhu1/codex-game-studio.git
-cd codex-game-studio
+git clone git@github.com:merlinhu1/codex-game-studio.git signal-cartographer
+cd signal-cartographer
 npm install
 npm run build
 
 ./codex-game-studio init --name "Signal Cartographer" --engine godot --mode prototype --non-interactive \
   --concept "A compact puzzle game about routing trains through haunted switchyards"
 
-./codex-game-studio status --project projects/signal-cartographer
-./codex-game-studio validate --project projects/signal-cartographer
+./codex-game-studio status
+./codex-game-studio validate
 ```
 
 To inspect a role prompt before launching Codex:
 
 ```sh
-./codex-game-studio run producer --project projects/signal-cartographer \
+./codex-game-studio run producer \
   "Create the initial market overview." --print-prompt
 ```
 
@@ -54,7 +54,7 @@ Codex Game Studio turns that structure into local project artifacts that Codex c
 
 | Capability | What it means |
 | --- | --- |
-| Local project scaffolding | Creates deterministic game workspaces under `projects/<slug>/`. |
+| Local project scaffolding | Initializes the current repository root as the game workspace; `--nested` keeps the legacy `projects/<slug>/` layout available for migration. |
 | Codex-native studio roles | Generates focused role prompts for production, design, engineering, art, QA, localization, and release work. |
 | Workflow prompts | Provides reusable prompts for market review, analytics, specs, handoffs, ship checks, UI review, and more. |
 | Engine overlays | Adds Godot, Unity, or Unreal context without turning this project into an engine wrapper. |

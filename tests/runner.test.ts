@@ -52,7 +52,7 @@ describe("runner", () => {
       metadata: { provenance: "override", approvedByUser: true }
     });
 
-    const fast = initProject({ name: "Fast Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
+    const fast = initProject({ name: "Fast Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-runner-policy-")));
     const fastRun = prepareRun("gameplay-programmer", { project: fast.projectRoot, task: "Implement movement", codexBin: path.join(cwd, "missing-codex") }, cwd);
     const fastMetadata = JSON.parse(readFileSync(fastRun.metadataPath, "utf8")) as { eligibility: { writePolicy: string; metadata: { provenance: string } } };
     expect(fastRun.output).toContain("Write policy: advisory-write");
@@ -150,13 +150,13 @@ describe("runner", () => {
     const { projectRoot } = initProject({ name: "Broad Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
 
     const narrow = prepareRun("producer", { project: projectRoot, task: "Plan next milestone", dryRun: true }, cwd);
-    expect(narrow.contextFiles).not.toContain("documentation/design/gdd.md");
-    expect(narrow.contextFiles).not.toContain("documentation/production/timeline.md");
+    expect(narrow.contextFiles).not.toContain("design/gdd.md");
+    expect(narrow.contextFiles).not.toContain("production/timeline.md");
 
     const broad = prepareRun("producer", { project: projectRoot, task: "Plan next milestone", dryRun: true, allowBroadContext: true }, cwd);
-    expect(broad.contextFiles).toContain("documentation/design/gdd.md");
-    expect(broad.contextFiles).toContain("documentation/production/timeline.md");
-    expect(broad.contextFiles).toContain("resources/market-research/market-overview.md");
+    expect(broad.contextFiles).toContain("design/gdd.md");
+    expect(broad.contextFiles).toContain("production/timeline.md");
+    expect(broad.contextFiles).toContain("docs/market-overview.md");
     expect(broad.contextFiles).not.toContain("Broad context explicitly allowed by CLI flag.");
     expect(broad.contextFiles.filter((file) => file.startsWith(".codex/prompts/"))).toHaveLength(1);
   });
@@ -164,30 +164,31 @@ describe("runner", () => {
   test("broad context ignores directories and realpath escapes", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-"));
     const { projectRoot } = initProject({ name: "Bounded Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    const gdd = path.join(projectRoot, "documentation", "design", "gdd.md");
+    const gdd = path.join(projectRoot, "design", "gdd.md");
     rmSync(gdd);
     mkdirSync(gdd);
-    const overview = path.join(projectRoot, "resources", "market-research", "market-overview.md");
-    const outside = path.join(cwd, "outside.md");
+    const overview = path.join(projectRoot, "docs", "market-overview.md");
+    const outsideDir = mkdtempSync(path.join(tmpdir(), "ogs-outside-"));
+    const outside = path.join(outsideDir, "outside.md");
     writeFileSync(outside, "outside");
     rmSync(overview);
     symlinkSync(outside, overview);
 
     const broad = prepareRun("producer", { project: projectRoot, task: "Plan next milestone", dryRun: true, allowBroadContext: true }, cwd);
 
-    expect(broad.contextFiles).not.toContain("documentation/design/gdd.md");
-    expect(broad.contextFiles).not.toContain("resources/market-research/market-overview.md");
+    expect(broad.contextFiles).not.toContain("design/gdd.md");
+    expect(broad.contextFiles).not.toContain("docs/market-overview.md");
   });
 
   test("include artifact renders canonical project-relative paths", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-"));
     const { projectRoot } = initProject({ name: "Artifact Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
 
-    const run = prepareRun("producer", { project: projectRoot, task: "Plan next milestone", printPrompt: true, includeArtifact: ["documentation/design/../design/gdd.md"] }, cwd);
+    const run = prepareRun("producer", { project: projectRoot, task: "Plan next milestone", printPrompt: true, includeArtifact: ["design/../design/gdd.md"] }, cwd);
 
-    expect(run.contextFiles).toContain("documentation/design/gdd.md");
-    expect(run.prompt).toContain("# Included Artifact: documentation/design/gdd.md");
-    expect(() => prepareRun("producer", { project: projectRoot, task: "Plan next milestone", printPrompt: true, includeArtifact: ["documentation/design/gdd.md\n# injected"] }, cwd)).toThrow(
+    expect(run.contextFiles).toContain("design/gdd.md");
+    expect(run.prompt).toContain("# Included Artifact: design/gdd.md");
+    expect(() => prepareRun("producer", { project: projectRoot, task: "Plan next milestone", printPrompt: true, includeArtifact: ["design/gdd.md\n# injected"] }, cwd)).toThrow(
       "--include-artifact cannot contain control characters"
     );
   });
@@ -209,14 +210,14 @@ describe("runner", () => {
   test("oversized included artifacts are not embedded in prompts", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-artifact-oversized-"));
     const { projectRoot } = initProject({ name: "Oversized Artifact Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    const artifactPath = path.join(projectRoot, "documentation", "design", "large-artifact.md");
+    const artifactPath = path.join(projectRoot, "design", "large-artifact.md");
     writeFileSync(artifactPath, `OVERSIZED_ARTIFACT_BODY\n${"x".repeat(20_000)}`);
 
-    const run = prepareRun("producer", { project: projectRoot, task: "Plan next milestone", printPrompt: true, includeArtifact: ["documentation/design/large-artifact.md"] }, cwd);
+    const run = prepareRun("producer", { project: projectRoot, task: "Plan next milestone", printPrompt: true, includeArtifact: ["design/large-artifact.md"] }, cwd);
 
-    expect(run.contextFiles).not.toContain("documentation/design/large-artifact.md");
-    expect(run.prompt).toContain("- documentation/design/large-artifact.md: omitted");
-    expect(run.prompt).not.toContain("# Included Artifact: documentation/design/large-artifact.md");
+    expect(run.contextFiles).not.toContain("design/large-artifact.md");
+    expect(run.prompt).toContain("- design/large-artifact.md: omitted");
+    expect(run.prompt).not.toContain("# Included Artifact: design/large-artifact.md");
     expect(run.prompt).not.toContain("OVERSIZED_ARTIFACT_BODY");
   });
 

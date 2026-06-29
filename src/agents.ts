@@ -57,7 +57,7 @@ export function generateProjectAgentsMd(config: ProjectConfig): string {
   const hash = guidanceConfigHash(config);
   return `<!-- generated-by: codex-game-studio src/agents.ts schema=1.0 -->
 <!-- source-config-sha256: ${hash} -->
-# ${config.project.name} Agents
+# ${config.project.name} Game Studio
 
 Project: ${config.project.name}
 Slug: ${config.project.slug}
@@ -74,8 +74,8 @@ ${config.project.engine} ${config.project.engine_version}
 
 ## Commands
 
-- Validate: \`./codex-game-studio validate --project projects/${config.project.slug}\`
-- Refresh context manifest after editing selected project context: \`./codex-game-studio refresh-context --project projects/${config.project.slug}\`
+- Validate: \`./codex-game-studio validate\`
+- Refresh context manifest after editing selected project context: \`./codex-game-studio refresh-context\`
 
 ## Coding Conventions
 
@@ -105,6 +105,42 @@ Use AGENTS.md, .codex/studio.json, the current role prompt, and task-relevant co
 Codex is the default runtime for \`codex-game-studio run <role>\`; use \`--dry-run\` or \`--print-prompt\` only for inspection.
 Do not use telemetry, planner/next, hosted/background orchestration, unbounded parallelism, or ownership enforcement in this build. Explicit local task orchestration must stay reviewable in .codex state.
 `;
+}
+
+function tomlString(value: string): string {
+  return JSON.stringify(value);
+}
+
+function tomlMultiline(value: string): string {
+  return `"""\n${value.replace(/"""/g, '\"\"\"')}\n"""`;
+}
+
+export function renderProjectCustomAgentToml(role: StudioRoleId, config: ProjectConfig, engines: EngineConfigRegistry): string {
+  const pkg = rolePackages[role];
+  const engine = engines[config.project.engine];
+  const sourceInput = projectRolePromptSourceInput(role, config, engines);
+  const body = [
+    `# generated-by: codex-game-studio`,
+    `# surface: custom-agent`,
+    `# source-role-id: ${role}`,
+    `# source-input-sha256: ${renderGeneratedSurfaceMetadata({ surface: "custom-agent-source", role, sourceInput, body: "" }).match(/source-input-sha256: ([a-f0-9]+)/)?.[1] ?? ""}`,
+    `# schema-version: 1`,
+    "",
+    `name = ${tomlString(role.replace(/-/g, "_"))}`,
+    `description = ${tomlString(`Game development ${pkg.displayName} agent for ${role} tasks in this repository. Use for ${pkg.responsibilities.slice(0, 2).join(", ").toLowerCase()}.`)}`,
+    `model_reasoning_effort = "medium"`,
+    `developer_instructions = ${tomlMultiline([
+      `You are the ${pkg.displayName} role for ${config.project.name}.`,
+      `Engine: ${engine.display_name} ${config.project.engine_version}.`,
+      "Follow AGENTS.md, .codex/studio.json, selected skills, and task-relevant files.",
+      "Keep changes bounded to the requested game-development task.",
+      "Report changed files, verification evidence, and remaining risks.",
+      "",
+      pkg.systemPrompt
+    ].join("\n"))}`,
+    ""
+  ].join("\n");
+  return body;
 }
 
 export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfig, engines: EngineConfigRegistry): string {
@@ -223,6 +259,13 @@ export function materializeAgents(input: MaterializeAgentsInput): string[] {
     const prompt = path.join(prompts, `${role}.md`);
     writeFileSync(prompt, renderProjectRolePrompt(role, input.config, input.engines));
     written.push(prompt);
+  }
+  const agents = path.join(input.projectRoot, ".codex", "agents");
+  mkdirSync(agents, { recursive: true });
+  for (const role of projectRoleIdsForEngine(input.config.project.engine)) {
+    const agent = path.join(agents, `${role}.toml`);
+    writeFileSync(agent, renderProjectCustomAgentToml(role, input.config, input.engines));
+    written.push(agent);
   }
   return written;
 }

@@ -11,6 +11,7 @@ import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { packageAssetPath, resolveProjectRoot } from "./paths.js";
 import { projectRoleIdsForEngine, rolePackages, type StudioRoleId } from "./roles.js";
 import { workflowAliases, workflowIds, workflowRegistry, type WorkflowId } from "./workflows.js";
+import { materializeSkills } from "./skills.js";
 import type { StudioMode } from "./studio-policy.js";
 
 export type InitProjectOptions = {
@@ -27,6 +28,8 @@ export type InitProjectOptions = {
   timeline?: string;
   engineVersion?: string;
   nonInteractive?: boolean;
+  nested?: boolean;
+  forceRefresh?: boolean;
 };
 
 export type StudioProjectState = {
@@ -96,20 +99,24 @@ export function defaultProjectConfig(options: InitProjectOptions): ProjectConfig
 }
 
 function writeStarterDocs(projectRoot: string, config: ProjectConfig): void {
-  mkdirSync(path.join(projectRoot, "documentation", "design"), { recursive: true });
-  mkdirSync(path.join(projectRoot, "documentation", "production"), { recursive: true });
-  mkdirSync(path.join(projectRoot, "resources", "market-research"), { recursive: true });
+  for (const folder of ["src", "assets", "design", "docs", path.join("docs", "architecture"), "tests", "tools", "production", path.join("production", "session-state")]) {
+    mkdirSync(path.join(projectRoot, folder), { recursive: true });
+  }
+  for (const marker of ["assets/.gitkeep", "tests/.gitkeep", "tools/.gitkeep", "production/session-state/.gitkeep"]) {
+    writeFileSync(path.join(projectRoot, marker), "");
+  }
   writeFileSync(
-    path.join(projectRoot, "documentation", "design", "gdd.md"),
-    `# ${config.project.name} GDD\n\n# Purpose\n\n${config.project.concept}\n\n# Core Loop\n\nDefine and validate the playable loop.\n\n# Validation\n\nRun \`npm run validate -- --project projects/${config.project.slug}\`.\n`
+    path.join(projectRoot, "design", "gdd.md"),
+    `# ${config.project.name} GDD\n\n# Purpose\n\n${config.project.concept}\n\n# Core Loop\n\nDefine and validate the playable loop.\n\n# Validation\n\nRun \`./codex-game-studio validate\` from the game root.\n`
   );
   writeFileSync(
-    path.join(projectRoot, "documentation", "production", "timeline.md"),
+    path.join(projectRoot, "production", "timeline.md"),
     `# Timeline\n\n${config.project.timeline}\n\n# Milestones\n\n${config.production.milestones.map((m) => `- ${m.id}: ${m.title} (${m.target})`).join("\n")}\n\n# Risks\n\n- Scope may exceed the first validation gate.\n\n# Next Validation Gate\n\nRun project validation after first playable setup.\n`
   );
+  writeFileSync(path.join(projectRoot, "docs", "architecture", "README.md"), `# ${config.project.name} Architecture\n\nCapture game architecture decisions here.\n`);
   writeFileSync(
-    path.join(projectRoot, "resources", "market-research", "market-overview.md"),
-    `# Market Overview\n\nAudience: ${config.project.audience}\n\nCompetitors: ${config.project.competitors.join(", ")}\n\nThis is a seed, not a full competitor report.\n`
+    path.join(projectRoot, "docs", "market-overview.md"),
+    `# Market Overview\n\nAudience: ${config.project.audience}\n\nCompetitors: ${config.project.competitors.join(", ") || "none configured"}\n\nThis is a seed, not a full competitor report.\n`
   );
 }
 
@@ -254,9 +261,16 @@ function writeCodexWorkflowFiles(projectRoot: string): void {
 
 export function initProject(options: InitProjectOptions, cwd = process.cwd()): { projectRoot: string; config: ProjectConfig } {
   const config = defaultProjectConfig(options);
-  const projectRoot = path.resolve(cwd, path.join("projects", config.project.slug));
-  if (existsSync(projectRoot)) throw new Error(`Project path already exists or collides: ${projectRoot}`);
-  assertNoSameParentCollision(path.dirname(projectRoot), config);
+  const projectRoot = path.resolve(cwd, options.nested ? path.join("projects", config.project.slug) : ".");
+  const studioPath = path.join(projectRoot, ".codex", "studio.json");
+  if (existsSync(studioPath) && !options.forceRefresh) {
+    const existing = readStudioProject(projectRoot);
+    if (existing.name !== config.project.name) {
+      throw new Error(`Project root already contains ${existing.name}; pass --force-refresh to reinitialize`);
+    }
+  }
+  if (!existsSync(studioPath) && existsSync(projectRoot) && options.nested) throw new Error(`Project path already exists or collides: ${projectRoot}`);
+  if (options.nested) assertNoSameParentCollision(path.dirname(projectRoot), config);
   const engines = loadEngineConfigs(packageAssetPath("engine_configs"));
   mkdirSync(projectRoot, { recursive: true });
   createEngineFolders({ projectRoot, projectSlug: config.project.slug, projectName: config.project.name, engine: config.project.engine, registry: engines });
@@ -269,6 +283,7 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
   writeStarterDocs(projectRoot, config);
   materializeEngineReferences(projectRoot, packageAssetPath("."), config.project.engine);
   materializeAgents({ projectRoot, config, engines });
+  materializeSkills(projectRoot, config);
   writeContextManifest(projectRoot, readStudioProject(projectRoot));
   return { projectRoot, config };
 }
@@ -285,6 +300,8 @@ export function statusProject(project?: string, cwd = process.cwd()): string {
     `studio mode: ${config.studioMode}`,
     `engine: ${config.engine}`,
     `active roles: ${(config.activeRoles ?? config.roles).join(", ")}`,
+    `custom agents: .codex/agents/*.toml`,
+    `skills: .agents/skills/*/SKILL.md`,
     `custom roles: ${customization.roles.length}, workflows: ${customization.workflows.length}, templates: ${customization.templates.length}`
   ].join("\n");
 }

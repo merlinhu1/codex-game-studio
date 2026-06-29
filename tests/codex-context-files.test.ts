@@ -32,32 +32,33 @@ describe("Codex context files", () => {
   test("path-safe selector records required, missing, unsafe, and budgeted context", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-select-"));
     const { projectRoot } = initProject({ name: "Selector Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    const outside = path.join(cwd, "outside.md");
+    const outsideDir = mkdtempSync(path.join(tmpdir(), "ogs-outside-"));
+    const outside = path.join(outsideDir, "outside.md");
     writeFileSync(outside, "outside");
-    symlinkSync(outside, path.join(projectRoot, "documentation", "design", "escape.md"));
-    writeFileSync(path.join(projectRoot, "documentation", "design", "large.md"), "x".repeat(20_000));
+    symlinkSync(outside, path.join(projectRoot, "design", "escape.md"));
+    writeFileSync(path.join(projectRoot, "design", "large.md"), "x".repeat(20_000));
 
     const result = selectContextEntries(projectRoot, [
       { sourcePath: "AGENTS.md", reason: "project instructions", required: true },
-      { sourcePath: "documentation/design/missing.md", reason: "missing required", required: true },
-      { sourcePath: "documentation/design/gdd.md", reason: "design reference" },
-      { sourcePath: "documentation/production/timeline.md", reason: "production reference" },
-      { sourcePath: "documentation/design/large.md", reason: "large optional" },
+      { sourcePath: "design/missing.md", reason: "missing required", required: true },
+      { sourcePath: "design/gdd.md", reason: "design reference" },
+      { sourcePath: "production/timeline.md", reason: "production reference" },
+      { sourcePath: "design/large.md", reason: "large optional" },
       { sourcePath: "/absolute.md", reason: "absolute", required: true },
       { sourcePath: "../escape.md", reason: "traversal", required: true },
       { sourcePath: ".env", reason: "secret", required: true },
-      { sourcePath: "documentation/design/escape.md", reason: "symlink escape", required: true }
+      { sourcePath: "design/escape.md", reason: "symlink escape", required: true }
     ], { maxFiles: 2, maxChars: 50_000, maxEntryChars: 10_000 });
 
-    expect(result.selected.map((entry) => entry.sourcePath)).toEqual(["AGENTS.md", "documentation/design/gdd.md"]);
+    expect(result.selected.map((entry) => entry.sourcePath)).toEqual(["AGENTS.md", "design/gdd.md"]);
     expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "AGENTS.md", status: "selected", required: true, reason: "project instructions" }));
-    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "documentation/design/missing.md", status: "missing" }));
+    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "design/missing.md", status: "missing" }));
     expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "/absolute.md", status: "rejected", safety: "unsafe", statusReason: expect.stringMatching(/absolute/i) }));
     expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "../escape.md", status: "rejected", safety: "unsafe", statusReason: expect.stringMatching(/traversal/i) }));
     expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: ".env", status: "rejected", safety: "secret" }));
-    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "documentation/design/escape.md", status: "rejected", statusReason: expect.stringMatching(/symlink/i) }));
-    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "documentation/design/large.md", status: "omitted", statusReason: expect.stringMatching(/entry character budget/i) }));
-    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "documentation/production/timeline.md", status: "omitted", statusReason: expect.stringMatching(/file count budget/i) }));
+    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "design/escape.md", status: "rejected", statusReason: expect.stringMatching(/symlink/i) }));
+    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "design/large.md", status: "omitted", statusReason: expect.stringMatching(/entry character budget/i) }));
+    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "production/timeline.md", status: "omitted", statusReason: expect.stringMatching(/file count budget/i) }));
   });
 
   test("selector prioritizes required context over earlier optional context within file budget", () => {
@@ -65,28 +66,28 @@ describe("Codex context files", () => {
     const { projectRoot } = initProject({ name: "Required Budget Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
 
     const result = selectContextEntries(projectRoot, [
-      { sourcePath: "documentation/design/gdd.md", reason: "optional design reference" },
+      { sourcePath: "design/gdd.md", reason: "optional design reference" },
       { sourcePath: "AGENTS.md", reason: "project instructions", required: true }
     ], { maxFiles: 1, maxChars: 10_000, maxEntryChars: 10_000 });
 
     expect(result.selected.map((entry) => entry.sourcePath)).toEqual(["AGENTS.md"]);
     expect(result.budget.usedFiles).toBeLessThanOrEqual(1);
-    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "documentation/design/gdd.md", status: "omitted", statusReason: expect.stringMatching(/file count budget/i) }));
+    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "design/gdd.md", status: "omitted", statusReason: expect.stringMatching(/file count budget/i) }));
   });
 
   test("selector omits oversized required context instead of bypassing character budgets", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-required-size-"));
     const { projectRoot } = initProject({ name: "Required Size Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    writeFileSync(path.join(projectRoot, "documentation", "design", "huge-required.md"), "x".repeat(20_000));
+    writeFileSync(path.join(projectRoot, "design", "huge-required.md"), "x".repeat(20_000));
 
     const result = selectContextEntries(projectRoot, [
-      { sourcePath: "documentation/design/huge-required.md", reason: "required oversized reference", required: true },
+      { sourcePath: "design/huge-required.md", reason: "required oversized reference", required: true },
       { sourcePath: "AGENTS.md", reason: "project instructions", required: true }
     ], { maxFiles: 2, maxChars: 50_000, maxEntryChars: 10_000 });
 
     expect(result.selected.map((entry) => entry.sourcePath)).toEqual(["AGENTS.md"]);
     expect(result.budget.usedChars).toBeLessThanOrEqual(50_000);
-    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "documentation/design/huge-required.md", status: "omitted", statusReason: expect.stringMatching(/entry character budget/i) }));
+    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "design/huge-required.md", status: "omitted", statusReason: expect.stringMatching(/entry character budget/i) }));
   });
 
   test("selector rejects dotenv variants as secret-like paths", () => {
@@ -118,17 +119,17 @@ describe("Codex context files", () => {
   test("broad context selection records missing required files instead of widening reads", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-missing-"));
     const { projectRoot } = initProject({ name: "Missing Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    rmSync(path.join(projectRoot, "documentation", "design", "gdd.md"));
+    rmSync(path.join(projectRoot, "design", "gdd.md"));
     mkdirSync(path.join(projectRoot, "notes"), { recursive: true });
     writeFileSync(path.join(projectRoot, "notes", "unrequested.md"), "do not include");
 
     const result = selectContextEntries(projectRoot, [
-      { sourcePath: "documentation/design/gdd.md", reason: "required design reference", required: true },
+      { sourcePath: "design/gdd.md", reason: "required design reference", required: true },
       { sourcePath: "AGENTS.md", reason: "project instructions", required: true }
     ]);
 
     expect(result.selected.map((entry) => entry.sourcePath)).toEqual(["AGENTS.md"]);
-    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "documentation/design/gdd.md", status: "missing" }));
+    expect(result.entries).toContainEqual(expect.objectContaining({ sourcePath: "design/gdd.md", status: "missing" }));
     expect(result.entries.map((entry) => entry.sourcePath)).not.toContain("notes/unrequested.md");
   });
 

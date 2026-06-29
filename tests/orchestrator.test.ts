@@ -10,7 +10,7 @@ describe("task orchestration", () => {
   test("dry-run orchestration plans waves without mutating task state or runs", async () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-orchestrate-dry-"));
     const { projectRoot } = initProject({ name: "Dry Orchestration Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
-    const task = createTask(projectRoot, { title: "Implement jump", role: "gameplay-programmer", files: ["documentation/design/gdd.md"], writeFiles: ["source/project-dry-orchestration-game/player.gd"] });
+    const task = createTask(projectRoot, { title: "Implement jump", role: "gameplay-programmer", files: ["design/gdd.md"], writeFiles: ["source/project-dry-orchestration-game/player.gd"] });
     const before = readFileSync(path.join(projectRoot, ".codex", "tasks.json"), "utf8");
 
     const result = await orchestrateTasks({ project: projectRoot, taskIds: [task.id], dryRun: true, maxConcurrency: 1 });

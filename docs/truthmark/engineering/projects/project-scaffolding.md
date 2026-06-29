@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-26
+last_reviewed: 2026-06-29
 ---
 
 # Project Scaffolding
@@ -10,13 +10,13 @@ last_reviewed: 2026-06-26
 
 Project scaffolding turns a non-interactive CLI request into a ready Codex Game Studio project.
 
-The scaffold includes deterministic state, engine markers, selected engine references, role prompts, workflow prompts, and starter production/design artifacts.
+The scaffold includes deterministic state, engine markers, selected engine references, role prompts, Codex custom agents, repository skills, workflow prompts, and starter production/design artifacts.
 
 ## Scope
 
 This leaf doc owns project initialization, generated project state, engine-specific files and folders, and active-engine reference materialization.
 
-It also owns generated project `AGENTS.md`, generated role prompts, and read-only project status/resume behavior.
+It also owns generated project `AGENTS.md`, generated role prompts, generated `.codex/agents/*.toml`, generated `.agents/skills/**`, and read-only project status/resume behavior.
 
 It does not own Codex run execution, task lifecycle persistence, or repository-level CLI validation.
 
@@ -25,9 +25,9 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 - `init` and `new` share the same initialization path.
 - Initialization requires `--name`, `--engine`, `--mode`, and `--non-interactive`.
 - Initialization accepts optional `--studio-mode` and defaults it to `guided-studio`.
-- Initialization writes projects under `projects/<slug>/`.
-- It rejects an existing target path.
-- It checks same-parent slug collisions and Unreal class-name collisions before writing.
+- Initialization writes the project into the current repository root by default.
+- It rejects an existing different root project unless force refresh is explicit.
+- Explicit `--nested` keeps the legacy `projects/<slug>/` layout and checks same-parent slug collisions plus Unreal class-name collisions before writing.
 - Project state is written to `.codex/studio.json`.
 - Project state uses schema version 1 and product `codex-game-studio`.
 - Project state records project summary fields, lifecycle `mode`, policy `studioMode`, project-scoped roles, active roles, active engine specialist, and workflow IDs.
@@ -46,7 +46,7 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 - Default context manifest requests include selected active-engine reference files.
 - Default context manifest requests do not include unrelated engine packs.
 - Engine scaffolding uses the configured engine registry for Godot, Unity, and Unreal markers and source folders.
-- Initialization writes `.codex/workflows/*.md`, starter design docs, production docs, market docs, project `AGENTS.md`, and role prompts.
+- Initialization writes `.codex/workflows/*.md`, starter design docs, production docs, market docs, project `AGENTS.md`, role prompts, Codex custom-agent TOML files, and repository skills.
 - Project-scoped roles include all non-specialist catalog roles.
 - Project-scoped roles include exactly one active engine specialist role.
 - Generated role prompts and workflow files include deterministic leading metadata.
@@ -61,12 +61,12 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 - Project creation is deterministic and non-interactive.
 - Missing `--non-interactive` or `--mode` is an error.
 - Omitted `--studio-mode` uses `guided-studio`.
-- Generated projects live under `projects/<slug>/` by default.
-- `CODEX.md`, `project_orchestrator.md`, and `.gamestudio/runs` are forbidden generated project surfaces.
+- Generated projects use the current repository root by default; `--nested` is a legacy migration escape hatch for `projects/<slug>/`.
+- `CODEX.md`, `project_orchestrator.md`, `.gamestudio/runs`, `.codex/hooks.json`, coding-standard `.codex/rules/*.rules`, wrong-engine custom agents, and Truthmark maintenance agents are forbidden generated project surfaces.
 - Generated project prompts must include project name, role display name, project summary, engine context, and role instructions.
 - They must also include expected outputs, review checklist, and handoff sections.
 - Generated project `AGENTS.md` must not list wrong-engine specialists.
-- Generated `.codex/prompts/*.md` must not materialize wrong-engine specialists.
+- Generated `.codex/prompts/*.md` and `.codex/agents/*.toml` must not materialize wrong-engine specialists.
 - Generated-surface metadata must not use timestamps, absolute paths, process IDs, run IDs, or other operational values.
 - A legacy generated surface has all generated-surface metadata markers removed.
 - Partial metadata, malformed metadata, or metadata-shaped body lines outside the leading header count as invalid metadata or body tampering.
@@ -74,22 +74,22 @@ It does not own Codex run execution, task lifecycle persistence, or repository-l
 ## Flows And States
 
 - Initialization parses options, normalizes engine, derives slug, and rejects collisions.
-- It creates engine files, project files, and `.codex/runs`.
+- It creates root game engine files, project files, and `.codex/runs`.
 - It writes the empty approval store, studio state, and default customization config.
 - It writes metadata-bearing workflow files and starter docs.
 - It materializes the active engine reference pack.
-- It materializes metadata-bearing role prompts.
+- It materializes metadata-bearing role prompts, custom-agent TOML files, and repository skills.
 - It writes the context manifest and sidecar metadata.
 - Project status states are `active`, `frozen`, and `inactive`.
 - `freeze` is the only current CLI path that mutates project status.
 
 ## Contracts
 
-- `codex-game-studio init --name <name> --engine <engine> --mode <mode> --non-interactive [--studio-mode <mode>]` creates a project and prints the created path.
+- `codex-game-studio init --name <name> --engine <engine> --mode <mode> --non-interactive [--studio-mode <mode>]` initializes the current repository root and prints the created path.
 - `codex-game-studio new` is an alias for initialization.
-- `codex-game-studio status --project <path>` reads `.codex/studio.json`.
-- `codex-game-studio resume --project <path>` reads `.codex/studio.json`.
-- `codex-game-studio freeze --project <path>` operates on `.codex/studio.json` and changes status.
+- `codex-game-studio status [--project <path>]` reads `.codex/studio.json`.
+- `codex-game-studio resume [--project <path>]` reads `.codex/studio.json`.
+- `codex-game-studio freeze [--project <path>]` operates on `.codex/studio.json` and changes status.
 
 ## Product Truth Links
 
@@ -132,6 +132,9 @@ Generated project instructions live in `AGENTS.md` to align with Codex-native wo
 - Update this doc when context manifest, config, engine, engine reference, agent, path, engine config, or engine reference assets change.
 - Relevant verification includes project workflow, agent/template, engine-system, and project validation tests.
 
+- Decision (2026-06-29): Treat the clone checkout root as the primary game root and keep `--nested` only for legacy migration.
+- Decision (2026-06-29): Generate Codex-native custom agents under `.codex/agents/*.toml` and repository skills under `.agents/skills/*/SKILL.md`.
+
 ## Source References
 
 - ../../routes/areas/repository.md
@@ -141,6 +144,7 @@ Generated project instructions live in `AGENTS.md` to align with Codex-native wo
 - ../../../../src/engines.ts
 - ../../../../src/engine-reference.ts
 - ../../../../src/agents.ts
+- ../../../../src/skills.ts
 - ../../../../src/paths.ts
 - ../../../../src/generated-surfaces.ts
 - ../../../../src/customization.ts

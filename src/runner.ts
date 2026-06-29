@@ -17,7 +17,7 @@ import { renderSelectedTemplates, selectTemplates } from "./templates.js";
 import { runVerificationCommand, type VerificationResult } from "./verification.js";
 
 export type RunOptions = {
-  project: string;
+  project?: string;
   task: string;
   printPrompt?: boolean;
   dryRun?: boolean;
@@ -120,9 +120,9 @@ function renderRuntimeContextBlock(role: StudioRoleId, projectRoot: string, task
 
 function broadContextRequests(): ContextRequestEntry[] {
   return [
-    { sourcePath: "documentation/design/gdd.md", reason: "design reference" },
-    { sourcePath: "documentation/production/timeline.md", reason: "production reference" },
-    { sourcePath: "resources/market-research/market-overview.md", reason: "market reference" }
+    { sourcePath: "design/gdd.md", reason: "design reference" },
+    { sourcePath: "production/timeline.md", reason: "production reference" },
+    { sourcePath: "docs/market-overview.md", reason: "market reference" }
   ];
 }
 
@@ -647,10 +647,11 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
         )
       : "";
   const eligibilitySummary = formatEligibility(eligibility);
+  const nativeSurfaceSummary = [`Codex custom agent: .codex/agents/${role}.toml`, "Relevant skills:", "- .agents/skills/cgs-standards-gameplay/SKILL.md", "- .agents/skills/cgs-bugfix/SKILL.md"].join("\n");
   const output = options.printPrompt
     ? prompt
     : options.dryRun
-      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${eligibilitySummary}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${eligibilitySummary}\n${nativeSurfaceSummary}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
       : `Prompt cache written: ${promptPath}\n${eligibilitySummary}\nExecuting Codex: ${codexCommand.display}`;
   return { prompt, promptPath, metadataPath, projectRoot, role, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility };
 }

@@ -27,7 +27,7 @@ function initCliProject(prefix: string, name: string): { cwd: string; projectRoo
   const cwd = mkdtempSync(path.join(tmpdir(), prefix));
   tempRoots.push(cwd);
   runCli(["init", "--name", name, "--engine", "godot", "--mode", "prototype", "--non-interactive"], cwd);
-  return { cwd, projectRoot: path.join(cwd, "projects", name.toLowerCase().replace(/\s+/g, "-")) };
+  return { cwd, projectRoot: cwd };
 }
 
 beforeAll(() => {
@@ -42,12 +42,12 @@ describe("built CLI prompt surface", () => {
   test("prints inlined project prompt, selected templates, and bounded broad context from temp cwd", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-cli-prompt-"));
     tempRoots.push(cwd);
-    const repoProject = path.join(repoRoot, "projects", "cli-prompt-game");
+    const repoProject = path.join(repoRoot, ".codex", "studio.json");
     const repoProjectExisted = existsSync(repoProject);
 
     try {
       execFileSync("node", [cli, "init", "--name", "CLI Prompt Game", "--engine", "godot", "--mode", "design", "--non-interactive"], { cwd, encoding: "utf8" });
-      const projectRoot = path.join(cwd, "projects", "cli-prompt-game");
+      const projectRoot = cwd;
 
       const marketPrompt = execFileSync("node", [cli, "run", "market-analyst", "--project", projectRoot, "--print-prompt", "Assess competitors"], {
         cwd,
@@ -62,9 +62,9 @@ describe("built CLI prompt surface", () => {
         cwd,
         encoding: "utf8"
       });
-      expect(dryRun).toContain("- documentation/design/gdd.md");
-      expect(dryRun).toContain("- documentation/production/timeline.md");
-      expect(dryRun).toContain("- resources/market-research/market-overview.md");
+      expect(dryRun).toContain("- design/gdd.md");
+      expect(dryRun).toContain("- production/timeline.md");
+      expect(dryRun).toContain("- docs/market-overview.md");
       expect((dryRun.match(/- \.codex\/prompts\//g) ?? [])).toHaveLength(1);
       expect(existsSync(repoProject)).toBe(repoProjectExisted);
     } finally {
@@ -85,7 +85,7 @@ describe("built CLI prompt surface", () => {
               title: "Implement jump feel",
               role: "gameplay-programmer",
               status: "ready",
-              files: ["documentation/design/gdd.md"],
+              files: ["design/gdd.md"],
               writeFiles: ["source/player.gd"],
               dependencies: [],
               priority: 0,
@@ -111,7 +111,7 @@ describe("built CLI prompt surface", () => {
         "--task",
         "task-001",
         "--scope",
-        "source/**/*.gd",
+        "src/**/*.gd",
         "--approved-by",
         "lead",
         "--expires-at",
@@ -122,7 +122,7 @@ describe("built CLI prompt surface", () => {
 
     expect(grant).toContain("approval-001");
     expect(grant).toContain("Implement jump feel");
-    expect(grant).toContain("source/**/*.gd");
+    expect(grant).toContain("src/**/*.gd");
 
     const store = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "approvals.json"), "utf8")) as {
       records: Array<{ id: string; role: string; approvedFiles?: string[]; source: string }>;
@@ -198,7 +198,7 @@ describe("built CLI prompt surface", () => {
           "--task",
           hash64,
           "--scope",
-          "source/**/*.gd"
+          "src/**/*.gd"
         ],
         cwd
       )
@@ -215,7 +215,7 @@ describe("built CLI prompt surface", () => {
               title: "Plan milestone",
               role: "producer",
               status: "ready",
-              files: ["documentation/production/timeline.md"],
+              files: ["production/timeline.md"],
               notes: []
             }
           ]
@@ -236,7 +236,7 @@ describe("built CLI prompt surface", () => {
           "--task",
           "task-001",
           "--scope",
-          "source/**/*.gd"
+          "src/**/*.gd"
         ],
         cwd
       )
@@ -254,7 +254,7 @@ describe("built CLI prompt surface", () => {
           "--task",
           "not-a-task",
           "--scope",
-          "source/**/*.gd"
+          "src/**/*.gd"
         ],
         cwd
       )
@@ -274,7 +274,7 @@ describe("built CLI prompt surface", () => {
         "--task",
         hash64,
         "--scope",
-        "source/**/*.gd",
+        "src/**/*.gd",
         "--expires-at",
         "2000-01-01T00:00:00.000Z"
       ],
@@ -301,7 +301,7 @@ describe("built CLI prompt surface", () => {
         "--task",
         hash64,
         "--scope",
-        "source/**/*.gd",
+        "src/**/*.gd",
         "--approved-by",
         "lead"
       ],
@@ -313,7 +313,7 @@ describe("built CLI prompt surface", () => {
     const store = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "approvals.json"), "utf8")) as {
       records: Array<{ role: string; approvedGlobs: string[] }>;
     };
-    expect(store.records[0]).toMatchObject({ role: "custom-boss-designer", approvedGlobs: ["source/**/*.gd"] });
+    expect(store.records[0]).toMatchObject({ role: "custom-boss-designer", approvedGlobs: ["src/**/*.gd"] });
   });
 
   test("run dry-run shows approval override advisory and sandbox provenance", () => {
