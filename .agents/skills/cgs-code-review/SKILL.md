@@ -1,6 +1,6 @@
 ---
 name: cgs-code-review
-description: Use for Codex Game Studio code review work: Review changes for correctness, maintainability, security, tests, engine idioms, and scope control.
+description: Use for code review tasks that review changes for correctness, maintainability, security, tests, engine idioms, and scope control; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the code-review objective, target files/assets, constraints, and verification evidence.

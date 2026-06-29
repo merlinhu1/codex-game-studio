@@ -5,7 +5,7 @@ primary-agent: producer
 linked-skills: [cgs-sprint-plan, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the sprint-plan goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a sprint plan request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/sprint-plan.md
 source-hash: 535477f90b8da3519ffaff4ffe1ffb24d3665c88cfe3aff3f1036b8e5b0ae361
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

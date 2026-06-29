@@ -1,5 +1,5 @@
 name = "devops_engineer"
-description = "Game development DevOps Engineer agent for devops-engineer tasks in this template repository."
+description = "Owns devops engineer work: Design build, packaging, CI, release automation, environment setup, cache strategy, and reproducible validation flows for game projects. Produces Build automation, CI or packaging notes, Reproducibility checks; hand off requests outside devops engineer ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

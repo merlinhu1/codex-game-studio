@@ -1,6 +1,6 @@
 ---
 name: cgs-prototype
-description: Use for Codex Game Studio prototype work: Build or plan a throwaway concept prototype around a falsifiable design hypothesis and cleanup boundary.
+description: Use for prototype tasks that build or plan a throwaway concept prototype around a falsifiable design hypothesis and cleanup boundary; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the prototype objective, target files/assets, constraints, and verification evidence.

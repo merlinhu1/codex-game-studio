@@ -1,6 +1,6 @@
 ---
 name: cgs-team-audio
-description: Use for Codex Game Studio team audio work: Coordinate audio design, implementation, asset readiness, mix targets, and QA for audio work.
+description: Use for team audio tasks that coordinate audio design, implementation, asset readiness, mix targets, and QA for audio work; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the team-audio objective, target files/assets, constraints, and verification evidence.

@@ -1,6 +1,6 @@
 ---
 name: cgs-ux-review
-description: Use for Codex Game Studio ux review work: Review UX flows for clarity, friction, accessibility, localization, controller support, and player comprehension.
+description: Use for ux review tasks that review UX flows for clarity, friction, accessibility, localization, controller support, and player comprehension; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the ux-review objective, target files/assets, constraints, and verification evidence.

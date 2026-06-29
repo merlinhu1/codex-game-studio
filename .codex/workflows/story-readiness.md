@@ -5,7 +5,7 @@ primary-agent: producer
 linked-skills: [cgs-story-readiness, cgs-bugfix]
 phase: review
 risk: medium
-argument-hint: Describe the story-readiness goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a story readiness request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/story-readiness.md
 source-hash: e815391ac44b0b2265edabadc1287d1e558c7ab63ab01dfecd8f48fbe316b764
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

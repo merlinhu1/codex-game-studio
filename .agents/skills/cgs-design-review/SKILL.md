@@ -1,6 +1,6 @@
 ---
 name: cgs-design-review
-description: Use for Codex Game Studio design review work: Review design artifacts against pillars, player experience, production scope, and downstream implementation risk.
+description: Use for design review tasks that review design artifacts against pillars, player experience, production scope, and downstream implementation risk; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the design-review objective, target files/assets, constraints, and verification evidence.

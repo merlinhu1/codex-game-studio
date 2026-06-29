@@ -1,6 +1,6 @@
 ---
 name: cgs-standards-gameplay
-description: Use for Codex Game Studio gameplay standards: mechanics, tuning, data-driven values, engine idioms, and player-facing acceptance checks.
+description: Use for standards gameplay tasks that mechanics, tuning, data-driven values, engine idioms, and player-facing acceptance checks; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4-mini
 model_reasoning_effort: low
 argument-hint: Describe the standards-gameplay objective, target files/assets, constraints, and verification evidence.

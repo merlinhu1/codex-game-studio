@@ -1,6 +1,6 @@
 ---
 name: cgs-estimate
-description: Use for Codex Game Studio estimate work: Estimate scope using uncertainty, dependencies, discipline handoffs, risk buffers, and confidence ranges.
+description: Use for estimate tasks that estimate scope using uncertainty, dependencies, discipline handoffs, risk buffers, and confidence ranges; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the estimate objective, target files/assets, constraints, and verification evidence.

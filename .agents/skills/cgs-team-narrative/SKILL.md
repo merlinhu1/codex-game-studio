@@ -1,6 +1,6 @@
 ---
 name: cgs-team-narrative
-description: Use for Codex Game Studio team narrative work: Coordinate narrative content, dialogue, localization, implementation hooks, and consistency review.
+description: Use for team narrative tasks that coordinate narrative content, dialogue, localization, implementation hooks, and consistency review; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the team-narrative objective, target files/assets, constraints, and verification evidence.

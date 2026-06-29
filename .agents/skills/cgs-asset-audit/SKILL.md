@@ -1,6 +1,6 @@
 ---
 name: cgs-asset-audit
-description: Use for Codex Game Studio asset audit work: Audit game assets for completeness, naming, import settings, ownership, licensing, and production risk.
+description: Use for asset audit tasks that audit game assets for completeness, naming, import settings, ownership, licensing, and production risk; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the asset-audit objective, target files/assets, constraints, and verification evidence.

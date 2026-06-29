@@ -1,6 +1,6 @@
 ---
 name: cgs-day-one-patch
-description: Use for Codex Game Studio day one patch work: Plan launch-window fixes, risk acceptance, validation, platform submission, and player communication.
+description: Use for day one patch tasks that plan launch-window fixes, risk acceptance, validation, platform submission, and player communication; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the day-one-patch objective, target files/assets, constraints, and verification evidence.

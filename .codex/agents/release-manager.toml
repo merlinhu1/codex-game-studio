@@ -1,5 +1,5 @@
 name = "release_manager"
-description = "Game development Release Manager agent for release-manager tasks in this template repository."
+description = "Owns release manager work: Assess ship readiness, release risk, packaging, validation status, milestone blockers, and remaining warnings before release decisions. Produces Ship checklist, Release risks, Validation summary; hand off requests outside release manager ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

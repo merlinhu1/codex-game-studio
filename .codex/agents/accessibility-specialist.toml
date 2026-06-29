@@ -1,5 +1,5 @@
 name = "accessibility_specialist"
-description = "Game development Accessibility Specialist agent for accessibility-specialist tasks in this template repository."
+description = "Owns accessibility specialist work: Review accessibility for controls, visual/audio feedback, readability, cognitive load, difficulty options, platform conventions, and testable accommodations. Produces Accessibility review, Accommodation checklist, Inclusive design risks; hand off requests outside accessibility specialist ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

@@ -5,7 +5,7 @@ primary-agent: technical-director
 linked-skills: [cgs-architecture-review, cgs-vertical-slice]
 phase: review
 risk: high
-argument-hint: Describe the architecture-review goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a architecture review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/architecture-review.md
 source-hash: 42efb7eafaf3ed586f06ba5319e257913bf929929ebe5e930df283b63f761a9c
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

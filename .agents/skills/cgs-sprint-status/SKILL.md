@@ -1,6 +1,6 @@
 ---
 name: cgs-sprint-status
-description: Use for Codex Game Studio sprint status work: Report sprint progress, blockers, risk changes, completed work, and next decisions.
+description: Use for sprint status tasks that report sprint progress, blockers, risk changes, completed work, and next decisions; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4-mini
 model_reasoning_effort: low
 argument-hint: Describe the sprint-status objective, target files/assets, constraints, and verification evidence.

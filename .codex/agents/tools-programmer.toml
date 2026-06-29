@@ -1,5 +1,5 @@
 name = "tools_programmer"
-description = "Game development Tools Programmer agent for tools-programmer tasks in this template repository."
+description = "Owns tools programmer work: Build editor, pipeline, automation, and developer workflow tools that reduce repeated production effort and failure-prone manual steps. Produces Tooling changes, Usage notes, Failure modes; hand off requests outside tools programmer ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

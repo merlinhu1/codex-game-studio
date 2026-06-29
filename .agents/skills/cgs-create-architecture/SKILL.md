@@ -1,6 +1,6 @@
 ---
 name: cgs-create-architecture
-description: Use for Codex Game Studio create architecture work: Design the technical architecture, layers, data ownership, engine boundaries, and control manifest.
+description: Use for create architecture tasks that design the technical architecture, layers, data ownership, engine boundaries, and control manifest; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the create-architecture objective, target files/assets, constraints, and verification evidence.

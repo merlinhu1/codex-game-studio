@@ -5,7 +5,7 @@ primary-agent: qa-playtester
 linked-skills: [cgs-standards-gameplay, cgs-bugfix]
 phase: review
 risk: medium
-argument-hint: Describe the playtest goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a playtest request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/playtest.md
 source-hash: c7f6e1c9ca0d6e6406d5b43aef9c0d5dfe9522087b2ac43c6212e3b8d49b4b23
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

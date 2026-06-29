@@ -24,6 +24,7 @@ The root [README](../README.md) is the concise human storefront. Use this index 
 | --- | --- |
 | [Development](development.md) | Build, test, validation, package, and documentation-maintenance workflow. |
 | [Workflow Validation](workflow-validation.md) | What repository and project validation check. |
+| [Prompt Quality Standard](prompt-quality.md) | Source of truth for improving tracked agents, skills, and workflows. |
 | [Known Upstream Differences](known-upstream-differences.md) | Intentional differences from the CCGS inspiration project. |
 | [Migration from Claude](migration-from-claude.md) | Migration notes from Claude-oriented game-studio workflows. |
 | [Product Boundary](architecture/product-boundary.md) | Implemented behavior, non-goals, and architecture boundaries. |

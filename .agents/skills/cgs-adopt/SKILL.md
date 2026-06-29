@@ -1,6 +1,6 @@
 ---
 name: cgs-adopt
-description: Use for Codex Game Studio adopt existing project work: Inventory existing source, assets, docs, and tests before mapping work into CGS structure.
+description: Use for adopt tasks that inventory existing source, assets, docs, and tests before mapping work into CGS structure; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the adopt objective, target files/assets, constraints, and verification evidence.

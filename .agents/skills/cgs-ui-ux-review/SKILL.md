@@ -1,6 +1,6 @@
 ---
 name: cgs-ui-ux-review
-description: Use for Codex Game Studio ui ux review work: Review UI and UX implementation for clarity, accessibility, localization, controller support, and player comprehension.
+description: Use for ui ux review tasks that review UI and UX implementation for clarity, accessibility, localization, controller support, and player comprehension; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the ui-ux-review objective, target files/assets, constraints, and verification evidence.

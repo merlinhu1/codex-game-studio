@@ -5,7 +5,7 @@ primary-agent: security-engineer
 linked-skills: [cgs-security-audit, cgs-vertical-slice]
 phase: review
 risk: high
-argument-hint: Describe the security-audit goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a security audit request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/security-audit.md
 source-hash: 9c3da9ef0ffb2084e33e3f720e10457c7cbaf2609174e48540db7abaff197737
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

@@ -5,7 +5,7 @@ primary-agent: technical-director
 linked-skills: [cgs-architecture-decision, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the architecture-decision goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a architecture decision request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/architecture-decision.md
 source-hash: f0d51d1e058c54bd34c0bedcb7ee79098aebc3605b581447aedaffcf0a4193f2
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

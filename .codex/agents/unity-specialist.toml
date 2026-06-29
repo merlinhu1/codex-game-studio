@@ -1,5 +1,5 @@
 name = "unity_specialist"
-description = "Game development Unity Specialist agent for unity-specialist tasks in this template repository."
+description = "Owns unity specialist work: Apply Unity-specific implementation and review guidance using only the active project's Unity reference pack and project files. Produces Unity guidance, Engine-specific risks, Verification notes; hand off requests outside unity specialist ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

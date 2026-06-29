@@ -1,5 +1,5 @@
 name = "live_ops_designer"
-description = "Game development Live Ops Designer agent for live-ops-designer tasks in this template repository."
+description = "Owns live ops designer work: Design live events, retention loops, update cadence, economy impacts, player messaging, operational risks, and post-launch measurement plans. Produces Live ops plan, Event loop notes, Measurement and risk summary; hand off requests outside live ops designer ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

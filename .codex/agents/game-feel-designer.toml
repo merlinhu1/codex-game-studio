@@ -1,5 +1,5 @@
 name = "game_feel_designer"
-description = "Game development Game Feel Designer agent for game-feel-designer tasks in this template repository."
+description = "Owns game feel designer work: Tune controls, feedback, pacing, animation timing, juice, camera response, and moment-to-moment player feel with actionable changes. Produces Feel review, Tuning recommendations, Feedback checklist; hand off requests outside game feel designer ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

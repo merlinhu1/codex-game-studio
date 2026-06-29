@@ -1,6 +1,6 @@
 ---
 name: cgs-team-release
-description: Use for Codex Game Studio team release work: Coordinate release management, build pipeline, store assets, QA signoff, comms, and rollback.
+description: Use for team release tasks that coordinate release management, build pipeline, store assets, QA signoff, comms, and rollback; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the team-release objective, target files/assets, constraints, and verification evidence.

@@ -1,6 +1,6 @@
 ---
 name: cgs-asset-spec
-description: Use for Codex Game Studio asset spec work: Specify an individual asset with purpose, constraints, references, dimensions, states, and acceptance criteria.
+description: Use for asset spec tasks that specify an individual asset with purpose, constraints, references, dimensions, states, and acceptance criteria; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the asset-spec objective, target files/assets, constraints, and verification evidence.

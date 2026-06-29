@@ -5,7 +5,7 @@ primary-agent: data-scientist
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the analytics-setup goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a analytics setup request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/analytics-setup.md
 source-hash: 19e2ccd6cba68c2a546ab3ab762de06f4d071923c07df1134f9860459a8ea5f9
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

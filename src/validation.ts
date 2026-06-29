@@ -21,7 +21,17 @@ import { isEngineSpecialistRoleId, projectRoleIdsForEngine, rolePackages, studio
 import { templateRegistry, validateTemplateFiles } from "./templates.js";
 import { renderWorkflowPrompt, workflowIds, workflowRegistry } from "./workflows.js";
 import { templateSkillDefinitions } from "./skills.js";
-import { isCodexModelName, isReasoningEffort, parsePromptSurfaceFrontmatter, parseTomlArrayField, parseTomlStringField, validateModelPolicy } from "./prompt-surface-metadata.js";
+import {
+  isCodexModelName,
+  isReasoningEffort,
+  parsePromptSurfaceFrontmatter,
+  parseTomlArrayField,
+  parseTomlStringField,
+  validateAgentDescriptionQuality,
+  validateModelPolicy,
+  validateSkillDescriptionQuality,
+  validateWorkflowArgumentHintQuality
+} from "./prompt-surface-metadata.js";
 
 export type CheckStatus = "pass" | "fail" | "skip";
 export type ValidationCheck = { id: string; status: CheckStatus; message: string; path?: string };
@@ -292,7 +302,10 @@ function agentPromptSurfaceChecks(root: string, file: string): ValidationCheck[]
   const body = readFileSync(full, "utf8");
   const model = parseTomlStringField(body, "model");
   const effort = parseTomlStringField(body, "model_reasoning_effort");
+  const description = parseTomlStringField(body, "description");
+  const discovery = validateAgentDescriptionQuality(description, id);
   const policy = validateModelPolicy({ model: model ?? "", model_reasoning_effort: effort });
+  checks.push(discovery.valid ? pass(`prompt_surface.agent.${id}.discovery_metadata`, `${id} discovery metadata is selection-oriented`, full) : fail(`prompt_surface.agent.${id}.discovery_metadata`, `${id} weak discovery metadata: ${discovery.diagnostics.map((diagnostic) => diagnostic.id).join(", ")}`, full));
   checks.push(policy.valid ? pass(`prompt_surface.agent.${id}.model`, `${id} uses exact Codex model policy`, full) : fail(`prompt_surface.agent.${id}.model`, `${id} invalid model policy: ${policy.issues.join(", ")}`, full));
   checks.push(hashLooksValid(parseTomlStringField(body, "source_hash")) && !!parseTomlStringField(body, "source_reference") ? pass(`prompt_surface.agent.${id}.traceability`, `${id} source traceability present`, full) : fail(`prompt_surface.agent.${id}.traceability`, `${id} missing source_reference/source_hash`, full));
   const skills = parseTomlArrayField(body, "primary_skills");
@@ -311,7 +324,9 @@ function skillPromptSurfaceChecks(root: string, file: string): ValidationCheck[]
   const { frontmatter } = parsePromptSurfaceFrontmatter(body);
   const model = scalarMetadata(frontmatter.model);
   const effort = scalarMetadata(frontmatter.model_reasoning_effort);
+  const discovery = validateSkillDescriptionQuality(scalarMetadata(frontmatter.description), id);
   const policy = validateModelPolicy({ model: model ?? "", model_reasoning_effort: effort });
+  checks.push(discovery.valid ? pass(`prompt_surface.skill.${id}.discovery_metadata`, `${id} discovery metadata is selection-oriented`, full) : fail(`prompt_surface.skill.${id}.discovery_metadata`, `${id} weak discovery metadata: ${discovery.diagnostics.map((diagnostic) => diagnostic.id).join(", ")}`, full));
   checks.push(policy.valid ? pass(`prompt_surface.skill.${id}.model`, `${id} uses exact Codex model policy`, full) : fail(`prompt_surface.skill.${id}.model`, `${id} invalid model policy: ${policy.issues.join(", ")}`, full));
   checks.push(hashLooksValid(scalarMetadata(frontmatter["source-hash"]) ?? scalarMetadata(frontmatter.source_hash)) && !!(scalarMetadata(frontmatter["source-reference"]) ?? scalarMetadata(frontmatter.source_reference)) ? pass(`prompt_surface.skill.${id}.traceability`, `${id} source traceability present`, full) : fail(`prompt_surface.skill.${id}.traceability`, `${id} missing source-reference/source-hash`, full));
   const primaryAgent = scalarMetadata(frontmatter["primary-agent"]) ?? scalarMetadata(frontmatter.primary_agent);
@@ -329,7 +344,9 @@ function workflowPromptSurfaceChecks(root: string, file: string): ValidationChec
   const { frontmatter } = parsePromptSurfaceFrontmatter(body);
   const model = scalarMetadata(frontmatter.model);
   const effort = scalarMetadata(frontmatter.model_reasoning_effort);
+  const discovery = validateWorkflowArgumentHintQuality(scalarMetadata(frontmatter["argument-hint"]), id);
   const policy = validateModelPolicy({ model: model ?? "", model_reasoning_effort: effort });
+  checks.push(discovery.valid ? pass(`prompt_surface.workflow.${id}.discovery_metadata`, `${id} discovery metadata is selection-oriented`, full) : fail(`prompt_surface.workflow.${id}.discovery_metadata`, `${id} weak discovery metadata: ${discovery.diagnostics.map((diagnostic) => diagnostic.id).join(", ")}`, full));
   checks.push(policy.valid ? pass(`prompt_surface.workflow.${id}.model`, `${id} uses exact Codex model policy`, full) : fail(`prompt_surface.workflow.${id}.model`, `${id} invalid model policy: ${policy.issues.join(", ")}`, full));
   const agent = scalarMetadata(frontmatter["primary-agent"]) ?? scalarMetadata(frontmatter.primary_agent);
   checks.push(agent && existsSync(path.join(root, ".codex", "agents", `${agent}.toml`)) ? pass(`prompt_surface.workflow.${id}.agent_link`, `${id} primary agent resolves`, full) : fail(`prompt_surface.workflow.${id}.agent_link`, `${id} primary agent link missing or broken`, full));

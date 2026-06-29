@@ -1,5 +1,5 @@
 name = "narrative_designer"
-description = "Game development Narrative Designer agent for narrative-designer tasks in this template repository."
+description = "Owns narrative designer work: Shape story, tone, world rules, character and content needs, and narrative consistency while respecting production constraints. Produces Narrative brief, Content list, Tone guidance; hand off requests outside narrative designer ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

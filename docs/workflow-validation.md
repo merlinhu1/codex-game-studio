@@ -2,7 +2,7 @@
 
 Validation exits nonzero when any check fails.
 
-Repo validation checks package scripts, build output, package assets, engine configs, expanded role rendering, canonical workflow rendering, deterministic behavioral-evaluation scenarios, templates, package packing, installed-bin asset loading, future-only CLI surfaces, and Codex CLI readiness. Tests also cover explicit task orchestration, workflow task recipes, and curated CCGS adaptation registry consistency.
+Repo validation checks package scripts, build output, package assets, engine configs, expanded role rendering, canonical workflow rendering, prompt-surface discovery metadata, deterministic behavioral-evaluation scenarios, templates, package packing, installed-bin asset loading, future-only CLI surfaces, and Codex CLI readiness. Tests also cover explicit task orchestration, workflow task recipes, and curated CCGS adaptation registry consistency.
 
 Project validation checks `.codex/studio.json` full `roles`, mode-specific `activeRoles`, registry-derived `workflows`, `.codex/studio/config.json` customization packs, tracked `AGENTS.md`, `.codex/agents/*.toml`, `.codex/workflows/*.md`, `.agents/skills/*/SKILL.md`, engine source files, starter docs, timeline sections, forbidden legacy artifacts, and read-only `status`/`resume` behavior.
 

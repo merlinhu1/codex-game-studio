@@ -1,6 +1,6 @@
 ---
 name: cgs-standards-prototype
-description: Use for Codex Game Studio prototype standards: fast experiments with explicit hypotheses, throwaway boundaries, and graduation criteria.
+description: Use for standards prototype tasks that fast experiments with explicit hypotheses, throwaway boundaries, and graduation criteria; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4-mini
 model_reasoning_effort: low
 argument-hint: Describe the standards-prototype objective, target files/assets, constraints, and verification evidence.

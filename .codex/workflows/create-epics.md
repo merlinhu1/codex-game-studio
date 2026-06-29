@@ -5,7 +5,7 @@ primary-agent: producer
 linked-skills: [cgs-create-epics, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the create-epics goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a create epics request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/create-epics.md
 source-hash: 42d3919a918f03755ba3b2dd9ecdc4015339dc165006c7665e108eb62f871686
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

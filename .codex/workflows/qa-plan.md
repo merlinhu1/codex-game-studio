@@ -5,7 +5,7 @@ primary-agent: qa-playtester
 linked-skills: [cgs-qa-plan, cgs-bugfix]
 phase: plan
 risk: medium
-argument-hint: Describe the qa-plan goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a qa plan request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/qa-plan.md
 source-hash: 3adbf7f46c8318d14386d739b4411e65dd87bab644cc7cd5cd5da3c298f567df
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

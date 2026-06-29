@@ -1,6 +1,6 @@
 ---
 name: cgs-test-evidence-review
-description: Use for Codex Game Studio test evidence review work: Review validation output, logs, screenshots, recordings, and manual checks for sufficiency and gaps.
+description: Use for test evidence review tasks that review validation output, logs, screenshots, recordings, and manual checks for sufficiency and gaps; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the test-evidence-review objective, target files/assets, constraints, and verification evidence.

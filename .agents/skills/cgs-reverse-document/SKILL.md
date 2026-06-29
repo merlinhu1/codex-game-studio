@@ -1,6 +1,6 @@
 ---
 name: cgs-reverse-document
-description: Use for Codex Game Studio reverse document work: Create design or technical documentation from existing implementation without inventing unverified behavior.
+description: Use for reverse document tasks that create design or technical documentation from existing implementation without inventing unverified behavior; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the reverse-document objective, target files/assets, constraints, and verification evidence.

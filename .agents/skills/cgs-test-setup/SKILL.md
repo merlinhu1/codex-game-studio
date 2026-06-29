@@ -1,6 +1,6 @@
 ---
 name: cgs-test-setup
-description: Use for Codex Game Studio test setup work: Configure test harnesses, fixtures, commands, and documentation so validation is repeatable.
+description: Use for test setup tasks that configure test harnesses, fixtures, commands, and documentation so validation is repeatable; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the test-setup objective, target files/assets, constraints, and verification evidence.

@@ -5,7 +5,7 @@ primary-agent: ui-ux-designer
 linked-skills: [cgs-ui-ux-review, cgs-vertical-slice]
 phase: review
 risk: high
-argument-hint: Describe the ui-ux-review goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a ui ux review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/ui-ux-review.md
 source-hash: 9f7f488ceea66c123f694460a42be633fe27e5e66291721a00e7acccef98c0e5
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

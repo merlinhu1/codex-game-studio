@@ -5,7 +5,7 @@ primary-agent: creative-director
 linked-skills: [cgs-brainstorm, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the brainstorm goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a brainstorm request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/brainstorm.md
 source-hash: 089f684096f5d974b08282b12052d231462da5324c914fcfa832bb2a2737f975
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

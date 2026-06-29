@@ -1,5 +1,5 @@
 name = "localization_lead"
-description = "Game development Localization Lead agent for localization-lead tasks in this template repository."
+description = "Owns localization lead work: Plan localization scope, string readiness, culturalization risks, text expansion, asset dependencies, voice/subtitle needs, and handoff checks. Produces Localization plan, String and asset risks, Culturalization notes; hand off requests outside localization lead ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

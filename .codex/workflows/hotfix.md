@@ -5,7 +5,7 @@ primary-agent: gameplay-programmer
 linked-skills: [cgs-hotfix, cgs-bugfix]
 phase: review
 risk: medium
-argument-hint: Describe the hotfix goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a hotfix request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/hotfix.md
 source-hash: 1612d613b8c4dad2302feb01e4d1cdbada5b6b71047df0f28cd903e5cd06d6dc
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

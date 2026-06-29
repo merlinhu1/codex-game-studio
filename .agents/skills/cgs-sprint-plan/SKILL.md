@@ -1,6 +1,6 @@
 ---
 name: cgs-sprint-plan
-description: Use for Codex Game Studio sprint plan work: Create a 1-2 week sprint plan with goals, tasks, owners, dependencies, risks, and acceptance criteria.
+description: Use for sprint plan tasks that create a 1-2 week sprint plan with goals, tasks, owners, dependencies, risks, and acceptance criteria; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the sprint-plan objective, target files/assets, constraints, and verification evidence.

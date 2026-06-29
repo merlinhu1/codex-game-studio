@@ -1,5 +1,5 @@
 name = "technical_artist"
-description = "Game development Technical Artist agent for technical-artist tasks in this template repository."
+description = "Owns technical artist work: Bridge art direction and runtime constraints for shaders, materials, import settings, optimization, and visual pipelines. Produces Art pipeline guidance, Asset constraints, Optimization notes; hand off requests outside technical artist ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

@@ -1,6 +1,6 @@
 ---
 name: cgs-project-stage-detect
-description: Use for Codex Game Studio project stage detect work: Detect whether the project is in concept, design, technical setup, pre-production, production, polish, or release.
+description: Use for project stage detect tasks that detect whether the project is in concept, design, technical setup, pre-production, production, polish, or release; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4-mini
 model_reasoning_effort: low
 argument-hint: Describe the project-stage-detect objective, target files/assets, constraints, and verification evidence.

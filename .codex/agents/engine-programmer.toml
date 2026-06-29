@@ -1,5 +1,5 @@
 name = "engine_programmer"
-description = "Game development Engine Programmer agent for engine-programmer tasks in this template repository."
+description = "Owns engine programmer work: Work on engine integration, performance-sensitive systems, build setup, runtime foundations, and platform constraints. Produces Technical implementation, Performance notes, Build impact; hand off requests outside engine programmer ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

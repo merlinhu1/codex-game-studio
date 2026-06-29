@@ -5,7 +5,7 @@ primary-agent: performance-analyst
 linked-skills: [cgs-perf-profile, cgs-bugfix]
 phase: review
 risk: medium
-argument-hint: Describe the perf-profile goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a perf profile request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/perf-profile.md
 source-hash: e8b50d85075eea5dc75d5bd2f4a299591a615accbc074ab7307ab3d8a48e056b
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

@@ -1,6 +1,6 @@
 ---
 name: cgs-create-stories
-description: Use for Codex Game Studio create stories work: Break an epic into small stories with acceptance criteria, owner role, files, and verification.
+description: Use for create stories tasks that break an epic into small stories with acceptance criteria, owner role, files, and verification; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the create-stories objective, target files/assets, constraints, and verification evidence.

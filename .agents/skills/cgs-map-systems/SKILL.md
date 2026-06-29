@@ -1,6 +1,6 @@
 ---
 name: cgs-map-systems
-description: Use for Codex Game Studio map systems work: Decompose the concept into game systems with dependency order, priority tiers, and validation needs.
+description: Use for map systems tasks that decompose the concept into game systems with dependency order, priority tiers, and validation needs; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the map-systems objective, target files/assets, constraints, and verification evidence.
