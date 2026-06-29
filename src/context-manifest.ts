@@ -176,9 +176,9 @@ export function defaultContextRequests(studio: StudioProjectState): ContextReque
   return [
     { sourcePath: "AGENTS.md", reason: "project instructions", required: true },
     { sourcePath: ".codex/studio.json", reason: "project state", required: true },
-    { sourcePath: "documentation/design/gdd.md", reason: "design reference", required: true },
-    { sourcePath: "documentation/production/timeline.md", reason: "production reference" },
-    { sourcePath: "resources/market-research/market-overview.md", reason: "market reference" },
+    { sourcePath: "design/gdd.md", reason: "design reference", required: true },
+    { sourcePath: "production/timeline.md", reason: "production reference" },
+    { sourcePath: "docs/market-overview.md", reason: "market reference" },
     { sourcePath: engineFile, reason: `${studio.engine} engine reference`, required: true },
     ...defaultEngineReferenceContextRequests(studio)
   ];

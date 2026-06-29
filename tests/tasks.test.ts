@@ -16,7 +16,7 @@ describe("tasks", () => {
   test("strict studio blocks unapproved task runs before run metadata writes or task mutation", async () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-task-strict-"));
     const { projectRoot } = initProject({ name: "Strict Task Game", engine: "godot", mode: "prototype", studioMode: "strict-studio", nonInteractive: true }, cwd);
-    const task = createTask(projectRoot, { title: "Implement jump", role: "gameplay-programmer", files: ["documentation/design/gdd.md"] });
+    const task = createTask(projectRoot, { title: "Implement jump", role: "gameplay-programmer", files: ["design/gdd.md"] });
     const beforeStore = readFileSync(path.join(projectRoot, ".codex", "tasks.json"), "utf8");
     const beforeRuns = readdirSync(path.join(projectRoot, ".codex", "runs"));
 

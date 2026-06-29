@@ -19,7 +19,7 @@ const validApprovalRecord = {
   stage: "approved",
   role: "gameplay-programmer",
   objectiveSha256: "0".repeat(64),
-  approvedGlobs: ["source/**/*.ts"],
+  approvedGlobs: ["src/**/*.ts"],
   source: "draft-workflow",
   approvedBy: "designer",
   approvedAt: "2026-06-13T00:00:00.000Z"
@@ -41,12 +41,12 @@ describe("validation", () => {
   });
 
   test("fresh initialized projects validate and failures are explicit", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
     for (const [name, engine, mode] of [
       ["Godot Val", "godot", "prototype"],
       ["Unity Val", "unity", "design"],
       ["Unreal Val", "ue5", "development"]
     ] as const) {
+      const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
       const { projectRoot } = initProject({ name, engine, mode, nonInteractive: true }, cwd);
       expect(validateProject(projectRoot).filter((c) => c.status === "fail")).toEqual([]);
     }
@@ -56,7 +56,7 @@ describe("validation", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
     const { projectRoot } = initProject({ name: "Broken Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     rmSync(path.join(projectRoot, "AGENTS.md"));
-    rmSync(path.join(projectRoot, "source", "project-broken-game", "project.godot"));
+    rmSync(path.join(projectRoot, "src", "project.godot"));
     const failures = validateProject(projectRoot).filter((c) => c.status === "fail");
     expect(failures.map((f) => f.id)).toContain("project.agents_md");
     expect(failures.map((f) => f.id)).toContain("project.engine_file");
@@ -76,7 +76,7 @@ describe("validation", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
     const { projectRoot } = initProject({ name: "Timeline Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     writeFileSync(
-      path.join(projectRoot, "documentation", "production", "timeline.md"),
+      path.join(projectRoot, "production", "timeline.md"),
       "# Timeline\n\nTBD\n\n# Milestones\n\n# Risks\n\n- Scope risk.\n\n# Next Validation Gate\n\nRun validation.\n"
     );
     const failures = validateProject(projectRoot).filter((c) => c.status === "fail");
@@ -86,7 +86,7 @@ describe("validation", () => {
   test("Unity validation fails when ProjectSettings marker is missing", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-val-"));
     const { projectRoot } = initProject({ name: "Broken Unity", engine: "unity", mode: "design", nonInteractive: true }, cwd);
-    rmSync(path.join(projectRoot, "source", "project-broken-unity", "ProjectSettings", "ProjectSettings.asset"));
+    rmSync(path.join(projectRoot, "src", "ProjectSettings", "ProjectSettings.asset"));
     const failures = validateProject(projectRoot).filter((c) => c.status === "fail");
     expect(failures.map((f) => f.id)).toContain("project.engine_settings");
   });
@@ -139,7 +139,7 @@ describe("validation", () => {
       expect.objectContaining({ id: "codex.project.context_manifest", message: expect.stringMatching(/invalid JSON/i) })
     );
 
-    const { projectRoot: staleProject } = initProject({ name: "Stale Manifest Val", engine: "godot", mode: "prototype", studioMode: "strict-studio", nonInteractive: true }, cwd);
+    const { projectRoot: staleProject } = initProject({ name: "Stale Manifest Val", engine: "godot", mode: "prototype", studioMode: "strict-studio", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-val-")));
     const metaPath = path.join(staleProject, ".codex", "context-manifest.meta.json");
     const meta = JSON.parse(readFileSync(metaPath, "utf8"));
     meta.studioMode = "guided-studio";
@@ -238,34 +238,34 @@ describe("validation", () => {
     writeFileSync(rolePrompt, readFileSync(rolePrompt, "utf8").replace(/source-input-sha256: [a-f0-9]+/, "source-input-sha256: bad"));
     expect(validateProject(projectRoot).filter((c) => c.status === "fail").map((c) => c.id)).toContain("codex.role.market-analyst.prompt.freshness");
 
-    const { projectRoot: bodyProject } = initProject({ name: "Body Freshness Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot: bodyProject } = initProject({ name: "Body Freshness Game", engine: "godot", mode: "prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-val-")));
     const bodyPrompt = path.join(bodyProject, ".codex", "prompts", "market-analyst.md");
     writeFileSync(bodyPrompt, `${readFileSync(bodyPrompt, "utf8")}\nTampered body.\n`);
     expect(validateProject(bodyProject).filter((c) => c.status === "fail").map((c) => c.id)).toContain("codex.role.market-analyst.prompt.body");
 
-    const { projectRoot: metadataBodyProject } = initProject({ name: "Metadata Body Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot: metadataBodyProject } = initProject({ name: "Metadata Body Game", engine: "godot", mode: "prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-val-")));
     const metadataBodyPrompt = path.join(metadataBodyProject, ".codex", "prompts", "market-analyst.md");
     writeFileSync(metadataBodyPrompt, `${readFileSync(metadataBodyPrompt, "utf8")}\n<!-- source-input-sha256: deadbeef -->\n`);
     expect(validateProject(metadataBodyProject).filter((c) => c.status === "fail").map((c) => c.id)).toContain("codex.role.market-analyst.prompt.body");
 
-    const { projectRoot: rendererProject } = initProject({ name: "Renderer Drift Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot: rendererProject } = initProject({ name: "Renderer Drift Game", engine: "godot", mode: "prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-val-")));
     const rendererPrompt = path.join(rendererProject, ".codex", "prompts", "market-analyst.md");
     const changedBody = readFileSync(rendererPrompt, "utf8").replace("# Market Analyst", "# Market Research Analyst");
     const changedHash = hashGeneratedBody(stripGeneratedMetadata(changedBody));
     writeFileSync(rendererPrompt, changedBody.replace(/rendered-body-sha256: [a-f0-9]+/, `rendered-body-sha256: ${changedHash}`));
     expect(validateProject(rendererProject).filter((c) => c.status === "fail").map((c) => c.id)).toContain("codex.role.market-analyst.prompt.body");
 
-    const { projectRoot: workflowProject } = initProject({ name: "Workflow Freshness Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot: workflowProject } = initProject({ name: "Workflow Freshness Game", engine: "godot", mode: "prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-val-")));
     const workflow = path.join(workflowProject, ".codex", "workflows", "ui-ux-review.md");
     writeFileSync(workflow, readFileSync(workflow, "utf8").replace(/source-input-sha256: [a-f0-9]+/, "source-input-sha256: bad"));
     expect(validateProject(workflowProject).filter((c) => c.status === "fail").map((c) => c.id)).toContain("codex.workflow.ui-ux-review.freshness");
 
-    const { projectRoot: workflowBodyProject } = initProject({ name: "Workflow Body Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot: workflowBodyProject } = initProject({ name: "Workflow Body Game", engine: "godot", mode: "prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-val-")));
     const workflowBody = path.join(workflowBodyProject, ".codex", "workflows", "ui-ux-review.md");
     writeFileSync(workflowBody, `${readFileSync(workflowBody, "utf8")}\nTampered workflow body.\n`);
     expect(validateProject(workflowBodyProject).filter((c) => c.status === "fail").map((c) => c.id)).toContain("codex.workflow.ui-ux-review.body");
 
-    const { projectRoot: legacyProject } = initProject({ name: "Legacy Surface Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot: legacyProject } = initProject({ name: "Legacy Surface Game", engine: "godot", mode: "prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-val-")));
     const legacyPrompt = path.join(legacyProject, ".codex", "prompts", "market-analyst.md");
     writeFileSync(legacyPrompt, readFileSync(legacyPrompt, "utf8").replace(/^<!-- .* -->\n/gm, ""));
     const legacyChecks = validateProject(legacyProject);
@@ -282,13 +282,13 @@ describe("validation", () => {
     const malformedFailures = validateProject(malformedProject).filter((c) => c.status === "fail").map((c) => c.id);
     expect(malformedFailures).toContain("codex.role.market-analyst.prompt.freshness");
 
-    const { projectRoot: partialProject } = initProject({ name: "Partial Surface Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot: partialProject } = initProject({ name: "Partial Surface Game", engine: "godot", mode: "prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-val-")));
     const partialWorkflow = path.join(partialProject, ".codex", "workflows", "ui-ux-review.md");
     writeFileSync(partialWorkflow, readFileSync(partialWorkflow, "utf8").replace(/^<!-- rendered-body-sha256: .* -->\n/m, ""));
     const partialFailures = validateProject(partialProject).filter((c) => c.status === "fail").map((c) => c.id);
     expect(partialFailures).toContain("codex.workflow.ui-ux-review.body");
 
-    const { projectRoot: legacyProject } = initProject({ name: "Commentless Surface Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot: legacyProject } = initProject({ name: "Commentless Surface Game", engine: "godot", mode: "prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-val-")));
     const legacyPrompt = path.join(legacyProject, ".codex", "prompts", "market-analyst.md");
     writeFileSync(legacyPrompt, readFileSync(legacyPrompt, "utf8").replace(/^<!-- .* -->\n/gm, ""));
     expect(validateProject(legacyProject)).toContainEqual(expect.objectContaining({ id: "codex.role.market-analyst.prompt.freshness", status: "skip" }));

@@ -60,6 +60,7 @@ Code surface:
 - src/config.ts
 - src/engines.ts
 - src/agents.ts
+- src/skills.ts
 - src/context-manifest.ts
 - src/engine-reference.ts
 - src/generated-surfaces.ts

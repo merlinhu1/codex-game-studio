@@ -7,80 +7,80 @@ import { describe, expect, test } from "vitest";
 import { guidanceConfigHash } from "../src/config.js";
 import { freezeProject, initProject, resumeProject, statusProject } from "../src/projects.js";
 
+function tempRoot(prefix: string): string {
+  return mkdtempSync(path.join(tmpdir(), prefix));
+}
+
 describe("project workflow", () => {
-  test("init creates project docs, config, agents, and engine files", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-project-"));
+  test("init configures the current repository root as the game root", () => {
+    const cwd = tempRoot("ogs-root-project-");
     const { projectRoot, config } = initProject({ name: "Test Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    expect(existsSync(path.join(projectRoot, "project-config.json"))).toBe(false);
-    expect(existsSync(path.join(projectRoot, "CODEX.md"))).toBe(false);
+    expect(projectRoot).toBe(cwd);
+    expect(existsSync(path.join(cwd, "projects", "test-game"))).toBe(false);
     expect(existsSync(path.join(projectRoot, ".codex", "studio.json"))).toBe(true);
-    expect(JSON.parse(readFileSync(path.join(projectRoot, ".codex", "approvals.json"), "utf8"))).toEqual({
-      schemaVersion: 1,
-      product: "codex-game-studio",
-      records: []
-    });
     expect(existsSync(path.join(projectRoot, ".codex", "context-manifest.json"))).toBe(true);
     expect(existsSync(path.join(projectRoot, ".codex", "context-manifest.meta.json"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "runs"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".gamestudio"))).toBe(false);
+
+    expect(existsSync(path.join(projectRoot, "src", "project.godot"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "assets", ".gitkeep"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "design", "gdd.md"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "docs", "architecture", "README.md"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "docs", "market-overview.md"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "tests", ".gitkeep"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "tools", ".gitkeep"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "production", "timeline.md"))).toBe(true);
+
     const contextManifest = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "context-manifest.json"), "utf8"));
-    const contextManifestMeta = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "context-manifest.meta.json"), "utf8"));
-    expect(contextManifest).toMatchObject({
-      schemaVersion: 1,
-      product: "codex-game-studio",
-      projectStage: "prototype",
-      studioMode: "guided-studio"
-    });
     expect(contextManifest.entries).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ sourcePath: "AGENTS.md", required: true, safety: "safe", status: "selected" }),
-        expect.objectContaining({ sourcePath: "source/project-test-game/project.godot", reason: expect.stringMatching(/engine/i), status: "selected" })
+        expect.objectContaining({ sourcePath: "design/gdd.md", required: true, status: "selected" }),
+        expect.objectContaining({ sourcePath: "src/project.godot", reason: expect.stringMatching(/engine/i), status: "selected" })
       ])
     );
-    expect(contextManifest.manifestSha256).toBeUndefined();
-    expect(contextManifestMeta).toMatchObject({
-      schemaVersion: 1,
-      product: "codex-game-studio",
-      projectStage: "prototype",
-      studioMode: "guided-studio"
-    });
-    expect(contextManifestMeta.manifestSha256).toMatch(/^[a-f0-9]{64}$/);
-    expect(existsSync(path.join(projectRoot, ".codex", "runs"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, ".codex", "prompts", "producer.md"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, ".codex", "prompts", "gameplay-programmer.md"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, ".codex", "prompts", "qa-playtester.md"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, ".codex", "workflows", "vertical-slice.md"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, ".codex", "workflows", "bugfix.md"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, ".codex", "workflows", "playtest.md"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, ".gamestudio", "runs"))).toBe(false);
-    expect(JSON.parse(readFileSync(path.join(projectRoot, ".codex", "studio.json"), "utf8"))).toMatchObject({
-      schemaVersion: 1,
-      product: "codex-game-studio",
-      engine: "godot",
-      studioMode: "guided-studio",
-      currentMilestone: "prototype"
-    });
+
     const agents = readFileSync(path.join(projectRoot, "AGENTS.md"), "utf8");
-    expect(agents).toContain("# Test Game Agents");
+    expect(agents).toContain("# Test Game Game Studio");
     for (const section of ["## Project Goal", "## Engine", "## Commands", "## Coding Conventions", "## Asset Conventions", "## Studio Roles", "## Current Milestone", "## Verification", "## Rules"]) {
       expect(agents).toContain(section);
     }
     expect(agents).not.toContain("CODEX.md");
-    expect(existsSync(path.join(projectRoot, "source", "project-test-game", "project.godot"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, "resources", "market-research", "market-overview.md"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, "documentation", "design", "gdd.md"))).toBe(true);
-    expect(existsSync(path.join(projectRoot, ".gamestudio"))).toBe(false);
-    expect(readFileSync(path.join(projectRoot, "AGENTS.md"), "utf8")).toContain(guidanceConfigHash(config));
+    expect(agents).not.toContain("NodeNext");
+    expect(agents).not.toContain("Truthmark");
+    expect(agents).toContain(guidanceConfigHash(config));
+
     expect(config.project.concept).toBe("Test Game concept");
     expect(config.project.genre).toBe("Unspecified");
     expect(config.project.platform).toBe("PC");
     expect(config.project.audience).toBe("General players");
     expect(config.project.competitors).toEqual([]);
-    expect(config.project.monetization).toBe("undecided");
-    expect(config.project.timeline).toBe("TBD");
-    expect(existsSync(path.join(projectRoot, "resources", "market-research", "mini-metro.md"))).toBe(false);
+  });
+
+  test("init materializes Codex-native custom agents and repository skills", () => {
+    const cwd = tempRoot("ogs-surfaces-");
+    const { projectRoot } = initProject({ name: "Surface Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const agent = readFileSync(path.join(projectRoot, ".codex", "agents", "gameplay-programmer.toml"), "utf8");
+    expect(agent).toContain('name = "gameplay_programmer"');
+    expect(agent).toContain("description = ");
+    expect(agent).toContain("developer_instructions = ");
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "gameplay-programmer.md"))).toBe(false);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "godot-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unity-specialist.toml"))).toBe(false);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unreal-specialist.toml"))).toBe(false);
+    expect(existsSync(path.join(projectRoot, ".codex", "hooks.json"))).toBe(false);
+    expect(existsSync(path.join(projectRoot, ".codex", "rules"))).toBe(false);
+
+    for (const skill of ["cgs-start", "cgs-setup-engine", "cgs-adopt", "cgs-bugfix", "cgs-vertical-slice", "cgs-ui-ux-review", "cgs-release-checklist", "cgs-standards-gameplay", "cgs-standards-tests", "cgs-standards-prototype", "cgs-standards-ui"]) {
+      const body = readFileSync(path.join(projectRoot, ".agents", "skills", skill, "SKILL.md"), "utf8");
+      expect(body).toContain(`name: ${skill}`);
+      expect(body).toContain("description: ");
+    }
   });
 
   test("init requires explicit non-interactive mode and supports optional overrides", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-required-"));
+    const cwd = tempRoot("ogs-required-");
     expect(() => initProject({ name: "Missing Mode", engine: "godot", nonInteractive: true }, cwd)).toThrow(/--mode/);
     expect(() => initProject({ name: "Missing Noninteractive", engine: "godot", mode: "prototype" }, cwd)).toThrow(/--non-interactive/);
     const { config } = initProject({
@@ -97,101 +97,47 @@ describe("project workflow", () => {
     expect(config.project.engine_version).toBe("4.5.custom");
   });
 
-  test("init generates an empty approval store", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-approval-project-"));
-    const { projectRoot } = initProject({ name: "Approval Project", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
-    expect(JSON.parse(readFileSync(path.join(projectRoot, ".codex", "approvals.json"), "utf8"))).toEqual({
-      schemaVersion: 1,
-      product: "codex-game-studio",
-      records: []
-    });
+  test("default init protects an existing different root project", () => {
+    const cwd = tempRoot("ogs-protect-");
+    initProject({ name: "First Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    expect(() => initProject({ name: "Second Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd)).toThrow(/already contains/i);
   });
 
-  test("context manifest files describe selected context and sidecar freshness", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-manifest-"));
-    const { projectRoot } = initProject({ name: "Manifest Game", engine: "godot", mode: "development", studioMode: "strict-studio", nonInteractive: true }, cwd);
-    const manifest = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "context-manifest.json"), "utf8"));
-    const meta = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "context-manifest.meta.json"), "utf8"));
-
-    expect(manifest).toMatchObject({ schemaVersion: 1, projectStage: "development", studioMode: "strict-studio" });
-    expect(manifest.entries).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ sourcePath: "AGENTS.md", required: true, status: "selected" }),
-        expect.objectContaining({ sourcePath: "source/project-manifest-game/project.godot", reason: "godot engine reference" })
-      ])
-    );
-    expect(meta).toMatchObject({ schemaVersion: 1, projectStage: "development", studioMode: "strict-studio" });
-    expect(meta.manifestSha256).toMatch(/^[a-f0-9]{64}$/);
-    expect(meta.inputsSha256).toMatch(/^[a-f0-9]{64}$/);
+  test("explicit nested mode preserves legacy projects slug layout", () => {
+    const cwd = tempRoot("ogs-nested-");
+    const { projectRoot } = initProject({ name: "Nested Game", engine: "godot", mode: "prototype", nonInteractive: true, nested: true }, cwd);
+    expect(projectRoot).toBe(path.join(cwd, "projects", "nested-game"));
+    expect(existsSync(path.join(projectRoot, ".codex", "studio.json"))).toBe(true);
   });
 
-  test("CLI init requires mode and non-interactive and accepts repeated competitor flags", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-cli-"));
+  test("CLI init writes root studio state by default and accepts repeated competitor flags", () => {
+    const cwd = tempRoot("ogs-cli-");
     const cli = path.join(process.cwd(), "src", "cli.ts");
     const tsx = path.join(process.cwd(), "node_modules", ".bin", "tsx");
     expect(() => execFileSync(tsx, [cli, "init", "--name", "CLI Missing Mode", "--engine", "godot", "--non-interactive"], { cwd, encoding: "utf8", stdio: "pipe" })).toThrow();
-    execFileSync(tsx, [
-      cli,
-      "init",
-      "--name",
-      "CLI Game",
-      "--engine",
-      "godot",
-      "--mode",
-      "prototype",
-      "--studio-mode",
-      "fast-prototype",
-      "--non-interactive",
-      "--competitor",
-      "terra nil",
-      "--competitor",
-      "mini metro",
-      "--engine-version",
-      "4.5.custom"
-    ], { cwd, encoding: "utf8" });
-    const studio = JSON.parse(readFileSync(path.join(cwd, "projects", "cli-game", ".codex", "studio.json"), "utf8"));
+    execFileSync(tsx, [cli, "init", "--name", "CLI Game", "--engine", "godot", "--mode", "prototype", "--studio-mode", "fast-prototype", "--non-interactive", "--competitor", "terra nil", "--competitor", "mini metro", "--engine-version", "4.5.custom"], { cwd, encoding: "utf8" });
+    const studio = JSON.parse(readFileSync(path.join(cwd, ".codex", "studio.json"), "utf8"));
     expect(studio.engineVersion).toBe("4.5.custom");
     expect(studio.studioMode).toBe("fast-prototype");
+    expect(existsSync(path.join(cwd, "projects", "cli-game"))).toBe(false);
   });
 
-  test("CLI init does not expose arbitrary project root override", () => {
-    const cli = path.join(process.cwd(), "src", "cli.ts");
-    const tsx = path.join(process.cwd(), "node_modules", ".bin", "tsx");
-    const help = execFileSync(tsx, [cli, "init", "--help"], { encoding: "utf8" });
-    expect(help).not.toContain("--root");
-  });
-
-  test("init ignores arbitrary root override and stays under projects slug", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-root-"));
-    const outsideRoot = path.join(cwd, "outside-root");
-    const { projectRoot } = initProject({ name: "Root Escape", engine: "godot", mode: "prototype", nonInteractive: true, root: outsideRoot } as Parameters<typeof initProject>[0], cwd);
-    expect(projectRoot).toBe(path.join(cwd, "projects", "root-escape"));
-    expect(existsSync(outsideRoot)).toBe(false);
-  });
-
-  test("all engines initialize expected files", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-engines-"));
-    expect(existsSync(path.join(initProject({ name: "Godot Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd).projectRoot, "source", "project-godot-game", "project.godot"))).toBe(true);
-    expect(existsSync(path.join(initProject({ name: "Unity Game", engine: "unity", mode: "design", nonInteractive: true }, cwd).projectRoot, "source", "project-unity-game", "Packages", "manifest.json"))).toBe(true);
-    expect(existsSync(path.join(initProject({ name: "Unreal Game", engine: "Unreal Engine", mode: "development", nonInteractive: true }, cwd).projectRoot, "source", "project-unreal-game", "UnrealGame.uproject"))).toBe(true);
-  });
-
-  test("same-parent init rejects Unreal class-name collisions", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-collision-"));
-    initProject({ name: "Foo1", engine: "unreal", mode: "prototype", nonInteractive: true }, cwd);
-    expect(() => initProject({ name: "Foo 1", engine: "unreal", mode: "prototype", nonInteractive: true }, cwd)).toThrow(/collides/i);
+  test("all engines initialize expected root files", () => {
+    expect(existsSync(path.join(initProject({ name: "Godot Game", engine: "godot", mode: "prototype", nonInteractive: true }, tempRoot("ogs-godot-")).projectRoot, "src", "project.godot"))).toBe(true);
+    expect(existsSync(path.join(initProject({ name: "Unity Game", engine: "unity", mode: "design", nonInteractive: true }, tempRoot("ogs-unity-")).projectRoot, "src", "Packages", "manifest.json"))).toBe(true);
+    expect(existsSync(path.join(initProject({ name: "Unreal Game", engine: "Unreal Engine", mode: "development", nonInteractive: true }, tempRoot("ogs-unreal-")).projectRoot, "src", "UnrealGame.uproject"))).toBe(true);
   });
 
   test("status resume are read-only and freeze only changes operational status", () => {
-    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-status-"));
+    const cwd = tempRoot("ogs-status-");
     const { projectRoot } = initProject({ name: "Freeze Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     const studioPath = path.join(projectRoot, ".codex", "studio.json");
     const before = readFileSync(studioPath, "utf8");
-    expect(statusProject(projectRoot, cwd)).toContain("status: active");
-    expect(resumeProject(projectRoot, cwd)).toContain("Suggested next command");
+    expect(statusProject(undefined, cwd)).toContain("custom agents: .codex/agents/*.toml");
+    expect(resumeProject(undefined, cwd)).toContain("Suggested next command");
     expect(readFileSync(studioPath, "utf8")).toBe(before);
     const agentsBefore = readFileSync(path.join(projectRoot, "AGENTS.md"), "utf8");
-    freezeProject(projectRoot, cwd);
+    freezeProject(undefined, cwd);
     expect(JSON.parse(readFileSync(studioPath, "utf8")).status).toBe("frozen");
     expect(readFileSync(path.join(projectRoot, "AGENTS.md"), "utf8")).toBe(agentsBefore);
   });

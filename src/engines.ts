@@ -48,8 +48,8 @@ export function normalizeEngine(value: string, registry: EngineConfigRegistry): 
   throw new Error(`Unknown engine "${value}". Expected one of: godot, unity, unreal`);
 }
 
-export function sourceRoot(projectRoot: string, projectSlug: string): string {
-  return path.join(projectRoot, "source", `project-${projectSlug}`);
+export function sourceRoot(projectRoot: string, _projectSlug: string): string {
+  return path.join(projectRoot, "src");
 }
 
 export function projectClassName(displayNameOrSlug: string): string {
