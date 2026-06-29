@@ -16,7 +16,7 @@ The root [README](../README.md) is the concise human storefront. Use this index 
 | [Setup](setup.md) | Short setup commands for source checkouts and package-bin smoke checks. |
 | [Examples](examples/README.md) | Scenario-based examples inspired by the CCGS example-index style. |
 | [Studio Roles](studio-roles.md) | Role catalog, role groups, and guidance for choosing the right Codex role. |
-| [Project Anatomy](project-anatomy.md) | Generated project tree, file ownership, and validation-sensitive artifacts. |
+| [Project Anatomy](project-anatomy.md) | Template repository tree, file ownership, and validation-sensitive artifacts. |
 
 ### For contributors
 

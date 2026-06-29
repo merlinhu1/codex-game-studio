@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, test } from "node:test";
@@ -9,10 +9,22 @@ import { createTask, renderTaskRun } from "../src/tasks.js";
 import { renderWorkflowPrompt } from "../src/workflows.js";
 import { createContextManifest, selectContextEntries } from "../src/context-manifest.js";
 
+function seedTemplateRoot(root: string): void {
+  for (const entry of ["AGENTS.md", ".codex/agents", ".codex/workflows", ".agents/skills"]) {
+    cpSync(path.join(process.cwd(), entry), path.join(root, entry), { recursive: true });
+  }
+}
+
+function initTemplateProject(options: Parameters<typeof initProject>[0], cwd: string): ReturnType<typeof initProject> {
+  seedTemplateRoot(cwd);
+  return initProject(options, cwd);
+}
+
+
 describe("Codex context files", () => {
   test("runner, workflows, and task prompts use AGENTS.md", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-"));
-    const { projectRoot } = initProject({ name: "Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
 
     const prepared = prepareRun("gameplay-programmer", { project: projectRoot, task: "Implement movement", dryRun: true }, cwd);
     expect(prepared.contextFiles[0]).toBe("AGENTS.md");
@@ -32,7 +44,7 @@ describe("Codex context files", () => {
 
   test("path-safe selector records required, missing, unsafe, and budgeted context", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-select-"));
-    const { projectRoot } = initProject({ name: "Selector Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Selector Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     const outsideDir = mkdtempSync(path.join(tmpdir(), "ogs-outside-"));
     const outside = path.join(outsideDir, "outside.md");
     writeFileSync(outside, "outside");
@@ -64,7 +76,7 @@ describe("Codex context files", () => {
 
   test("selector prioritizes required context over earlier optional context within file budget", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-required-budget-"));
-    const { projectRoot } = initProject({ name: "Required Budget Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Required Budget Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
 
     const result = selectContextEntries(projectRoot, [
       { sourcePath: "design/gdd.md", reason: "optional design reference" },
@@ -78,7 +90,7 @@ describe("Codex context files", () => {
 
   test("selector omits oversized required context instead of bypassing character budgets", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-required-size-"));
-    const { projectRoot } = initProject({ name: "Required Size Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Required Size Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     writeFileSync(path.join(projectRoot, "design", "huge-required.md"), "x".repeat(20_000));
 
     const result = selectContextEntries(projectRoot, [
@@ -93,7 +105,7 @@ describe("Codex context files", () => {
 
   test("selector rejects dotenv variants as secret-like paths", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-env-local-"));
-    const { projectRoot } = initProject({ name: "Env Local Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Env Local Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     writeFileSync(path.join(projectRoot, ".env.local"), "TOKEN=secret\n");
 
     const result = selectContextEntries(projectRoot, [
@@ -106,7 +118,7 @@ describe("Codex context files", () => {
 
   test("implement workflow context contract does not mix read-only policy with writable permissions", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-workflow-contract-"));
-    const { projectRoot } = initProject({ name: "Workflow Contract Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Workflow Contract Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
 
     const workflow = renderWorkflowPrompt(projectRoot, "bugfix");
 
@@ -119,7 +131,7 @@ describe("Codex context files", () => {
 
   test("broad context selection records missing required files instead of widening reads", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-missing-"));
-    const { projectRoot } = initProject({ name: "Missing Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Missing Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     rmSync(path.join(projectRoot, "design", "gdd.md"));
     mkdirSync(path.join(projectRoot, "notes"), { recursive: true });
     writeFileSync(path.join(projectRoot, "notes", "unrequested.md"), "do not include");
@@ -136,7 +148,7 @@ describe("Codex context files", () => {
 
   test("context manifest selects active engine references without unrelated engine docs", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-engine-reference-"));
-    const { projectRoot } = initProject({ name: "Unity Context Game", engine: "unity", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Unity Context Game", engine: "unity", mode: "prototype", nonInteractive: true }, cwd);
 
     const manifest = createContextManifest(projectRoot, {
       schemaVersion: 1,
@@ -171,7 +183,7 @@ describe("Codex context files", () => {
 
   test("role runs and workflow prompts select task-relevant engine references without broad loading", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-engine-task-"));
-    const { projectRoot } = initProject({ name: "Godot Netcode Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Godot Netcode Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
 
     const run = prepareRun("gameplay-programmer", { project: projectRoot, task: "Implement rollback networking input sync", printPrompt: true }, cwd);
     expect(run.contextFiles).toContain("docs/engine-reference/godot/modules/networking.md");

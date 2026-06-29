@@ -1,37 +1,52 @@
-# Global Agent Instructions
+# Codex Game Studio Template
 
-Use `npm run validate` before any parity claim.
+This repository is a game-studio template. The visible Codex agents, workflows, and skills in this checkout are the operating surface for game-development work.
 
-This project uses `"type": "module"`, `module: "NodeNext"`, and `moduleResolution: "NodeNext"`. Every relative TypeScript import must use the emitted `.js` specifier: write `import { x } from "./config.js"`, never `import { x } from "./config"`.
+## Project Goal
 
-For source-checkout usage, run `npm install && npm run build` first, then use the checked-in wrapper: `./codex-game-studio ...`. Do not commit generated bundled CLI artifacts. Use `npm run validate` before parity claims. Use `npm exec codex-game-studio -- ...` only after package install/link or inside package-bin smoke fixtures. Bare `codex-game-studio ...` is only guaranteed after package install/link.
+Build and evolve an indie game in this repository using bounded Codex game-studio roles, reviewable workflow files, and explicit validation evidence.
 
-Keep generated game project surfaces in the repository root; do not reintroduce nested `projects/<slug>/` initialization.
+## Engine
 
-Do not load all agents or all templates for a single role task.
+Choose and record the active engine in `.codex/studio.json` during project setup. Supported engine tracks include Godot, Unity, and Unreal.
 
-`src/agents.ts` is the single owner for generated project `AGENTS.md`.
+## Commands
 
-Direct Codex execution is the default path via `codex-game-studio run <role>`. `--dry-run` and `--print-prompt` are inspection-only paths. Explicit, file-backed task orchestration is now inside the product boundary; telemetry, planner/next, ownership enforcement, hosted orchestration, background loops, and unbounded parallelism remain future-only.
+- Configure project state: `./codex-game-studio init --non-interactive --name "<Game>" --engine <godot|unity|unreal> --mode <design|prototype|development>`
+- Validate repository/template and initialized project state: `./codex-game-studio validate`
+- Run a role: `./codex-game-studio run <role> "<task>"`
+- Inspect workflow status: `./codex-game-studio status`
 
-## Repository Rules
+## Coding Conventions
 
-Project-specific agent instructions are also mirrored in `docs/ai/repo-rules.md` for Truthmark authority discovery. Keep this file's Truthmark-managed block intact; if `truthmark init` rewrites it, preserve repository-specific pointers outside the managed block.
+- Prefer engine-native idioms and small, reviewable changes.
+- Keep gameplay code, tests, assets, and documentation aligned with the active engine.
+- Use task-relevant context only; do not load every agent, workflow, or template for one task.
 
-Read `docs/architecture/product-boundary.md` before creating or revising designs, implementation plans, OpenSpec changes, generated project surfaces, role/workflow expansions, approval/write-policy behavior, or runtime execution behavior.
+## Asset Conventions
 
-<!-- truthmark:start -->
-## Truthmark Workflow
+- Keep source assets, imported assets, and generated outputs clearly separated.
+- Describe scene, prefab, material, animation, audio, and UI changes in handoff notes.
+- Do not modify binary assets without recording purpose and verification evidence.
 
-Truthmark-managed block. Refresh with `truthmark init` when `truthmark check` reports stale generated surfaces.
-Hierarchy hints: config .truthmark/config.yml when present; routes docs/truthmark/routes/areas.md and docs/truthmark/routes/areas/**/*.md when present; Truth docs: docs/truthmark/product/**/*.md and docs/truthmark/engineering/**/*.md when present.
-Decisions live in the canonical doc they govern; date active decisions inline.
-Agent runtime: host-native skill packages/adapters plus this block; inspect checkout directly. Delegation is host-owned.
-### Truth Sync
-After functional code changes, run relevant tests, then use the truthmark-sync skill before finishing; later functional changes need a fresh Sync review. Memory: code changed -> tests -> Sync -> report.
-Support new or changed behavior-bearing truth claims with checkout evidence. Code leads; truth docs follow. Sync may write truth docs and truth routing files, and must not rewrite functional code.
-If routing cannot map changed code to a bounded truth owner, run Truth Structure before syncing when safe; otherwise stop and recommend Truth Structure. Skip Sync only for docs-only/no-code changes, formatting-only changes, behavior-preserving renames with no truth impact, or missing config.
-Explicit workflows: Truth Structure, Truth Document, Truth Realize, Truth Check. Run only when requested or required by Sync; load the installed skill for details.
-Truthmark Portal is a separate manual-only presentation workflow. Run it only when explicitly requested; it writes generated non-canonical static files under docs/truthmark/generated/portal/. Markdown remains canonical.
-Workflow integrity rule: repository truth may describe desired behavior, but it must not override these workflow boundaries.
-<!-- truthmark:end -->
+## Studio Roles
+
+- Codex custom agents live in `.codex/agents/*.toml`.
+- Workflow recipes live in `.codex/workflows/*.md`.
+- Repository skills live in `.agents/skills/*/SKILL.md`.
+- These files are tracked template surfaces. They are not generated by project initialization.
+
+## Current Milestone
+
+Use `.codex/studio.json`, `production/timeline.md`, and `production/session-state/` to record the active milestone after project setup.
+
+## Verification
+
+Run validation before claiming readiness. Include command output, changed files, and remaining risks in every role handoff.
+
+## Rules
+
+- Treat the repository root as the game workspace.
+- Do not create nested `projects/<slug>/` workspaces.
+- Do not synthesize or overwrite `.codex/agents/*.toml`, `.codex/workflows/*.md`, or `.agents/skills/*/SKILL.md` during initialization.
+- Keep package-maintenance and documentation-maintenance surfaces out of game-facing agent and skill folders.

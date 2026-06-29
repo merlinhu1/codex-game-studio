@@ -12,7 +12,7 @@ Codex Game Studio provides a local-first TypeScript CLI for Codex-assisted game 
 
 The CLI must let developers scaffold projects, render bounded Codex-native prompts, run selected studio roles and workflows, and record reviewable project state.
 
-It must also validate generated surfaces.
+It must also validate tracked template surfaces and project state.
 
 It must not require a hosted service, daemon, hidden memory layer, or heavyweight studio process.
 
@@ -28,7 +28,7 @@ This capability includes the user-visible Codex Game Studio package and CLI.
 
 It covers project initialization, role/workflow prompt rendering, direct Codex execution, task state, approval/write-policy primitives, and engine reference packaging.
 
-It also covers generated project files and validation.
+It also covers template files, project-state files, and validation.
 
 This capability excludes game-engine functionality and hosted orchestration. It includes explicit local task orchestration when state, approvals, selected context, locks, runs, and failures are reviewable in `.codex/**`.
 
@@ -44,7 +44,7 @@ The source checkout wrapper runs built TypeScript output from `dist/cli.js` afte
 
 Contributor npm scripts remain available for rebuilding TypeScript output and validating package behavior.
 
-Generated projects use `AGENTS.md` and `.codex/**` surfaces instead of legacy `CODEX.md` contracts.
+Template repositories use `AGENTS.md`, `.codex/**`, and `.agents/skills/**` surfaces instead of legacy `CODEX.md` contracts.
 
 Direct Codex execution through `codex-game-studio run <role>` is the default runtime path.
 
@@ -54,7 +54,7 @@ The current repository includes metadata-validated engine reference material for
 
 It also includes context-manifest generation, project task state, approval-store behavior, role/workflow registries, and behavioral-evaluation scenarios.
 
-It includes project-local customization packs and validation coverage for package assets and generated surfaces.
+It includes project-local customization packs and validation coverage for package assets, template surfaces, and project state.
 
 Built-in role prompts use bounded structured contracts.
 
@@ -84,16 +84,16 @@ Production templates are package-shipped assets selected by relevance.
 
 - Developers can initialize and manage project scaffolds through the source checkout wrapper without npm installation.
 - Published or linked packages expose the same CLI as the `codex-game-studio` package bin.
-- Generated project files remain reviewable in the repository.
+- Template and project-state files remain reviewable in the repository.
 - Role and workflow execution stays Codex-native by default.
 - Role and workflow execution does not require a hosted service, daemon, or alternate agent runtime.
 - Prompt and context materialization selects relevant roles, workflows, templates, engine references, and customization entries.
 - Prompt and context materialization does not load every available agent or template for a single task.
 - Mutating runtime behavior is visible and policy-gated.
 - Dry-run and print-prompt paths do not mutate project state.
-- Generated project contracts use `AGENTS.md` and `.codex/**`.
+- Template contracts use `AGENTS.md`, `.codex/**`, and `.agents/skills/**`.
 - Stale generated-project compatibility surfaces are not reintroduced without an explicit boundary change.
-- Validation commands and tests cover public CLI/package behavior, generated surfaces, engine references, and future-only surfaces.
+- Validation commands and tests cover public CLI/package behavior, template surfaces, project state, engine references, and future-only surfaces.
 
 ## Product Decisions
 
@@ -105,8 +105,8 @@ Production templates are package-shipped assets selected by relevance.
 - 2026-06-28: The user-facing source checkout path is clone plus `./codex-game-studio`; npm install is contributor setup, not project-use setup.
 - 2026-06-13: Studio depth is optional and mode-controlled.
 - 2026-06-13: Lifecycle stage must remain separate from process strictness.
-- 2026-06-13: Generated project instruction contracts use `AGENTS.md` and `.codex/**`.
-- 2026-06-13: Generated project instruction contracts do not use `CODEX.md` or legacy compatibility shims.
+- 2026-06-29: Template instruction contracts use tracked `AGENTS.md`, `.codex/agents`, `.codex/workflows`, and `.agents/skills` files.
+- 2026-06-29: Template instruction contracts do not use `CODEX.md`, `.codex/prompts/**` mirrors, or legacy compatibility shims.
 - 2026-06-26: Planner/next, telemetry, hard ownership enforcement, hosted/background orchestration, unbounded parallelism, and similar surfaces remain out of scope unless a later product-boundary decision, implementation, tests, and truth docs bring them in.
 - 2026-06-13: Truthmark-backed docs guard repository truth in this checkout.
 - 2026-06-13: Truthmark workflow mechanics are not Codex Game Studio product features.

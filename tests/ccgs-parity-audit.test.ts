@@ -5,7 +5,7 @@ import { describe, test } from "node:test";
 import { expect } from "expect";
 import { generateParityMatrix, inventoryCcgsSurfaces, renderParityMatrixMarkdown, validateParityMatrix, writeParityReports } from "../src/ccgs-parity.js";
 import { defaultProjectConfig } from "../src/projects.js";
-import { generatedSkillDefinitions } from "../src/skills.js";
+import { templateSkillDefinitions } from "../src/skills.js";
 
 function fixtureRoot(): string {
   const root = mkdtempSync(path.join(tmpdir(), "ccgs-fixture-"));
@@ -57,8 +57,8 @@ describe("CCGS parity audit", () => {
     expect(readFileSync(path.join(out, "ccgs-surface-parity-matrix.md"), "utf8")).toContain(`- Total rows: ${matrix.rows.length}`);
   });
 
-  test("upgraded generated skills are no longer thin wrappers", () => {
-    const definitions = generatedSkillDefinitions(defaultProjectConfig({ name: "Skill Depth Game", engine: "godot", mode: "prototype", nonInteractive: true }));
+  test("upgraded template skills are no longer thin wrappers", () => {
+    const definitions = templateSkillDefinitions(defaultProjectConfig({ name: "Skill Depth Game", engine: "godot", mode: "prototype", nonInteractive: true }));
     expect(new Set(definitions.map((skill) => skill.name)).size).toBe(definitions.length);
     expect(definitions.map((skill) => skill.name)).toEqual(expect.arrayContaining(["cgs-brainstorm", "cgs-map-systems", "cgs-design-system", "cgs-vertical-slice", "cgs-bug-report", "cgs-qa-plan", "cgs-release-checklist", "cgs-localize", "cgs-team-ui"]));
     expect(definitions.find((skill) => skill.name === "cgs-vertical-slice")?.body).toContain("PROCEED / PIVOT / KILL");

@@ -1,17 +1,20 @@
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { explainApprovalMismatch, normalizeApprovalScope, readApprovalStore, type ApprovalMismatchDiagnostic } from "./approvals.js";
-import { readProjectAgentPrompt } from "./agents.js";
+import { renderProjectRolePrompt } from "./agents.js";
 import { buildCodexExecArgs, executeCodexCommand, resolveCodexCommand, type CodexExecutionResult } from "./codex-runtime.js";
 import { renderCodexPrompt } from "./codex-prompts.js";
 import { createCodexStudioSession, type VerificationCommand } from "./codex-session.js";
+import type { ProjectConfig } from "./config.js";
 import { selectContextEntries, type ContextManifestEntry, type ContextRequestEntry } from "./context-manifest.js";
+import { loadEngineConfigs } from "./engines.js";
 import { engineReferenceContextRequests } from "./engine-reference.js";
+import { stripGeneratedMetadata } from "./generated-surfaces.js";
 import { renderContextContract } from "./prompt-context.js";
-import { readStudioProject } from "./projects.js";
+import { readStudioProject, type StudioProjectState } from "./projects.js";
 import { isEngineSpecialistRoleId, isStudioRoleId, projectRoleIdsForEngine, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
 import { customPhaseForRun, customTemplateIdsForRole, findCustomRole, renderCustomRolePrompt } from "./customization.js";
-import { resolveProjectRoot } from "./paths.js";
+import { packageAssetPath, resolveProjectRoot } from "./paths.js";
 import { evaluateStudioRunEligibility, type CodexSandboxMode, type CodexStudioPhase, type StudioRunEligibility } from "./studio-policy.js";
 import { renderSelectedTemplates, selectTemplates } from "./templates.js";
 import { runVerificationCommand, type VerificationResult } from "./verification.js";
@@ -112,10 +115,35 @@ function safeArtifact(projectRoot: string, artifact: string): { full: string; di
   return { full: realFull, display: path.relative(realRoot, realFull).split(path.sep).join("/") };
 }
 
-function renderRuntimeContextBlock(role: StudioRoleId, projectRoot: string, task: string): string {
-  const projectRolePrompt = readProjectAgentPrompt(role, projectRoot);
+function configFromStudio(studio: StudioProjectState): ProjectConfig {
+  return {
+    schema_version: "1.0",
+    project: {
+      name: studio.name,
+      slug: studio.slug,
+      concept: studio.concept,
+      genre: studio.genre,
+      platform: studio.platform,
+      audience: studio.audience,
+      competitors: studio.competitors,
+      monetization: studio.monetization,
+      timeline: studio.timeline,
+      engine: studio.engine,
+      engine_version: studio.engineVersion,
+      mode: studio.mode,
+      studio_mode: studio.studioMode,
+      phase: studio.phase,
+      status: studio.status
+    },
+    team: { active_agents: studio.activeRoles },
+    production: { milestones: [] }
+  };
+}
+
+function renderRuntimeContextBlock(role: StudioRoleId, studio: StudioProjectState, task: string): string {
+  const projectRolePrompt = stripGeneratedMetadata(renderProjectRolePrompt(role, configFromStudio(studio), loadEngineConfigs(packageAssetPath("engine_configs"))));
   const templateBodies = renderSelectedTemplates(selectTemplates(role, task));
-  return ["", `# Project Role Prompt: .codex/prompts/${role}.md`, "", projectRolePrompt.trim(), templateBodies, ""].join("\n");
+  return ["", `# Runtime Role Context: ${role}`, "", projectRolePrompt.trim(), templateBodies, ""].join("\n");
 }
 
 function broadContextRequests(): ContextRequestEntry[] {
@@ -368,7 +396,7 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
   const reviewSelection = selectContextEntries(projectRoot, [
     { sourcePath: "AGENTS.md", reason: "project instructions", required: true },
     { sourcePath: ".codex/studio.json", reason: "project state", required: true },
-    { sourcePath: ".codex/prompts/qa-playtester.md", reason: "review role prompt", required: true },
+    { sourcePath: ".codex/agents/qa-playtester.toml", reason: "review custom agent", required: true },
     ...contextSelection.selected.map((entry) => ({ sourcePath: entry.sourcePath, reason: `implementation context: ${entry.reason}`, required: entry.required }))
   ]);
   const reviewSession = createCodexStudioSession({
@@ -394,7 +422,7 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
           entries: reviewSelection.entries,
           readOnlyReview: true
         })
-      })}${renderRuntimeContextBlock("qa-playtester", projectRoot, reviewObjective)}`
+      })}${renderRuntimeContextBlock("qa-playtester", studio, reviewObjective)}`
     : undefined;
   const fixContract = renderContextContract({
     session: { phase: "fix", writePolicy: eligibility.writePolicy, sandbox: eligibility.codexSandbox, allowFileEdits: eligibility.allowFileEdits },
@@ -485,7 +513,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   const contextRequests: ContextRequestEntry[] = [
     { sourcePath: "AGENTS.md", reason: "project instructions", required: true },
     { sourcePath: ".codex/studio.json", reason: "project state", required: true },
-    { sourcePath: `.codex/prompts/${role}.md`, reason: "selected role prompt", required: true },
+    { sourcePath: `.codex/agents/${role}.toml`, reason: "selected custom agent", required: true },
     ...artifactDisplays.map((display) => ({ sourcePath: display, reason: "included artifact", required: true })),
     ...engineReferenceContextRequests(studio.engine, role, task),
     ...(options.allowBroadContext ? broadContextRequests() : [])
@@ -532,7 +560,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
     writePolicy: eligibility.writePolicy,
     eligibility
   });
-  const runtimeContextBlock = renderRuntimeContextBlock(role, projectRoot, task);
+  const runtimeContextBlock = renderRuntimeContextBlock(role, studio, task);
   const prompt = `${renderCodexPrompt({
     ...session,
     contextContract: renderContextContract({
@@ -546,7 +574,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   const reviewSelection = selectContextEntries(projectRoot, [
     { sourcePath: "AGENTS.md", reason: "project instructions", required: true },
     { sourcePath: ".codex/studio.json", reason: "project state", required: true },
-    { sourcePath: ".codex/prompts/qa-playtester.md", reason: "review role prompt", required: true },
+    { sourcePath: ".codex/agents/qa-playtester.toml", reason: "review custom agent", required: true },
     ...contextSelection.selected.map((entry) => ({ sourcePath: entry.sourcePath, reason: `implementation context: ${entry.reason}`, required: entry.required }))
   ]);
   const reviewSession = createCodexStudioSession({
@@ -572,7 +600,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
           entries: reviewSelection.entries,
           readOnlyReview: true
         })
-      })}${renderRuntimeContextBlock("qa-playtester", projectRoot, reviewObjective)}`
+      })}${renderRuntimeContextBlock("qa-playtester", studio, reviewObjective)}`
     : undefined;
   const fixSession = createCodexStudioSession({
     projectRoot,

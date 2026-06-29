@@ -1,7 +1,7 @@
 ---
 status: active
 truth_kind: engineering-behavior
-last_reviewed: 2026-06-26
+last_reviewed: 2026-06-29
 ---
 
 # Codex Roles And Workflows
@@ -10,15 +10,17 @@ last_reviewed: 2026-06-26
 
 Codex roles and workflows turn the generic Codex CLI into a bounded game-studio prompt surface.
 
-They define role contracts, context boundaries, reusable templates, and render-only workflow shortcuts.
+They define role contracts, context boundaries, reusable templates, tracked custom agents, tracked workflows, and render-only workflow shortcuts.
 
 ## Scope
 
-This leaf doc owns role IDs, role package metadata, Codex session prompt rendering, workflow registry entries, and template registry behavior.
+This leaf doc owns role IDs, role package metadata, Codex session prompt rendering, workflow registry entries, workflow template files, repository skills, and template registry behavior.
 
-It also owns engine-reference prompt selection and generated workflow prompt content.
+It also owns engine-reference prompt selection and runtime prompt packet composition.
 
-It does not own process execution, task persistence, package installation, or generated project initialization side effects.
+It does not own process execution, task persistence, package installation, or project initialization side effects.
+
+It does not own init-time generation of agent, workflow, or skill instruction bodies.
 
 ## Current Implementation Behavior
 
@@ -27,21 +29,19 @@ It does not own process execution, task persistence, package installation, or ge
 - The roster covers audio, level, world, content, systems, and economy clusters.
 - It also covers live ops, community, localization, accessibility, security, devops, performance, networking, AI, and UI programming clusters.
 - Engine specialist role IDs are `godot-specialist`, `unity-specialist`, and `unreal-specialist`.
-- Generated projects include only the specialist prompt for the active project engine.
+- The template repository tracks custom-agent files under `.codex/agents/*.toml`.
+- The template repository tracks workflow files under `.codex/workflows/*.md`.
+- The template repository tracks repository skills under `.agents/skills/*/SKILL.md`.
 - Each role package has a display name, system prompt, context strategy, responsibilities, expected inputs, and expected outputs.
 - Role packages may also include an output schema, quality gates, collaboration notes, stop conditions, handoff wording, and review checklist.
 - Shared role-contract guidance lives in reusable fragments.
 - Fragments cover scope control, verification evidence, write-policy behavior, handoff discipline, and release readiness.
 - Role packages select fragments instead of copying the same prose into every role.
-- Generated project role prompts include the role display name, context strategy, role instructions, and structured sections.
-- They also include selected active-engine references, expected outputs, review checklist, and handoff template.
-- Programming and technical-art roles receive active-engine version, best-practice, and gameplay references.
-- Engine and tools roles receive active-engine plugin references.
-- Engine specialists receive the matching active-engine specialist reference.
-- Module and plugin references remain task-keyword-selected.
-- Unrelated engine references are excluded.
-- Codex session prompts render role identity, phase, project root, objective, and engine context.
-- They also render sandbox, write policy, file-edit permission, context files, expected outputs, verification command, review checklist, and completion-report instructions.
+- Runtime role prompt packets include role identity, phase, project root, objective, and engine context.
+- Runtime role prompt packets include sandbox, write policy, file-edit permission, context files, expected outputs, verification command, review checklist, and completion-report instructions.
+- Runtime role prompt packets include selected active-engine references, expected outputs, review checklist, and handoff guidance.
+- Runtime role prompt packets are assembled in memory.
+- Runtime role prompt packets are not mirrored to `.codex/prompts/**` during initialization.
 - When a context contract exists, the prompt includes a `# Context Contract` section.
 - The context contract lists selected context, omissions, blockers, project stage, studio mode, phase, write policy, sandbox, and file-edit permission.
 - Workflow prompt rendering uses the same phase and studio-mode eligibility fields as role runs.
@@ -74,8 +74,8 @@ It does not own process execution, task persistence, package installation, or ge
 - Custom workflows may target either a built-in role or a project-local custom role.
 - Built-in targets render through the standard Codex session prompt and role contract.
 - Custom targets append the project-local custom role prompt.
-- Generated workflow files carry deterministic source-input and rendered-body hash metadata.
-- Workflow hashes cover workflow definition fields plus the owning role display name, expected outputs, and review checklist.
+- Tracked workflow files do not require generated-surface source-input or rendered-body hash metadata.
+- Tracked repository skills do not require generated-surface source-input or rendered-body hash metadata.
 
 ## Core Rules
 
@@ -87,13 +87,16 @@ It does not own process execution, task persistence, package installation, or ge
 - The project config template must parse as JSON.
 - Workflow shortcuts render prompts only.
 - `workflow create-tasks` is a separate explicit recipe path that writes file-backed tasks for supported workflows without launching Codex.
-- Workflow shortcuts do not imply hidden planner, telemetry, ownership, hosted orchestration, background loops, or unbounded parallel behavior. Explicit local task orchestration is provided only through reviewable `.codex/**` task, lock, and run state.
+- Workflow shortcuts do not imply hidden planner, telemetry, ownership, hosted orchestration, background loops, or unbounded parallel behavior.
+- Explicit local task orchestration is provided only through reviewable `.codex/**` task, lock, and run state.
 - Custom IDs must use the `custom-*` prefix.
 - Custom file references must be project-safe relative paths.
 - Custom entries must not replace built-in role, workflow, or template IDs.
 - Workflow prompt rendering may append only selected workflow templates.
 - Role prompt rendering may list only selected active-engine references.
-- Generated projects may include only the active engine specialist prompt.
+- The template root may track all engine specialist custom-agent files.
+- Runtime project state selects exactly one active engine specialist for a project.
+- Init must not generate `.codex/agents/*.toml`, `.codex/workflows/*.md`, `.agents/skills/*/SKILL.md`, or `.codex/prompts/**` mirrors.
 
 ## Flows And States
 
@@ -114,19 +117,18 @@ It does not own process execution, task persistence, package installation, or ge
 ## Contracts
 
 - Role IDs are stable strings exported from `src/roles.ts`.
-- Role IDs are reused by config validation, project state, prompt generation, workflow routing, and task creation.
+- Role IDs are reused by config validation, project state, prompt rendering, workflow routing, and task creation.
 - Role-package structured-contract fields are rendered into standard Codex session prompts.
-- The same fields are rendered into generated project role prompts.
-- Generated role-prompt freshness inputs include those fields so stale prompt bodies fail validation.
 - Engine reference prompt selection maps role IDs, optional task/workflow keywords, and active project engine to generated project paths under `docs/engine-reference/<engine>/`.
 - Every engine pack includes version, current best practices, deprecated API, breaking-change, gameplay, specialist, module, and plugin references.
 - Engine reference assets carry seed-review metadata.
 - Workflow IDs map to `.codex/workflows/<workflow>.md` files, expected context files, taxonomy categories, gap-coverage notes, and optional CLI aliases.
+- Repository skill IDs map to `.agents/skills/<skill>/SKILL.md` template files.
 - The CCGS parity audit inventories reference agents, skills, workflow-catalog steps, templates, and rules into JSON and Markdown matrix reports.
-- The parity matrix records source hashes, CGS target paths, target hashes when a generated or registry target exists, decisions, score fields, rationales, owner paths, test paths, and implementation status.
-- The generated workflow catalog models phase progression, required steps, optional steps, repeatable steps, artifact checks, and next-phase links without importing Claude slash-command runtime behavior.
+- The parity matrix records source hashes, CGS target paths, target hashes when a tracked target exists, decisions, score fields, rationales, owner paths, test paths, and implementation status.
+- The workflow catalog models phase progression, required steps, optional steps, repeatable steps, artifact checks, and next-phase links without importing Claude slash-command runtime behavior.
 - Status output includes the next incomplete workflow-catalog phase and required artifact checks.
-- Skill generation renders per-skill phases, context files, write targets, quality gates, handoff/report formats, and required marker validation.
+- Repository skills contain per-skill phases, context files, write targets, quality gates, handoff/report formats, and required marker validation.
 - Behavioral scenario IDs map to representative roles or workflows in `src/behavioral-evaluation.ts`.
 - Each scenario declares required phrases, forbidden drift phrases, selected-context categories, and workflow template expectations.
 - Required template expectations apply to both project-backed and no-project workflow rendering.
@@ -150,58 +152,63 @@ It does not own process execution, task persistence, package installation, or ge
 - Decision (2026-06-14): Add one specialist role ID per supported engine.
 - Decision (2026-06-14): Keep engine reference prompt selection scoped to the active engine.
 - Decision (2026-06-14): Keep engine specialist IDs canonical.
-- Decision (2026-06-14): Scope generated project specialist prompts to the active engine.
 - Decision (2026-06-17): Expand role coverage through bounded specialist clusters instead of mirroring CCGS file-for-file.
 - Decision (2026-06-17): Keep each new role as a renderable package with selected context, expected outputs, and a review checklist.
-- Decision (2026-06-17): Expand workflow coverage as a prompt-only catalog with local aliases and generated metadata.
+- Decision (2026-06-17): Expand workflow coverage as a prompt-only catalog with local aliases and metadata.
 - Decision (2026-06-17): Do not import slash-command lifecycle machinery.
 - Decision (2026-06-17): Expand production templates as package-shipped, metadata-rich templates selected by relevance.
 - Decision (2026-06-17): Expand engine reference depth as package-shipped, metadata-validated active-engine assets.
 - Decision (2026-06-17): Select module and plugin references by task or workflow keywords.
 - Decision (2026-06-17): Expand role prompt depth through compact structured contracts and reusable shared fragments.
-- Decision (2026-06-17): Render shared fragments in both standard session prompts and generated project prompts.
+- Decision (2026-06-17): Render shared fragments in standard session prompts.
 - Decision (2026-06-17): Add deterministic behavioral-evaluation fixtures instead of hosted or LLM-based evaluators.
 - Decision (2026-06-17): Add project-local customization as an extend-only overlay for `custom-*` roles, workflows, and templates.
 - Decision (2026-06-17): Let custom workflows reuse built-in roles instead of requiring duplicate local role definitions.
 - Decision (2026-06-17): Reuse the built-in QA review surface for custom role review passes.
 - Decision (2026-06-17): Use the configured custom role prompt for custom fix passes.
+- Decision (2026-06-29): Treat `.codex/agents`, `.codex/workflows`, and `.agents/skills` as tracked template repository surfaces.
+- Decision (2026-06-29): Assemble runtime role prompt packets in memory instead of generating `.codex/prompts/**` mirrors.
 
 ## Rationale
 
-Role and workflow prompt generation is the user-facing contract that makes Codex act like a game-studio workflow.
+Tracked template files make the game-studio surface inspectable and reviewable in Git.
 
-Keeping the system render-only avoids overclaiming automation that is not implemented.
+Runtime prompt rendering keeps project-specific context fresh without generating durable instruction mirrors.
 
-Declarative packages also keep role and workflow surfaces inspectable and testable.
+Keeping workflow shortcuts render-only avoids overclaiming automation that is not implemented.
 
 ## Non-Goals
 
 - This doc does not own whether Codex is installed or authenticated.
 - This doc does not own task lifecycle mutations.
-- This doc does not own verification command execution.
+- This doc does not own project initialization state writes.
+- This doc does not define CI or package publishing.
 
 ## Maintenance Notes
 
-- Update this doc when role, prompt, workflow, customization, engine-reference, or template behavior changes.
-- Relevant verification includes role tests, Codex prompt/session tests, workflow tests, customization tests, template tests, and functionality-gap tests.
+- Update this doc when role-package fields change.
+- Update this doc when workflow registry behavior changes.
+- Update this doc when tracked custom-agent, workflow, or skill file expectations change.
+- Relevant tests include roles, workflow catalog, workflow recipes, runner, context files, functionality-gap coverage, and template repository surfaces.
 
 ## Source References
 
 - ../../routes/areas/repository.md
 - ../../../../src/roles.ts
-- ../../../../src/codex-session.ts
-- ../../../../src/codex-prompts.ts
+- ../../../../src/agents.ts
 - ../../../../src/workflows.ts
 - ../../../../src/templates.ts
-- ../../../../src/customization.ts
-- ../../../../src/prompt-context.ts
-- ../../../../src/engine-reference.ts
+- ../../../../src/runner.ts
+- ../../../../src/context-manifest.ts
 - ../../../../src/behavioral-evaluation.ts
-- ../../../../src/generated-surfaces.ts
-- ../../../../templates/**
+- ../../../../src/skills.ts
+- ../../../../src/ccgs-parity.ts
+- ../../../../.codex/agents/**
+- ../../../../.codex/workflows/**
+- ../../../../.agents/skills/**
 - ../../../../tests/roles.test.ts
-- ../../../../tests/codex-session.test.ts
-- ../../../../tests/codex-prompts.test.ts
-- ../../../../tests/behavioral-evaluation.test.ts
-- ../../../../tests/customization.test.ts
+- ../../../../tests/workflow-recipes.test.ts
+- ../../../../tests/runner.test.ts
+- ../../../../tests/codex-context-files.test.ts
 - ../../../../tests/functionality-gap-pass.test.ts
+- ../../../../tests/template-repository-surfaces.test.ts

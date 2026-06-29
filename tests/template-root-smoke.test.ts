@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, test } from "node:test";
@@ -23,6 +23,9 @@ describe("template root smoke", () => {
     execFileSync("npm", ["run", "build", "--silent"], { cwd: repoRoot, encoding: "utf8" });
     const root = mkdtempSync(path.join(tmpdir(), "ogs-template-root-"));
     try {
+      for (const entry of ["AGENTS.md", ".codex/agents", ".codex/workflows", ".agents/skills"]) {
+        cpSync(path.join(repoRoot, entry), path.join(root, entry), { recursive: true });
+      }
       execFileSync("node", [cli, "init", "--name", "Clone Root Game", "--engine", "godot", "--mode", "prototype", "--non-interactive"], { cwd: root, encoding: "utf8" });
       execFileSync("node", [cli, "validate"], { cwd: root, encoding: "utf8" });
 

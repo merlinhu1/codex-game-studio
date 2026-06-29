@@ -53,7 +53,7 @@ It records visible run, task, orchestration, verification, review, and fix outco
 ## Execution Model
 
 - `prepareRun` resolves the project and reads studio state.
-- `prepareRun` inlines the generated project role prompt plus selected package templates.
+- `prepareRun` assembles runtime role context from tracked custom agents, typed role metadata, project state, and selected package templates.
 - `prepareRun` renders a Codex prompt, computes cache paths, and builds Codex execution commands.
 - Custom `custom-*` role runs use the configured custom prompt file.
 - Custom runs also use configured expected outputs, review checklist, selected local templates, and declared context files.
@@ -94,9 +94,9 @@ It records visible run, task, orchestration, verification, review, and fix outco
 - Implementation and fix passes use `danger-full-access` by default when file edits are allowed.
 - `workspace-write` is used only when the caller passes `--constrained-sandbox`.
 - Review passes use a read-only Codex sandbox.
-- Built-in fix prompts receive the same role prompt and selected templates as the primary implementation prompt.
+- Built-in fix prompts receive the same runtime role context and selected templates as the primary implementation prompt.
 - Custom fix prompts receive the configured custom role prompt and selected local templates.
-- Review prompts receive the generated QA playtester prompt plus selected QA templates.
+- Review prompts receive QA playtester runtime context plus selected QA templates.
 - Prompt, session, and run metadata records active write policy, file-edit permission, sandbox, and eligibility metadata.
 - `src/studio-policy.ts` defines pure project-stage and studio-mode policy helpers.
 - Policy helpers keep lifecycle stage separate from studio mode.
@@ -163,7 +163,7 @@ It records visible run, task, orchestration, verification, review, and fix outco
 - Decision (2026-05-28): Make dry-run and print-prompt non-mutating inspection paths.
 - Decision (2026-05-28): Force review prompts through a read-only sandbox.
 - Decision (2026-05-28): Require a valid project before task-store writes.
-- Decision (2026-05-30): Use generated project role prompts and selected templates as runtime prompt input.
+- Decision (2026-06-29): Use tracked custom agents, runtime role context, project state, and selected templates as runtime prompt input.
 - Decision (2026-05-30): Keep broad context discovery bounded.
 - Decision (2026-06-13): Keep the first studio-policy slice as pure mapping helpers.
 - Decision (2026-06-13): Default allowed mutating policy results to `danger-full-access`.

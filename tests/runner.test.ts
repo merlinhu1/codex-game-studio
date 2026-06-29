@@ -1,4 +1,4 @@
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, test } from "node:test";
@@ -6,10 +6,21 @@ import { expect } from "expect";
 import { initProject } from "../src/projects.js";
 import { executeRunLifecycle, prepareRun } from "../src/runner.js";
 
+function seedTemplateRoot(root: string): void {
+  for (const entry of ["AGENTS.md", ".codex/agents", ".codex/workflows", ".agents/skills"]) {
+    cpSync(path.join(process.cwd(), entry), path.join(root, entry), { recursive: true });
+  }
+}
+
+function initTemplateProject(options: Parameters<typeof initProject>[0], cwd: string): ReturnType<typeof initProject> {
+  seedTemplateRoot(cwd);
+  return initProject(options, cwd);
+}
+
 describe("runner", () => {
   test("inspection modes do not write run cache files", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-"));
-    const { projectRoot } = initProject({ name: "Inspect Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Inspect Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     const runsDir = path.join(projectRoot, ".codex", "runs");
     const before = readdirSync(runsDir);
 
@@ -25,7 +36,7 @@ describe("runner", () => {
 
   test("strict studio blocks unapproved mutating role runs before run metadata writes", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-strict-"));
-    const { projectRoot } = initProject({ name: "Strict Game", engine: "godot", mode: "prototype", studioMode: "strict-studio", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Strict Game", engine: "godot", mode: "prototype", studioMode: "strict-studio", nonInteractive: true }, cwd);
     const runsDir = path.join(projectRoot, ".codex", "runs");
     const before = readdirSync(runsDir);
 
@@ -38,7 +49,7 @@ describe("runner", () => {
 
   test("guided override and fast prototype record provenance metadata for allowed runs", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-policy-"));
-    const guided = initProject({ name: "Guided Game", engine: "godot", mode: "prototype", studioMode: "guided-studio", nonInteractive: true }, cwd);
+    const guided = initTemplateProject({ name: "Guided Game", engine: "godot", mode: "prototype", studioMode: "guided-studio", nonInteractive: true }, cwd);
     const guidedDryRun = prepareRun("gameplay-programmer", { project: guided.projectRoot, task: "Implement movement", dryRun: true, approvedByUser: true }, cwd);
     expect(guidedDryRun.output).toContain("Write policy: override-write");
     expect(guidedDryRun.output).toContain("Sandbox: danger-full-access");
@@ -53,7 +64,7 @@ describe("runner", () => {
       metadata: { provenance: "override", approvedByUser: true }
     });
 
-    const fast = initProject({ name: "Fast Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-runner-policy-")));
+    const fast = initTemplateProject({ name: "Fast Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, mkdtempSync(path.join(tmpdir(), "ogs-runner-policy-")));
     const fastRun = prepareRun("gameplay-programmer", { project: fast.projectRoot, task: "Implement movement", codexBin: path.join(cwd, "missing-codex") }, cwd);
     const fastMetadata = JSON.parse(readFileSync(fastRun.metadataPath, "utf8")) as { eligibility: { writePolicy: string; metadata: { provenance: string } } };
     expect(fastRun.output).toContain("Write policy: advisory-write");
@@ -62,7 +73,7 @@ describe("runner", () => {
 
   test("mutating runs default to full access and require explicit constrained sandbox for workspace-write", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-sandbox-"));
-    const { projectRoot } = initProject({ name: "Sandbox Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Sandbox Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
 
     const defaultRun = prepareRun("gameplay-programmer", { project: projectRoot, task: "Implement movement", dryRun: true }, cwd);
     expect(defaultRun.codexCommand.args).toEqual(expect.arrayContaining(["--sandbox", "danger-full-access"]));
@@ -73,54 +84,53 @@ describe("runner", () => {
     expect(constrainedRun.codexCommand.args).toEqual(expect.arrayContaining(["--sandbox", "workspace-write"]));
   });
 
-  test("inlines generated project role prompt", () => {
+  test("inlines runtime role context without generating prompt files", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-"));
-    const { projectRoot } = initProject({ name: "Prompt Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
-    const promptPath = path.join(projectRoot, ".codex", "prompts", "market-analyst.md");
-    writeFileSync(promptPath, `${readFileSync(promptPath, "utf8")}\nUNIQUE_PROJECT_PROMPT_SENTINEL\n`);
+    const { projectRoot } = initTemplateProject({ name: "Prompt Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
 
     const run = prepareRun("market-analyst", { project: projectRoot, task: "Assess competitors", printPrompt: true }, cwd);
 
-    expect(run.prompt).toContain("# Project Role Prompt: .codex/prompts/market-analyst.md");
-    expect(run.prompt).toContain("UNIQUE_PROJECT_PROMPT_SENTINEL");
-    expect(run.contextFiles).toContain(".codex/prompts/market-analyst.md");
+    expect(run.prompt).toContain("# Runtime Role Context: market-analyst");
+    expect(run.prompt).toContain("Project: Prompt Game");
+    expect(run.contextFiles).toContain(".codex/agents/market-analyst.toml");
+    expect(existsSync(path.join(projectRoot, ".codex", "prompts"))).toBe(false);
   });
 
-  test("missing generated project role prompt fails clearly", () => {
+  test("missing tracked custom agent is reported as context blocker", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-"));
-    const { projectRoot } = initProject({ name: "Missing Prompt Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
-    rmSync(path.join(projectRoot, ".codex", "prompts", "market-analyst.md"));
+    const { projectRoot } = initTemplateProject({ name: "Missing Agent Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
+    rmSync(path.join(projectRoot, ".codex", "agents", "market-analyst.toml"));
 
-    expect(() => prepareRun("market-analyst", { project: projectRoot, task: "Assess competitors", printPrompt: true }, cwd)).toThrow(
-      "Missing generated project role prompt: .codex/prompts/market-analyst.md"
-    );
+    const run = prepareRun("market-analyst", { project: projectRoot, task: "Assess competitors", printPrompt: true }, cwd);
+    expect(run.prompt).toContain(".codex/agents/market-analyst.toml: missing");
+    expect(run.contextFiles).not.toContain(".codex/agents/market-analyst.toml");
   });
 
   test("wrong-engine specialist run fails clearly before producing a prompt", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-specialist-"));
-    const { projectRoot } = initProject({ name: "Godot Specialist Run", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Godot Specialist Run", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
 
     expect(() => prepareRun("unity-specialist", { project: projectRoot, task: "Review engine setup", printPrompt: true }, cwd)).toThrow(
       /unity-specialist is not available for godot projects/i
     );
 
     const run = prepareRun("godot-specialist", { project: projectRoot, task: "Review engine setup", printPrompt: true }, cwd);
-    expect(run.prompt).toContain("# Project Role Prompt: .codex/prompts/godot-specialist.md");
+    expect(run.prompt).toContain("# Runtime Role Context: godot-specialist");
     expect(run.prompt).toContain("docs/engine-reference/godot/specialist.md");
   });
 
-  test("fix prompt includes project role prompt", () => {
+  test("fix prompt includes runtime role context", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-"));
-    const { projectRoot } = initProject({ name: "Fix Prompt Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Fix Prompt Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
 
     const run = prepareRun("market-analyst", { project: projectRoot, task: "Assess competitors", dryRun: true, fix: true }, cwd);
 
-    expect(run.fixPrompt).toContain("# Project Role Prompt: .codex/prompts/market-analyst.md");
+    expect(run.fixPrompt).toContain("# Runtime Role Context: market-analyst");
   });
 
   test("role runs inline selected templates", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-run-template-"));
-    const { projectRoot } = initProject({ name: "Template Run Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Template Run Game", engine: "godot", mode: "design", nonInteractive: true }, cwd);
 
     const market = prepareRun("market-analyst", { project: projectRoot, task: "Assess positioning", printPrompt: true }, cwd);
     expect(market.prompt).toContain("## Selected Templates");
@@ -148,7 +158,7 @@ describe("runner", () => {
 
   test("broad context discovers bounded existing project files", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-"));
-    const { projectRoot } = initProject({ name: "Broad Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Broad Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
 
     const narrow = prepareRun("producer", { project: projectRoot, task: "Plan next milestone", dryRun: true }, cwd);
     expect(narrow.contextFiles).not.toContain("design/gdd.md");
@@ -159,12 +169,12 @@ describe("runner", () => {
     expect(broad.contextFiles).toContain("production/timeline.md");
     expect(broad.contextFiles).toContain("docs/market-overview.md");
     expect(broad.contextFiles).not.toContain("Broad context explicitly allowed by CLI flag.");
-    expect(broad.contextFiles.filter((file) => file.startsWith(".codex/prompts/"))).toHaveLength(1);
+    expect(broad.contextFiles.filter((file) => file.startsWith(".codex/agents/"))).toHaveLength(1);
   });
 
   test("broad context ignores directories and realpath escapes", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-"));
-    const { projectRoot } = initProject({ name: "Bounded Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Bounded Context Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     const gdd = path.join(projectRoot, "design", "gdd.md");
     rmSync(gdd);
     mkdirSync(gdd);
@@ -183,7 +193,7 @@ describe("runner", () => {
 
   test("include artifact renders canonical project-relative paths", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-"));
-    const { projectRoot } = initProject({ name: "Artifact Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Artifact Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
 
     const run = prepareRun("producer", { project: projectRoot, task: "Plan next milestone", printPrompt: true, includeArtifact: ["design/../design/gdd.md"] }, cwd);
 
@@ -196,7 +206,7 @@ describe("runner", () => {
 
   test("rejected included artifacts are not embedded in prompts", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-artifact-rejected-"));
-    const { projectRoot } = initProject({ name: "Rejected Artifact Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Rejected Artifact Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     mkdirSync(path.join(projectRoot, "dist"), { recursive: true });
     writeFileSync(path.join(projectRoot, "dist", "bundle.js"), "REJECTED_BUNDLE_BODY");
 
@@ -210,7 +220,7 @@ describe("runner", () => {
 
   test("oversized included artifacts are not embedded in prompts", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-artifact-oversized-"));
-    const { projectRoot } = initProject({ name: "Oversized Artifact Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Oversized Artifact Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
     const artifactPath = path.join(projectRoot, "design", "large-artifact.md");
     writeFileSync(artifactPath, `OVERSIZED_ARTIFACT_BODY\n${"x".repeat(20_000)}`);
 
@@ -224,7 +234,7 @@ describe("runner", () => {
 
   test("review passes execute Codex with a read-only sandbox", async () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-review-"));
-    const { projectRoot } = initProject({ name: "Review Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Review Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
     const log = path.join(cwd, "codex-invocations.jsonl");
     const stub = path.join(cwd, "codex-stub.mjs");
     writeFileSync(
@@ -248,13 +258,13 @@ console.log(JSON.stringify({ blockers: [], warnings: [], summary: "ok", needsFix
     expect(invocations).toHaveLength(2);
     expect(invocations[0].args).toEqual(expect.arrayContaining(["--sandbox", "danger-full-access"]));
     expect(invocations[1].args).toEqual(expect.arrayContaining(["--sandbox", "read-only"]));
-    expect(invocations[1].input).toContain("# Project Role Prompt: .codex/prompts/qa-playtester.md");
+    expect(invocations[1].input).toContain("# Runtime Role Context: qa-playtester");
     expect(invocations[1].input).toContain("Template: playtest_report");
   });
 
   test("implementation, review, and fix prompts share a bounded Context Contract", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-contract-"));
-    const { projectRoot } = initProject({ name: "Contract Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
+    const { projectRoot } = initTemplateProject({ name: "Contract Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
 
     const run = prepareRun("gameplay-programmer", { project: projectRoot, task: "Implement movement", dryRun: true, review: true, fix: true }, cwd);
 
@@ -271,7 +281,7 @@ console.log(JSON.stringify({ blockers: [], warnings: [], summary: "ok", needsFix
       expect(prompt).toContain("Omissions and Blockers:");
     }
     expect(run.reviewPrompt).toContain("Read-only review: inspect diff and verification output; do not edit files.");
-    expect(run.reviewPrompt).toContain(".codex/prompts/qa-playtester.md");
+    expect(run.reviewPrompt).toContain(".codex/agents/qa-playtester.toml");
     expect(run.fixPrompt).toContain("Bounded Blockers:");
     expect(run.fixPrompt).toContain("- Review and verification blockers will be supplied at execution time.");
   });

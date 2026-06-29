@@ -150,9 +150,7 @@ It does not own project scaffolding internals, role prompt content, or Codex run
 
 - Decision (2026-05-28): Keep `validate` as the hard-failing parity gate before readiness claims.
 - Decision (2026-05-28): Test that future planner, telemetry, parallel, and ownership surfaces are not exposed.
-- Decision (2026-05-30): Validate generated-surface source metadata and rendered-body hashes for new generated files.
-- Decision (2026-05-30): Fail malformed or partial generated metadata with stable freshness/body check IDs.
-- Decision (2026-05-30): Treat only fully absent metadata as a legacy skip diagnostic.
+- Decision (2026-05-30): Historical generated-surface metadata checks were replaced by tracked template-surface validation for clone-visible files.
 - Decision (2026-06-13): Treat `.codex/approvals.json` as a required generated project contract.
 - Decision (2026-06-13): Fail project validation with `codex.project.approvals` when the approval store is missing, malformed, or schema-invalid.
 - Decision (2026-06-13): Expose approval grant/list/revoke as audit-store management commands.
@@ -189,7 +187,7 @@ Validation makes those claims executable. Prompt-surface drift and packaging dri
 
 - Update this doc when CLI behavior, validation behavior, behavioral-evaluation checks, context-manifest checks, or engine-reference checks change.
 - Also update it when package metadata, README claims, or validation IDs change.
-- Relevant verification includes `npm run validate`, CLI help smoke checks, customization tests, and behavioral-evaluation tests.
+- Relevant verification includes `npm run validate`, CLI help smoke checks, validation tests, context tests, and functionality-gap tests.
 - It also includes validation tests, package smoke checks, and future-surface guard tests.
 
 ## Source References
@@ -204,9 +202,8 @@ Validation makes those claims executable. Prompt-surface drift and packaging dri
 - ../../../../src/engine-reference.ts
 - ../../../../src/generated-surfaces.ts
 - ../../../../src/behavioral-evaluation.ts
-- ../../../../tests/cli-prompt-surface.test.ts
 - ../../../../tests/project-workflow.test.ts
 - ../../../../tests/validation.test.ts
 - ../../../../tests/functionality-gap-pass.test.ts
-- ../../../../tests/customization.test.ts
-- ../../../../tests/behavioral-evaluation.test.ts
+- ../../../../tests/codex-context-files.test.ts
+- ../../../../tests/template-repository-surfaces.test.ts

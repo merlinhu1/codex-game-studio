@@ -1,10 +1,8 @@
-import { mkdirSync, writeFileSync } from "node:fs";
-import path from "node:path";
 import type { ProjectConfig } from "./config.js";
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { workflowRegistry, type WorkflowId } from "./workflows.js";
 
-export type GeneratedSkillDefinition = {
+export type TemplateSkillDefinition = {
   name: string;
   description: string;
   sourceId: string;
@@ -270,12 +268,12 @@ function skillBody(profile: SkillProfile, config: ProjectConfig): string {
     .join("\n");
 }
 
-function renderSkill(definition: GeneratedSkillDefinition): string {
+function renderSkill(definition: TemplateSkillDefinition): string {
   const body = ["---", `name: ${definition.name}`, `description: ${definition.description}`, "---", "", definition.body.trimEnd(), ""].join("\n");
   return `${renderGeneratedSurfaceMetadata({ surface: "skill", id: definition.name, sourceInput: definition.sourceInput, body })}${body}`;
 }
 
-export function generatedSkillDefinitions(config: ProjectConfig): GeneratedSkillDefinition[] {
+export function templateSkillDefinitions(config: ProjectConfig): TemplateSkillDefinition[] {
   return skillProfiles.map((profile) => ({
     name: `cgs-${profile.id}`,
     sourceId: profile.id,
@@ -286,22 +284,6 @@ export function generatedSkillDefinitions(config: ProjectConfig): GeneratedSkill
   }));
 }
 
-export function generatedSkillRequiredMarkers(): Record<string, string[]> {
-  return Object.fromEntries(skillProfiles.map((profile) => [`cgs-${profile.id}`, profile.markers]));
-}
-
-export function renderGeneratedSkill(definition: GeneratedSkillDefinition): string {
+export function renderTemplateSkill(definition: TemplateSkillDefinition): string {
   return renderSkill(definition);
-}
-
-export function materializeSkills(projectRoot: string, config: ProjectConfig): string[] {
-  const written: string[] = [];
-  for (const definition of generatedSkillDefinitions(config)) {
-    const dir = path.join(projectRoot, ".agents", "skills", definition.name);
-    mkdirSync(dir, { recursive: true });
-    const file = path.join(dir, "SKILL.md");
-    writeFileSync(file, renderGeneratedSkill(definition));
-    written.push(file);
-  }
-  return written;
 }
