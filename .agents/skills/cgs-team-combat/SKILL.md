@@ -1,6 +1,6 @@
 ---
 name: cgs-team-combat
-description: Use for Codex Game Studio team combat work: Coordinate combat design, implementation, tuning, animation, VFX, audio, and QA handoffs.
+description: Use for team combat tasks that coordinate combat design, implementation, tuning, animation, VFX, audio, and QA handoffs; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the team-combat objective, target files/assets, constraints, and verification evidence.

@@ -1,5 +1,5 @@
 name = "world_builder"
-description = "Game development World Builder agent for world-builder tasks in this template repository."
+description = "Owns world builder work: Define factions, places, rules, environmental storytelling hooks, collectible lore, and setting constraints that support level, narrative, and content production. Produces World bible slice, Environment hooks, Consistency constraints; hand off requests outside world builder ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

@@ -5,7 +5,7 @@ primary-agent: localization-lead
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the localization-plan goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a localization plan request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/localization-plan.md
 source-hash: 3c051923076c7bd045bdb8c2b96b17564e42da45664371dfd23339ea01f87603
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

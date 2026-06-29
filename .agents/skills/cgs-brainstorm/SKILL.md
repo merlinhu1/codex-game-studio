@@ -1,6 +1,6 @@
 ---
 name: cgs-brainstorm
-description: Use for Codex Game Studio brainstorm work: Explore the game idea with player fantasy, verbs, pillars, audience, constraints, and scope tiers.
+description: Use for brainstorm tasks that explore the game idea with player fantasy, verbs, pillars, audience, constraints, and scope tiers; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the brainstorm objective, target files/assets, constraints, and verification evidence.

@@ -5,7 +5,7 @@ primary-agent: release-manager
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: ship
 risk: high
-argument-hint: Describe the ship-check goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a ship check request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/ship-check.md
 source-hash: c0314e1b40f51a412fb34e841c4828b18841d12d524e73578609f2f8b946877d
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

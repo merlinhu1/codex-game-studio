@@ -1,6 +1,6 @@
 ---
 name: cgs-perf-profile
-description: Use for Codex Game Studio performance profile work: Profile frame time, memory, loading, assets, rendering, scripting, and platform constraints.
+description: Use for perf profile tasks that profile frame time, memory, loading, assets, rendering, scripting, and platform constraints; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the perf-profile objective, target files/assets, constraints, and verification evidence.

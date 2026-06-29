@@ -1,6 +1,6 @@
 ---
 name: cgs-bug-triage
-description: Use for Codex Game Studio bug triage work: Classify bugs by severity, priority, reproduction confidence, owner role, risk, and release impact.
+description: Use for bug triage tasks that classify bugs by severity, priority, reproduction confidence, owner role, risk, and release impact; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the bug-triage objective, target files/assets, constraints, and verification evidence.

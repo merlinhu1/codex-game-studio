@@ -1,6 +1,6 @@
 ---
 name: cgs-security-audit
-description: Use for Codex Game Studio security audit work: Audit secrets, network surfaces, auth, saves, platform APIs, dependencies, and exploit risks.
+description: Use for security audit tasks that audit secrets, network surfaces, auth, saves, platform APIs, dependencies, and exploit risks; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the security-audit objective, target files/assets, constraints, and verification evidence.

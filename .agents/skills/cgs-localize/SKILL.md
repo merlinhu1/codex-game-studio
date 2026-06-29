@@ -1,6 +1,6 @@
 ---
 name: cgs-localize
-description: Use for Codex Game Studio localize work: Plan localization keys, context, screenshots, pluralization, text expansion, and review workflow.
+description: Use for localize tasks that plan localization keys, context, screenshots, pluralization, text expansion, and review workflow; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the localize objective, target files/assets, constraints, and verification evidence.

@@ -1,6 +1,6 @@
 ---
 name: cgs-retrospective
-description: Use for Codex Game Studio retrospective work: Facilitate a retrospective with what worked, what failed, root causes, actions, and owner follow-up.
+description: Use for retrospective tasks that facilitate a retrospective with what worked, what failed, root causes, actions, and owner follow-up; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the retrospective objective, target files/assets, constraints, and verification evidence.

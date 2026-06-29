@@ -1,6 +1,6 @@
 ---
 name: cgs-team-level
-description: Use for Codex Game Studio team level work: Coordinate level design, blockout, art, scripting, lighting, optimization, and playtest handoffs.
+description: Use for team level tasks that coordinate level design, blockout, art, scripting, lighting, optimization, and playtest handoffs; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the team-level objective, target files/assets, constraints, and verification evidence.

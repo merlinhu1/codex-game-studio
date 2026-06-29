@@ -5,7 +5,7 @@ primary-agent: senior-game-artist
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the art-direction goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a art direction request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/art-direction.md
 source-hash: bb63d35ee4c93bc78cdb69865b93a8451772f1947457e7a4cb0de10a50261857
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

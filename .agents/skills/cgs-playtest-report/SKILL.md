@@ -1,6 +1,6 @@
 ---
 name: cgs-playtest-report
-description: Use for Codex Game Studio playtest report work: Capture player observations, comprehension, friction, loop completion, bugs, quotes, and design implications.
+description: Use for playtest report tasks that capture player observations, comprehension, friction, loop completion, bugs, quotes, and design implications; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the playtest-report objective, target files/assets, constraints, and verification evidence.

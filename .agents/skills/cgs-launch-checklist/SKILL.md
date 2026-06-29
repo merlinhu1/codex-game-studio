@@ -1,6 +1,6 @@
 ---
 name: cgs-launch-checklist
-description: Use for Codex Game Studio launch checklist work: Coordinate day-of-launch readiness, monitoring, community, support, rollback, and hotfix paths.
+description: Use for launch checklist tasks that coordinate day-of-launch readiness, monitoring, community, support, rollback, and hotfix paths; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the launch-checklist objective, target files/assets, constraints, and verification evidence.

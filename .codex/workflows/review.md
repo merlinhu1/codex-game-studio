@@ -5,7 +5,7 @@ primary-agent: qa-playtester
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: review
 risk: high
-argument-hint: Describe the review goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/review.md
 source-hash: 34723440e64f04b85aaac3355e08ac64bc58b31c7f5b68dc83351d651619b628
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

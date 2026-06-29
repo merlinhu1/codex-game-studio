@@ -5,7 +5,7 @@ primary-agent: gameplay-programmer
 linked-skills: [cgs-bugfix]
 phase: implement
 risk: medium
-argument-hint: Describe the bugfix goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a bugfix request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/bugfix.md
 source-hash: e4f3ff1a7569114e173de2be80c20cbc1d914d920c4970092667161683380aaa
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

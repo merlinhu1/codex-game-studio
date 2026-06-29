@@ -1,6 +1,6 @@
 ---
 name: cgs-balance-check
-description: Use for Codex Game Studio balance check work: Evaluate tuning values, progression pacing, economy levers, exploits, and player-skill assumptions.
+description: Use for balance check tasks that evaluate tuning values, progression pacing, economy levers, exploits, and player-skill assumptions; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the balance-check objective, target files/assets, constraints, and verification evidence.

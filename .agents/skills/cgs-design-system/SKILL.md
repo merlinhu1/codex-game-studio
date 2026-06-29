@@ -1,6 +1,6 @@
 ---
 name: cgs-design-system
-description: Use for Codex Game Studio design system work: Author a system GDD with rules, data, edge cases, progression, feedback, and implementation acceptance tests.
+description: Use for design system tasks that author a system GDD with rules, data, edge cases, progression, feedback, and implementation acceptance tests; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the design-system objective, target files/assets, constraints, and verification evidence.

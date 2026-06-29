@@ -1,6 +1,6 @@
 ---
 name: cgs-consistency-check
-description: Use for Codex Game Studio consistency check work: Find contradictions across design, narrative, systems, UI, content, and implementation artifacts.
+description: Use for consistency check tasks that find contradictions across design, narrative, systems, UI, content, and implementation artifacts; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the consistency-check objective, target files/assets, constraints, and verification evidence.

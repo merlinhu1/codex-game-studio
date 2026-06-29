@@ -1,6 +1,6 @@
 ---
 name: cgs-bug-report
-description: Use for Codex Game Studio bug report work: Capture a reproducible bug with environment, steps, expected/actual behavior, severity, evidence, and owner.
+description: Use for bug report tasks that capture a reproducible bug with environment, steps, expected/actual behavior, severity, evidence, and owner; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the bug-report objective, target files/assets, constraints, and verification evidence.

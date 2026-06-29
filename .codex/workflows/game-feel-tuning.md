@@ -5,7 +5,7 @@ primary-agent: game-feel-designer
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: review
 risk: high
-argument-hint: Describe the game-feel-tuning goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a game feel tuning request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/game-feel-tuning.md
 source-hash: 8d1c4b6a894d8b08fa5890a7a0db85c47c0b906667b0dbc8677c4b0159e1bec0
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

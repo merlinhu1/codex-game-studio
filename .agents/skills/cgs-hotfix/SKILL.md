@@ -1,6 +1,6 @@
 ---
 name: cgs-hotfix
-description: Use for Codex Game Studio hotfix work: Scope and execute an urgent fix with reproduction, minimal change, verification, release notes, and rollback.
+description: Use for hotfix tasks that scope and execute an urgent fix with reproduction, minimal change, verification, release notes, and rollback; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the hotfix objective, target files/assets, constraints, and verification evidence.

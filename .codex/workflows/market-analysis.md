@@ -5,7 +5,7 @@ primary-agent: market-analyst
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the market-analysis goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a market analysis request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/market-analysis.md
 source-hash: 79df4ced2d1e89e860f5d1e4560fb17e57a31b713b64a76f8c0f4e9b2f2e7853
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

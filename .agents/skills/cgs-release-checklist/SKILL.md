@@ -1,6 +1,6 @@
 ---
 name: cgs-release-checklist
-description: Use for Codex Game Studio release checklist work: Check build, packaging, store, QA, localization, accessibility, rollback, and ship/no-ship readiness.
+description: Use for release checklist tasks that check build, packaging, store, QA, localization, accessibility, rollback, and ship/no-ship readiness; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the release-checklist objective, target files/assets, constraints, and verification evidence.

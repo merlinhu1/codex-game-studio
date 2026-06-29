@@ -5,7 +5,7 @@ primary-agent: qa-playtester
 linked-skills: [cgs-regression-suite, cgs-bugfix]
 phase: review
 risk: medium
-argument-hint: Describe the regression-suite goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a regression suite request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/regression-suite.md
 source-hash: 8d0248078a4d567474766257fccf6a31a790b14152643806c608f2dbe726478e
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

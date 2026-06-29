@@ -30,8 +30,11 @@ It does not own init-time generation of agent, workflow, or skill instruction bo
 - It also covers live ops, community, localization, accessibility, security, devops, performance, networking, AI, and UI programming clusters.
 - Engine specialist role IDs are `godot-specialist`, `unity-specialist`, and `unreal-specialist`.
 - The template repository tracks custom-agent files under `.codex/agents/*.toml`.
+- Agent descriptions are selection metadata that state role ownership, trigger terms, output class, and handoff boundary.
 - The template repository tracks workflow files under `.codex/workflows/*.md`.
+- Workflow argument hints request workflow-specific objectives, targets, constraints, and verification or handoff evidence.
 - The template repository tracks repository skills under `.agents/skills/*/SKILL.md`.
+- Skill descriptions state use triggers, outcomes, verification evidence, changed/proposed files, and handoff boundaries.
 - Each role package has a display name, system prompt, context strategy, responsibilities, expected inputs, and expected outputs.
 - Role packages may also include an output schema, quality gates, collaboration notes, stop conditions, handoff wording, and review checklist.
 - Shared role-contract guidance lives in reusable fragments.
@@ -124,6 +127,7 @@ It does not own init-time generation of agent, workflow, or skill instruction bo
 - Engine reference assets carry seed-review metadata.
 - Workflow IDs map to `.codex/workflows/<workflow>.md` files, expected context files, taxonomy categories, gap-coverage notes, and optional CLI aliases.
 - Repository skill IDs map to `.agents/skills/<skill>/SKILL.md` template files.
+- Prompt-surface discovery metadata validation rejects generic agent descriptions, generic workflow argument hints, and non-actionable skill descriptions.
 - The CCGS parity audit inventories reference agents, skills, workflow-catalog steps, templates, and rules into JSON and Markdown matrix reports.
 - The parity matrix records source hashes, CGS target paths, target hashes when a tracked target exists, decisions, score fields, rationales, owner paths, test paths, and implementation status.
 - The workflow catalog models phase progression, required steps, optional steps, repeatable steps, artifact checks, and next-phase links without importing Claude slash-command runtime behavior.
@@ -167,6 +171,7 @@ It does not own init-time generation of agent, workflow, or skill instruction bo
 - Decision (2026-06-17): Reuse the built-in QA review surface for custom role review passes.
 - Decision (2026-06-17): Use the configured custom role prompt for custom fix passes.
 - Decision (2026-06-29): Treat `.codex/agents`, `.codex/workflows`, and `.agents/skills` as tracked template repository surfaces.
+- Decision (2026-06-29): Validate prompt-surface discovery metadata as selection contracts before further prompt body expansion.
 - Decision (2026-06-29): Assemble runtime role prompt packets in memory instead of generating `.codex/prompts/**` mirrors.
 
 ## Rationale

@@ -1,5 +1,5 @@
 name = "writer"
-description = "Game development Writer agent for writer tasks in this template repository."
+description = "Owns writer work: Draft shippable dialogue, item text, barks, tutorial copy, lore snippets, and narrative-facing implementation notes that fit the project's tone and production constraints. Produces Draft copy, Tone notes, Implementation handoff; hand off requests outside writer ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

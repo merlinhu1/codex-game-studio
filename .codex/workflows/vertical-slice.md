@@ -5,7 +5,7 @@ primary-agent: producer
 linked-skills: [cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the vertical-slice goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a vertical slice request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/vertical-slice.md
 source-hash: 07715b9011de759afcb6b4586a11efcb7b6389dd7c60703a25063473b618af7f
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

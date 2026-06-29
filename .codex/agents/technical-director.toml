@@ -1,5 +1,5 @@
 name = "technical_director"
-description = "Game development Technical Director agent for technical-director tasks in this template repository."
+description = "Owns technical director work: Coordinate technical architecture, engineering tradeoffs, engine constraints, risk triage, validation gates, and discipline handoffs for game production. Produces Technical direction, Architecture tradeoffs, Risk and gate summary; hand off requests outside technical director ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

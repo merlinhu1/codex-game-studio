@@ -44,6 +44,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns accessibility specialist work: Review accessibility for controls, visual/audio feedback, readability, cognitive load, difficulty options, platform conventions, and testable accommodations. Produces Accessibility review, Accommodation checklist, Inclusive design risks; hand off requests outside accessibility specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -73,6 +78,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns ai programmer work: Implement game AI behavior, decision logic, navigation, perception, tuning hooks, debug visibility, and deterministic verification for NPC or systemic agents. Produces AI implementation, Behavior tuning notes, Debug and test evidence; hand off requests outside ai programmer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -104,6 +114,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns audio director work: Define audio pillars, music direction, soundscape priorities, implementation constraints, mix goals, and cross-discipline audio production handoffs. Produces Audio direction, Soundscape priorities, Implementation constraints; hand off requests outside audio director ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -134,6 +149,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns community manager work: Plan player communication, feedback triage, community launch beats, moderation risks, sentiment signals, and actionable handoffs to production roles. Produces Community plan, Feedback triage notes, Messaging risks; hand off requests outside community manager ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -169,6 +189,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns creative director work: Set creative pillars, protect player fantasy, align experience goals across disciplines, and keep scope coherent for Codex-executed game work. Produces Creative direction, Scope decisions, Experience pillars; hand off requests outside creative director ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -191,6 +216,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns data scientist work: Define analytics events, success metrics, experiment plans, dashboards, and evidence loops that support design and production decisions. Produces Analytics plan, Event taxonomy, Experiment outline; hand off requests outside data scientist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -220,6 +250,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns devops engineer work: Design build, packaging, CI, release automation, environment setup, cache strategy, and reproducible validation flows for game projects. Produces Build automation, CI or packaging notes, Reproducibility checks; hand off requests outside devops engineer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -251,6 +286,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns economy designer work: Model currencies, rewards, sinks, pacing, pricing, progression pressure, and fairness risks for game economies without adding hidden monetization assumptions. Produces Economy model, Reward and sink table, Balance risks; hand off requests outside economy designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -280,6 +320,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns engine programmer work: Work on engine integration, performance-sensitive systems, build setup, runtime foundations, and platform constraints. Produces Technical implementation, Performance notes, Build impact; hand off requests outside engine programmer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -316,6 +361,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns game designer work: Design implementation-level mechanics, feature rules, tuning values, edge cases, and player-facing acceptance criteria with practical scope. Produces Feature spec, Tuning notes, Acceptance criteria; hand off requests outside game designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -338,6 +388,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns game feel designer work: Tune controls, feedback, pacing, animation timing, juice, camera response, and moment-to-moment player feel with actionable changes. Produces Feel review, Tuning recommendations, Feedback checklist; hand off requests outside game feel designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -367,6 +422,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns gameplay programmer work: Implement gameplay systems with focused file edits, engine-native idioms, deterministic behavior, and verification evidence. Produces Code changes, Verification results, Implementation notes; hand off requests outside gameplay programmer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -396,6 +456,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns godot specialist work: Apply Godot-specific implementation and review guidance using only the active project's Godot reference pack and project files. Produces Godot guidance, Engine-specific risks, Verification notes; hand off requests outside godot specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -427,6 +492,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns level designer work: Design levels, encounter spaces, navigation beats, pacing, objective flow, metrics, blockout notes, and testable acceptance criteria for playable content. Produces Level brief, Blockout notes, Playtest criteria; hand off requests outside level designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -457,6 +527,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns live ops designer work: Design live events, retention loops, update cadence, economy impacts, player messaging, operational risks, and post-launch measurement plans. Produces Live ops plan, Event loop notes, Measurement and risk summary; hand off requests outside live ops designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -487,6 +562,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns localization lead work: Plan localization scope, string readiness, culturalization risks, text expansion, asset dependencies, voice/subtitle needs, and handoff checks. Produces Localization plan, String and asset risks, Culturalization notes; hand off requests outside localization lead ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -509,6 +589,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns market analyst work: Analyze audience, competitors, positioning, pricing, discoverability, and market risks using project constraints and clearly labeled assumptions. Produces Market analysis, Competitor positioning, Audience risks; hand off requests outside market analyst ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -531,6 +616,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns narrative designer work: Shape story, tone, world rules, character and content needs, and narrative consistency while respecting production constraints. Produces Narrative brief, Content list, Tone guidance; hand off requests outside narrative designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -560,6 +650,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns network programmer work: Implement networked gameplay, replication, synchronization, authority boundaries, latency handling, rollback risks, and multiplayer verification notes. Produces Networking implementation, Synchronization notes, Multiplayer verification; hand off requests outside network programmer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -590,6 +685,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns performance analyst work: Profile frame time, memory, loading, asset cost, CPU/GPU bottlenecks, instrumentation needs, and optimization priorities for game builds. Produces Performance report, Optimization priorities, Measurement plan; hand off requests outside performance analyst ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -626,6 +726,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns producer work: Convert goals into bounded production plans, milestone slices, risk lists, owner recommendations, and verification gates for Codex-executed game work. Produces Production plan, Milestone tasks, Risk register; hand off requests outside producer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -648,6 +753,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns qa playtester work: Find reproducible gameplay, usability, accessibility, and regression issues with clear severity, evidence, and verification steps. Produces Issue list, Repro steps, Severity notes; hand off requests outside qa playtester ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -682,6 +792,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns release manager work: Assess ship readiness, release risk, packaging, validation status, milestone blockers, and remaining warnings before release decisions. Produces Ship checklist, Release risks, Validation summary; hand off requests outside release manager ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -711,6 +826,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns security engineer work: Review game client, tools, build scripts, online surfaces, secrets handling, abuse cases, and dependency risks with practical mitigation steps. Produces Security review, Threat notes, Mitigation checklist; hand off requests outside security engineer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -733,6 +853,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns senior game artist work: Define art direction, asset style, visual constraints, production quality bars, reference needs, and asset review notes. Produces Art direction, Asset list, Visual quality bar; hand off requests outside senior game artist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -755,6 +880,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns senior game designer work: Own high-level systems, progression, economy, core loops, balancing direction, and design cohesion across feature slices. Produces Systems design, Progression model, Acceptance criteria; hand off requests outside senior game designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -785,6 +915,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns sound designer work: Specify sound effects, feedback cues, ambience, music triggers, implementation events, and audio verification notes for gameplay moments. Produces Sound cue list, Audio event notes, Verification checklist; hand off requests outside sound designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -807,6 +942,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns studio orchestrator work: Route work between roles, maintain concise handoffs, protect project scope, identify blockers, and select the next bounded studio action without running hidden parallel work. Produces Studio handoff, Next-role routing, Blocker summary; hand off requests outside studio orchestrator ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -838,6 +978,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns systems designer work: Design interconnected rules, progression loops, resource flows, balancing levers, edge cases, and acceptance tests for durable game systems. Produces Systems spec, Balance levers, Edge-case notes; hand off requests outside systems designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -867,6 +1012,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns technical artist work: Bridge art direction and runtime constraints for shaders, materials, import settings, optimization, and visual pipelines. Produces Art pipeline guidance, Asset constraints, Optimization notes; hand off requests outside technical artist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -897,6 +1047,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns technical director work: Coordinate technical architecture, engineering tradeoffs, engine constraints, risk triage, validation gates, and discipline handoffs for game production. Produces Technical direction, Architecture tradeoffs, Risk and gate summary; hand off requests outside technical director ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -926,6 +1081,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns tools programmer work: Build editor, pipeline, automation, and developer workflow tools that reduce repeated production effort and failure-prone manual steps. Produces Tooling changes, Usage notes, Failure modes; hand off requests outside tools programmer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -955,6 +1115,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns ui programmer work: Implement HUD, menu, input, state binding, responsive layout, accessibility hooks, and UI runtime behavior from designer-facing interaction specs. Produces UI implementation, State binding notes, Interaction verification; hand off requests outside ui programmer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -977,6 +1142,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns ui ux designer work: Design interface flows, usability heuristics, HUD layout, onboarding, accessibility, menu interactions, and interaction risks. Produces UI flow review, HUD/menu recommendations, Accessibility notes; hand off requests outside ui ux designer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1006,6 +1176,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns unity specialist work: Apply Unity-specific implementation and review guidance using only the active project's Unity reference pack and project files. Produces Unity guidance, Engine-specific risks, Verification notes; hand off requests outside unity specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1035,6 +1210,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns unreal specialist work: Apply Unreal-specific implementation and review guidance using only the active project's Unreal reference pack and project files. Produces Unreal guidance, Engine-specific risks, Verification notes; hand off requests outside unreal specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1066,6 +1246,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns world builder work: Define factions, places, rules, environmental storytelling hooks, collectible lore, and setting constraints that support level, narrative, and content production. Produces World bible slice, Environment hooks, Consistency constraints; hand off requests outside world builder ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1097,6 +1282,11 @@
         "sourceHash": true,
         "primarySkills": true,
         "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns writer work: Draft shippable dialogue, item text, barks, tutorial copy, lore snippets, and narrative-facing implementation notes that fit the project's tone and production constraints. Produces Draft copy, Tone notes, Implementation handoff; hand off requests outside writer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1120,6 +1310,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a analytics setup request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1143,6 +1338,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a architecture decision request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1166,6 +1366,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a architecture review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1189,6 +1394,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a art direction request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1212,6 +1422,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a brainstorm request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1235,6 +1450,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a bugfix request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1258,6 +1478,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a create epics request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1281,6 +1506,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a create stories request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1304,6 +1534,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a design spec request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1327,6 +1562,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a game feel tuning request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1350,6 +1590,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a handoff request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1373,6 +1618,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a hotfix request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1396,6 +1646,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a localization plan request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1419,6 +1674,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a market analysis request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1442,6 +1702,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a onboard request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1465,6 +1730,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a perf profile request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1488,6 +1758,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a playtest request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1511,6 +1786,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a production milestone request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1534,6 +1814,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a prototype request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1557,6 +1842,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a qa plan request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1580,6 +1870,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a regression suite request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1603,6 +1898,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a release checklist request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1626,6 +1926,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1649,6 +1954,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a security audit request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1672,6 +1982,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a ship check request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1695,6 +2010,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a sprint plan request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1718,6 +2038,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a sprint status request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1741,6 +2066,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a story done request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1764,6 +2094,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a story readiness request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1787,6 +2122,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a ui ux review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1810,6 +2150,11 @@
         "sourceHash": true,
         "agent": true,
         "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a vertical slice request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1841,6 +2186,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for adopt tasks that inventory existing source, assets, docs, and tests before mapping work into CGS structure; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1871,6 +2221,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for architecture decision tasks that write an ADR with context, options, decision, consequences, validation, and rollback; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1902,6 +2257,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for architecture review tasks that review architecture for layer violations, scalability risks, engine misuse, testing seams, and production readiness; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1932,6 +2292,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for art bible tasks that define visual identity, shape language, palette, camera, animation, UI style, and asset constraints; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1962,6 +2327,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for asset audit tasks that audit game assets for completeness, naming, import settings, ownership, licensing, and production risk; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -1992,6 +2362,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for asset spec tasks that specify an individual asset with purpose, constraints, references, dimensions, states, and acceptance criteria; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2023,6 +2398,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for balance check tasks that evaluate tuning values, progression pacing, economy levers, exploits, and player-skill assumptions; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2053,6 +2433,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for brainstorm tasks that explore the game idea with player fantasy, verbs, pillars, audience, constraints, and scope tiers; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2083,6 +2468,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for bug report tasks that capture a reproducible bug with environment, steps, expected/actual behavior, severity, evidence, and owner; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2113,6 +2503,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for bug triage tasks that classify bugs by severity, priority, reproduction confidence, owner role, risk, and release impact; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2135,6 +2530,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for bugfix tasks that fix a bounded bug with reproduction evidence, minimal change, regression coverage, and handoff notes; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2165,6 +2565,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for changelog tasks that maintain a developer-facing changelog grouped by feature, fix, content, performance, and breaking change; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2196,6 +2601,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for code review tasks that review changes for correctness, maintainability, security, tests, engine idioms, and scope control; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2226,6 +2636,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for consistency check tasks that find contradictions across design, narrative, systems, UI, content, and implementation artifacts; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2257,6 +2672,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for content audit tasks that audit content coverage, duplication, tone consistency, localization needs, and production completeness; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2288,6 +2708,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for create architecture tasks that design the technical architecture, layers, data ownership, engine boundaries, and control manifest; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2319,6 +2744,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for create control manifest tasks that define implementation rules, boundaries, allowed dependencies, validation commands, and review gates; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2350,6 +2780,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for create epics tasks that break project goals into epics with outcomes, dependencies, risks, and validation gates; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2381,6 +2816,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for create stories tasks that break an epic into small stories with acceptance criteria, owner role, files, and verification; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2411,6 +2851,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for day one patch tasks that plan launch-window fixes, risk acceptance, validation, platform submission, and player communication; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2441,6 +2886,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for design review tasks that review design artifacts against pillars, player experience, production scope, and downstream implementation risk; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2471,6 +2921,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for design system tasks that author a system GDD with rules, data, edge cases, progression, feedback, and implementation acceptance tests; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2501,6 +2956,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for dev story tasks that turn a design or bug into an implementation-ready story with owner, files, acceptance tests, and dependencies; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2531,6 +2991,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for estimate tasks that estimate scope using uncertainty, dependencies, discipline handoffs, risk buffers, and confidence ranges; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2561,6 +3026,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for gate check tasks that run an advisory phase or artifact gate with criteria, evidence, concerns, and user-controlled next decision; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2591,6 +3061,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for help tasks that summarize available CGS workflows, next phase options, required artifacts, and safe commands; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2621,6 +3096,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for hotfix tasks that scope and execute an urgent fix with reproduction, minimal change, verification, release notes, and rollback; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2651,6 +3131,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for launch checklist tasks that coordinate day-of-launch readiness, monitoring, community, support, rollback, and hotfix paths; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2682,6 +3167,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for localize tasks that plan localization keys, context, screenshots, pluralization, text expansion, and review workflow; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2712,6 +3202,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for map systems tasks that decompose the concept into game systems with dependency order, priority tiers, and validation needs; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2742,6 +3237,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for milestone review tasks that review milestone readiness, completed evidence, blockers, carryover, and phase transition risk; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2772,6 +3272,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for onboard tasks that orient a new contributor or agent to project state, file layout, stage, risks, and next work; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2803,6 +3308,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for patch notes tasks that write player-facing patch notes with fixes, known issues, balance changes, and verification caveats; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2834,6 +3344,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for perf profile tasks that profile frame time, memory, loading, assets, rendering, scripting, and platform constraints; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2864,6 +3379,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for playtest report tasks that capture player observations, comprehension, friction, loop completion, bugs, quotes, and design implications; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2894,6 +3414,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for project stage detect tasks that detect whether the project is in concept, design, technical setup, pre-production, production, polish, or release; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2925,6 +3450,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for propagate design change tasks that trace a design change through systems, docs, tasks, tests, content, and release risk; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2957,6 +3487,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for prototype tasks that build or plan a throwaway concept prototype around a falsifiable design hypothesis and cleanup boundary; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -2988,6 +3523,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for qa plan tasks that plan focused QA coverage across features, risks, platforms, devices, regressions, and acceptance criteria; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3018,6 +3558,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for quick design tasks that draft a constrained design slice fast while preserving pillars, assumptions, and open questions; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3048,6 +3593,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for regression suite tasks that define or run regression coverage for changed systems, prior bugs, critical paths, and release blockers; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3078,6 +3628,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for release checklist tasks that check build, packaging, store, QA, localization, accessibility, rollback, and ship/no-ship readiness; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3108,6 +3663,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for retrospective tasks that facilitate a retrospective with what worked, what failed, root causes, actions, and owner follow-up; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3138,6 +3698,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for reverse document tasks that create design or technical documentation from existing implementation without inventing unverified behavior; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3168,6 +3733,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for review all gdds tasks that cross-check all GDDs for consistency, missing systems, dependency conflicts, and production readiness; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3198,6 +3768,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for scope check tasks that assess whether requested work fits the milestone and propose cuts, deferrals, or safer slices; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3229,6 +3804,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for security audit tasks that audit secrets, network surfaces, auth, saves, platform APIs, dependencies, and exploit risks; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3259,6 +3839,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for setup engine tasks that pin engine version, verify project markers, document conventions, and run engine smoke checks; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3289,6 +3874,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for skill improve tasks that improve a skill after observed failures while preserving trigger, procedure, validation, and handoff clarity; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3319,6 +3909,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for skill test tasks that test a repository skill against fixtures, required sections, dry-runs, and behavioral expectations; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3349,6 +3944,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for smoke check tasks that run the fastest useful checks proving the project opens, builds, starts, and reaches a basic playable state; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3379,6 +3979,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for soak test tasks that plan longer stability checks for memory, performance drift, save/load, networking, and live-ops loops; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3409,6 +4014,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for sprint plan tasks that create a 1-2 week sprint plan with goals, tasks, owners, dependencies, risks, and acceptance criteria; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3439,6 +4049,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for sprint status tasks that report sprint progress, blockers, risk changes, completed work, and next decisions; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3461,6 +4076,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for standards gameplay tasks that mechanics, tuning, data-driven values, engine idioms, and player-facing acceptance checks; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3483,6 +4103,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for standards prototype tasks that fast experiments with explicit hypotheses, throwaway boundaries, and graduation criteria; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3505,6 +4130,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for standards tests tasks that unit, integration, engine smoke, playtest, and regression coverage; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3527,6 +4157,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for standards ui tasks that hUD, menus, accessibility, localization, controller navigation, and input states; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3557,6 +4192,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for start tasks that clarify the game concept, engine, production mode, first milestone, and next required artifact; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3587,6 +4227,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for story done tasks that check if a story is complete with changed files, tests, acceptance evidence, and handoff notes; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3617,6 +4262,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for story readiness tasks that check if a story is implementable with clear inputs, acceptance criteria, dependencies, and validation; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3647,6 +4297,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for team audio tasks that coordinate audio design, implementation, asset readiness, mix targets, and QA for audio work; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3677,6 +4332,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for team combat tasks that coordinate combat design, implementation, tuning, animation, VFX, audio, and QA handoffs; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3707,6 +4367,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for team level tasks that coordinate level design, blockout, art, scripting, lighting, optimization, and playtest handoffs; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3737,6 +4402,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for team live ops tasks that coordinate events, telemetry, economy, content cadence, support, and incident readiness; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3767,6 +4437,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for team narrative tasks that coordinate narrative content, dialogue, localization, implementation hooks, and consistency review; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3797,6 +4472,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for team polish tasks that coordinate final polish across game feel, UI, audio, art, bugs, performance, and accessibility; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3828,6 +4508,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for team qa tasks that coordinate QA coverage, bug triage, regression, platform checks, and release evidence; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3858,6 +4543,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for team release tasks that coordinate release management, build pipeline, store assets, QA signoff, comms, and rollback; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3888,6 +4578,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for team ui tasks that coordinate UI design, implementation, accessibility, localization, controller support, and UX QA; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3918,6 +4613,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for tech debt tasks that identify technical debt, production risk, payoff, safe refactor slices, and validation needed; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3948,6 +4648,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for test evidence review tasks that review validation output, logs, screenshots, recordings, and manual checks for sufficiency and gaps; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -3978,6 +4683,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for test flakiness tasks that diagnose flaky tests by isolating timing, randomness, ordering, environment, and cleanup causes; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -4008,6 +4718,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for test helpers tasks that design reusable test helpers without hiding assertions, over-mocking, or coupling tests to implementation details; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -4038,6 +4753,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for test setup tasks that configure test harnesses, fixtures, commands, and documentation so validation is repeatable; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -4060,6 +4780,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for ui ux review tasks that review UI and UX implementation for clarity, accessibility, localization, controller support, and player comprehension; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -4091,6 +4816,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for ux design tasks that design user journeys, menus, HUD, onboarding, input states, accessibility, and localization-ready UX copy; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -4122,6 +4852,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for ux review tasks that review UX flows for clarity, friction, accessibility, localization, controller support, and player comprehension; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     },
     {
@@ -4154,6 +4889,11 @@
         "sourceHash": true,
         "agent": true,
         "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for vertical slice tasks that validate whether a full game loop can be built at representative quality before production commitment; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
       }
     }
   ]

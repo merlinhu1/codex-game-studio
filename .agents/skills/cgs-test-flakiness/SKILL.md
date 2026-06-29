@@ -1,6 +1,6 @@
 ---
 name: cgs-test-flakiness
-description: Use for Codex Game Studio test flakiness work: Diagnose flaky tests by isolating timing, randomness, ordering, environment, and cleanup causes.
+description: Use for test flakiness tasks that diagnose flaky tests by isolating timing, randomness, ordering, environment, and cleanup causes; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the test-flakiness objective, target files/assets, constraints, and verification evidence.

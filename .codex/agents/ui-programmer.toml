@@ -1,5 +1,5 @@
 name = "ui_programmer"
-description = "Game development UI Programmer agent for ui-programmer tasks in this template repository."
+description = "Owns ui programmer work: Implement HUD, menu, input, state binding, responsive layout, accessibility hooks, and UI runtime behavior from designer-facing interaction specs. Produces UI implementation, State binding notes, Interaction verification; hand off requests outside ui programmer ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

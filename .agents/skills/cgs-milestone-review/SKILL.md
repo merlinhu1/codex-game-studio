@@ -1,6 +1,6 @@
 ---
 name: cgs-milestone-review
-description: Use for Codex Game Studio milestone review work: Review milestone readiness, completed evidence, blockers, carryover, and phase transition risk.
+description: Use for milestone review tasks that review milestone readiness, completed evidence, blockers, carryover, and phase transition risk; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the milestone-review objective, target files/assets, constraints, and verification evidence.

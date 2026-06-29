@@ -1,6 +1,6 @@
 ---
 name: cgs-dev-story
-description: Use for Codex Game Studio development story work: Turn a design or bug into an implementation-ready story with owner, files, acceptance tests, and dependencies.
+description: Use for dev story tasks that turn a design or bug into an implementation-ready story with owner, files, acceptance tests, and dependencies; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the dev-story objective, target files/assets, constraints, and verification evidence.

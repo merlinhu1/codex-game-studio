@@ -1,6 +1,6 @@
 ---
 name: cgs-soak-test
-description: Use for Codex Game Studio soak test work: Plan longer stability checks for memory, performance drift, save/load, networking, and live-ops loops.
+description: Use for soak test tasks that plan longer stability checks for memory, performance drift, save/load, networking, and live-ops loops; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the soak-test objective, target files/assets, constraints, and verification evidence.

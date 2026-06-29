@@ -5,7 +5,7 @@ primary-agent: senior-game-designer
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the design-spec goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a design spec request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/design-spec.md
 source-hash: 9261742b271ffafea2af4cdb3e05ca879a2b73d58309ef75ad6ddc13aea06497
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

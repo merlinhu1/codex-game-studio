@@ -5,7 +5,7 @@ primary-agent: qa-playtester
 linked-skills: [cgs-story-done, cgs-bugfix]
 phase: review
 risk: medium
-argument-hint: Describe the story-done goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a story done request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/story-done.md
 source-hash: 97ca471f7ddb731db208cd9f4b9ddab320ceab5bc6fbfeccf4c933892e99a8ab
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

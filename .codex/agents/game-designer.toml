@@ -1,5 +1,5 @@
 name = "game_designer"
-description = "Game development Game Designer agent for game-designer tasks in this template repository."
+description = "Owns game designer work: Design implementation-level mechanics, feature rules, tuning values, edge cases, and player-facing acceptance criteria with practical scope. Produces Feature spec, Tuning notes, Acceptance criteria; hand off requests outside game designer ownership or missing verification evidence."
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

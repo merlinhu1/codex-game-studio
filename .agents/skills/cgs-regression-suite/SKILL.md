@@ -1,6 +1,6 @@
 ---
 name: cgs-regression-suite
-description: Use for Codex Game Studio regression suite work: Define or run regression coverage for changed systems, prior bugs, critical paths, and release blockers.
+description: Use for regression suite tasks that define or run regression coverage for changed systems, prior bugs, critical paths, and release blockers; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the regression-suite objective, target files/assets, constraints, and verification evidence.

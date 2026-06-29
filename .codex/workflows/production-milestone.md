@@ -5,7 +5,7 @@ primary-agent: producer
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the production-milestone goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a production milestone request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/production-milestone.md
 source-hash: 24e88c28bdbf98c567fdb005aa895812e926398817f47e58e8bb6f343fb7dbc2
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

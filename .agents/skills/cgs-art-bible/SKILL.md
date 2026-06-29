@@ -1,6 +1,6 @@
 ---
 name: cgs-art-bible
-description: Use for Codex Game Studio art bible work: Define visual identity, shape language, palette, camera, animation, UI style, and asset constraints.
+description: Use for art bible tasks that define visual identity, shape language, palette, camera, animation, UI style, and asset constraints; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the art-bible objective, target files/assets, constraints, and verification evidence.

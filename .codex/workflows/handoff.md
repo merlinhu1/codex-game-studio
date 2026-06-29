@@ -5,7 +5,7 @@ primary-agent: studio-orchestrator
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: plan
 risk: high
-argument-hint: Describe the handoff goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a handoff request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/handoff.md
 source-hash: e307052ed5c98b2c7db097b17c27cb580f9d1253884e3d9154650cece91cca91
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

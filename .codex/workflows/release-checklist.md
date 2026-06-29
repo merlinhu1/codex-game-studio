@@ -5,7 +5,7 @@ primary-agent: release-manager
 linked-skills: [cgs-release-checklist, cgs-vertical-slice]
 phase: ship
 risk: high
-argument-hint: Describe the release-checklist goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a release checklist request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/release-checklist.md
 source-hash: 323ba87fd53d96504b2795e4a68eb382c9b047672df9138bf5c6047169acf878
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

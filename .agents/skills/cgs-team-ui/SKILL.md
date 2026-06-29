@@ -1,6 +1,6 @@
 ---
 name: cgs-team-ui
-description: Use for Codex Game Studio team ui work: Coordinate UI design, implementation, accessibility, localization, controller support, and UX QA.
+description: Use for team ui tasks that coordinate UI design, implementation, accessibility, localization, controller support, and UX QA; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the team-ui objective, target files/assets, constraints, and verification evidence.

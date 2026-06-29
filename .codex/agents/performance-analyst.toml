@@ -1,5 +1,5 @@
 name = "performance_analyst"
-description = "Game development Performance Analyst agent for performance-analyst tasks in this template repository."
+description = "Owns performance analyst work: Profile frame time, memory, loading, asset cost, CPU/GPU bottlenecks, instrumentation needs, and optimization priorities for game builds. Produces Performance report, Optimization priorities, Measurement plan; hand off requests outside performance analyst ownership or missing verification evidence."
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
 model_verbosity = "medium"

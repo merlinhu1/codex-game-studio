@@ -1,6 +1,6 @@
 ---
 name: cgs-start
-description: Use for Codex Game Studio start work: Clarify the game concept, engine, production mode, first milestone, and next required artifact.
+description: Use for start tasks that clarify the game concept, engine, production mode, first milestone, and next required artifact; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.5
 model_reasoning_effort: high
 argument-hint: Describe the start objective, target files/assets, constraints, and verification evidence.

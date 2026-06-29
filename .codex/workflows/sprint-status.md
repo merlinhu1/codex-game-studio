@@ -5,7 +5,7 @@ primary-agent: studio-orchestrator
 linked-skills: [cgs-sprint-status, cgs-vertical-slice]
 phase: review
 risk: low
-argument-hint: Describe the sprint-status goal, target milestone/files, constraints, and required evidence.
+argument-hint: Provide a sprint status request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.
 source-reference: .codex/workflows/sprint-status.md
 source-hash: 93da26e1a257325a8fb7d88e420d069c695cfcf80085beb0c849197140205946
 output-artifacts: [plan, changed-files, verification-evidence, handoff]

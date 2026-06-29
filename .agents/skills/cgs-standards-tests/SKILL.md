@@ -1,6 +1,6 @@
 ---
 name: cgs-standards-tests
-description: Use for Codex Game Studio test standards: unit, integration, engine smoke, playtest, and regression coverage.
+description: Use for standards tests tasks that unit, integration, engine smoke, playtest, and regression coverage; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4-mini
 model_reasoning_effort: low
 argument-hint: Describe the standards-tests objective, target files/assets, constraints, and verification evidence.

@@ -2,7 +2,16 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { defaultModelPolicyForId, parsePromptSurfaceFrontmatter, parseTomlArrayField, parseTomlStringField } from "../src/prompt-surface-metadata.js";
+import {
+  defaultModelPolicyForId,
+  parsePromptSurfaceFrontmatter,
+  parseTomlArrayField,
+  parseTomlStringField,
+  validateAgentDescriptionQuality,
+  validateSkillDescriptionQuality,
+  validateWorkflowArgumentHintQuality,
+  type PromptDiscoveryQuality
+} from "../src/prompt-surface-metadata.js";
 
 export const promptSurfaceDecisions = ["adopt", "adapt", "merge", "split", "defer", "out-of-scope"] as const;
 type PromptSurfaceDecision = (typeof promptSurfaceDecisions)[number];
@@ -20,6 +29,7 @@ type SurfaceRow = {
   upstreamLineCount?: number;
   depthScore: number;
   metadata: Record<string, boolean>;
+  discoveryMetadata: PromptDiscoveryQuality & { text: string };
 };
 
 type AuditReport = {
@@ -106,6 +116,20 @@ function tomlMetadata(body: string): Record<string, boolean> {
   };
 }
 
+function discoveryMetadataFor(type: SurfaceRow["sourceType"], id: string, body: string): PromptDiscoveryQuality & { text: string } {
+  if (type === "agent") {
+    const text = parseTomlStringField(body, "description") ?? "";
+    return { text, ...validateAgentDescriptionQuality(text, id) };
+  }
+  const { frontmatter } = parsePromptSurfaceFrontmatter(body);
+  if (type === "workflow") {
+    const text = typeof frontmatter["argument-hint"] === "string" ? frontmatter["argument-hint"] : "";
+    return { text, ...validateWorkflowArgumentHintQuality(text, id) };
+  }
+  const text = typeof frontmatter.description === "string" ? frontmatter.description : "";
+  return { text, ...validateSkillDescriptionQuality(text, id) };
+}
+
 function requiredTestsFor(type: SurfaceRow["sourceType"]): string[] {
   if (type === "workflow") return ["tests/workflow-catalog.test.ts", "tests/workflow-recipes.test.ts", "tests/validation.test.ts"];
   if (type === "agent") return ["tests/template-repository-surfaces.test.ts", "tests/roles.test.ts", "tests/validation.test.ts"];
@@ -139,7 +163,8 @@ function rowFor(type: SurfaceRow["sourceType"], file: string): SurfaceRow {
     lineCount: lineCount(body),
     upstreamLineCount: sourceBody ? lineCount(sourceBody) : undefined,
     depthScore,
-    metadata
+    metadata,
+    discoveryMetadata: discoveryMetadataFor(type, id, body)
   };
 }
 
@@ -164,9 +189,9 @@ function writeReports(report: AuditReport): void {
     `Upstream agents: ${report.upstream.agents}; skills: ${report.upstream.skills}.`,
     `Decisions: ${report.decisionLegend.join(", ")}.`,
     "",
-    "| Type | Local path | Upstream source | Decision | Status | Lines | Upstream lines | Score | Model metadata | Required tests |",
-    "| --- | --- | --- | --- | --- | ---: | ---: | ---: | --- | --- |",
-    ...report.rows.map((row) => `| ${row.sourceType} | \`${row.localPath}\` | ${row.sourcePath ? `\`${row.sourcePath}\`` : ""} | ${row.decision} | ${row.status} | ${row.lineCount} | ${row.upstreamLineCount ?? ""} | ${row.depthScore} | ${row.metadata.model ? "yes" : "no"} | ${row.requiredTests.map((test) => `\`${test}\``).join("<br>")} |`),
+    "| Type | Local path | Upstream source | Decision | Status | Lines | Upstream lines | Score | Model metadata | Discovery metadata | Required tests |",
+    "| --- | --- | --- | --- | --- | ---: | ---: | ---: | --- | --- | --- |",
+    ...report.rows.map((row) => `| ${row.sourceType} | \`${row.localPath}\` | ${row.sourcePath ? `\`${row.sourcePath}\`` : ""} | ${row.decision} | ${row.status} | ${row.lineCount} | ${row.upstreamLineCount ?? ""} | ${row.depthScore} | ${row.metadata.model ? "yes" : "no"} | ${row.discoveryMetadata.valid ? "pass" : row.discoveryMetadata.diagnostics.map((diagnostic) => diagnostic.id).join("<br>")} | ${row.requiredTests.map((test) => `\`${test}\``).join("<br>")} |`),
     ""
   ];
   writeFileSync(path.join(refDir, "prompt-surface-uplift-matrix.md"), lines.join("\n"));

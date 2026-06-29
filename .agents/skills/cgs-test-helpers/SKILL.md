@@ -1,6 +1,6 @@
 ---
 name: cgs-test-helpers
-description: Use for Codex Game Studio test helpers work: Design reusable test helpers without hiding assertions, over-mocking, or coupling tests to implementation details.
+description: Use for test helpers tasks that design reusable test helpers without hiding assertions, over-mocking, or coupling tests to implementation details; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4-mini
 model_reasoning_effort: low
 argument-hint: Describe the test-helpers objective, target files/assets, constraints, and verification evidence.

@@ -1,6 +1,6 @@
 ---
 name: cgs-skill-test
-description: Use for Codex Game Studio skill test work: Test a repository skill against fixtures, required sections, dry-runs, and behavioral expectations.
+description: Use for skill test tasks that test a repository skill against fixtures, required sections, dry-runs, and behavioral expectations; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.4
 model_reasoning_effort: medium
 argument-hint: Describe the skill-test objective, target files/assets, constraints, and verification evidence.
