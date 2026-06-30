@@ -18,11 +18,11 @@ Create a local project, inspect its state, and run validation.
 ```sh
 ./codex-game-studio init --name "Rogue Core" --engine godot --mode prototype --non-interactive \
   --competitor "Mini Metro" --competitor "Dorfromantik"
-./codex-game-studio status --project projects/rogue-core
-./codex-game-studio validate --project projects/rogue-core
+./codex-game-studio status
+./codex-game-studio validate
 ```
 
-**Learn:** project creation, generated project location, status output, and project validation.
+**Learn:** project state, status output, and project validation.
 
 ---
 
@@ -34,10 +34,10 @@ Create a local project, inspect its state, and run validation.
 Inspect the prompt first, then run the producer role through Codex.
 
 ```sh
-./codex-game-studio run producer --project projects/rogue-core \
+./codex-game-studio run producer \
   "Create the initial market overview." --print-prompt
 
-./codex-game-studio run producer --project projects/rogue-core \
+./codex-game-studio run producer \
   "Create the initial market overview."
 ```
 
@@ -53,12 +53,12 @@ Inspect the prompt first, then run the producer role through Codex.
 Render workflow prompts without launching Codex.
 
 ```sh
-./codex-game-studio market --project projects/rogue-core --dry-run
-./codex-game-studio analytics --project projects/rogue-core --dry-run
-./codex-game-studio handoff --project projects/rogue-core --dry-run
-./codex-game-studio design-spec --project projects/rogue-core --dry-run
-./codex-game-studio feel-review --project projects/rogue-core --dry-run
-./codex-game-studio ui-review --project projects/rogue-core --dry-run
+./codex-game-studio market --dry-run
+./codex-game-studio analytics --dry-run
+./codex-game-studio handoff --dry-run
+./codex-game-studio design-spec --dry-run
+./codex-game-studio feel-review --dry-run
+./codex-game-studio ui-review --dry-run
 ```
 
 **Learn:** workflow shortcuts are preparation surfaces; they do not launch Codex or create run records.
@@ -73,8 +73,8 @@ Render workflow prompts without launching Codex.
 Turn a supported workflow recipe into explicit project tasks.
 
 ```sh
-./codex-game-studio workflow create-tasks vertical-slice --project projects/rogue-core
-./codex-game-studio validate --project projects/rogue-core
+./codex-game-studio workflow create-tasks vertical-slice
+./codex-game-studio validate
 ```
 
 **Learn:** task recipes, `.codex/tasks.json`, and validation after task-state changes.
@@ -98,5 +98,3 @@ List templates and inspect one before using it in a role prompt or design sessio
 ## More detail
 
 - [User Guide](../user-guide.md) for command-by-command usage.
-- [Studio Roles](../studio-roles.md) for choosing a role.
-- [Project Anatomy](../project-anatomy.md) for generated files.

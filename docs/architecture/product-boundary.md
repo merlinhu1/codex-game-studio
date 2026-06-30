@@ -1,28 +1,23 @@
 ---
 status: active
 doc_type: architecture
-truth_kind: architecture
-last_reviewed: 2026-06-25
+last_reviewed: 2026-06-29
 source_of_truth:
   - ../../README.md
   - ../../AGENTS.md
-  - ../truthmark/engineering/repository/overview.md
-  - ../truthmark/engineering/codex/runtime-and-tasks.md
-  - ../truthmark/engineering/codex/roles-and-workflows.md
-  - ../truthmark/engineering/contracts/cli-and-validation.md
 ---
 
 # Codex Game Studio Product Boundary
 
 **Audience:** humans and agents designing, planning, or changing Codex Game Studio.
 
-**Use:** read this before creating or revising product designs, implementation plans, OpenSpec changes, role/workflow expansions, approval policy, generated project surfaces, or runtime execution behavior.
+**Use:** read this before creating or revising product designs, implementation plans, OpenSpec changes, role/workflow expansions, approval policy, tracked template and project-state surfaces, or runtime execution behavior.
 
 ## Mission
 
 Codex Game Studio helps developers use Codex as a practical game-development studio inside a local repository.
 
-The product should make it easier to start, plan, build, review, and ship games by providing a package-friendly TypeScript CLI that creates project scaffolds, renders bounded Codex prompts, manages game-studio roles and workflows, records auditable project state, and validates the generated surfaces.
+The product should make it easier to start, plan, build, review, and ship games by providing a package-friendly TypeScript CLI that creates project scaffolds, renders bounded Codex prompts, manages game-studio roles and workflows, records auditable project state, and validates the tracked template and project-state surfaces.
 
 The product exists to expand what a developer can do with Codex for game creation. It may orchestrate role-scoped Codex work when the plan, state, permissions, and handoffs stay explicit and reviewable. It must not turn game development into mandatory studio ceremony, hide the developer's intent behind an opaque orchestrator, or replace human creative and technical judgment.
 
@@ -32,7 +27,7 @@ Codex Game Studio is:
 
 - a local-first CLI and package for game-development repository workflows;
 - Codex-native in its primary execution path;
-- oriented around generated project files such as `AGENTS.md`, `.codex/**`, templates, tasks, and validation output;
+- oriented around tracked template files such as `AGENTS.md`, `.codex/**`, templates, tasks, and validation output;
 - useful for both solo/prototype work and more structured studio-style work;
 - allowed to provide bounded task orchestration for role-scoped Codex runs when it remains local, explicit, file-backed, policy-gated, and validated;
 - explicit about when it is rendering prompts, planning tasks, orchestrating task runs, running Codex, mutating project state, or only inspecting planned behavior.
@@ -56,7 +51,7 @@ External tools, reference workflows, and comparison projects may inspire improve
 3. **Local repository files stay reviewable.** Project state, prompts, tasks, approvals, templates, and validation evidence should be visible in the working tree or deterministic CLI output, not hidden in off-repo services.
 4. **Developer control comes first.** Studio depth is optional and mode-controlled. Fast prototype workflows must remain lightweight; orchestration and strict approval flows must be explicit rather than silently imposed on every project.
 5. **Project stage and studio strictness are separate.** Lifecycle stage (`design`, `prototype`, `development`) must not be collapsed into process strictness (`fast-prototype`, `guided-studio`, `strict-studio`).
-6. **Generated instructions use `AGENTS.md` and `.codex/**`.** Do not add `CODEX.md`, legacy generated-project compatibility shims, or alternate instruction contracts unless a future boundary update explicitly changes this rule.
+6. **Tracked instructions use `AGENTS.md` and `.codex/**`.** Do not add `CODEX.md`, legacy generated-project compatibility shims, or alternate instruction contracts unless a future boundary update explicitly changes this rule.
 7. **Depth comes from selected context, not prompt bloat.** Registries may contain rich roles, workflows, engine references, and rules, but generated prompts and task packets should include only relevant selected material.
 8. **Mutation is policy-gated and visible.** Any design that lets Codex or the CLI mutate files must specify write policy, approval/override behavior, sandbox selection, dry-run diagnostics, and where provenance is recorded.
 9. **Future-only surfaces must remain absent until built.** Planner/next, telemetry, hard output-ownership enforcement, hosted orchestration, background autonomous loops, and unbounded parallelism must not appear as user-facing behavior before they have implementation, tests, and docs.

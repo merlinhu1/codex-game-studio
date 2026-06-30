@@ -1,20 +1,14 @@
 ---
 status: active
 doc_type: index
-last_reviewed: 2026-06-25
+last_reviewed: 2026-06-29
 ---
 
-# Truth Docs
+# Product Truth Docs
 
-This directory is an index for current truth docs organized by the configured Truthmark hierarchy.
+This directory is intentionally empty of product-specific leaf docs after the stale-doc purge.
 
-Product truth owns capability promises, boundaries, decisions, and acceptance criteria. Product lane docs state what must be true, why it matters, and what success means.
-
-README.md files are indexes, not Truth Sync targets. Keep product truth in bounded capability docs.
-
-## Product Capability Docs
-
-- [Codex Game Studio CLI](codex-game-studio-cli.md)
+Use the root `README.md`, `AGENTS.md`, tracked Codex surfaces, and tests as the primary product truth until a bounded Truthmark workflow explicitly creates a new product leaf doc.
 
 ## Source References
 
