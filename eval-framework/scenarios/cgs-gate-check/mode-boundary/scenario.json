@@ -9,7 +9,6 @@
     "mustRead": [
       ".agents/skills/cgs-gate-check/SKILL.md",
       "eval-framework/rubrics/skill-behavior.json",
-      "eval-framework/rubrics/skill-behavior.json",
       "eval-framework/scenarios/cgs-gate-check/mode-boundary/prompt.md"
     ],
     "mustChange": [
