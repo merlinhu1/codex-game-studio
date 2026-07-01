@@ -1,0 +1,51 @@
+{
+  "id": "skill.cgs-story-done.done-verdict",
+  "target": "cgs-story-done",
+  "kind": "skill",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/cgs-story-done/done-verdict/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".agents/skills/cgs-story-done/SKILL.md",
+      "eval-framework/rubrics/skill-behavior.json",
+      "eval-framework/rubrics/skill-behavior.json",
+      "eval-framework/scenarios/cgs-story-done/done-verdict/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/story-done-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "task-framing",
+      "output-quality",
+      "verification-discipline",
+      "failure-handling",
+      "human-review-quality",
+      "token-discipline"
+    ]
+  }
+}

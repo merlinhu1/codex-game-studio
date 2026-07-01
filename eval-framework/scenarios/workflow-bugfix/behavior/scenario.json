@@ -1,0 +1,51 @@
+{
+  "id": "workflow.bugfix.behavior",
+  "target": "workflow.bugfix",
+  "kind": "workflow",
+  "priority": "critical",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-bugfix/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/bugfix.md",
+      ".agents/skills/cgs-bugfix/SKILL.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-bugfix/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/bugfix-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}

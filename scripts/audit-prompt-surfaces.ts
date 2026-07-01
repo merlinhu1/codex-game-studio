@@ -5,7 +5,8 @@ import { fileURLToPath } from "node:url";
 import {
   defaultModelPolicyForId,
   parsePromptSurfaceFrontmatter,
-  parseTomlArrayField,
+  parseTomlCommentArrayField,
+  parseTomlCommentStringField,
   parseTomlStringField,
   validateAgentDescriptionQuality,
   validateSkillDescriptionQuality,
@@ -109,10 +110,10 @@ function tomlMetadata(body: string): Record<string, boolean> {
   return {
     model: !!parseTomlStringField(body, "model"),
     reasoning: !!parseTomlStringField(body, "model_reasoning_effort"),
-    sourceReference: !!parseTomlStringField(body, "source_reference"),
-    sourceHash: !!parseTomlStringField(body, "source_hash"),
-    primarySkills: parseTomlArrayField(body, "primary_skills").length > 0,
-    toolPolicy: parseTomlArrayField(body, "allowed_tool_categories").length > 0
+    sourceReference: !!parseTomlCommentStringField(body, "source_reference"),
+    sourceHash: !!parseTomlCommentStringField(body, "source_hash"),
+    primarySkills: parseTomlCommentArrayField(body, "primary_skills").length > 0,
+    toolPolicy: parseTomlCommentArrayField(body, "allowed_tool_categories").length > 0
   };
 }
 

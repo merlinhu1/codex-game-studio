@@ -1,0 +1,53 @@
+{
+  "id": "workflow.market-analysis.behavior",
+  "target": "workflow.market-analysis",
+  "kind": "workflow",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-market-analysis/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/market-analysis.md",
+      ".agents/skills/cgs-content-audit/SKILL.md",
+      "templates/market_analysis_template.md",
+      "templates/pitch_document_template.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-market-analysis/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/market-analysis-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}

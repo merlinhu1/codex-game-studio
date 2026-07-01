@@ -1,0 +1,21 @@
+{
+  "id": "skill-behavior",
+  "manualOnly": true,
+  "deterministicGates": [
+    "required-read",
+    "write-boundary",
+    "required-change",
+    "verification-evidence",
+    "report-presence"
+  ],
+  "semanticDimensions": [
+    "triggering",
+    "context-selection",
+    "task-framing",
+    "output-quality",
+    "verification-discipline",
+    "failure-handling",
+    "human-review-quality",
+    "token-discipline"
+  ]
+}

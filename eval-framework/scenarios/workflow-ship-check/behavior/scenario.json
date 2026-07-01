@@ -1,0 +1,52 @@
+{
+  "id": "workflow.ship-check.behavior",
+  "target": "workflow.ship-check",
+  "kind": "workflow",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-ship-check/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/ship-check.md",
+      "templates/ship_check_template.md",
+      "templates/risk_register_template.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-ship-check/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/ship-check-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "role.game-designer.domain-boundary",
+  "target": "role.game-designer",
+  "kind": "role",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/role-game-designer/domain-boundary/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/agents/game-designer.toml",
+      "eval-framework/rubrics/role-behavior.json",
+      "eval-framework/scenarios/role-game-designer/domain-boundary/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/game-designer-role-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "domain-boundary",
+      "delegation-quality",
+      "output-quality",
+      "verification-discipline",
+      "handoff-quality",
+      "token-discipline"
+    ]
+  }
+}

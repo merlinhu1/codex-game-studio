@@ -1,0 +1,22 @@
+{
+  "id": "prompt-workflow-behavior",
+  "manualOnly": true,
+  "deterministicGates": [
+    "workflow-triggering",
+    "context-boundary",
+    "write-boundary",
+    "template-selection",
+    "verification-evidence",
+    "report-presence"
+  ],
+  "semanticDimensions": [
+    "triggering",
+    "context-selection",
+    "role-routing",
+    "template-selection",
+    "output-quality",
+    "verification-discipline",
+    "stop-condition-quality",
+    "token-discipline"
+  ]
+}

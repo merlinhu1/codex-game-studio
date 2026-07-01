@@ -1,0 +1,53 @@
+{
+  "id": "workflow.release-checklist.behavior",
+  "target": "workflow.release-checklist",
+  "kind": "workflow",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-release-checklist/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/release-checklist.md",
+      ".agents/skills/cgs-release-checklist/SKILL.md",
+      "templates/release_notes_template.md",
+      "templates/risk_register_template.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-release-checklist/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/release-checklist-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}

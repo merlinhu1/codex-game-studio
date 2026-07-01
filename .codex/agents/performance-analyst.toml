@@ -3,12 +3,12 @@ description = "Owns performance analyst work: Profile frame time, memory, loadin
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
 model_verbosity = "medium"
-source_reference = ".claude/agents/performance-analyst.md"
-source_hash = "c155149e303e200a00074721cd3d9bf5b92d080871ab6298670954aec5705468"
-primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
-allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
-invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
-stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
+# source_reference = ".claude/agents/performance-analyst.md"
+# source_hash = "c155149e303e200a00074721cd3d9bf5b92d080871ab6298670954aec5705468"
+# primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
+# allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
+# invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
+# stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
 developer_instructions = """
 You are the Performance Analyst role for this Codex Game Studio template repository.
 Use AGENTS.md, .codex/studio.json when present, selected workflows, selected skills, and task-relevant files.

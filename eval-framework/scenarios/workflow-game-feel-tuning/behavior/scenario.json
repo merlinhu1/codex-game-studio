@@ -1,0 +1,52 @@
+{
+  "id": "workflow.game-feel-tuning.behavior",
+  "target": "workflow.game-feel-tuning",
+  "kind": "workflow",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-game-feel-tuning/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/game-feel-tuning.md",
+      ".agents/skills/cgs-balance-check/SKILL.md",
+      "templates/game_feel_tuning_template.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-game-feel-tuning/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/game-feel-tuning-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}

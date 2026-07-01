@@ -1,0 +1,51 @@
+{
+  "id": "skill.cgs-test-evidence-review.evidence-review",
+  "target": "cgs-test-evidence-review",
+  "kind": "skill",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/cgs-test-evidence-review/evidence-review/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".agents/skills/cgs-test-evidence-review/SKILL.md",
+      "templates/test_evidence_template.md",
+      "eval-framework/rubrics/skill-behavior.json",
+      "eval-framework/scenarios/cgs-test-evidence-review/evidence-review/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/test-evidence-review-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "task-framing",
+      "output-quality",
+      "verification-discipline",
+      "failure-handling",
+      "human-review-quality",
+      "token-discipline"
+    ]
+  }
+}
