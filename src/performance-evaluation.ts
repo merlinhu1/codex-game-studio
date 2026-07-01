@@ -178,8 +178,21 @@ function asArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
 }
 
+function hasExplicitReadDenial(evidence: string, required: string): boolean {
+  const escaped = escapeRegExp(required);
+  const denialBeforePath = new RegExp(
+    `(?:did\\s+not|didn't|never|not|no|failed\\s+to|unable\\s+to|could\\s+not|couldn't|skipped|without)\\s+(?:explicitly\\s+)?(?:read|reading|inspect|inspecting|open|opening|load|loading)[\\s\\S]{0,120}${escaped}`,
+    "iu"
+  );
+  const pathBeforeDenial = new RegExp(
+    `${escaped}[\\s\\S]{0,120}(?:was|were)?\\s*(?:not|never)\\s+(?:read|inspected|opened|loaded)`,
+    "iu"
+  );
+  return denialBeforePath.test(evidence) || pathBeforeDenial.test(evidence);
+}
+
 function includesRequiredEvidence(evidence: string, required: string): boolean {
-  return evidence.includes(required);
+  return evidence.includes(required) && !hasExplicitReadDenial(evidence, required);
 }
 
 function commandWasRunOrExplained(evidence: string, command: string): boolean {
@@ -200,7 +213,9 @@ export function gradePerformanceEvaluationScenario(
   const evidence = `${observation.traceEvidence}\n${observation.finalReport ?? ""}`;
 
   for (const file of scenario.expected.mustRead) {
-    if (!includesRequiredEvidence(evidence, file)) {
+    if (hasExplicitReadDenial(evidence, file)) {
+      failures.push({ id: "required-read-explicitly-denied", message: `${file} was explicitly reported as not read` });
+    } else if (!includesRequiredEvidence(evidence, file)) {
       failures.push({ id: "required-read-not-recorded", message: `${file} was not recorded in trace evidence` });
     }
   }

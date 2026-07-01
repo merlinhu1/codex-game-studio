@@ -59,6 +59,17 @@ describe("performance evaluation framework", () => {
     expect(failResult.failures.map((failure) => failure.id)).not.toContain("skill-missing");
   });
 
+  test("fails required-read gate when evidence explicitly says the file was not read", () => {
+    const result = gradePerformanceEvaluationScenario(scenario, {
+      traceEvidence: "Did not read .agents/skills/cgs-skill-test/SKILL.md; read eval-framework/rubrics/skill-behavior.json; ran npm run validate",
+      changedFiles: ["production/session-state/eval-report.md"],
+      finalReport: "## Eval Report\nPASS"
+    });
+
+    expect(result.status).toBe("fail");
+    expect(result.failures.map((failure) => failure.id)).toContain("required-read-explicitly-denied");
+  });
+
   test("loads first-pass coverage across workflow prompts, skills, and role prompts", () => {
     const framework = loadPerformanceEvaluationFramework(process.cwd());
     const summary = summarizePerformanceEvaluationCoverage(framework);
