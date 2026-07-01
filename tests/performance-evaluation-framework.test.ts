@@ -5,6 +5,7 @@ import {
   loadPerformanceEvaluationFramework,
   summarizePerformanceEvaluationCoverage,
   validatePerformanceEvaluationFramework,
+  type PerformanceEvaluationFramework,
   type PerformanceEvaluationScenario
 } from "../src/performance-evaluation.js";
 
@@ -70,6 +71,31 @@ describe("performance evaluation framework", () => {
     expect(result.failures.map((failure) => failure.id)).toContain("required-read-explicitly-denied");
   });
 
+  test("counts unique scenario references instead of duplicated target references", () => {
+    const duplicatePath = "eval-framework/scenarios/cgs-skill-test/behavioral-spec/scenario.json";
+    const duplicateFramework: PerformanceEvaluationFramework = {
+      catalog: {
+        version: 1,
+        manualOnly: true,
+        lastReviewed: "2026-07-01",
+        targets: [{
+          id: "duplicated-target",
+          kind: "skill",
+          priority: "critical",
+          manualOnly: true,
+          surfacePaths: [".agents/skills/cgs-skill-test/SKILL.md"],
+          rubric: "eval-framework/rubrics/skill-behavior.json",
+          scenarios: [duplicatePath, duplicatePath]
+        }],
+        runners: { harnessHosts: [], manualAgentHosts: [] }
+      },
+      scenarios: [scenario],
+      rubrics: []
+    };
+
+    expect(summarizePerformanceEvaluationCoverage(duplicateFramework).scenarios).toBe(1);
+  });
+
   test("loads first-pass coverage across workflow prompts, skills, and role prompts", () => {
     const framework = loadPerformanceEvaluationFramework(process.cwd());
     const summary = summarizePerformanceEvaluationCoverage(framework);
@@ -117,6 +143,7 @@ describe("performance evaluation framework", () => {
     expect(ids).toEqual(expect.arrayContaining([
       "performance_eval.catalog.manual_only",
       "performance_eval.scenarios.behavioral_expectations",
+      "performance_eval.scenarios.unique_expectations",
       "performance_eval.rubrics.semantic_dimensions",
       "performance_eval.strategy.no_existence_only_checks",
       "performance_eval.token_estimation",

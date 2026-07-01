@@ -9,7 +9,6 @@
     "mustRead": [
       ".agents/skills/cgs-code-review/SKILL.md",
       "eval-framework/rubrics/skill-behavior.json",
-      "eval-framework/rubrics/skill-behavior.json",
       "eval-framework/scenarios/cgs-code-review/review-findings/prompt.md"
     ],
     "mustChange": [

@@ -9,7 +9,6 @@
     "mustRead": [
       ".agents/skills/cgs-story-done/SKILL.md",
       "eval-framework/rubrics/skill-behavior.json",
-      "eval-framework/rubrics/skill-behavior.json",
       "eval-framework/scenarios/cgs-story-done/done-verdict/prompt.md"
     ],
     "mustChange": [

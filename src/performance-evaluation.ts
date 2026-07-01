@@ -178,6 +178,16 @@ function asArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
 }
 
+function duplicateValues(values: string[]): string[] {
+  const seen = new Set<string>();
+  const duplicates = new Set<string>();
+  for (const value of values) {
+    if (seen.has(value)) duplicates.add(value);
+    seen.add(value);
+  }
+  return [...duplicates];
+}
+
 function hasExplicitReadDenial(evidence: string, required: string): boolean {
   const escaped = escapeRegExp(required);
   const denialBeforePath = new RegExp(
@@ -273,7 +283,7 @@ export function summarizePerformanceEvaluationCoverage(framework: PerformanceEva
   }
   return {
     targets: framework.catalog.targets.length,
-    scenarios: framework.catalog.targets.reduce((total, target) => total + target.scenarios.length, 0),
+    scenarios: new Set(framework.catalog.targets.flatMap((target) => target.scenarios)).size,
     surfacePaths: framework.catalog.targets.reduce((total, target) => total + target.surfacePaths.length, 0),
     byKind
   };
@@ -334,6 +344,23 @@ export function validatePerformanceEvaluationFramework(root: string): Performanc
     scenarioProblems.length === 0
       ? pass("performance_eval.scenarios.behavioral_expectations", "scenarios require reads, write boundaries, reports, verification, or semantic grading")
       : fail("performance_eval.scenarios.behavioral_expectations", scenarioProblems.join("; "))
+  );
+
+  const duplicateExpectationProblems = framework.scenarios.flatMap((scenario) => {
+    const expectationArrays: Array<[string, string[]]> = [
+      ["mustRead", scenario.expected.mustRead],
+      ["mustChange", scenario.expected.mustChange],
+      ["mustNotChange", scenario.expected.mustNotChange],
+      ["mustRunOrExplain", scenario.expected.mustRunOrExplain]
+    ];
+    return expectationArrays.flatMap(([field, values]) =>
+      duplicateValues(values).map((duplicate) => `${scenario.id} duplicates expected.${field} entry ${duplicate}`)
+    );
+  });
+  checks.push(
+    duplicateExpectationProblems.length === 0
+      ? pass("performance_eval.scenarios.unique_expectations", "scenario expectation arrays do not duplicate required reads, changes, forbidden changes, or verification commands")
+      : fail("performance_eval.scenarios.unique_expectations", duplicateExpectationProblems.join("; "))
   );
 
   const rubricProblems = framework.rubrics.flatMap((rubric) => {
