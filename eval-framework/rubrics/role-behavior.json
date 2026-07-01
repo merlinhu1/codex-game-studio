@@ -1,0 +1,21 @@
+{
+  "id": "role-behavior",
+  "manualOnly": true,
+  "deterministicGates": [
+    "required-read",
+    "domain-boundary",
+    "write-boundary",
+    "verification-evidence",
+    "report-presence"
+  ],
+  "semanticDimensions": [
+    "triggering",
+    "context-selection",
+    "domain-boundary",
+    "delegation-quality",
+    "output-quality",
+    "verification-discipline",
+    "handoff-quality",
+    "token-discipline"
+  ]
+}

@@ -3,12 +3,12 @@ description = "Owns narrative designer work: Shape story, tone, world rules, cha
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
-source_reference = ".codex/agents/narrative-designer.toml"
-source_hash = "02eadc45737f8a1e5950b32fa1d7daa4382608a4c82136ad6e162eb76616c684"
-primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
-allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
-invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
-stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
+# source_reference = ".codex/agents/narrative-designer.toml"
+# source_hash = "02eadc45737f8a1e5950b32fa1d7daa4382608a4c82136ad6e162eb76616c684"
+# primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
+# allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
+# invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
+# stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
 developer_instructions = """
 You are the Narrative Designer role for this Codex Game Studio template repository.
 Use AGENTS.md, .codex/studio.json when present, selected workflows, selected skills, and task-relevant files.

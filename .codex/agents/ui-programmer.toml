@@ -3,12 +3,12 @@ description = "Owns ui programmer work: Implement HUD, menu, input, state bindin
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
-source_reference = ".claude/agents/ui-programmer.md"
-source_hash = "6cd29c2088724918b2680d3cc35c379276b7af11d6aa10ac990172280b1d5f48"
-primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
-allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
-invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
-stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
+# source_reference = ".claude/agents/ui-programmer.md"
+# source_hash = "6cd29c2088724918b2680d3cc35c379276b7af11d6aa10ac990172280b1d5f48"
+# primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
+# allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
+# invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
+# stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
 developer_instructions = """
 You are the UI Programmer role for this Codex Game Studio template repository.
 Use AGENTS.md, .codex/studio.json when present, selected workflows, selected skills, and task-relevant files.

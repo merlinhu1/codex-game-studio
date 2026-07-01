@@ -3,12 +3,12 @@ description = "Owns producer work: Convert goals into bounded production plans, 
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
-source_reference = ".claude/agents/producer.md"
-source_hash = "05f8bf426001cbd07ca9ca40dde0348139e208f97af7d87abcfecf8ca84c3257"
-primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
-allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
-invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
-stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
+# source_reference = ".claude/agents/producer.md"
+# source_hash = "05f8bf426001cbd07ca9ca40dde0348139e208f97af7d87abcfecf8ca84c3257"
+# primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
+# allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
+# invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
+# stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
 developer_instructions = """
 You are the Producer role for this Codex Game Studio template repository.
 Use AGENTS.md, .codex/studio.json when present, selected workflows, selected skills, and task-relevant files.

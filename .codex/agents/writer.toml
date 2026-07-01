@@ -3,12 +3,12 @@ description = "Owns writer work: Draft shippable dialogue, item text, barks, tut
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
-source_reference = ".claude/agents/writer.md"
-source_hash = "8eafe2f3cd7f2c12acc0d8f93ed93bf638a915490ed5ca5a11721f1bf60f49d7"
-primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
-allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
-invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
-stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
+# source_reference = ".claude/agents/writer.md"
+# source_hash = "8eafe2f3cd7f2c12acc0d8f93ed93bf638a915490ed5ca5a11721f1bf60f49d7"
+# primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
+# allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
+# invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
+# stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
 developer_instructions = """
 You are the Writer role for this Codex Game Studio template repository.
 Use AGENTS.md, .codex/studio.json when present, selected workflows, selected skills, and task-relevant files.

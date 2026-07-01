@@ -3,12 +3,12 @@ description = "Owns godot specialist work: Apply Godot-specific implementation a
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
-source_reference = ".claude/agents/godot-specialist.md"
-source_hash = "3156133f9bff9463a12cb48e6337f49a3ab39359550c18eabac4ac70b84b6e37"
-primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
-allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
-invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
-stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
+# source_reference = ".claude/agents/godot-specialist.md"
+# source_hash = "3156133f9bff9463a12cb48e6337f49a3ab39359550c18eabac4ac70b84b6e37"
+# primary_skills = ["cgs-standards-gameplay", "cgs-vertical-slice", "cgs-bugfix"]
+# allowed_tool_categories = ["read", "edit", "shell", "tests", "git"]
+# invocation_guidance = "Use for bounded game-development work where this role owns the decision or handoff."
+# stop_conditions = "Stop on missing project state, unsafe write scope, absent verification path, or cross-role ownership conflict."
 developer_instructions = """
 You are the Godot Specialist role for this Codex Game Studio template repository.
 Use AGENTS.md, .codex/studio.json when present, selected workflows, selected skills, and task-relevant files.

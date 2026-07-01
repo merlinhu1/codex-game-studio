@@ -104,8 +104,19 @@ export function parseTomlStringField(body: string, key: string): string | undefi
   return match?.[1];
 }
 
+export function parseTomlCommentStringField(body: string, key: string): string | undefined {
+  const match = new RegExp(`^#\\s*${key}\\s*=\\s*\"([^\"]*)\"`, "m").exec(body);
+  return match?.[1];
+}
+
 export function parseTomlArrayField(body: string, key: string): string[] {
   const match = new RegExp(`^${key}\\s*=\\s*\\[([^\\]]*)\\]`, "m").exec(body);
+  if (!match) return [];
+  return match[1].split(",").map((part) => part.trim().replace(/^['\"]|['\"]$/g, "")).filter(Boolean);
+}
+
+export function parseTomlCommentArrayField(body: string, key: string): string[] {
+  const match = new RegExp(`^#\\s*${key}\\s*=\\s*\\[([^\\]]*)\\]`, "m").exec(body);
   if (!match) return [];
   return match[1].split(",").map((part) => part.trim().replace(/^['\"]|['\"]$/g, "")).filter(Boolean);
 }

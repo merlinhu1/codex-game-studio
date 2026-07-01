@@ -1,0 +1,572 @@
+{
+  "version": 1,
+  "manualOnly": true,
+  "lastReviewed": "2026-07-01",
+  "targets": [
+    {
+      "id": "workflow.vertical-slice",
+      "kind": "workflow",
+      "priority": "critical",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/vertical-slice.md",
+        ".agents/skills/cgs-vertical-slice/SKILL.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-vertical-slice/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.bugfix",
+      "kind": "workflow",
+      "priority": "critical",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/bugfix.md",
+        ".agents/skills/cgs-bugfix/SKILL.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-bugfix/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.playtest",
+      "kind": "workflow",
+      "priority": "critical",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/playtest.md",
+        ".agents/skills/cgs-playtest-report/SKILL.md",
+        "templates/playtest_report_template.md",
+        "templates/test_evidence_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-playtest/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.market-analysis",
+      "kind": "workflow",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/market-analysis.md",
+        ".agents/skills/cgs-content-audit/SKILL.md",
+        "templates/market_analysis_template.md",
+        "templates/pitch_document_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-market-analysis/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.release-checklist",
+      "kind": "workflow",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/release-checklist.md",
+        ".agents/skills/cgs-release-checklist/SKILL.md",
+        "templates/release_notes_template.md",
+        "templates/risk_register_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-release-checklist/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.ship-check",
+      "kind": "workflow",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/ship-check.md",
+        "templates/ship_check_template.md",
+        "templates/risk_register_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-ship-check/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.prototype",
+      "kind": "workflow",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/prototype.md",
+        ".agents/skills/cgs-prototype/SKILL.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-prototype/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.design-spec",
+      "kind": "workflow",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/design-spec.md",
+        ".agents/skills/cgs-design-system/SKILL.md",
+        "templates/gdd_template.md",
+        "templates/feature_spec_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-design-spec/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.game-feel-tuning",
+      "kind": "workflow",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/game-feel-tuning.md",
+        ".agents/skills/cgs-balance-check/SKILL.md",
+        "templates/game_feel_tuning_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-game-feel-tuning/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.ui-ux-review",
+      "kind": "workflow",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/ui-ux-review.md",
+        ".agents/skills/cgs-ui-ux-review/SKILL.md",
+        "templates/ui_ux_review_template.md",
+        "templates/accessibility_requirements_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-ui-ux-review/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.architecture-review",
+      "kind": "workflow",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/architecture-review.md",
+        ".agents/skills/cgs-architecture-review/SKILL.md",
+        "templates/technical_design_template.md",
+        "templates/architecture_traceability_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-architecture-review/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "workflow.sprint-plan",
+      "kind": "workflow",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/workflows/sprint-plan.md",
+        ".agents/skills/cgs-sprint-plan/SKILL.md",
+        "templates/sprint_plan_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/workflow-sprint-plan/behavior/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-skill-test",
+      "kind": "skill",
+      "priority": "critical",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-skill-test/SKILL.md",
+        "eval-framework/rubrics/skill-behavior.json"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-skill-test/behavioral-spec/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-skill-improve",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-skill-improve/SKILL.md",
+        "eval-framework/failure-taxonomy.md",
+        "eval-framework/improvement-loop.md"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-skill-improve/failure-loop/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-gate-check",
+      "kind": "skill",
+      "priority": "critical",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-gate-check/SKILL.md",
+        "eval-framework/rubrics/skill-behavior.json"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-gate-check/mode-boundary/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-design-review",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-design-review/SKILL.md",
+        "eval-framework/rubrics/skill-behavior.json"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-design-review/read-only-verdict/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-architecture-review",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-architecture-review/SKILL.md",
+        "eval-framework/rubrics/skill-behavior.json"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-architecture-review/risk-verdict/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-story-readiness",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-story-readiness/SKILL.md",
+        "eval-framework/rubrics/skill-behavior.json"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-story-readiness/readiness-verdict/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-story-done",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-story-done/SKILL.md",
+        "eval-framework/rubrics/skill-behavior.json"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-story-done/done-verdict/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-qa-plan",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-qa-plan/SKILL.md",
+        "templates/test_plan_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-qa-plan/coverage-plan/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-regression-suite",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-regression-suite/SKILL.md",
+        "templates/test_evidence_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-regression-suite/repeatability/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-test-evidence-review",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-test-evidence-review/SKILL.md",
+        "templates/test_evidence_template.md"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-test-evidence-review/evidence-review/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-test-flakiness",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-test-flakiness/SKILL.md",
+        "eval-framework/rubrics/skill-behavior.json"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-test-flakiness/flakiness-diagnosis/scenario.json"
+      ]
+    },
+    {
+      "id": "cgs-code-review",
+      "kind": "skill",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".agents/skills/cgs-code-review/SKILL.md",
+        "eval-framework/rubrics/skill-behavior.json"
+      ],
+      "rubric": "eval-framework/rubrics/skill-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/cgs-code-review/review-findings/scenario.json"
+      ]
+    },
+    {
+      "id": "role.producer",
+      "kind": "role",
+      "priority": "critical",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/agents/producer.toml"
+      ],
+      "rubric": "eval-framework/rubrics/role-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/role-producer/domain-boundary/scenario.json"
+      ]
+    },
+    {
+      "id": "role.qa-playtester",
+      "kind": "role",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/agents/qa-playtester.toml"
+      ],
+      "rubric": "eval-framework/rubrics/role-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/role-qa-playtester/domain-boundary/scenario.json"
+      ]
+    },
+    {
+      "id": "role.gameplay-programmer",
+      "kind": "role",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/agents/gameplay-programmer.toml"
+      ],
+      "rubric": "eval-framework/rubrics/role-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/role-gameplay-programmer/domain-boundary/scenario.json"
+      ]
+    },
+    {
+      "id": "role.game-designer",
+      "kind": "role",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/agents/game-designer.toml"
+      ],
+      "rubric": "eval-framework/rubrics/role-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/role-game-designer/domain-boundary/scenario.json"
+      ]
+    },
+    {
+      "id": "role.market-analyst",
+      "kind": "role",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/agents/market-analyst.toml"
+      ],
+      "rubric": "eval-framework/rubrics/role-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/role-market-analyst/domain-boundary/scenario.json"
+      ]
+    },
+    {
+      "id": "role.technical-artist",
+      "kind": "role",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/agents/technical-artist.toml"
+      ],
+      "rubric": "eval-framework/rubrics/role-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/role-technical-artist/domain-boundary/scenario.json"
+      ]
+    },
+    {
+      "id": "role.release-manager",
+      "kind": "role",
+      "priority": "high",
+      "manualOnly": true,
+      "surfacePaths": [
+        ".codex/agents/release-manager.toml"
+      ],
+      "rubric": "eval-framework/rubrics/role-behavior.json",
+      "scenarios": [
+        "eval-framework/scenarios/role-release-manager/domain-boundary/scenario.json"
+      ]
+    }
+  ],
+  "runners": {
+    "harnessHosts": [
+      "fake"
+    ],
+    "manualAgentHosts": [
+      "codex"
+    ],
+    "runOutputPolicy": {
+      "repositoryTracked": true,
+      "root": "eval-framework/runs",
+      "perRunDirectory": "<timestamp>-<stage-or-scenario>",
+      "requiredFiles": [
+        "summary.md",
+        "audit.json"
+      ],
+      "summaryContract": [
+        "run id and evaluation stage",
+        "selected model and token usage summary",
+        "scenario verdict table",
+        "deterministic failures and semantic findings",
+        "changed files and verification evidence",
+        "recommended follow-up fixes"
+      ],
+      "auditContract": [
+        "machine-readable scenario results",
+        "raw token usage fields",
+        "model used per scenario",
+        "trace evidence references",
+        "failure taxonomy labels"
+      ],
+      "notes": "Evaluation results are repository artifacts. Commit intentionally selected run summaries and compact audit files when preserving an eval result; do not rely on chat transcript as the record."
+    }
+  },
+  "modelPolicy": {
+    "defaultEvaluationModel": "gpt-5.3-codex-spark",
+    "allowedEvaluationModels": [
+      "gpt-5.3-codex-spark",
+      "gpt-5.5",
+      "gpt-5.4",
+      "gpt-5.4-mini"
+    ],
+    "overrideMechanism": "Manual runners may pass an explicit Codex --model value per scenario or batch; record the selected model in the run report and audit JSON.",
+    "tokenEstimation": {
+      "required": true,
+      "fields": [
+        "inputTokens",
+        "cachedInputTokens",
+        "outputTokens",
+        "reasoningOutputTokens",
+        "totalTokens"
+      ],
+      "notes": "Estimate token usage as part of each staged evaluation run using the selected model, scenario count, expected context, and expected output size; record actual token usage when the host exposes it."
+    }
+  },
+  "evaluationPlan": [
+    {
+      "stage": "smoke-critical",
+      "purpose": "Run the smallest critical token-estimation set first before touching broad coverage.",
+      "targetPriorities": [
+        "critical"
+      ],
+      "scenarioKinds": [
+        "workflow",
+        "skill",
+        "role"
+      ],
+      "recommendedMaxScenarios": 5
+    },
+    {
+      "stage": "workflow-high-risk",
+      "purpose": "Evaluate high-priority workflow prompts that drive real game-production behavior.",
+      "targetPriorities": [
+        "critical",
+        "high"
+      ],
+      "scenarioKinds": [
+        "workflow"
+      ],
+      "recommendedMaxScenarios": 12
+    },
+    {
+      "stage": "skill-maintenance",
+      "purpose": "Evaluate skill-maintenance, gate, QA, review, and evidence skills after workflow smoke passes.",
+      "targetPriorities": [
+        "critical",
+        "high"
+      ],
+      "scenarioKinds": [
+        "skill"
+      ],
+      "recommendedMaxScenarios": 12
+    },
+    {
+      "stage": "role-boundary",
+      "purpose": "Evaluate role prompts for ownership boundaries and handoff quality.",
+      "targetPriorities": [
+        "critical",
+        "high"
+      ],
+      "scenarioKinds": [
+        "role"
+      ],
+      "recommendedMaxScenarios": 7
+    },
+    {
+      "stage": "full-regression",
+      "purpose": "Run all scenarios only before large prompt-surface releases or after broad refactors.",
+      "targetPriorities": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "scenarioKinds": [
+        "workflow",
+        "skill",
+        "role",
+        "prompt"
+      ],
+      "recommendedMaxScenarios": 31
+    }
+  ]
+}

@@ -8,6 +8,7 @@ import { projectAgentsMdRequiredSections, projectRolePromptSourceInput, renderPr
 import { validateApprovalStore } from "./approvals.js";
 import { runBehavioralEvaluations } from "./behavioral-evaluation.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
+import { validatePerformanceEvaluationFramework } from "./performance-evaluation.js";
 import { contextManifestInput, createContextManifest, type ContextManifest, type ContextManifestMeta } from "./context-manifest.js";
 import { validateProjectCustomization } from "./customization.js";
 import { createCodexStudioSession } from "./codex-session.js";
@@ -26,6 +27,8 @@ import {
   isReasoningEffort,
   parsePromptSurfaceFrontmatter,
   parseTomlArrayField,
+  parseTomlCommentArrayField,
+  parseTomlCommentStringField,
   parseTomlStringField,
   validateAgentDescriptionQuality,
   validateModelPolicy,
@@ -307,11 +310,13 @@ function agentPromptSurfaceChecks(root: string, file: string): ValidationCheck[]
   const policy = validateModelPolicy({ model: model ?? "", model_reasoning_effort: effort });
   checks.push(discovery.valid ? pass(`prompt_surface.agent.${id}.discovery_metadata`, `${id} discovery metadata is selection-oriented`, full) : fail(`prompt_surface.agent.${id}.discovery_metadata`, `${id} weak discovery metadata: ${discovery.diagnostics.map((diagnostic) => diagnostic.id).join(", ")}`, full));
   checks.push(policy.valid ? pass(`prompt_surface.agent.${id}.model`, `${id} uses exact Codex model policy`, full) : fail(`prompt_surface.agent.${id}.model`, `${id} invalid model policy: ${policy.issues.join(", ")}`, full));
-  checks.push(hashLooksValid(parseTomlStringField(body, "source_hash")) && !!parseTomlStringField(body, "source_reference") ? pass(`prompt_surface.agent.${id}.traceability`, `${id} source traceability present`, full) : fail(`prompt_surface.agent.${id}.traceability`, `${id} missing source_reference/source_hash`, full));
-  const skills = parseTomlArrayField(body, "primary_skills");
+  const sourceReference = parseTomlCommentStringField(body, "source_reference");
+  const sourceHash = parseTomlCommentStringField(body, "source_hash");
+  checks.push(hashLooksValid(sourceHash) && !!sourceReference ? pass(`prompt_surface.agent.${id}.traceability`, `${id} source traceability present`, full) : fail(`prompt_surface.agent.${id}.traceability`, `${id} missing commented source_reference/source_hash`, full));
+  const skills = parseTomlCommentArrayField(body, "primary_skills");
   const brokenSkill = skills.find((skill) => !existsSync(path.join(root, ".agents", "skills", skill, "SKILL.md")));
   checks.push(skills.length && !brokenSkill ? pass(`prompt_surface.agent.${id}.links`, `${id} linked skills resolve`, full) : fail(`prompt_surface.agent.${id}.links`, brokenSkill ? `${id} linked skill missing: ${brokenSkill}` : `${id} missing linked skills`, full));
-  checks.push(parseTomlArrayField(body, "allowed_tool_categories").length ? pass(`prompt_surface.agent.${id}.tool_policy`, `${id} tool policy present`, full) : fail(`prompt_surface.agent.${id}.tool_policy`, `${id} missing tool policy`, full));
+  checks.push(parseTomlCommentArrayField(body, "allowed_tool_categories").length ? pass(`prompt_surface.agent.${id}.tool_policy`, `${id} tool policy present`, full) : fail(`prompt_surface.agent.${id}.tool_policy`, `${id} missing tool policy`, full));
   checks.push(promptSurfaceDepth(body, ["Use When", "Do Not Use When", "Procedure", "Handoff Contract", "Stop Conditions"]) >= 40 ? pass(`prompt_surface.agent.${id}.depth`, `${id} prompt depth sufficient`, full) : fail(`prompt_surface.agent.${id}.depth`, `${id} prompt surface too thin`, full));
   return checks;
 }
@@ -457,6 +462,8 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
       : `${result.id} behavioral scenario failed: missing phrases [${result.missingRequiredPhrases.join(", ")}], forbidden phrases [${result.presentForbiddenPhrases.join(", ")}], missing context [${result.missingContextCategories.join(", ")}], missing templates [${result.missingTemplateIds.join(", ")}], forbidden templates [${result.presentForbiddenTemplateIds.join(", ")}]`;
     checks.push(result.status === "pass" ? pass(`behavioral.scenario.${result.id}`, message) : fail(`behavioral.scenario.${result.id}`, message));
   }
+
+  checks.push(...validatePerformanceEvaluationFramework(root));
 
   const templateFailures = validateTemplateFiles();
   checks.push(...templateFailures.map((message) => fail("templates", message)));

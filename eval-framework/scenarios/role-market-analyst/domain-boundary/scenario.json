@@ -1,0 +1,50 @@
+{
+  "id": "role.market-analyst.domain-boundary",
+  "target": "role.market-analyst",
+  "kind": "role",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/role-market-analyst/domain-boundary/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/agents/market-analyst.toml",
+      "eval-framework/rubrics/role-behavior.json",
+      "eval-framework/scenarios/role-market-analyst/domain-boundary/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/market-analyst-role-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "domain-boundary",
+      "delegation-quality",
+      "output-quality",
+      "verification-discipline",
+      "handoff-quality",
+      "token-discipline"
+    ]
+  }
+}

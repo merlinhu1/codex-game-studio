@@ -1,0 +1,53 @@
+{
+  "id": "workflow.playtest.behavior",
+  "target": "workflow.playtest",
+  "kind": "workflow",
+  "priority": "critical",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-playtest/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/playtest.md",
+      ".agents/skills/cgs-playtest-report/SKILL.md",
+      "templates/playtest_report_template.md",
+      "templates/test_evidence_template.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-playtest/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/playtest-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}

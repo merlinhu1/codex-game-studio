@@ -1,0 +1,51 @@
+{
+  "id": "workflow.vertical-slice.behavior",
+  "target": "workflow.vertical-slice",
+  "kind": "workflow",
+  "priority": "critical",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-vertical-slice/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/vertical-slice.md",
+      ".agents/skills/cgs-vertical-slice/SKILL.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-vertical-slice/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/vertical-slice-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}
