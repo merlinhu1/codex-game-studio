@@ -25,54 +25,54 @@ Reference root: `/opt/data/repos/Claude-Code-Game-Studios`
 | Type | Source | Decision | CGS target | Status | Rationale |
 | --- | --- | --- | --- | --- | --- |
 | agent | accessibility-specialist | adapt | role:accessibility-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | ai-programmer | adapt | role:ai-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | ai-programmer | adapt | role:ai-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | analytics-engineer | merge | role:data-scientist | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
 | agent | art-director | merge | role:senior-game-artist | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
-| agent | audio-director | adapt | role:audio-director | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | community-manager | adapt | role:community-manager | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | audio-director | adapt | role:audio-director | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | community-manager | adapt | role:community-manager | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | creative-director | adapt | role:creative-director | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | devops-engineer | adapt | role:devops-engineer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | economy-designer | adapt | role:economy-designer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | engine-programmer | adapt | role:engine-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | devops-engineer | adapt | role:devops-engineer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | economy-designer | adapt | role:economy-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | engine-programmer | adapt | role:engine-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | game-designer | adapt | role:game-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | gameplay-programmer | adapt | role:gameplay-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | godot-csharp-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
 | agent | godot-gdextension-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
 | agent | godot-gdscript-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
 | agent | godot-shader-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | godot-specialist | adapt | role:godot-specialist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | godot-specialist | adapt | role:godot-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | lead-programmer | merge | role:technical-director | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
-| agent | level-designer | adapt | role:level-designer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | live-ops-designer | adapt | role:live-ops-designer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | localization-lead | adapt | role:localization-lead | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | level-designer | adapt | role:level-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | live-ops-designer | adapt | role:live-ops-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | localization-lead | adapt | role:localization-lead | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | narrative-director | merge | role:narrative-designer | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
-| agent | network-programmer | adapt | role:network-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | network-programmer | adapt | role:network-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | performance-analyst | adapt | role:performance-analyst | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | producer | adapt | role:producer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | prototyper | merge | role:gameplay-programmer | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
 | agent | qa-lead | merge | role:qa-playtester | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
 | agent | qa-tester | merge | role:qa-playtester | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
 | agent | release-manager | adapt | role:release-manager | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | security-engineer | adapt | role:security-engineer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | sound-designer | adapt | role:sound-designer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | security-engineer | adapt | role:security-engineer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | sound-designer | adapt | role:sound-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | systems-designer | adapt | role:systems-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | technical-artist | adapt | role:technical-artist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | technical-artist | adapt | role:technical-artist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | technical-director | adapt | role:technical-director | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | tools-programmer | adapt | role:tools-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | tools-programmer | adapt | role:tools-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | ue-blueprint-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
 | agent | ue-gas-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
 | agent | ue-replication-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
 | agent | ue-umg-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | ui-programmer | adapt | role:ui-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | ui-programmer | adapt | role:ui-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | unity-addressables-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
 | agent | unity-dots-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
 | agent | unity-shader-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | unity-specialist | adapt | role:unity-specialist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | unity-specialist | adapt | role:unity-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | unity-ui-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | unreal-specialist | adapt | role:unreal-specialist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | unreal-specialist | adapt | role:unreal-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | ux-designer | merge | role:ui-ux-designer | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
-| agent | world-builder | adapt | role:world-builder | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | writer | adapt | role:writer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | world-builder | adapt | role:world-builder | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | writer | adapt | role:writer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | skill | adopt | adapt | skill:cgs-adopt | implemented | Generated Codex skill exists; adapt the CCGS workflow depth to Codex-native instructions. |
 | skill | architecture-decision | adapt | skill:cgs-architecture-decision | implemented | Generated Codex skill exists; adapt the CCGS workflow depth to Codex-native instructions. |
 | skill | architecture-review | adapt | skill:cgs-architecture-review | implemented | Generated Codex skill exists; adapt the CCGS workflow depth to Codex-native instructions. |

@@ -8,11 +8,11 @@ Source evidence:
 
 ## Current state
 
-- Implemented parity rows: 119
-- Remaining parity rows: 99
+- Implemented parity rows: 139
+- Remaining parity rows: 79
 - Deferred parity rows: 0
 - Out-of-scope parity rows: 0
-- Remaining role rows: 32
+- Remaining role rows: 12
 - Remaining workflow-step rows: 30
 - Remaining template rows: 26
 - Remaining rule rows: 11
@@ -22,38 +22,18 @@ Prompt-surface metadata completion is not the same as full CCGS product-parity c
 
 ## Role package gaps
 
-- `ai-programmer` → role:ai-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `audio-director` → role:audio-director (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `community-manager` → role:community-manager (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `devops-engineer` → role:devops-engineer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `economy-designer` → role:economy-designer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `engine-programmer` → role:engine-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
 - `godot-csharp-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
 - `godot-gdextension-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
 - `godot-gdscript-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
 - `godot-shader-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `godot-specialist` → role:godot-specialist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `level-designer` → role:level-designer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `live-ops-designer` → role:live-ops-designer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `localization-lead` → role:localization-lead (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `network-programmer` → role:network-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `security-engineer` → role:security-engineer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `sound-designer` → role:sound-designer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `technical-artist` → role:technical-artist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `tools-programmer` → role:tools-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
 - `ue-blueprint-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
 - `ue-gas-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
 - `ue-replication-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
 - `ue-umg-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `ui-programmer` → role:ui-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
 - `unity-addressables-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
 - `unity-dots-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
 - `unity-shader-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `unity-specialist` → role:unity-specialist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
 - `unity-ui-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `unreal-specialist` → role:unreal-specialist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `world-builder` → role:world-builder (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
-- `writer` → role:writer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
 
 ## Workflow-step gaps
 

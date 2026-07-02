@@ -43,7 +43,7 @@ describe("CCGS parity audit", () => {
     expect(matrix.rows.every((row) => row.decision && row.rationale && row.sourceHash)).toBe(true);
     expect(matrix.rows.find((row) => row.sourceId === "producer")?.cgsTarget).toEqual(expect.objectContaining({ kind: "role", id: "producer", path: "src/roles.ts", hash: expect.stringMatching(/^[a-f0-9]{64}$/) }));
     expect(matrix.rows.find((row) => row.sourceId === "producer")?.status).toBe("implemented");
-    expect(matrix.rows.find((row) => row.sourceId === "writer")?.status).toBe("todo");
+    expect(matrix.rows.find((row) => row.sourceId === "writer")?.status).toBe("implemented");
     expect(matrix.rows.find((row) => row.sourceId === "vertical-slice")?.cgsTarget).toEqual(expect.objectContaining({ kind: "skill", id: "cgs-vertical-slice", path: "src/skills.ts", hash: expect.stringMatching(/^[a-f0-9]{64}$/) }));
     expect(matrix.rows.find((row) => row.sourceId === "localize")?.cgsTarget).toEqual(expect.objectContaining({ kind: "skill", id: "cgs-localize", path: "src/skills.ts" }));
     expect(matrix.rows.find((row) => row.sourceId === "game-concept")?.decision).toBe("adopt");
@@ -87,10 +87,10 @@ describe("CCGS parity audit", () => {
     matrix.counts.total += 2;
 
     const markdown = renderRemainingGapTasksMarkdown(matrix);
-    expect(markdown).toContain("- Implemented parity rows: 4");
-    expect(markdown).toContain("- Remaining parity rows: 4");
+    expect(markdown).toContain("- Implemented parity rows: 5");
+    expect(markdown).toContain("- Remaining parity rows: 3");
     expect(markdown).toContain("## Role package gaps");
-    expect(markdown).toContain("`writer` → role:writer");
+    expect(markdown).toContain("No remaining rows.");
     expect(markdown).toContain("## Workflow-step gaps");
     expect(markdown).toContain("`game-concept` → workflow:game-concept");
     expect(markdown).toContain("## Template gaps");
@@ -114,6 +114,56 @@ describe("CCGS parity audit", () => {
     expect(row?.status).toBe("implemented");
     expect(row?.rationale).toContain("upgraded CCGS-depth Codex role package");
     expect(renderRemainingGapTasksMarkdown(matrix)).not.toContain("`accessibility-specialist` → role:accessibility-specialist");
+  });
+
+  test("remaining direct role gaps are closed before major gap categories", () => {
+    const directRoleGapIds = [
+      "ai-programmer",
+      "audio-director",
+      "community-manager",
+      "devops-engineer",
+      "economy-designer",
+      "engine-programmer",
+      "godot-specialist",
+      "level-designer",
+      "live-ops-designer",
+      "localization-lead",
+      "network-programmer",
+      "security-engineer",
+      "sound-designer",
+      "technical-artist",
+      "tools-programmer",
+      "ui-programmer",
+      "unity-specialist",
+      "unreal-specialist",
+      "world-builder",
+      "writer"
+    ];
+    const root = fixtureRoot();
+    for (const roleId of directRoleGapIds) {
+      writeFileSync(path.join(root, ".claude", "agents", `${roleId}.md`), `---
+name: ${roleId}
+description: ${roleId} upstream role
+tools: Read, Write
+skills: [${roleId}-skill]
+---
+
+## Core Responsibilities
+
+- Own ${roleId} production work
+- Produce implementation-ready findings and handoffs
+
+## Output Format
+
+Summary | Risks | Verification | Handoff
+`);
+    }
+
+    const matrix = generateParityMatrix(inventoryCcgsSurfaces(root), defaultProjectConfig({ name: "Direct Role Gap Game", engine: "godot", mode: "prototype", nonInteractive: true }));
+    const remainingDirectRoleRows = matrix.rows.filter((row) => row.sourceType === "agent" && row.decision === "adapt" && row.cgsTarget.kind === "role" && row.status !== "implemented");
+    expect(remainingDirectRoleRows).toEqual([]);
+    const report = renderRemainingGapTasksMarkdown(matrix);
+    for (const roleId of directRoleGapIds) expect(report).not.toContain(`\`${roleId}\` → role:${roleId}`);
   });
 
   test("upgraded template skills are no longer thin wrappers", () => {

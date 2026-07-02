@@ -47,10 +47,10 @@
         "kind": "role",
         "id": "ai-programmer",
         "path": "src/roles.ts",
-        "hash": "87b7c77b264157d9ad6f650e0ae59cadf41cb3c054dc723ff1133a7cc25245bd"
+        "hash": "d723985f7f7be128bc36a2a29d62cf35df943806539e14abbb1c0f07429be133"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -63,7 +63,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -128,10 +128,10 @@
         "kind": "role",
         "id": "audio-director",
         "path": "src/roles.ts",
-        "hash": "6b0e14ae270f404bcc1ccb5c22795a969ea4cc18bc535dbf9e9ab8c26e5685c7"
+        "hash": "41ce8c0c54f63b2f7e8260a0d130930ee6e6f469cdb9d2480ce5d436f34a9bc6"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -144,7 +144,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -155,10 +155,10 @@
         "kind": "role",
         "id": "community-manager",
         "path": "src/roles.ts",
-        "hash": "6729eb5bbba13782f324eb6128d1ab80ccad188cda311a57f8dcda76766e9fe8"
+        "hash": "f836b1c9979e82bd840bb63de14cdc2bbd324facdd7e778f5d2fab066bfb0a6c"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -171,7 +171,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -209,10 +209,10 @@
         "kind": "role",
         "id": "devops-engineer",
         "path": "src/roles.ts",
-        "hash": "a007fcb0c7a86e7eb9b03fb12a07d5f9327185a2b0a70b824ad71d0802c02d18"
+        "hash": "75fba81d6a3e270f52cf87743814d3ac8eda74ab56c670b30e9c0fc9950c998d"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -225,7 +225,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -236,10 +236,10 @@
         "kind": "role",
         "id": "economy-designer",
         "path": "src/roles.ts",
-        "hash": "5f492860e855ad17092469374b8697486b067e7af4c7ffbe2ea11a5948cc15d4"
+        "hash": "0db90a28978ad7d1b5ae74488441f2377146621debd578d41a9181b5a647ac76"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -252,7 +252,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -263,10 +263,10 @@
         "kind": "role",
         "id": "engine-programmer",
         "path": "src/roles.ts",
-        "hash": "654bc5b932d60452e0f768f641ff29942cd448bc3ff02a6c4f928abb4a89b442"
+        "hash": "31839ad024f8cdf1cf992c28ecdc4bbcdfb183e97690e90e305223b0c5b0c18d"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -279,7 +279,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -448,10 +448,10 @@
         "kind": "role",
         "id": "godot-specialist",
         "path": "src/roles.ts",
-        "hash": "57b8381189093ab38a314597d236a1b2f29bd867ad1e36efef125274b663de06"
+        "hash": "29be2f59ace04bd5b335a5744740446abce6dc24738c02e99535c701e931c2ff"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -464,7 +464,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -502,10 +502,10 @@
         "kind": "role",
         "id": "level-designer",
         "path": "src/roles.ts",
-        "hash": "72f099ea489d6045db16b5cf80a2a6b3e562841aeb16fe4a76e624e5932d4f72"
+        "hash": "55a13d3baef52656e9985dc1b2b4ebd3971912822d9c64ede007e2fba7085e5d"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -518,7 +518,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -529,10 +529,10 @@
         "kind": "role",
         "id": "live-ops-designer",
         "path": "src/roles.ts",
-        "hash": "bfa0eec4d1dc0db319a93701cfdc1fa6489ac6289b583fd7f9f7e2912f278180"
+        "hash": "0e16962e104716f389f08139bab08d574fc7d0542b0679fb734af75f04dc5e57"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -545,7 +545,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -556,10 +556,10 @@
         "kind": "role",
         "id": "localization-lead",
         "path": "src/roles.ts",
-        "hash": "490a225b6cecd4a3766bfe0cdb404327924ae530934710a1c00e4005bb70c4d6"
+        "hash": "f5403d89594fd6b8dccb5f6e1f09fa2358c8fa2c9a3627ef577a21625f1619c4"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -572,7 +572,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -610,10 +610,10 @@
         "kind": "role",
         "id": "network-programmer",
         "path": "src/roles.ts",
-        "hash": "c031a9578669ffc7f8565a53479d8ea411d92165f727351048efc73a8bf57afd"
+        "hash": "26c777522097084919fd4e210daa747a3bb1f643b2ac685fddd4bed26c741e01"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -626,7 +626,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -799,10 +799,10 @@
         "kind": "role",
         "id": "security-engineer",
         "path": "src/roles.ts",
-        "hash": "456efdf88cf280fe0e5b727fd90034bf8f8ca1d1e0b4feb2f6640172f8c67270"
+        "hash": "c82d1c63a9c17cd606dd797aa64cfaaa8560d99a07610a7dc515ee7ab14bda80"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -815,7 +815,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -826,10 +826,10 @@
         "kind": "role",
         "id": "sound-designer",
         "path": "src/roles.ts",
-        "hash": "e3faebb084fdf10692f043708e806f72d80347e28f2a04f6e8159b1bcb16e120"
+        "hash": "3a36273f0796973a0926e71c9d1c79772d91bdeee24dbeaf7ede96bc73de268c"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -842,7 +842,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -880,10 +880,10 @@
         "kind": "role",
         "id": "technical-artist",
         "path": "src/roles.ts",
-        "hash": "b3582c5e8dce3cf710b44c0539790727cc7f5be425ac1f9893c6d25d53be0c84"
+        "hash": "252a03a5530acca1f64d1a6dd1cbe0484e24ae9803367e615cac3928d239041e"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -896,7 +896,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -934,10 +934,10 @@
         "kind": "role",
         "id": "tools-programmer",
         "path": "src/roles.ts",
-        "hash": "ae31a7e75ad8225a861b986aabcd4337b4dbdcd463b2c48f4beaba1d71d3d5e7"
+        "hash": "c951216d347be9333b8a73260d07e84d6a18f297b80fe5582cb3abf41300cbaa"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -950,7 +950,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1065,10 +1065,10 @@
         "kind": "role",
         "id": "ui-programmer",
         "path": "src/roles.ts",
-        "hash": "10c5a6301d621d62fbd46bf52fe054a070fe83f2bd07b8be68003606e861b270"
+        "hash": "864eafa8e65eb6ad69a008512f6f4e5398e33541032d8e6f5dfb1675909a492e"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -1081,7 +1081,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1170,10 +1170,10 @@
         "kind": "role",
         "id": "unity-specialist",
         "path": "src/roles.ts",
-        "hash": "2bc1f02b0a5481a272184b0ac9c45bcee5f0c7e661c51986e2b187b980b161ac"
+        "hash": "c2c7a3a8171668dec5e5b9a88e9cce3cf2d28206cda6a5cc5275eb53414eb4b0"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1186,7 +1186,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1223,10 +1223,10 @@
         "kind": "role",
         "id": "unreal-specialist",
         "path": "src/roles.ts",
-        "hash": "07929b39c15ecfb2067dc4d28c1e6f8ac2f1b006d6b523daf17fbca892357dbf"
+        "hash": "17028b715e7d48112e0b419a3aaa6f73788c4bdfb26e50746b70d33d51189939"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1239,7 +1239,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1277,10 +1277,10 @@
         "kind": "role",
         "id": "world-builder",
         "path": "src/roles.ts",
-        "hash": "452aa4689212820282f510992651eb8c0838d36141f670e89fae5e29312325b2"
+        "hash": "518aa658f0ee8bfd36752eab0828538bd65d81da33cc43482965b91158b797ea"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -1293,7 +1293,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1304,10 +1304,10 @@
         "kind": "role",
         "id": "writer",
         "path": "src/roles.ts",
-        "hash": "7d9a982648ef670a28d753dffcafcaf91824a38e1fec54847ff8502e5885afeb"
+        "hash": "866c136fdba0bd5e36d82c671f3049cc38f2ee9f82effcf89acb464a8393d1d4"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 5,
@@ -1320,7 +1320,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "skill",

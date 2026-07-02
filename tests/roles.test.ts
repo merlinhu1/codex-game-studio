@@ -105,6 +105,53 @@ describe("Codex role packages", () => {
     expect(contractText).toMatch(/Producer|producer/);
   });
 
+  test("remaining direct CCGS role gaps expose upgraded role contracts", () => {
+    const directRoleGapIds = [
+      "ai-programmer",
+      "audio-director",
+      "community-manager",
+      "devops-engineer",
+      "economy-designer",
+      "engine-programmer",
+      "godot-specialist",
+      "level-designer",
+      "live-ops-designer",
+      "localization-lead",
+      "network-programmer",
+      "security-engineer",
+      "sound-designer",
+      "technical-artist",
+      "tools-programmer",
+      "ui-programmer",
+      "unity-specialist",
+      "unreal-specialist",
+      "world-builder",
+      "writer"
+    ] as const;
+
+    for (const roleId of directRoleGapIds) {
+      const role = rolePackages[roleId];
+      const contractText = [
+        ...role.responsibilities,
+        ...role.inputsToInspect,
+        ...(role.outputSchema ?? []),
+        ...role.qualityGates,
+        ...role.collaborationNotes,
+        ...role.stopConditions,
+        role.handoffTemplate
+      ].join("\n");
+
+      expect(role.responsibilities.length).toBeGreaterThanOrEqual(3);
+      expect(role.outputSchema?.length ?? 0).toBeGreaterThanOrEqual(4);
+      expect(role.qualityGates.length).toBeGreaterThanOrEqual(3);
+      expect(role.collaborationNotes.length).toBeGreaterThanOrEqual(2);
+      expect(role.stopConditions.length).toBeGreaterThanOrEqual(1);
+      expect(role.handoffTemplate).toContain(role.displayName);
+      expect(contractText).toContain("verification");
+      expect(contractText).toContain("handoff");
+    }
+  });
+
   test("role packages expose structured compact role contracts", () => {
     for (const role of Object.values(rolePackages)) {
       expect(role.responsibilities.length).toBeGreaterThanOrEqual(2);

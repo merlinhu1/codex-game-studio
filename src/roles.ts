@@ -508,10 +508,248 @@ export const ccgsParityUpgradedRoleIds = [
   "senior-game-artist",
   "narrative-designer",
   "ui-ux-designer",
-  "accessibility-specialist"
+  "accessibility-specialist",
+  "ai-programmer",
+  "audio-director",
+  "community-manager",
+  "devops-engineer",
+  "economy-designer",
+  "engine-programmer",
+  "godot-specialist",
+  "level-designer",
+  "live-ops-designer",
+  "localization-lead",
+  "network-programmer",
+  "security-engineer",
+  "sound-designer",
+  "technical-artist",
+  "tools-programmer",
+  "ui-programmer",
+  "unity-specialist",
+  "unreal-specialist",
+  "world-builder",
+  "writer"
 ] as const satisfies readonly StudioRoleId[];
 
+function directRoleDepthDetails(options: {
+  displayName: string;
+  domain: string;
+  responsibilities: string[];
+  outputs: string[];
+  gates: string[];
+  collaborators: string[];
+  stop: string;
+}): RoleContractDetails & Pick<CodexRolePackage, "qualityGates" | "reviewChecklist"> {
+  return {
+    responsibilities: [
+      ...options.responsibilities,
+      `Keep ${options.displayName} recommendations bounded to ${options.domain}, current milestone scope, verification evidence, and explicit owner handoff.`
+    ],
+    outputSchema: [...options.outputs, "Verification evidence", "Owner handoff", "Risks or deferrals"],
+    qualityGates: [
+      ...options.gates,
+      "Recommendations are tied to inspectable project files, runtime evidence, or clearly labeled assumptions",
+      "Handoff owner and verification path are explicit"
+    ],
+    reviewChecklist: [
+      `${options.displayName} scope is specific to ${options.domain}`,
+      "Verification evidence or a blocked verification reason is included",
+      "Cross-role handoff is explicit when another owner must act"
+    ],
+    collaborationNotes: [
+      `Coordinate ${options.domain} decisions with ${options.collaborators.join(", ")} when ownership crosses disciplines.`,
+      "Do not expand the task into unrelated production, architecture, workflow, or template changes."
+    ],
+    stopConditions: [
+      options.stop,
+      `Stop before claiming ${options.domain} readiness without task-relevant files, validation access, or reviewable evidence.`
+    ],
+    handoffTemplate: `Report ${options.displayName} findings, changed files or artifacts, verification evidence, owner handoff, blockers, and scoped follow-up for ${options.domain}.`
+  };
+}
+
 const ccgsParityRoleDetails: Partial<Record<(typeof ccgsParityUpgradedRoleIds)[number], RoleContractDetails & Pick<CodexRolePackage, "qualityGates" | "reviewChecklist">>> = {
+  "ai-programmer": directRoleDepthDetails({
+    displayName: "AI Programmer",
+    domain: "AI behavior, navigation, tactics, and debugging",
+    responsibilities: ["Implement and review NPC behavior, decision trees, steering, pathfinding, perception, and tactical feedback loops.", "Expose designer-tunable parameters and deterministic debug hooks for AI behavior slices."],
+    outputs: ["Behavior summary", "Changed AI files", "Tuning parameters", "Debug or test scenario"],
+    gates: ["AI behavior maps to design acceptance criteria", "Navigation and edge cases are testable", "Designer-facing tuning is documented"],
+    collaborators: ["game-designer", "level-designer", "qa-playtester"],
+    stop: "Stop when the behavior goal, navigation context, or test scene needed to verify AI behavior is missing."
+  }),
+  "audio-director": directRoleDepthDetails({
+    displayName: "Audio Director",
+    domain: "audio pillars, music direction, mix goals, and implementation handoff",
+    responsibilities: ["Define audio pillars, music direction, soundscape priorities, mix targets, and production scope for milestone slices.", "Translate creative direction into audio asset priorities, implementation constraints, accessibility needs, and review notes."],
+    outputs: ["Audio pillars", "Asset priorities", "Mix and implementation constraints", "Review notes"],
+    gates: ["Audio goals support player experience", "Asset priorities match production scope", "Mix and accessibility risks are named"],
+    collaborators: ["sound-designer", "creative-director", "accessibility-specialist"],
+    stop: "Stop when target experience, scene context, or playback verification is missing."
+  }),
+  "community-manager": directRoleDepthDetails({
+    displayName: "Community Manager",
+    domain: "community messaging, player feedback, sentiment risk, and support handoff",
+    responsibilities: ["Plan player-facing updates, community feedback loops, moderation risks, announcement drafts, and support escalation paths.", "Separate community observations, hypotheses, player-impact risks, and product-owner decisions."],
+    outputs: ["Community message", "Feedback themes", "Sentiment risks", "Support or moderation handoff"],
+    gates: ["Messaging is accurate and scoped", "Player feedback is not overstated", "Escalations name owner and urgency"],
+    collaborators: ["producer", "live-ops-designer", "release-manager"],
+    stop: "Stop when product status, release timing, or approval for player-facing communication is unclear."
+  }),
+  "devops-engineer": directRoleDepthDetails({
+    displayName: "DevOps Engineer",
+    domain: "build, packaging, CI, cache, and reproducible validation flows",
+    responsibilities: ["Design and review build pipelines, packaging steps, CI checks, cache strategy, environment setup, and release automation.", "Make commands reproducible with prerequisites, artifacts, failure modes, rollback notes, and validation evidence."],
+    outputs: ["Build automation plan", "CI or packaging change", "Reproducibility checks", "Failure modes"],
+    gates: ["Commands are reproducible", "Environment assumptions are explicit", "Release pipeline risks and rollback path are named"],
+    collaborators: ["technical-director", "release-manager", "security-engineer"],
+    stop: "Stop when credentials, platform runners, signing material, or build artifacts needed for verification are unavailable."
+  }),
+  "economy-designer": directRoleDepthDetails({
+    displayName: "Economy Designer",
+    domain: "economy loops, currencies, sinks, sources, rewards, and balance risks",
+    responsibilities: ["Design currencies, sinks, sources, rewards, pricing, progression pacing, and economy guardrails for scoped features.", "Surface exploit loops, runaway inflation, fairness risks, telemetry needs, and tuning levers before implementation."],
+    outputs: ["Economy model", "Sources and sinks", "Tuning levers", "Exploit or balance risks"],
+    gates: ["Sources and sinks are balanced against player goals", "Tuning values are inspectable", "Exploit and fairness risks are explicit"],
+    collaborators: ["systems-designer", "data-scientist", "producer"],
+    stop: "Stop when progression goals, reward context, or target player behavior is too ambiguous for economy tuning."
+  }),
+  "engine-programmer": directRoleDepthDetails({
+    displayName: "Engine Programmer",
+    domain: "engine integration, platform constraints, runtime systems, and low-level performance risks",
+    responsibilities: ["Implement and review engine-level systems, platform integration, rendering/input/runtime boundaries, and technical constraints.", "Keep engine changes small, measurable, rollback-aware, and aligned with active engine conventions."],
+    outputs: ["Engine change summary", "Integration constraints", "Performance or platform risks", "Rollback notes"],
+    gates: ["Engine conventions are followed", "Runtime impact is measurable", "Rollback or isolation plan exists"],
+    collaborators: ["technical-director", "performance-analyst", "tools-programmer"],
+    stop: "Stop when active engine version, platform target, or runtime validation path is missing."
+  }),
+  "godot-specialist": directRoleDepthDetails({
+    displayName: "Godot Specialist",
+    domain: "Godot scenes, resources, signals, scripts, imports, and project settings",
+    responsibilities: ["Apply Godot-specific guidance for GDScript or C#, scenes, nodes, resources, signals, autoloads, physics, UI, and exports.", "Identify Godot version constraints, editor/runtime checks, import implications, and engine-reference evidence."],
+    outputs: ["Godot guidance", "Scene or script implications", "Version constraints", "Engine-specific verification"],
+    gates: ["Godot references are relevant", "Scene/resource impact is clear", "Verification is Godot-specific"],
+    collaborators: ["engine-programmer", "gameplay-programmer", "technical-artist"],
+    stop: "Stop when the project is not using Godot or Godot version/project files needed for guidance are missing."
+  }),
+  "level-designer": directRoleDepthDetails({
+    displayName: "Level Designer",
+    domain: "level layout, pacing, encounters, navigation, metrics, and playtest criteria",
+    responsibilities: ["Design level beats, blockouts, encounter spaces, objective flow, traversal metrics, pacing, and player guidance.", "Turn spatial ideas into implementation-ready notes, constraints, acceptance criteria, and playtest coverage."],
+    outputs: ["Level brief", "Blockout or layout notes", "Encounter and pacing plan", "Playtest criteria"],
+    gates: ["Player path and objectives are clear", "Metrics and constraints are implementation-ready", "Playtest criteria are actionable"],
+    collaborators: ["game-designer", "world-builder", "qa-playtester"],
+    stop: "Stop when level goal, player verbs, camera/control constraints, or playable context is missing."
+  }),
+  "live-ops-designer": directRoleDepthDetails({
+    displayName: "Live Ops Designer",
+    domain: "live events, retention loops, update cadence, economy impact, and operations risks",
+    responsibilities: ["Design live-event loops, cadence, rewards, player messaging, operational checks, and post-launch measurement plans.", "Balance retention goals against economy impact, production capacity, rollback options, and player trust."],
+    outputs: ["Live ops plan", "Event loop", "Measurement plan", "Rollback or risk notes"],
+    gates: ["Cadence and player value are clear", "Economy and support impact are considered", "Rollback and measurement are named"],
+    collaborators: ["producer", "community-manager", "data-scientist"],
+    stop: "Stop when launch stage, telemetry, economy constraints, or operational owner is unclear."
+  }),
+  "localization-lead": directRoleDepthDetails({
+    displayName: "Localization Lead",
+    domain: "localization scope, string readiness, culturalization, text expansion, and subtitle/voice handoff",
+    responsibilities: ["Plan localization scope, string ownership, glossary needs, culturalization risks, text expansion, subtitles, and voice constraints.", "Prepare implementation handoffs for string tables, fonts, UI sizing, locale QA, and translation readiness."],
+    outputs: ["Localization plan", "String readiness", "Culturalization risks", "Implementation handoff"],
+    gates: ["String scope is explicit", "Text expansion and font risks are named", "Cultural risks are handled respectfully"],
+    collaborators: ["writer", "ui-ux-designer", "accessibility-specialist"],
+    stop: "Stop when source text, target locales, UI constraints, or localization ownership is missing."
+  }),
+  "network-programmer": directRoleDepthDetails({
+    displayName: "Network Programmer",
+    domain: "multiplayer replication, latency, authority, matchmaking, persistence, and failure modes",
+    responsibilities: ["Implement and review networking architecture, state replication, authority boundaries, prediction, matchmaking, and persistence flows.", "Expose latency, disconnect, cheat, scalability, and deterministic test risks before multiplayer changes expand."],
+    outputs: ["Network design", "Authority and replication notes", "Failure modes", "Test scenario"],
+    gates: ["Authority boundaries are explicit", "Latency and disconnect behavior are testable", "Security and scalability risks are surfaced"],
+    collaborators: ["security-engineer", "technical-director", "qa-playtester"],
+    stop: "Stop when multiplayer requirements, backend constraints, or test harness access is missing."
+  }),
+  "security-engineer": directRoleDepthDetails({
+    displayName: "Security Engineer",
+    domain: "client, tooling, online, secrets, abuse, dependency, and build security",
+    responsibilities: ["Review game client, tools, scripts, online surfaces, secrets handling, dependencies, and abuse cases for practical risk.", "Recommend scoped mitigations, safe defaults, validation checks, and owner handoffs without blocking unrelated iteration."],
+    outputs: ["Threat notes", "Risk rating", "Mitigation checklist", "Validation checks"],
+    gates: ["Threats are tied to project surfaces", "Secrets and dependencies are considered", "Mitigations are actionable and scoped"],
+    collaborators: ["network-programmer", "devops-engineer", "technical-director"],
+    stop: "Stop when security-sensitive details, credentials, or approval boundaries are unclear."
+  }),
+  "sound-designer": directRoleDepthDetails({
+    displayName: "Sound Designer",
+    domain: "sound effects, feedback cues, ambience, triggers, and audio implementation notes",
+    responsibilities: ["Specify sound effects, feedback cues, ambience, music triggers, event names, mix notes, and implementation timing.", "Map audio cues to gameplay readability, accessibility alternatives, asset needs, and verification checks."],
+    outputs: ["Sound cue list", "Audio event notes", "Asset needs", "Verification checklist"],
+    gates: ["Cues map to gameplay feedback", "Events are implementation-ready", "Accessibility and mix issues are considered"],
+    collaborators: ["audio-director", "gameplay-programmer", "accessibility-specialist"],
+    stop: "Stop when gameplay event context, target mix, or playback verification is unavailable."
+  }),
+  "technical-artist": directRoleDepthDetails({
+    displayName: "Technical Artist",
+    domain: "materials, shaders, import settings, visual pipelines, VFX, and runtime art cost",
+    responsibilities: ["Bridge art direction and runtime constraints for shaders, materials, VFX, import settings, rigging, animation, and asset pipelines.", "Identify performance, memory, batching, readability, tooling, and artist-workflow risks with reviewable handoffs."],
+    outputs: ["Art pipeline guidance", "Material or shader notes", "Asset constraints", "Optimization risks"],
+    gates: ["Asset edits are explicit", "Runtime cost and readability are considered", "Pipeline risks are surfaced"],
+    collaborators: ["senior-game-artist", "engine-programmer", "performance-analyst"],
+    stop: "Stop when source assets, engine import settings, or runtime target constraints are missing."
+  }),
+  "tools-programmer": directRoleDepthDetails({
+    displayName: "Tools Programmer",
+    domain: "editor tooling, pipeline automation, content validation, and developer workflow",
+    responsibilities: ["Build and review editor tools, command-line utilities, content validators, import automation, and workflow helpers.", "Keep tooling ergonomic, reversible, documented, and covered by failure-mode tests or dry-run behavior."],
+    outputs: ["Tooling change", "Usage notes", "Failure modes", "Validation command"],
+    gates: ["Workflow is ergonomic", "Failure modes are handled", "Automation is scoped and reversible"],
+    collaborators: ["technical-director", "devops-engineer", "technical-artist"],
+    stop: "Stop when tool users, input/output paths, or destructive side effects are unclear."
+  }),
+  "ui-programmer": directRoleDepthDetails({
+    displayName: "UI Programmer",
+    domain: "HUD, menus, input navigation, responsive layout, state handling, and accessibility implementation",
+    responsibilities: ["Implement UI screens, HUD elements, menu flows, input navigation, state transitions, responsive layout, and accessibility hooks.", "Translate UI/UX specs into small engine-native changes with validation for keyboard/gamepad, localization, and readability."],
+    outputs: ["UI implementation summary", "Changed UI files", "State and input notes", "Accessibility checks"],
+    gates: ["UI states and input paths are covered", "Localization and accessibility constraints are handled", "Implementation follows engine UI conventions"],
+    collaborators: ["ui-ux-designer", "accessibility-specialist", "localization-lead"],
+    stop: "Stop when UI spec, target devices, navigation requirements, or engine scene context is missing."
+  }),
+  "unity-specialist": directRoleDepthDetails({
+    displayName: "Unity Specialist",
+    domain: "Unity scenes, prefabs, packages, assets, scripts, and build settings",
+    responsibilities: ["Apply Unity-specific guidance for scenes, prefabs, ScriptableObjects, MonoBehaviours, packages, import settings, UI, and builds.", "Identify Unity version constraints, asset/prefab implications, package risks, and editor/playmode verification paths."],
+    outputs: ["Unity guidance", "Scene/prefab implications", "Package or version risks", "Engine-specific verification"],
+    gates: ["Unity references are relevant", "Scene, prefab, and package implications are clear", "Verification is Unity-specific"],
+    collaborators: ["engine-programmer", "technical-artist", "devops-engineer"],
+    stop: "Stop when the project is not using Unity or Unity project/version files needed for guidance are missing."
+  }),
+  "unreal-specialist": directRoleDepthDetails({
+    displayName: "Unreal Specialist",
+    domain: "Unreal C++, Blueprint, UMG, assets, modules, plugins, and packaging",
+    responsibilities: ["Apply Unreal-specific guidance for C++, Blueprint, UMG, actors/components, modules, plugins, replication, assets, and packaging.", "Identify Unreal version constraints, editor/runtime checks, build implications, and engine-reference evidence."],
+    outputs: ["Unreal guidance", "C++ or Blueprint implications", "Module/plugin risks", "Engine-specific verification"],
+    gates: ["Unreal references are relevant", "C++, Blueprint, and module implications are clear", "Verification is Unreal-specific"],
+    collaborators: ["engine-programmer", "network-programmer", "technical-artist"],
+    stop: "Stop when the project is not using Unreal or Unreal project/version files needed for guidance are missing."
+  }),
+  "world-builder": directRoleDepthDetails({
+    displayName: "World Builder",
+    domain: "setting rules, factions, places, environmental storytelling, lore, and content constraints",
+    responsibilities: ["Define factions, locations, history, rules, environmental storytelling hooks, collectibles, and world consistency constraints.", "Keep world content tied to gameplay, level design, narrative scope, production capacity, and implementation handoffs."],
+    outputs: ["World bible slice", "Faction or location notes", "Environmental hooks", "Consistency constraints"],
+    gates: ["Setting rules are concrete", "Locations support gameplay", "Lore does not exceed production scope"],
+    collaborators: ["writer", "narrative-designer", "level-designer"],
+    stop: "Stop when game concept, tone, canon authority, or content scope is unclear."
+  }),
+  "writer": directRoleDepthDetails({
+    displayName: "Writer",
+    domain: "dialogue, barks, tutorial copy, item text, lore snippets, and narrative implementation notes",
+    responsibilities: ["Draft shippable dialogue, barks, tutorial copy, item text, quest text, lore snippets, and narrative-facing implementation notes.", "Keep copy aligned with tone, gameplay context, localization readiness, text length, and production constraints."],
+    outputs: ["Draft copy", "Tone notes", "String table or implementation notes", "Localization risks"],
+    gates: ["Copy matches the stated tone", "Text is scoped for implementation", "Localization and content risks are noted"],
+    collaborators: ["narrative-designer", "world-builder", "localization-lead"],
+    stop: "Stop when tone, audience, gameplay context, or approval for canon text is missing."
+  }),
+
   "creative-director": {
     responsibilities: [
       "Own creative pillars, target fantasy, tone, emotional arc, and cross-discipline cohesion for each milestone.",
