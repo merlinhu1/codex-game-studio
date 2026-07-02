@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, test } from "node:test";
 import { expect } from "expect";
-import { generateParityMatrix, inventoryCcgsSurfaces, renderParityMatrixMarkdown, validateParityMatrix, writeParityReports } from "../src/ccgs-parity.js";
+import { generateParityMatrix, inventoryCcgsSurfaces, renderParityMatrixMarkdown, renderRemainingGapTasksMarkdown, validateParityMatrix, writeParityReports } from "../src/ccgs-parity.js";
 import { defaultProjectConfig } from "../src/projects.js";
 import { templateSkillDefinitions } from "../src/skills.js";
 
@@ -55,6 +55,55 @@ describe("CCGS parity audit", () => {
     writeParityReports(matrix, out);
     expect(JSON.parse(readFileSync(path.join(out, "ccgs-surface-parity-matrix.json"), "utf8")).rows).toHaveLength(matrix.rows.length);
     expect(readFileSync(path.join(out, "ccgs-surface-parity-matrix.md"), "utf8")).toContain(`- Total rows: ${matrix.rows.length}`);
+  });
+
+  test("writes an actionable generated remaining-gap report", () => {
+    const matrix = generateParityMatrix(inventoryCcgsSurfaces(fixtureRoot()), defaultProjectConfig({ name: "Gap Report Game", engine: "godot", mode: "prototype", nonInteractive: true }));
+    const templateGap = {
+      ...matrix.rows[0],
+      sourceType: "template" as const,
+      sourceId: "missing-template",
+      sourcePath: ".claude/docs/templates/missing-template.md",
+      cgsTarget: { kind: "template" as const, id: "missing-template", path: "templates/" },
+      decision: "adopt" as const,
+      status: "todo" as const,
+      ownerPath: "templates/",
+      testPath: "tests/agents-templates.test.ts"
+    };
+    const ruleGap = {
+      ...matrix.rows[0],
+      sourceType: "rule" as const,
+      sourceId: "ui-code",
+      sourcePath: ".claude/rules/ui-code.md",
+      cgsTarget: { kind: "rule" as const, id: "ui-code", path: "src/skills.ts" },
+      decision: "adapt" as const,
+      status: "deferred" as const,
+      ownerPath: "src/skills.ts",
+      testPath: "tests/codex-context-files.test.ts"
+    };
+    matrix.rows.push(templateGap, ruleGap);
+    matrix.counts.template += 1;
+    matrix.counts.rule += 1;
+    matrix.counts.total += 2;
+
+    const markdown = renderRemainingGapTasksMarkdown(matrix);
+    expect(markdown).toContain("- Implemented parity rows: 4");
+    expect(markdown).toContain("- Remaining parity rows: 4");
+    expect(markdown).toContain("## Role package gaps");
+    expect(markdown).toContain("`writer` → role:writer");
+    expect(markdown).toContain("## Workflow-step gaps");
+    expect(markdown).toContain("`game-concept` → workflow:game-concept");
+    expect(markdown).toContain("## Template gaps");
+    expect(markdown).toContain("`missing-template` → template:missing-template");
+    expect(markdown).toContain("## Rule adaptation gaps");
+    expect(markdown).toContain("`ui-code` → rule:ui-code");
+    expect(markdown).toContain("Prompt-surface metadata completion is not the same as full CCGS product-parity completion.");
+    expect(markdown).not.toContain("`producer` → role:producer");
+    expect(markdown).not.toContain("`vertical-slice` → skill:cgs-vertical-slice");
+
+    const out = mkdtempSync(path.join(tmpdir(), "ccgs-gap-out-"));
+    writeParityReports(matrix, out);
+    expect(readFileSync(path.join(out, "ccgs-remaining-gap-tasks.md"), "utf8")).toBe(markdown);
   });
 
   test("upgraded template skills are no longer thin wrappers", () => {

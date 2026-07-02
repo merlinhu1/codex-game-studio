@@ -4,153 +4,143 @@ Source evidence:
 
 - CCGS reference root: `/opt/data/repos/Claude-Code-Game-Studios`
 - Generated parity report: `references/ccgs-surface-parity-matrix.json`
-- Prompt-surface audit: `references/prompt-surface-uplift-matrix.json`
-- CCGS workflow catalog: `/opt/data/repos/Claude-Code-Game-Studios/.claude/docs/workflow-catalog.yaml`
+- Generated parity summary: `references/ccgs-surface-parity-matrix.md`
 
 ## Current state
 
 - Implemented parity rows: 118
 - Remaining parity rows: 100
-- Prompt-surface audit rows complete: 102
-- Prompt-surface audit rows deferred: 46
-- Implemented OpenSpec change docs were removed after the eval-framework coverage work landed in durable code, tests, and reference reports.
+- Deferred parity rows: 0
+- Out-of-scope parity rows: 0
+- Remaining role rows: 33
+- Remaining workflow-step rows: 30
+- Remaining template rows: 26
+- Remaining rule rows: 11
+- Remaining skill rows: 0
 
-The prompt-surface audit shows exact CCGS agent and skill source references are mostly complete. The remaining CCGS gap is now broader product parity: richer role-package behavior, workflow phase coverage, reusable templates, and rule/standards adaptation.
+Prompt-surface metadata completion is not the same as full CCGS product-parity completion. The prompt-surface audit checks local metadata, depth, and source traceability; this report tracks broader CCGS parity rows that still need product decisions or implementation.
 
-## Remaining tasks by priority
+## Role package gaps
 
-### 1. Close direct role-package depth gaps
+- `accessibility-specialist` → role:accessibility-specialist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `ai-programmer` → role:ai-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `audio-director` → role:audio-director (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `community-manager` → role:community-manager (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `devops-engineer` → role:devops-engineer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `economy-designer` → role:economy-designer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `engine-programmer` → role:engine-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `godot-csharp-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `godot-gdextension-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `godot-gdscript-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `godot-shader-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `godot-specialist` → role:godot-specialist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `level-designer` → role:level-designer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `live-ops-designer` → role:live-ops-designer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `localization-lead` → role:localization-lead (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `network-programmer` → role:network-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `security-engineer` → role:security-engineer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `sound-designer` → role:sound-designer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `technical-artist` → role:technical-artist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `tools-programmer` → role:tools-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `ue-blueprint-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `ue-gas-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `ue-replication-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `ue-umg-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `ui-programmer` → role:ui-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `unity-addressables-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `unity-dots-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `unity-shader-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `unity-specialist` → role:unity-specialist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `unity-ui-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+- `unreal-specialist` → role:unreal-specialist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `world-builder` → role:world-builder (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
+- `writer` → role:writer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
 
-The `.codex/agents/*.toml` prompt surfaces have source metadata, but `src/roles.ts` still has parity TODOs for these direct CCGS role packages. Upgrade each role package with CCGS-depth responsibilities, inputs, outputs, gates, stop conditions, and handoff contracts, then update tests that cover role rendering and validation.
+## Workflow-step gaps
 
-Roles:
+- `engine-setup` → workflow:engine-setup (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `game-concept` → workflow:game-concept (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `design-review-concept` → workflow:design-review-concept (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `art-bible` → workflow:art-bible (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `map-systems` → workflow:map-systems (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `design-system` → workflow:design-system (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `design-review` → workflow:design-review (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `review-all-gdds` → workflow:review-all-gdds (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `consistency-check` → workflow:consistency-check (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `create-architecture` → workflow:create-architecture (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `control-manifest` → workflow:control-manifest (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `accessibility-doc` → workflow:accessibility-doc (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `entity-inventory` → workflow:entity-inventory (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `asset-spec` → workflow:asset-spec (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `ux-design` → workflow:ux-design (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `ux-review` → workflow:ux-review (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `test-setup` → workflow:test-setup (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `implement` → workflow:implement (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `code-review` → workflow:code-review (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `bug-report` → workflow:bug-report (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `retrospective` → workflow:retrospective (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `team-feature` → workflow:team-feature (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `scope-check` → workflow:scope-check (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `balance-check` → workflow:balance-check (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `asset-audit` → workflow:asset-audit (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `playtest-polish` → workflow:playtest-polish (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `team-polish` → workflow:team-polish (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `patch-notes` → workflow:patch-notes (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `changelog` → workflow:changelog (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+- `launch-checklist` → workflow:launch-checklist (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
 
-- `accessibility-specialist`
-- `ai-programmer`
-- `audio-director`
-- `community-manager`
-- `devops-engineer`
-- `economy-designer`
-- `engine-programmer`
-- `godot-specialist`
-- `level-designer`
-- `live-ops-designer`
-- `localization-lead`
-- `network-programmer`
-- `security-engineer`
-- `sound-designer`
-- `technical-artist`
-- `tools-programmer`
-- `ui-programmer`
-- `unity-specialist`
-- `unreal-specialist`
-- `world-builder`
-- `writer`
+## Template gaps
 
-Suggested verification:
+- `architecture-decision-record` → template:architecture-decision-record (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `architecture-doc-from-code` → template:architecture-doc-from-code (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `changelog-template` → template:changelog-template (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `design-agent-protocol` → template:design-agent-protocol (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `implementation-agent-protocol` → template:implementation-agent-protocol (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `leadership-agent-protocol` → template:leadership-agent-protocol (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `concept-doc-from-prototype` → template:concept-doc-from-prototype (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `design-doc-from-implementation` → template:design-doc-from-implementation (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `faction-design` → template:faction-design (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `game-concept` → template:game-concept (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `game-design-document` → template:game-design-document (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `game-pillars` → template:game-pillars (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `hud-design` → template:hud-design (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `incident-response` → template:incident-response (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `interaction-pattern-library` → template:interaction-pattern-library (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `level-design-document` → template:level-design-document (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `milestone-definition` → template:milestone-definition (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `narrative-character-sheet` → template:narrative-character-sheet (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `post-mortem` → template:post-mortem (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `project-stage-report` → template:project-stage-report (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `prototype-report` → template:prototype-report (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `release-checklist-template` → template:release-checklist-template (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `risk-register-entry` → template:risk-register-entry (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `skill-test-spec` → template:skill-test-spec (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `systems-index` → template:systems-index (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
+- `technical-design-document` → template:technical-design-document (todo, adopt); owner: `templates/`; tests: `tests/agents-templates.test.ts`
 
-- `tests/roles.test.ts`
-- `tests/template-repository-surfaces.test.ts`
-- `tests/validation.test.ts`
-- `npm run validate`
+## Rule adaptation gaps
 
-### 2. Decide how to handle CCGS engine sub-specialists
+- `ai-code` → rule:ai-code (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `data-files` → rule:data-files (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `design-docs` → rule:design-docs (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `engine-code` → rule:engine-code (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `gameplay-code` → rule:gameplay-code (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `narrative` → rule:narrative (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `network-code` → rule:network-code (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `prototype-code` → rule:prototype-code (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `shader-code` → rule:shader-code (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `test-standards` → rule:test-standards (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
+- `ui-code` → rule:ui-code (todo, adapt); owner: `src/skills.ts`; tests: `tests/codex-context-files.test.ts`
 
-CCGS has specialist agents that do not yet have direct Codex Game Studio role surfaces. Do not blindly add all of them as top-level roles; decide whether each becomes a role, an engine-reference module, a skill, or a documented defer.
+## Skill gaps
 
-Deferred specialists:
-
-- Godot: `godot-csharp-specialist`, `godot-gdextension-specialist`, `godot-gdscript-specialist`, `godot-shader-specialist`
-- Unreal: `ue-blueprint-specialist`, `ue-gas-specialist`, `ue-replication-specialist`, `ue-umg-specialist`
-- Unity: `unity-addressables-specialist`, `unity-dots-specialist`, `unity-shader-specialist`, `unity-ui-specialist`
-
-Suggested outcome:
-
-- Add an explicit decision table to the parity report or product-boundary docs.
-- If adopted, route them through engine-scoped context rather than broad always-on role lists unless the product intentionally expands the role roster.
-
-### 3. Add missing CCGS workflow phase steps
-
-The current Codex workflow catalog covers 31 prompt-only workflows, but CCGS parity still has 30 missing phase-step rows from the CCGS workflow catalog. Add these as workflow aliases, phase-catalog entries, or documented non-adoptions.
-
-Workflow steps:
-
-- Concept and systems design: `engine-setup`, `game-concept`, `design-review-concept`, `art-bible`, `map-systems`, `design-system`, `design-review`, `review-all-gdds`, `consistency-check`
-- Technical setup and pre-production: `create-architecture`, `control-manifest`, `accessibility-doc`, `entity-inventory`, `asset-spec`, `ux-design`, `ux-review`, `test-setup`
-- Production and review: `implement`, `code-review`, `bug-report`, `retrospective`, `team-feature`, `scope-check`, `balance-check`, `asset-audit`, `playtest-polish`, `team-polish`
-- Release: `patch-notes`, `changelog`, `launch-checklist`
-
-Suggested verification:
-
-- `tests/workflow-catalog.test.ts`
-- `tests/workflow-recipes.test.ts`
-- `tests/functionality-gap-pass.test.ts`
-- CLI help and dry-run rendering for any new aliases
-
-### 4. Adopt missing CCGS templates as package templates
-
-The package already has several workflow templates wired into prompt rendering. These 26 CCGS templates still have no Codex Game Studio equivalent. Add them only where they improve workflow output contracts; avoid dumping every template into every prompt.
-
-Templates:
-
-- Architecture and technical docs: `architecture-decision-record`, `architecture-doc-from-code`, `technical-design-document`
-- Agent protocols: `design-agent-protocol`, `implementation-agent-protocol`, `leadership-agent-protocol`
-- Concept and design docs: `concept-doc-from-prototype`, `design-doc-from-implementation`, `game-concept`, `game-design-document`, `game-pillars`, `systems-index`
-- Content and UX docs: `faction-design`, `hud-design`, `interaction-pattern-library`, `level-design-document`, `narrative-character-sheet`
-- Production/release docs: `changelog-template`, `incident-response`, `milestone-definition`, `post-mortem`, `project-stage-report`, `prototype-report`, `release-checklist-template`, `risk-register-entry`, `skill-test-spec`
-
-Suggested verification:
-
-- Template registry tests for every adopted template.
-- Workflow rendering tests that prove only selected relevant templates are inlined.
-- Package asset validation.
-
-### 5. Adapt CCGS rules into Codex-native standards surfaces
-
-CCGS rule files should not be copied as `.codex/rules/*.rules`. Convert their intent into skills, AGENTS guidance, docs, or selected engine-reference context.
-
-Rule areas:
-
-- `ai-code`
-- `data-files`
-- `design-docs`
-- `engine-code`
-- `gameplay-code`
-- `narrative`
-- `network-code`
-- `prototype-code`
-- `shader-code`
-- `test-standards`
-- `ui-code`
-
-Suggested destination:
-
-- Existing standards skills such as `cgs-standards-gameplay`, `cgs-standards-prototype`, `cgs-standards-tests`, and `cgs-standards-ui`.
-- `AGENTS.md` or `docs/ai/repo-rules.md` only for durable repository-wide policy.
-- Engine-reference modules when the guidance is engine-specific.
-
-### 6. Tighten audit/report semantics
-
-The two reference reports currently answer different questions:
-
-- `prompt-surface-uplift-matrix.*` checks prompt metadata/depth for local prompt surfaces.
-- `ccgs-surface-parity-matrix.*` tracks broader CCGS product parity.
-
-Add explicit labels or derived summary fields so future readers do not treat prompt-surface completion as full CCGS parity completion.
-
-Suggested verification:
-
-- Audit scripts regenerate stable JSON/Markdown.
-- `tests/ccgs-parity-audit.test.ts`
-- `tests/prompt-surface-validation.test.ts`
+No remaining rows.
 
 ## Close-the-gap acceptance criteria
 
-The CCGS gap can be considered closed when:
-
-1. Every direct role has CCGS-depth role-package contracts in `src/roles.ts` and generated TOML remains source-traceable.
-2. Every deferred engine specialist has an explicit adopt/adapt/defer decision with a Codex-native destination.
-3. Workflow phase steps from CCGS are represented as supported Codex workflows, aliases, phase metadata, or documented non-adoptions.
-4. Adopted templates are packaged, registry-tested, and only inlined into relevant workflow prompts.
-5. CCGS rules are represented as standards skills/docs/engine context, not copied as Claude rule files.
-6. `npm run typecheck`, `npm test`, `npm run validate`, parity audits, and OpenSpec validation all pass.
+1. Every remaining row is either implemented with tests, explicitly deferred with rationale, or marked out of scope.
+2. Direct role-package gaps update `src/roles.ts` and role/template validation tests.
+3. Workflow-step gaps update workflow catalog, aliases, recipes, or documented non-adoption decisions.
+4. Template gaps add package templates only where workflow output contracts need them.
+5. Rule gaps become Codex-native standards skills, docs, or selected engine-reference context; they are not copied as Claude rule files.
+6. `npm run typecheck`, `npm test`, `npm run validate`, parity audit regeneration, and OpenSpec validation pass.

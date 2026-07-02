@@ -3302,7 +3302,7 @@
         "kind": "workflow",
         "id": "brainstorm",
         "path": "src/workflows.ts",
-        "hash": "864ae37c096eb213e72c09ff75c04532126e5831fc21be5243b5fa4541382325"
+        "hash": "f6824cd39d36965f7ec121c9ad9d643632640ea877d5f16e637926ff5cfbd8cb"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3589,7 +3589,7 @@
         "kind": "workflow",
         "id": "architecture-decision",
         "path": "src/workflows.ts",
-        "hash": "d797e83ec6f0e2ec083072699b2897f519c5b4bf24dd3dd181f0a2141655e1f2"
+        "hash": "e3764dbacf950807c66a5827521a57ca61259d355434f99dd07ba9cdf45c1e2b"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3616,7 +3616,7 @@
         "kind": "workflow",
         "id": "architecture-review",
         "path": "src/workflows.ts",
-        "hash": "31d543da1a2b1887e7b2c159b848bf8e5fec6fc915751163facfeab91d5add78"
+        "hash": "262686835e12e7f94305ef22a107b5a496262a19e1ea17fd02be9123dd9d9e90"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3799,7 +3799,7 @@
         "kind": "workflow",
         "id": "prototype",
         "path": "src/workflows.ts",
-        "hash": "f63f00f5cd9d135a1d73b17b8f96970747683bc072a76f341b29c883ffc1ca71"
+        "hash": "661a4a17ef4fbfa411dcdd47691ada56c062d531b02c485c50111ca6680a91ed"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3826,7 +3826,7 @@
         "kind": "workflow",
         "id": "create-epics",
         "path": "src/workflows.ts",
-        "hash": "54b38673417ef0c178d0d7b8255d2e92d23bc01e9bf98a294836fe0ecf5a714b"
+        "hash": "7b863b38deb5cf29386230ca59ec6469093f0b42013ceb96628754d305afe5a5"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3853,7 +3853,7 @@
         "kind": "workflow",
         "id": "create-stories",
         "path": "src/workflows.ts",
-        "hash": "1b86588757e1b0517e7c9633023cbbaf6f02cacef5ccf339a54fc6b1a9c49fd5"
+        "hash": "5bfc452f15cb89551bfca9f662d156f9b9e57af3d922386158f52113ba7c24ef"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3906,7 +3906,7 @@
         "kind": "workflow",
         "id": "sprint-plan",
         "path": "src/workflows.ts",
-        "hash": "394590e0b094016af62bb147b21f7c86d8e1b48a06ffbf6f76d6ee1c91a905e9"
+        "hash": "c41928a8fd5a14568dae21e3598032993893b888b13820497c5118861455ea47"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3933,7 +3933,7 @@
         "kind": "workflow",
         "id": "vertical-slice",
         "path": "src/workflows.ts",
-        "hash": "8436b8298c88e7ae02681e769bb2fd34c9c572a51bee065d5e470025de5c9402"
+        "hash": "23d4cca6a2ace3ab28c42897ec2541cc1b1cfb849846f0db911212a977682914"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3960,7 +3960,7 @@
         "kind": "workflow",
         "id": "sprint-plan",
         "path": "src/workflows.ts",
-        "hash": "394590e0b094016af62bb147b21f7c86d8e1b48a06ffbf6f76d6ee1c91a905e9"
+        "hash": "c41928a8fd5a14568dae21e3598032993893b888b13820497c5118861455ea47"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3987,7 +3987,7 @@
         "kind": "workflow",
         "id": "story-readiness",
         "path": "src/workflows.ts",
-        "hash": "05b3ec57ad525493a0d15818d807e18c5b731ace87f5596b3490507f3b3135ec"
+        "hash": "130e1354b77cd33ff02b4cb121eeddffca54e2a2386ac5adbe03d0d320642954"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4066,7 +4066,7 @@
         "kind": "workflow",
         "id": "story-done",
         "path": "src/workflows.ts",
-        "hash": "b7c8fad68317c8ff885046edf568c0b0de1d6efd8088d2b19674376ff5f7bfbc"
+        "hash": "5de2721f3f4580845abb0c021e4e855e361f7c289d9a5b44421837eb12b6f5d6"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4093,7 +4093,7 @@
         "kind": "workflow",
         "id": "qa-plan",
         "path": "src/workflows.ts",
-        "hash": "7785aa23cfaa25efc834b30390e398214c2d2e47bd1055384d9cde0f197198a0"
+        "hash": "f90bebdfb681b2dcb3d43584f0b910df71cf036a187f7d7e5fcd8857c5226f61"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4224,7 +4224,7 @@
         "kind": "workflow",
         "id": "sprint-status",
         "path": "src/workflows.ts",
-        "hash": "f2f5a3e0062c068539d89a5c0e29e986350fa3857c726145057db18e898fd55e"
+        "hash": "4de395e518c93fda76c1e880d240db194129830d4db187058915bc254e821762"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4251,7 +4251,7 @@
         "kind": "workflow",
         "id": "perf-profile",
         "path": "src/workflows.ts",
-        "hash": "cadda0ad0f7456692d4448f8785dea63df3b8db9cd29abfbc1543c1aa8f9e41d"
+        "hash": "15fc4fd723ca5cc82c71e4e58591fb440a317b805c4905aa0f768506f6bce610"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4382,7 +4382,7 @@
         "kind": "workflow",
         "id": "release-checklist",
         "path": "src/workflows.ts",
-        "hash": "d24e9fe94d91322e4dad0ef0b446071aee46c97be35f1a6931b762a74c7e9e98"
+        "hash": "170ba6f34b7c2a4becb80ce5a761c427fc68c1b05182ff125c18bd042ba8e8fa"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",

@@ -449,6 +449,77 @@ function decisionSummary(rows: ParityRow[]): Record<ParityDecision, number> {
   return summary;
 }
 
+function statusSummary(rows: ParityRow[]): Record<ParityRow["status"], number> {
+  const summary: Record<ParityRow["status"], number> = { todo: 0, implemented: 0, deferred: 0, "out-of-scope": 0 };
+  for (const row of rows) summary[row.status] += 1;
+  return summary;
+}
+
+function remainingGapRows(matrix: ParityMatrix): ParityRow[] {
+  return matrix.rows.filter((row) => row.status === "todo" || row.status === "deferred");
+}
+
+function targetLabel(row: ParityRow): string {
+  return `${row.cgsTarget.kind}:${row.cgsTarget.id || "none"}`;
+}
+
+function renderGapSection(title: string, rows: ParityRow[]): string[] {
+  if (!rows.length) return [`## ${title}`, "", "No remaining rows.", ""];
+  return [
+    `## ${title}`,
+    "",
+    ...rows.map((row) => `- \`${row.sourceId}\` → ${targetLabel(row)} (${row.status}, ${row.decision}); owner: \`${row.ownerPath}\`; tests: \`${row.testPath}\``),
+    ""
+  ];
+}
+
+export function renderRemainingGapTasksMarkdown(matrix: ParityMatrix): string {
+  const remaining = remainingGapRows(matrix);
+  const status = statusSummary(matrix.rows);
+  const remainingByType = new Map<CcgsSourceType, ParityRow[]>();
+  for (const type of ["agent", "workflow-step", "template", "rule", "skill"] as const) {
+    remainingByType.set(type, remaining.filter((row) => row.sourceType === type));
+  }
+  return [
+    "# Remaining CCGS Gap Tasks",
+    "",
+    "Source evidence:",
+    "",
+    `- CCGS reference root: \`${matrix.referenceRoot}\``,
+    "- Generated parity report: `references/ccgs-surface-parity-matrix.json`",
+    "- Generated parity summary: `references/ccgs-surface-parity-matrix.md`",
+    "",
+    "## Current state",
+    "",
+    `- Implemented parity rows: ${status.implemented}`,
+    `- Remaining parity rows: ${remaining.length}`,
+    `- Deferred parity rows: ${status.deferred}`,
+    `- Out-of-scope parity rows: ${status["out-of-scope"]}`,
+    `- Remaining role rows: ${remainingByType.get("agent")?.length ?? 0}`,
+    `- Remaining workflow-step rows: ${remainingByType.get("workflow-step")?.length ?? 0}`,
+    `- Remaining template rows: ${remainingByType.get("template")?.length ?? 0}`,
+    `- Remaining rule rows: ${remainingByType.get("rule")?.length ?? 0}`,
+    `- Remaining skill rows: ${remainingByType.get("skill")?.length ?? 0}`,
+    "",
+    "Prompt-surface metadata completion is not the same as full CCGS product-parity completion. The prompt-surface audit checks local metadata, depth, and source traceability; this report tracks broader CCGS parity rows that still need product decisions or implementation.",
+    "",
+    ...renderGapSection("Role package gaps", remainingByType.get("agent") ?? []),
+    ...renderGapSection("Workflow-step gaps", remainingByType.get("workflow-step") ?? []),
+    ...renderGapSection("Template gaps", remainingByType.get("template") ?? []),
+    ...renderGapSection("Rule adaptation gaps", remainingByType.get("rule") ?? []),
+    ...renderGapSection("Skill gaps", remainingByType.get("skill") ?? []),
+    "## Close-the-gap acceptance criteria",
+    "",
+    "1. Every remaining row is either implemented with tests, explicitly deferred with rationale, or marked out of scope.",
+    "2. Direct role-package gaps update `src/roles.ts` and role/template validation tests.",
+    "3. Workflow-step gaps update workflow catalog, aliases, recipes, or documented non-adoption decisions.",
+    "4. Template gaps add package templates only where workflow output contracts need them.",
+    "5. Rule gaps become Codex-native standards skills, docs, or selected engine-reference context; they are not copied as Claude rule files.",
+    "6. `npm run typecheck`, `npm test`, `npm run validate`, parity audit regeneration, and OpenSpec validation pass.",
+    ""
+  ].join("\n");
+}
+
 export function renderParityMatrixMarkdown(matrix: ParityMatrix): string {
   const summary = decisionSummary(matrix.rows);
   return [
@@ -484,4 +555,5 @@ export function writeParityReports(matrix: ParityMatrix, outDir = "references"):
   mkdirSync(outDir, { recursive: true });
   writeFileSync(path.join(outDir, "ccgs-surface-parity-matrix.json"), `${JSON.stringify(matrix, null, 2)}\n`);
   writeFileSync(path.join(outDir, "ccgs-surface-parity-matrix.md"), renderParityMatrixMarkdown(matrix));
+  writeFileSync(path.join(outDir, "ccgs-remaining-gap-tasks.md"), renderRemainingGapTasksMarkdown(matrix));
 }
