@@ -106,6 +106,16 @@ describe("CCGS parity audit", () => {
     expect(readFileSync(path.join(out, "ccgs-remaining-gap-tasks.md"), "utf8")).toBe(markdown);
   });
 
+  test("accessibility specialist direct role parity is implemented after CCGS-depth upgrade", () => {
+    const root = fixtureRoot();
+    writeFileSync(path.join(root, ".claude", "agents", "accessibility-specialist.md"), `---\nname: accessibility-specialist\ndescription: Accessibility specialist\ntools: Read, Write\nskills: [accessibility-audit]\n---\n\n## Core Responsibilities\n\n- Audit all UI and gameplay for accessibility compliance\n- Define WCAG 2.1 accessibility standards\n\n## Findings Format\n\nFinding | WCAG Criterion | Severity | Recommendation\n`);
+    const matrix = generateParityMatrix(inventoryCcgsSurfaces(root), defaultProjectConfig({ name: "Accessibility Gap Game", engine: "godot", mode: "prototype", nonInteractive: true }));
+    const row = matrix.rows.find((item) => item.sourceType === "agent" && item.sourceId === "accessibility-specialist");
+    expect(row?.status).toBe("implemented");
+    expect(row?.rationale).toContain("upgraded CCGS-depth Codex role package");
+    expect(renderRemainingGapTasksMarkdown(matrix)).not.toContain("`accessibility-specialist` → role:accessibility-specialist");
+  });
+
   test("upgraded template skills are no longer thin wrappers", () => {
     const definitions = templateSkillDefinitions(defaultProjectConfig({ name: "Skill Depth Game", engine: "godot", mode: "prototype", nonInteractive: true }));
     expect(new Set(definitions.map((skill) => skill.name)).size).toBe(definitions.length);

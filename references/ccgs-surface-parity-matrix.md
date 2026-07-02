@@ -24,7 +24,7 @@ Reference root: `/opt/data/repos/Claude-Code-Game-Studios`
 
 | Type | Source | Decision | CGS target | Status | Rationale |
 | --- | --- | --- | --- | --- | --- |
-| agent | accessibility-specialist | adapt | role:accessibility-specialist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | accessibility-specialist | adapt | role:accessibility-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | ai-programmer | adapt | role:ai-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
 | agent | analytics-engineer | merge | role:data-scientist | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
 | agent | art-director | merge | role:senior-game-artist | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |

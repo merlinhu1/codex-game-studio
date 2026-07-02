@@ -20,10 +20,10 @@
         "kind": "role",
         "id": "accessibility-specialist",
         "path": "src/roles.ts",
-        "hash": "9e0b866be878e48c1f3fa3e6b22246ffd0a5301c597c50717ef2f6eb54ee9693"
+        "hash": "ef9f148d32c02c2d316f2a9f17a137c9beb59be651f6997d82d95c701663608c"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -36,7 +36,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",

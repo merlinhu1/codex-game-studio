@@ -8,11 +8,11 @@ Source evidence:
 
 ## Current state
 
-- Implemented parity rows: 118
-- Remaining parity rows: 100
+- Implemented parity rows: 119
+- Remaining parity rows: 99
 - Deferred parity rows: 0
 - Out-of-scope parity rows: 0
-- Remaining role rows: 33
+- Remaining role rows: 32
 - Remaining workflow-step rows: 30
 - Remaining template rows: 26
 - Remaining rule rows: 11
@@ -22,7 +22,6 @@ Prompt-surface metadata completion is not the same as full CCGS product-parity c
 
 ## Role package gaps
 
-- `accessibility-specialist` → role:accessibility-specialist (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
 - `ai-programmer` → role:ai-programmer (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
 - `audio-director` → role:audio-director (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`
 - `community-manager` → role:community-manager (todo, adapt); owner: `src/roles.ts`; tests: `tests/agents-templates.test.ts`

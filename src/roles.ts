@@ -507,7 +507,8 @@ export const ccgsParityUpgradedRoleIds = [
   "data-scientist",
   "senior-game-artist",
   "narrative-designer",
-  "ui-ux-designer"
+  "ui-ux-designer",
+  "accessibility-specialist"
 ] as const satisfies readonly StudioRoleId[];
 
 const ccgsParityRoleDetails: Partial<Record<(typeof ccgsParityUpgradedRoleIds)[number], RoleContractDetails & Pick<CodexRolePackage, "qualityGates" | "reviewChecklist">>> = {
@@ -623,6 +624,44 @@ const ccgsParityRoleDetails: Partial<Record<(typeof ccgsParityUpgradedRoleIds)[n
     outputSchema: ["Player journey", "Screen or HUD spec", "Interaction states", "Accessibility notes", "Implementation handoff"],
     qualityGates: ["User flow covers error and empty states", "Accessibility constraints are named", "Acceptance criteria are implementable"],
     reviewChecklist: ["Journey is testable", "UI states are complete", "Accessibility and implementation risks are clear"]
+  },
+  "accessibility-specialist": {
+    responsibilities: [
+      "Audit UI, gameplay, onboarding, controls, feedback, and content against WCAG 2.1 AA-inspired game accessibility standards.",
+      "Identify concrete visual, audio, motor, cognitive, and input accessibility barriers before they become release blockers.",
+      "Specify scoped accommodations such as contrast fixes, colorblind-safe cues, subtitles, input remapping, timing options, motion reduction, and difficulty assists.",
+      "Produce structured findings with severity, WCAG criterion where applicable, recommendation, verification steps, and owner handoff."
+    ],
+    inputsToInspect: [
+      "AGENTS.md, .codex/studio.json, and the active project role prompt",
+      "Task-relevant UI flows, HUD/menu specs, screenshots, scenes, prefabs, control maps, input actions, tutorial copy, and gameplay feedback files",
+      "Audio/dialogue/subtitle requirements, localization constraints, platform input conventions, and engine accessibility reference notes",
+      "Build, playtest notes, QA reports, or acceptance criteria needed to verify the requested accessibility claim"
+    ],
+    outputSchema: ["Finding", "WCAG criterion", "Severity", "Recommendation", "Verification steps", "Owner handoff", "Scope or deferral note"],
+    qualityGates: [
+      "Every barrier is tied to a concrete player-facing surface, severity, and testable verification step",
+      "Recommendations cover contrast, readability, colorblind safety, subtitles or audio alternatives, input remapping, motor access, and cognitive load when relevant",
+      "Accommodation proposals are scoped to the current milestone and do not invent broad compliance claims without evidence",
+      "Structured findings separate blockers from warnings and identify the implementation or design owner"
+    ],
+    reviewChecklist: [
+      "WCAG criterion or game-specific accessibility standard is cited when applicable",
+      "Visual, audio, motor, cognitive, and input risks were considered for the feature under review",
+      "Recommendations are actionable, testable, and assigned to the right owner"
+    ],
+    collaborationNotes: [
+      "Coordinate UI flow and interaction pattern changes with UI UX Designer and UI Programmer owners.",
+      "Coordinate subtitle, caption, mix, and directional-audio accommodations with Audio Director and Sound Designer owners.",
+      "Coordinate verification coverage with QA Playtester and text expansion or readability risks with Localization Lead.",
+      "Escalate release-blocking accessibility barriers to Producer with severity, scope, and deferral impact."
+    ],
+    stopConditions: [
+      "Stop before claiming accessibility compliance when UI/control/audio evidence, target platform, or verification access is missing.",
+      "Stop when a requested accommodation requires creative, UI, audio, localization, or implementation ownership that has not been approved or scoped.",
+      "Stop when the only possible recommendation would be generic accessibility advice not tied to a concrete game surface."
+    ],
+    handoffTemplate: "Report structured findings, WCAG or game-specific criteria, severity, recommendation, verification steps, owner handoff, and any scoped deferrals for Accessibility Specialist work."
   }
 };
 

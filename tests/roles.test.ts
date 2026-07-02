@@ -82,6 +82,29 @@ describe("Codex role packages", () => {
 
 
 
+  test("accessibility specialist exposes CCGS-depth accessibility contract", () => {
+    const role = rolePackages["accessibility-specialist"];
+    const contractText = [
+      ...role.responsibilities,
+      ...role.inputsToInspect,
+      ...(role.outputSchema ?? []),
+      ...role.qualityGates,
+      ...role.collaborationNotes,
+      ...role.stopConditions,
+      role.handoffTemplate
+    ].join("\n");
+
+    expect(role.outputSchema).toEqual(expect.arrayContaining(["Finding", "WCAG criterion", "Severity", "Recommendation", "Verification steps", "Owner handoff"]));
+    for (const phrase of ["WCAG", "contrast", "colorblind", "subtitle", "input remapping", "motor", "cognitive", "structured findings"]) {
+      expect(contractText).toContain(phrase);
+    }
+    expect(contractText).toMatch(/UI Programmer|ui-programmer/);
+    expect(contractText).toMatch(/Audio Director|audio-director|Sound Designer|sound-designer/);
+    expect(contractText).toMatch(/QA Playtester|qa-playtester/);
+    expect(contractText).toMatch(/Localization Lead|localization-lead/);
+    expect(contractText).toMatch(/Producer|producer/);
+  });
+
   test("role packages expose structured compact role contracts", () => {
     for (const role of Object.values(rolePackages)) {
       expect(role.responsibilities.length).toBeGreaterThanOrEqual(2);
