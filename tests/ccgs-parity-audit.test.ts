@@ -7,6 +7,53 @@ import { generateParityMatrix, inventoryCcgsSurfaces, renderParityMatrixMarkdown
 import { defaultProjectConfig } from "../src/projects.js";
 import { templateSkillDefinitions } from "../src/skills.js";
 
+const firstBatchWorkflowGapIds = [
+  "engine-setup",
+  "game-concept",
+  "design-review-concept",
+  "art-bible",
+  "map-systems",
+  "design-system",
+  "design-review",
+  "review-all-gdds",
+  "consistency-check",
+  "create-architecture",
+  "control-manifest",
+  "accessibility-doc"
+] as const;
+
+const laterWorkflowGapIds = [
+  "entity-inventory",
+  "asset-spec",
+  "ux-design",
+  "ux-review",
+  "test-setup",
+  "implement",
+  "code-review",
+  "bug-report",
+  "retrospective",
+  "team-feature",
+  "scope-check",
+  "balance-check",
+  "asset-audit",
+  "playtest-polish",
+  "team-polish",
+  "patch-notes",
+  "changelog",
+  "launch-checklist"
+] as const;
+
+function workflowCatalogYaml(ids: readonly string[]): string {
+  return [
+    "phases:",
+    "  concept:",
+    "    label: \"Concept\"",
+    "    next_phase: systems-design",
+    "    steps:",
+    ...ids.map((id) => `      - id: ${id}\n        name: \"${id}\"\n        command: /${id}\n        required: true\n        repeatable: ${id === "design-system" ? "true" : "false"}\n        artifact:\n          glob: \"design/${id}.md\"\n          pattern: \"# ${id}\"`)
+  ].join("\n");
+}
+
 function fixtureRoot(): string {
   const root = mkdtempSync(path.join(tmpdir(), "ccgs-fixture-"));
   mkdirSync(path.join(root, ".claude", "agents"), { recursive: true });
@@ -46,7 +93,8 @@ describe("CCGS parity audit", () => {
     expect(matrix.rows.find((row) => row.sourceId === "writer")?.status).toBe("implemented");
     expect(matrix.rows.find((row) => row.sourceId === "vertical-slice")?.cgsTarget).toEqual(expect.objectContaining({ kind: "skill", id: "cgs-vertical-slice", path: "src/skills.ts", hash: expect.stringMatching(/^[a-f0-9]{64}$/) }));
     expect(matrix.rows.find((row) => row.sourceId === "localize")?.cgsTarget).toEqual(expect.objectContaining({ kind: "skill", id: "cgs-localize", path: "src/skills.ts" }));
-    expect(matrix.rows.find((row) => row.sourceId === "game-concept")?.decision).toBe("adopt");
+    expect(matrix.rows.find((row) => row.sourceId === "game-concept")?.decision).toBe("adapt");
+    expect(matrix.rows.find((row) => row.sourceId === "game-concept")?.status).toBe("implemented");
     expect(validateParityMatrix(matrix)).toEqual([]);
     const markdown = renderParityMatrixMarkdown(matrix);
     expect(markdown).toContain("## Decision Summary");
@@ -87,12 +135,12 @@ describe("CCGS parity audit", () => {
     matrix.counts.total += 2;
 
     const markdown = renderRemainingGapTasksMarkdown(matrix);
-    expect(markdown).toContain("- Implemented parity rows: 5");
-    expect(markdown).toContain("- Remaining parity rows: 3");
+    expect(markdown).toContain("- Implemented parity rows: 6");
+    expect(markdown).toContain("- Remaining parity rows: 2");
     expect(markdown).toContain("## Role package gaps");
     expect(markdown).toContain("No remaining rows.");
     expect(markdown).toContain("## Workflow-step gaps");
-    expect(markdown).toContain("`game-concept` → workflow:game-concept");
+    expect(markdown).toContain("No remaining rows.");
     expect(markdown).toContain("## Template gaps");
     expect(markdown).toContain("`missing-template` → template:missing-template");
     expect(markdown).toContain("## Rule adaptation gaps");
@@ -196,6 +244,19 @@ Summary | Risks | Verification | Handoff
     expect(engineRows.every((row) => row.status === "implemented" && row.cgsTarget.kind === "role")).toBe(true);
     const report = renderRemainingGapTasksMarkdown(matrix);
     for (const roleId of engineSubSpecialistIds) expect(report).not.toContain(`\`${roleId}\` → role:${roleId}`);
+  });
+
+  test("first CCGS workflow-step batch is implemented while later workflow gaps remain queued", () => {
+    const root = fixtureRoot();
+    writeFileSync(path.join(root, ".claude", "docs", "workflow-catalog.yaml"), workflowCatalogYaml([...firstBatchWorkflowGapIds, ...laterWorkflowGapIds]));
+    const matrix = generateParityMatrix(inventoryCcgsSurfaces(root), defaultProjectConfig({ name: "Workflow Gap Game", engine: "godot", mode: "prototype", nonInteractive: true }));
+    const workflowRows = matrix.rows.filter((row) => row.sourceType === "workflow-step");
+    const remainingWorkflowRows = workflowRows.filter((row) => row.status !== "implemented");
+
+    expect(workflowRows.filter((row) => firstBatchWorkflowGapIds.includes(row.sourceId as (typeof firstBatchWorkflowGapIds)[number])).every((row) => row.status === "implemented" && row.cgsTarget.kind === "workflow")).toBe(true);
+    expect(remainingWorkflowRows).toHaveLength(laterWorkflowGapIds.length);
+    for (const id of firstBatchWorkflowGapIds) expect(renderRemainingGapTasksMarkdown(matrix)).not.toContain(`\`${id}\` → workflow:${id}`);
+    for (const id of laterWorkflowGapIds) expect(renderRemainingGapTasksMarkdown(matrix)).toContain(`\`${id}\` → workflow:${id}`);
   });
 
   test("upgraded template skills are no longer thin wrappers", () => {

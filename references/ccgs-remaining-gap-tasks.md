@@ -8,12 +8,12 @@ Source evidence:
 
 ## Current state
 
-- Implemented parity rows: 151
-- Remaining parity rows: 67
+- Implemented parity rows: 163
+- Remaining parity rows: 55
 - Deferred parity rows: 0
 - Out-of-scope parity rows: 0
 - Remaining role rows: 0
-- Remaining workflow-step rows: 30
+- Remaining workflow-step rows: 18
 - Remaining template rows: 26
 - Remaining rule rows: 11
 - Remaining skill rows: 0
@@ -26,18 +26,6 @@ No remaining rows.
 
 ## Workflow-step gaps
 
-- `engine-setup` → workflow:engine-setup (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `game-concept` → workflow:game-concept (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `design-review-concept` → workflow:design-review-concept (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `art-bible` → workflow:art-bible (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `map-systems` → workflow:map-systems (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `design-system` → workflow:design-system (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `design-review` → workflow:design-review (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `review-all-gdds` → workflow:review-all-gdds (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `consistency-check` → workflow:consistency-check (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `create-architecture` → workflow:create-architecture (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `control-manifest` → workflow:control-manifest (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `accessibility-doc` → workflow:accessibility-doc (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
 - `entity-inventory` → workflow:entity-inventory (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
 - `asset-spec` → workflow:asset-spec (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
 - `ux-design` → workflow:ux-design (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`

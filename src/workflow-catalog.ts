@@ -34,10 +34,11 @@ export const workflowCatalog: { phases: WorkflowCatalogPhase[] } = {
       nextPhase: "systems-design",
       steps: [
         { id: "brainstorm", label: "Brainstorm", command: "./codex-game-studio run creative-director", required: false, description: "Explore fantasy, verbs, pillars, audience, and scope tiers." },
-        { id: "setup-engine", label: "Engine Setup", command: "use skill cgs-setup-engine", required: true, artifact: { path: ".codex/studio.json", pattern: "\"engine\"" }, description: "Configure engine and version." },
-        { id: "game-concept", label: "Game Concept", command: "use skill cgs-brainstorm", required: true, artifact: { path: "design/gdd.md" }, description: "Capture concept, pillars, and initial player promise." },
-        { id: "art-bible", label: "Art Bible", command: "use skill cgs-art-bible", required: false, artifact: { path: "design/art/art-bible.md" }, description: "Define visual identity and asset constraints." },
-        { id: "map-systems", label: "Systems Map", command: "use skill cgs-map-systems", required: true, artifact: { path: "design/gdd.md", pattern: "System" }, description: "Map systems and dependencies." }
+        { id: "engine-setup", label: "Engine Setup", command: "./codex-game-studio run engine-setup", required: true, artifact: { path: ".codex/studio.json", pattern: "\"engine\"" }, description: "Configure engine, version, project structure, and validation path." },
+        { id: "game-concept", label: "Game Concept", command: "./codex-game-studio run game-concept", required: true, artifact: { path: "design/gdd.md" }, description: "Capture concept, pillars, and initial player promise." },
+        { id: "design-review-concept", label: "Concept Design Review", command: "./codex-game-studio run design-review-concept", required: false, artifact: { path: "design/gdd.md", pattern: "Pillar|Scope|Risk" }, description: "Review the concept before deeper systems work." },
+        { id: "art-bible", label: "Art Bible", command: "./codex-game-studio run art-bible", required: false, artifact: { path: "design/art/art-bible.md" }, description: "Define visual identity and asset constraints." },
+        { id: "map-systems", label: "Systems Map", command: "./codex-game-studio run map-systems", required: true, artifact: { path: "design/gdd.md", pattern: "System" }, description: "Map systems and dependencies." }
       ]
     },
     {
@@ -46,10 +47,14 @@ export const workflowCatalog: { phases: WorkflowCatalogPhase[] } = {
       description: "Turn the concept into implementable systems, UX, and architecture.",
       nextPhase: "technical-setup",
       steps: [
-        { id: "design-system", label: "System GDDs", command: "use skill cgs-design-system", required: true, repeatable: true, artifact: { path: "design/gdd.md" }, description: "Author or update per-system GDD content." },
-        { id: "ux-design", label: "UX Design", command: "use skill cgs-ux-design", required: false, artifact: { path: "design/ux/ux-spec.md" }, description: "Document player journeys, HUD, menus, and accessibility." },
-        { id: "create-architecture", label: "Architecture", command: "use skill cgs-create-architecture", required: true, artifact: { path: "docs/architecture/README.md" }, description: "Define technical architecture and implementation boundaries." },
-        { id: "design-review", label: "Design Review", command: "use skill cgs-design-review", required: false, description: "Review design consistency and scope risk." }
+        { id: "design-system", label: "System GDDs", command: "./codex-game-studio run design-system", required: true, repeatable: true, artifact: { path: "design/gdd.md" }, description: "Author or update per-system GDD content." },
+        { id: "design-review", label: "Design Review", command: "./codex-game-studio run design-review", required: false, artifact: { path: "design/gdd.md", pattern: "Risk|Scope|System" }, description: "Review design consistency and scope risk." },
+        { id: "review-all-gdds", label: "Review All GDDs", command: "./codex-game-studio run review-all-gdds", required: false, artifact: { path: "design/gdd.md", pattern: "#|System" }, description: "Review all design documents for contradictions and missing ownership." },
+        { id: "consistency-check", label: "Consistency Check", command: "./codex-game-studio run consistency-check", required: false, artifact: { path: "production/session-state/active.md" }, description: "Check cross-surface consistency before implementation planning." },
+        { id: "create-architecture", label: "Architecture", command: "./codex-game-studio run create-architecture", required: true, artifact: { path: "docs/architecture/README.md" }, description: "Define technical architecture and implementation boundaries." },
+        { id: "control-manifest", label: "Control Manifest", command: "./codex-game-studio run control-manifest", required: false, artifact: { path: "design/ux/controls.md" }, description: "Document inputs, remapping, prompts, devices, and accessibility constraints." },
+        { id: "accessibility-doc", label: "Accessibility Requirements", command: "./codex-game-studio run accessibility-doc", required: false, artifact: { path: "design/ux/accessibility.md" }, description: "Document accessibility requirements and verification paths." },
+        { id: "ux-design", label: "UX Design", command: "use skill cgs-ux-design", required: false, artifact: { path: "design/ux/ux-spec.md" }, description: "Document player journeys, HUD, menus, and accessibility." }
       ]
     },
     {

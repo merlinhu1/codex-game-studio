@@ -28,6 +28,18 @@ export type WorkflowId =
   | "playtest"
   | "market-analysis"
   | "analytics-setup"
+  | "engine-setup"
+  | "game-concept"
+  | "design-review-concept"
+  | "art-bible"
+  | "map-systems"
+  | "design-system"
+  | "design-review"
+  | "review-all-gdds"
+  | "consistency-check"
+  | "create-architecture"
+  | "control-manifest"
+  | "accessibility-doc"
   | "design-spec"
   | "game-feel-tuning"
   | "art-direction"
@@ -133,6 +145,133 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     objective: "Define analytics events, success metrics, experiment plans, and evidence loops for the current project.",
     templateIds: ["analytics_setup"],
     cliAlias: "analytics"
+  }),
+  "engine-setup": workflow({
+    id: "engine-setup",
+    role: "technical-director",
+    phase: "plan",
+    category: "onboarding-discovery",
+    gapCoverage: ["engine setup", "project configuration"],
+    objective: "Confirm the selected engine, version, repository structure, run commands, and first validation path before design or implementation work proceeds.",
+    templateIds: ["engine_setup", "project_config"],
+    cliAlias: "engine-setup"
+  }),
+  "game-concept": workflow({
+    id: "game-concept",
+    role: "creative-director",
+    phase: "plan",
+    category: "onboarding-discovery",
+    gapCoverage: ["game concept", "core pillars"],
+    objective: "Turn the game idea into a concise concept with player fantasy, pillars, target audience, scope tier, and initial risks.",
+    templateIds: ["gdd", "pitch_document", "player_journey"],
+    cliAlias: "game-concept"
+  }),
+  "design-review-concept": workflow({
+    id: "design-review-concept",
+    role: "senior-game-designer",
+    phase: "review",
+    category: "design-architecture",
+    gapCoverage: ["concept review", "pillar and scope validation"],
+    objective: "Review the concept for coherent player promise, pillars, audience fit, production scope, and design risks before deeper systems work.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["gdd", "risk_register"],
+    cliAlias: "design-review-concept"
+  }),
+  "art-bible": workflow({
+    id: "art-bible",
+    role: "senior-game-artist",
+    phase: "plan",
+    category: "design-architecture",
+    gapCoverage: ["art bible", "visual production constraints"],
+    objective: "Define the art bible with visual pillars, references, asset constraints, style rules, production risks, and review criteria.",
+    templateIds: ["art_bible", "risk_register"],
+    cliAlias: "art-bible"
+  }),
+  "map-systems": workflow({
+    id: "map-systems",
+    role: "systems-designer",
+    phase: "plan",
+    category: "design-architecture",
+    gapCoverage: ["systems map", "system dependency mapping"],
+    objective: "Map core gameplay, economy, progression, content, UI, and technical systems with dependencies, owners, and validation signals.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["gdd", "technical_design", "architecture_traceability"],
+    cliAlias: "map-systems"
+  }),
+  "design-system": workflow({
+    id: "design-system",
+    role: "systems-designer",
+    phase: "plan",
+    category: "design-architecture",
+    gapCoverage: ["system design", "per-system GDD"],
+    objective: "Author or update a system design with player-facing rules, data model, edge cases, dependencies, tuning hooks, and acceptance criteria.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["feature_spec", "economy_model", "difficulty_curve"],
+    cliAlias: "design-system"
+  }),
+  "design-review": workflow({
+    id: "design-review",
+    role: "senior-game-designer",
+    phase: "review",
+    category: "design-architecture",
+    gapCoverage: ["design review", "scope and consistency review"],
+    objective: "Review design docs for player promise, systemic consistency, production scope, edge cases, and handoff readiness.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["gdd", "risk_register", "handoff"],
+    cliAlias: "design-review"
+  }),
+  "review-all-gdds": workflow({
+    id: "review-all-gdds",
+    role: "senior-game-designer",
+    phase: "review",
+    category: "design-architecture",
+    gapCoverage: ["GDD review", "cross-document consistency"],
+    objective: "Review all GDD and design artifacts for contradictions, missing systems, stale assumptions, and implementation blockers.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["gdd", "handoff", "risk_register"],
+    cliAlias: "review-all-gdds"
+  }),
+  "consistency-check": workflow({
+    id: "consistency-check",
+    role: "studio-orchestrator",
+    phase: "review",
+    category: "team-coordination",
+    gapCoverage: ["consistency check", "cross-surface contradiction review"],
+    objective: "Check design, production, architecture, UI, and validation surfaces for contradictions, missing owners, and stale assumptions.",
+    extraContextFiles: ["documentation/design/gdd.md", "documentation/production/timeline.md"],
+    templateIds: ["handoff", "risk_register"],
+    cliAlias: "consistency-check"
+  }),
+  "create-architecture": workflow({
+    id: "create-architecture",
+    role: "technical-director",
+    phase: "plan",
+    category: "design-architecture",
+    gapCoverage: ["architecture creation", "technical boundaries"],
+    objective: "Create technical architecture with engine modules, data flow, integration points, risk areas, and verification strategy.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["technical_design", "architecture_traceability", "adr"],
+    cliAlias: "create-architecture"
+  }),
+  "control-manifest": workflow({
+    id: "control-manifest",
+    role: "ui-ux-designer",
+    phase: "plan",
+    category: "localization-accessibility",
+    gapCoverage: ["control manifest", "input mapping documentation"],
+    objective: "Document controls, input devices, remapping requirements, UI prompts, accessibility constraints, and verification paths.",
+    templateIds: ["ux_spec", "accessibility_requirements", "player_journey"],
+    cliAlias: "control-manifest"
+  }),
+  "accessibility-doc": workflow({
+    id: "accessibility-doc",
+    role: "accessibility-specialist",
+    phase: "plan",
+    category: "localization-accessibility",
+    gapCoverage: ["accessibility documentation", "accommodation requirements"],
+    objective: "Document accessibility requirements across visual, audio, motor, cognitive, input, difficulty, and verification concerns.",
+    templateIds: ["accessibility_requirements", "ux_spec", "test_plan"],
+    cliAlias: "accessibility-doc"
   }),
   "design-spec": workflow({
     id: "design-spec",

@@ -1,7 +1,7 @@
 {
   "local": {
     "agents": 50,
-    "workflows": 31,
+    "workflows": 43,
     "skills": 79
   },
   "upstream": {
@@ -1700,6 +1700,34 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/accessibility-doc.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a accessibility doc request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/analytics-setup.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1778,6 +1806,34 @@
       },
       "discoveryMetadata": {
         "text": "Provide a architecture review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/art-bible.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a art bible request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -1868,6 +1924,90 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/consistency-check.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 85,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a consistency check request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/control-manifest.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a control manifest request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/create-architecture.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a create architecture request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/create-epics.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1924,6 +2064,62 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/design-review-concept.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a design review concept request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/design-review.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a design review request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/design-spec.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1946,6 +2142,90 @@
       },
       "discoveryMetadata": {
         "text": "Provide a design spec request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/design-system.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a design system request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/engine-setup.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a engine setup request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/game-concept.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a game concept request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -2058,6 +2338,34 @@
       },
       "discoveryMetadata": {
         "text": "Provide a localization plan request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/map-systems.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a map systems request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -2310,6 +2618,34 @@
       },
       "discoveryMetadata": {
         "text": "Provide a release checklist request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/review-all-gdds.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a review all gdds request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
