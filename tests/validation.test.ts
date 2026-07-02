@@ -223,10 +223,13 @@ describe("validation", () => {
 
     expect(validateProject(projectRoot).filter((c) => c.status === "fail")).toEqual([]);
     rmSync(path.join(projectRoot, ".codex", "agents", "godot-specialist.toml"));
+    rmSync(path.join(projectRoot, ".codex", "agents", "godot-gdscript-specialist.toml"));
 
     const failures = validateProject(projectRoot).filter((c) => c.status === "fail");
     expect(failures.map((f) => f.id)).toContain("codex.agent.godot-specialist.exists");
+    expect(failures.map((f) => f.id)).toContain("codex.agent.godot-gdscript-specialist.exists");
     expect(failures.map((f) => f.id)).not.toContain("codex.agent.unity-specialist.absent");
+    expect(failures.map((f) => f.id)).not.toContain("codex.agent.unity-dots-specialist.exists");
   });
 
   test("template surface validation detects malformed tracked agents and workflows", () => {

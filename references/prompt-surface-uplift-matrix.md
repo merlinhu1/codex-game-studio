@@ -1,6 +1,6 @@
 # Prompt Surface Uplift Matrix
 
-Local agents: 38; workflows: 31; skills: 79.
+Local agents: 50; workflows: 31; skills: 79.
 Upstream agents: 49; skills: 73.
 Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 
@@ -18,6 +18,10 @@ Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 | agent | `.codex/agents/game-designer.toml` | `.claude/agents/game-designer.md` | adapt | complete | 90 | 241 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/game-feel-designer.toml` |  | defer | deferred | 81 |  | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/gameplay-programmer.toml` | `.claude/agents/gameplay-programmer.md` | adapt | complete | 94 | 133 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/godot-csharp-specialist.toml` | `.claude/agents/godot-csharp-specialist.md` | adapt | complete | 94 | 407 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/godot-gdextension-specialist.toml` | `.claude/agents/godot-gdextension-specialist.md` | adapt | complete | 94 | 317 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/godot-gdscript-specialist.toml` | `.claude/agents/godot-gdscript-specialist.md` | adapt | complete | 94 | 272 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/godot-shader-specialist.toml` | `.claude/agents/godot-shader-specialist.md` | adapt | complete | 94 | 265 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/godot-specialist.toml` | `.claude/agents/godot-specialist.md` | adapt | complete | 81 | 193 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/level-designer.toml` | `.claude/agents/level-designer.md` | adapt | complete | 81 | 115 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/live-ops-designer.toml` | `.claude/agents/live-ops-designer.md` | adapt | complete | 81 | 184 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
@@ -38,9 +42,17 @@ Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 | agent | `.codex/agents/technical-artist.toml` | `.claude/agents/technical-artist.md` | adapt | complete | 82 | 108 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/technical-director.toml` | `.claude/agents/technical-director.md` | adapt | complete | 90 | 159 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/tools-programmer.toml` | `.claude/agents/tools-programmer.md` | adapt | complete | 82 | 101 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/ue-blueprint-specialist.toml` | `.claude/agents/ue-blueprint-specialist.md` | adapt | complete | 94 | 151 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/ue-gas-specialist.toml` | `.claude/agents/ue-gas-specialist.md` | adapt | complete | 94 | 133 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/ue-replication-specialist.toml` | `.claude/agents/ue-replication-specialist.md` | adapt | complete | 94 | 143 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/ue-umg-specialist.toml` | `.claude/agents/ue-umg-specialist.md` | adapt | complete | 94 | 150 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/ui-programmer.toml` | `.claude/agents/ui-programmer.md` | adapt | complete | 82 | 102 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/ui-ux-designer.toml` |  | defer | deferred | 90 |  | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/unity-addressables-specialist.toml` | `.claude/agents/unity-addressables-specialist.md` | adapt | complete | 94 | 165 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/unity-dots-specialist.toml` | `.claude/agents/unity-dots-specialist.md` | adapt | complete | 94 | 148 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/unity-shader-specialist.toml` | `.claude/agents/unity-shader-specialist.md` | adapt | complete | 94 | 178 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/unity-specialist.toml` | `.claude/agents/unity-specialist.md` | adapt | complete | 81 | 184 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/unity-ui-specialist.toml` | `.claude/agents/unity-ui-specialist.md` | adapt | complete | 94 | 217 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/unreal-specialist.toml` | `.claude/agents/unreal-specialist.md` | adapt | complete | 81 | 172 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/world-builder.toml` | `.claude/agents/world-builder.md` | adapt | complete | 81 | 111 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/writer.toml` | `.claude/agents/writer.md` | adapt | complete | 80 | 104 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |

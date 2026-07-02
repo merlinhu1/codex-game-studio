@@ -76,8 +76,20 @@ describe("project workflow", () => {
     expect(agent).toContain("developer_instructions = ");
     expect(existsSync(path.join(projectRoot, ".codex", "agents", "gameplay-programmer.md"))).toBe(false);
     expect(existsSync(path.join(projectRoot, ".codex", "agents", "godot-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "godot-gdscript-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "godot-csharp-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "godot-shader-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "godot-gdextension-specialist.toml"))).toBe(true);
     expect(existsSync(path.join(projectRoot, ".codex", "agents", "unity-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unity-dots-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unity-shader-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unity-addressables-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "unity-ui-specialist.toml"))).toBe(true);
     expect(existsSync(path.join(projectRoot, ".codex", "agents", "unreal-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "ue-gas-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "ue-blueprint-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "ue-replication-specialist.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "ue-umg-specialist.toml"))).toBe(true);
     expect(existsSync(path.join(projectRoot, ".codex", "hooks.json"))).toBe(false);
     expect(existsSync(path.join(projectRoot, ".codex", "rules"))).toBe(false);
 

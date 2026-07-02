@@ -37,7 +37,11 @@ export type EngineReferenceCheck = {
   path?: string;
 };
 
-const programmingRoles: StudioRoleId[] = ["gameplay-programmer", "engine-programmer", "tools-programmer", "technical-artist"];
+const godotRoles: StudioRoleId[] = ["godot-specialist", "godot-gdscript-specialist", "godot-csharp-specialist", "godot-shader-specialist", "godot-gdextension-specialist"];
+const unityRoles: StudioRoleId[] = ["unity-specialist", "unity-dots-specialist", "unity-shader-specialist", "unity-addressables-specialist", "unity-ui-specialist"];
+const unrealRoles: StudioRoleId[] = ["unreal-specialist", "ue-gas-specialist", "ue-blueprint-specialist", "ue-replication-specialist", "ue-umg-specialist"];
+const engineScopedRoles: Record<EngineReferenceId, StudioRoleId[]> = { godot: godotRoles, unity: unityRoles, unreal: unrealRoles };
+const programmingRoles: StudioRoleId[] = ["gameplay-programmer", "engine-programmer", "tools-programmer", "technical-artist", ...godotRoles, ...unityRoles, ...unrealRoles];
 const qaRoles: StudioRoleId[] = ["qa-playtester", "performance-analyst"];
 const designRoles: StudioRoleId[] = ["game-designer", "senior-game-designer", "game-feel-designer", "systems-designer", "level-designer"];
 const artRoles: StudioRoleId[] = ["senior-game-artist", "technical-artist", "ui-ux-designer"];
@@ -67,18 +71,18 @@ const moduleReferences: EngineReferencePrompt[] = [
 
 const pluginReferences: Record<EngineReferenceId, EngineReferencePrompt[]> = {
   godot: [
-    { path: "plugins.md", reason: "Godot addons, asset library, and GDExtension guidance", roles: ["tools-programmer", "engine-programmer", "godot-specialist"], keywords: ["plugin", "addon", "gdextension", "asset library", "tool script"], required: false }
+    { path: "plugins.md", reason: "Godot addons, asset library, and GDExtension guidance", roles: ["tools-programmer", "engine-programmer", "godot-specialist", "godot-gdextension-specialist"], keywords: ["plugin", "addon", "gdextension", "asset library", "tool script", "native", "binding"], required: false }
   ],
   unity: [
-    { path: "plugins.md", reason: "Unity package manager and verified package guidance", roles: ["tools-programmer", "engine-programmer", "unity-specialist"], keywords: ["plugin", "package", "upm", "manifest"], required: false },
-    { path: "plugins/addressables.md", reason: "Unity Addressables asset loading and content update guidance", roles: ["tools-programmer", "engine-programmer", "technical-artist", "unity-specialist"], keywords: ["addressables", "assetbundle", "asset bundle", "content update", "remote content", "asset loading"], required: false },
+    { path: "plugins.md", reason: "Unity package manager and verified package guidance", roles: ["tools-programmer", "engine-programmer", "unity-specialist", "unity-addressables-specialist", "unity-dots-specialist"], keywords: ["plugin", "package", "upm", "manifest"], required: false },
+    { path: "plugins/addressables.md", reason: "Unity Addressables asset loading and content update guidance", roles: ["tools-programmer", "engine-programmer", "technical-artist", "unity-specialist", "unity-addressables-specialist"], keywords: ["addressables", "assetbundle", "asset bundle", "content update", "remote content", "asset loading", "memory"], required: false },
     { path: "plugins/cinemachine.md", reason: "Unity Cinemachine camera and follow-target guidance", roles: ["gameplay-programmer", "technical-artist", "game-feel-designer", "unity-specialist"], keywords: ["cinemachine", "camera", "follow", "look at", "confiner", "dolly"], required: false },
-    { path: "plugins/dots.md", reason: "Unity DOTS, ECS, Burst, and Jobs guidance", roles: ["engine-programmer", "performance-analyst", "unity-specialist"], keywords: ["dots", "ecs", "entities", "burst", "jobs", "job system", "data-oriented"], required: false }
+    { path: "plugins/dots.md", reason: "Unity DOTS, ECS, Burst, and Jobs guidance", roles: ["engine-programmer", "performance-analyst", "unity-specialist", "unity-dots-specialist"], keywords: ["dots", "ecs", "entities", "burst", "jobs", "job system", "data-oriented"], required: false }
   ],
   unreal: [
-    { path: "plugins.md", reason: "Unreal plugin, module, and marketplace guidance", roles: ["tools-programmer", "engine-programmer", "unreal-specialist"], keywords: ["plugin", "module", "marketplace"], required: false },
-    { path: "plugins/gas.md", reason: "Unreal Gameplay Ability System guidance", roles: ["gameplay-programmer", "systems-designer", "network-programmer", "unreal-specialist"], keywords: ["gas", "gameplay ability", "ability system", "attribute", "effect", "tag"], required: false },
-    { path: "plugins/common-ui.md", reason: "Unreal Common UI input routing and screen stack guidance", roles: ["ui-programmer", "ui-ux-designer", "accessibility-specialist", "unreal-specialist"], keywords: ["common ui", "commonui", "widget", "input routing", "screen stack", "ui"], required: false },
+    { path: "plugins.md", reason: "Unreal plugin, module, and marketplace guidance", roles: ["tools-programmer", "engine-programmer", "unreal-specialist", "ue-blueprint-specialist"], keywords: ["plugin", "module", "marketplace"], required: false },
+    { path: "plugins/gas.md", reason: "Unreal Gameplay Ability System guidance", roles: ["gameplay-programmer", "systems-designer", "network-programmer", "unreal-specialist", "ue-gas-specialist"], keywords: ["gas", "gameplay ability", "ability system", "attribute", "effect", "tag", "prediction"], required: false },
+    { path: "plugins/common-ui.md", reason: "Unreal Common UI input routing and screen stack guidance", roles: ["ui-programmer", "ui-ux-designer", "accessibility-specialist", "unreal-specialist", "ue-umg-specialist"], keywords: ["common ui", "commonui", "widget", "input routing", "screen stack", "ui", "umg"], required: false },
     { path: "plugins/pcg.md", reason: "Unreal PCG procedural content guidance", roles: ["level-designer", "technical-artist", "tools-programmer", "unreal-specialist"], keywords: ["pcg", "procedural", "generation", "scatter", "graph"], required: false }
   ]
 };
@@ -105,7 +109,7 @@ function pack(engine: EngineReferenceId): EngineReferencePack {
       { path: "gameplay.md", reason: `${engine} gameplay implementation reference`, roles: programmingRoles, required: false },
       { path: "deprecated-apis.md", reason: `${engine} deprecated API avoidance guidance`, roles: [...programmingRoles, ...qaRoles], keywords: ["deprecated", "deprecation", "obsolete", "upgrade", "migration"], required: false },
       { path: "breaking-changes.md", reason: `${engine} breaking-change and migration guidance`, roles: [...programmingRoles, ...qaRoles], keywords: ["breaking", "migration", "upgrade", "version", "compatibility"], required: false },
-      { path: "specialist.md", reason: `${engine} specialist role reference`, roles: [`${engine}-specialist` as StudioRoleId], required: false },
+      { path: "specialist.md", reason: `${engine} specialist role reference`, roles: engineScopedRoles[engine], required: false },
       ...moduleReferences,
       ...pluginReferences[engine]
     ],

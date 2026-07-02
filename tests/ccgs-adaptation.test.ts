@@ -16,7 +16,7 @@ describe("curated CCGS adaptation registry", () => {
       expect(studioRoleIds).not.toContain(legacy as never);
     }
     expect(ccgsRoleAdaptations.find((item) => item.sourceId === "lead-programmer")?.decision).toBe("built-in-add-candidate");
-    expect(ccgsRoleAdaptations.find((item) => item.sourceId === "godot-gdscript-specialist")?.decision).toBe("specialty-context");
+    expect(ccgsRoleAdaptations.find((item) => item.sourceId === "godot-gdscript-specialist")?.decision).toBe("built-in-existing");
   });
 
   test("maps team skills to recipes and skill-maintenance surfaces out of scope", () => {

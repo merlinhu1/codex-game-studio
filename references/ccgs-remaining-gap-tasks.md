@@ -8,11 +8,11 @@ Source evidence:
 
 ## Current state
 
-- Implemented parity rows: 139
-- Remaining parity rows: 79
+- Implemented parity rows: 151
+- Remaining parity rows: 67
 - Deferred parity rows: 0
 - Out-of-scope parity rows: 0
-- Remaining role rows: 12
+- Remaining role rows: 0
 - Remaining workflow-step rows: 30
 - Remaining template rows: 26
 - Remaining rule rows: 11
@@ -22,18 +22,7 @@ Prompt-surface metadata completion is not the same as full CCGS product-parity c
 
 ## Role package gaps
 
-- `godot-csharp-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `godot-gdextension-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `godot-gdscript-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `godot-shader-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `ue-blueprint-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `ue-gas-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `ue-replication-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `ue-umg-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `unity-addressables-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `unity-dots-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `unity-shader-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
-- `unity-ui-specialist` → none:none (todo, defer); owner: `references/ccgs-surface-parity-matrix.json`; tests: `tests/ccgs-parity-audit.test.ts`
+No remaining rows.
 
 ## Workflow-step gaps
 

@@ -341,12 +341,13 @@
       "sourcePath": ".claude/agents/godot-csharp-specialist.md",
       "sourceHash": "b15ca77993fb986245b4ca4e9ac7822f4d74adfd3a352d4e331a0c24d08b82fb",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "godot-csharp-specialist",
+        "path": "src/roles.ts",
+        "hash": "8427f40d39e4fd8681ec320c33b57613b36947ca1e74fd9d39982a1723299d7f"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -357,9 +358,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -367,12 +368,13 @@
       "sourcePath": ".claude/agents/godot-gdextension-specialist.md",
       "sourceHash": "5781a7380ef3f90e6301e8c330cbe4f324b3e7ac0f66a91c127842e3c5a8a111",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "godot-gdextension-specialist",
+        "path": "src/roles.ts",
+        "hash": "ef06c467e65ac28c1960dca4d9e3e48f05cda477a8d2c57bc0b4e8f2cc39f75a"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -383,9 +385,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -393,12 +395,13 @@
       "sourcePath": ".claude/agents/godot-gdscript-specialist.md",
       "sourceHash": "03c4d2325044ff16b55bab1e0c6412f0688704ece76513db02b7fcf352668c88",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "godot-gdscript-specialist",
+        "path": "src/roles.ts",
+        "hash": "bd20653180e2e4343055618f59b18bec8abee736a624d5b40c9b8a6021032fea"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -409,9 +412,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -419,12 +422,13 @@
       "sourcePath": ".claude/agents/godot-shader-specialist.md",
       "sourceHash": "f0497d594b94ca4d0272bca8fb20ac7b8b594534060e774f64f2de143fb8a64e",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "godot-shader-specialist",
+        "path": "src/roles.ts",
+        "hash": "35b1e29b03f3d72679dbbc92fb71fa1a25b3eedb0295ef8c1d9a09033122fb7b"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -435,9 +439,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -448,7 +452,7 @@
         "kind": "role",
         "id": "godot-specialist",
         "path": "src/roles.ts",
-        "hash": "29be2f59ace04bd5b335a5744740446abce6dc24738c02e99535c701e931c2ff"
+        "hash": "f0d5dae7f3bfbf78597c8078f4115d307e255af17f965ab05407b6f0391e49b0"
       },
       "decision": "adapt",
       "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
@@ -958,12 +962,13 @@
       "sourcePath": ".claude/agents/ue-blueprint-specialist.md",
       "sourceHash": "f801d74b4dbcb052439e841a63c1a853ba6242dafee5d63d18b129883c95493c",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "ue-blueprint-specialist",
+        "path": "src/roles.ts",
+        "hash": "97ed3873117387d24bf72392a13f754e56c9af837225f54faa4d52c50d22118e"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -974,9 +979,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -984,12 +989,13 @@
       "sourcePath": ".claude/agents/ue-gas-specialist.md",
       "sourceHash": "b25dc54f2ec83ca4e3790197f1b2aed5c2c1054eb6449b2dd447a1b6d4a8f9ba",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "ue-gas-specialist",
+        "path": "src/roles.ts",
+        "hash": "39e21349fdc6326f76c4791a1ad9ef8bfb64c664c97b85d31d0a6050dc3feb42"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1000,9 +1006,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1010,12 +1016,13 @@
       "sourcePath": ".claude/agents/ue-replication-specialist.md",
       "sourceHash": "9bac007eff06a320c1559d0f81f783be689c644a217b0b4605781e39fbaa1918",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "ue-replication-specialist",
+        "path": "src/roles.ts",
+        "hash": "10625a6d8bf5f70d426c2e630524ab9cae9a546f2592b88dd0df4d24b5c30105"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1026,9 +1033,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1036,12 +1043,13 @@
       "sourcePath": ".claude/agents/ue-umg-specialist.md",
       "sourceHash": "bdbda2833cc07ca389c01a40d5f608137c7711a02b7a8313a16af50f0c5d0ae3",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "ue-umg-specialist",
+        "path": "src/roles.ts",
+        "hash": "c54e6a1addb89c80fffc78646f8ec75d03777bba6c364cca35975d204d6bbcfc"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1052,9 +1060,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1089,12 +1097,13 @@
       "sourcePath": ".claude/agents/unity-addressables-specialist.md",
       "sourceHash": "29e14d428647a55baeaa9faf2adae55fcbc6e4a56ed4dfd61c534641fb0253ea",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "unity-addressables-specialist",
+        "path": "src/roles.ts",
+        "hash": "7e0bfe97604403b6527dc68b973e51468d79de336c9ba48b1e9b08bf84287808"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1105,9 +1114,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1115,12 +1124,13 @@
       "sourcePath": ".claude/agents/unity-dots-specialist.md",
       "sourceHash": "98c328463e1b6af0b44f46bd3cb27abce52ba7e85571c56d18118c95a8bf9273",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "unity-dots-specialist",
+        "path": "src/roles.ts",
+        "hash": "fe975bc5b66ba1ac3d67d5bbb5a89bd858fa9ca104fc86ea0bb1e12f983461ef"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1131,9 +1141,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1141,12 +1151,13 @@
       "sourcePath": ".claude/agents/unity-shader-specialist.md",
       "sourceHash": "41bc71d8563a71ed386039819adc31593a54c3fdf747c3dc080a713d22db6d5a",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "unity-shader-specialist",
+        "path": "src/roles.ts",
+        "hash": "a8b042ecc4c8706f24f43cff4e535fdbd22805d2a0b0e3ae6ab53a83bf37093c"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1157,9 +1168,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1194,12 +1205,13 @@
       "sourcePath": ".claude/agents/unity-ui-specialist.md",
       "sourceHash": "62cbb003d7fdde1cd26fc03b47aeb6dbafc42afdf9bb8a5558be21991ecd231b",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "unity-ui-specialist",
+        "path": "src/roles.ts",
+        "hash": "f16b23554b5e83d028e82dcca313dd8da5452b283a3051e00bd80f70393a625a"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1210,9 +1222,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",

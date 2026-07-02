@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { z } from "zod";
-import { engineSpecialistRoleId, studioRoleIds, type RoleEngineId, type StudioRoleId } from "./roles.js";
+import { engineRoleIdsForEngine, studioRoleIds, type RoleEngineId, type StudioRoleId } from "./roles.js";
 import type { StudioMode } from "./studio-policy.js";
 
 export const agentNames = studioRoleIds;
@@ -114,7 +114,7 @@ export function activeAgentsForMode(mode: ProjectMode): AgentName[] {
 }
 
 export function activeAgentsForProject(mode: ProjectMode, engine: RoleEngineId): AgentName[] {
-  return [...activeAgentsForMode(mode), engineSpecialistRoleId(engine)];
+  return [...activeAgentsForMode(mode), ...engineRoleIdsForEngine(engine)];
 }
 
 function ordered(value: unknown, omitOperationalFields: boolean): unknown {

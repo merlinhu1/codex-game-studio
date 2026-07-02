@@ -19,8 +19,20 @@ export const studioRoleIds = [
   "ui-programmer",
   "engine-programmer",
   "godot-specialist",
+  "godot-gdscript-specialist",
+  "godot-csharp-specialist",
+  "godot-shader-specialist",
+  "godot-gdextension-specialist",
   "unity-specialist",
+  "unity-dots-specialist",
+  "unity-shader-specialist",
+  "unity-addressables-specialist",
+  "unity-ui-specialist",
   "unreal-specialist",
+  "ue-gas-specialist",
+  "ue-blueprint-specialist",
+  "ue-replication-specialist",
+  "ue-umg-specialist",
   "tools-programmer",
   "technical-director",
   "devops-engineer",
@@ -333,6 +345,38 @@ export const rolePackages: Record<StudioRoleId, CodexRolePackage> = {
     ["Godot guidance", "Engine-specific risks", "Verification notes"],
     ["Godot references are relevant", "Scene and script implications are clear", "Verification is engine-specific"]
   ),
+  "godot-gdscript-specialist": role(
+    "godot-gdscript-specialist",
+    "Godot GDScript Specialist",
+    "Own typed GDScript architecture, static typing, signals, resources, coroutine patterns, and performance guidance for Godot gameplay code.",
+    "focused",
+    ["GDScript implementation guidance", "Signal and typing risks", "Godot script verification"],
+    ["GDScript static typing is enforced", "Signals and node communication are explicit", "Verification is tied to Godot project files"]
+  ),
+  "godot-csharp-specialist": role(
+    "godot-csharp-specialist",
+    "Godot CSharp Specialist",
+    "Own Godot C# and .NET integration patterns, Signal delegates, nullable types, async flows, and type-safe node access for Godot projects.",
+    "focused",
+    ["Godot C# guidance", ".NET integration risks", "Typed API verification"],
+    ["C# and .NET patterns fit Godot conventions", "Signal and async behavior is explicit", "Verification is tied to Godot project files"]
+  ),
+  "godot-shader-specialist": role(
+    "godot-shader-specialist",
+    "Godot Shader Specialist",
+    "Own Godot shader, rendering, material, visual shader, particle, and VFX implementation guidance with performance-aware verification.",
+    "focused",
+    ["Godot shader guidance", "Rendering and VFX risks", "Visual verification notes"],
+    ["Shader code matches Godot rendering constraints", "Visual and performance risks are named", "Verification covers material or scene evidence"]
+  ),
+  "godot-gdextension-specialist": role(
+    "godot-gdextension-specialist",
+    "Godot GDExtension Specialist",
+    "Own Godot GDExtension, native bindings, C++ or Rust integration, build-system boundaries, and performance-sensitive custom nodes.",
+    "focused",
+    ["GDExtension guidance", "Native binding risks", "Build verification notes"],
+    ["Native boundaries are explicit", "Bindings and ABI risks are named", "Verification covers build and engine loading"]
+  ),
   "unity-specialist": role(
     "unity-specialist",
     "Unity Specialist",
@@ -341,6 +385,38 @@ export const rolePackages: Record<StudioRoleId, CodexRolePackage> = {
     ["Unity guidance", "Engine-specific risks", "Verification notes"],
     ["Unity references are relevant", "Scene, prefab, and package implications are clear", "Verification is engine-specific"]
   ),
+  "unity-dots-specialist": role(
+    "unity-dots-specialist",
+    "Unity DOTS Specialist",
+    "Own Unity DOTS, ECS, Jobs, Burst, data-oriented architecture, hybrid renderer, and performance-sensitive entity workflows.",
+    "focused",
+    ["DOTS architecture guidance", "ECS and Burst risks", "Performance verification notes"],
+    ["DOTS and ECS choices are justified", "Burst and job safety risks are explicit", "Verification covers Unity project evidence"]
+  ),
+  "unity-shader-specialist": role(
+    "unity-shader-specialist",
+    "Unity Shader Specialist",
+    "Own Unity shader, Shader Graph, VFX Graph, SRP rendering, material, lighting, and GPU performance guidance.",
+    "focused",
+    ["Unity shader guidance", "VFX and rendering risks", "Visual verification notes"],
+    ["Shader approach fits Unity render pipeline", "VFX and GPU risks are named", "Verification covers material or scene evidence"]
+  ),
+  "unity-addressables-specialist": role(
+    "unity-addressables-specialist",
+    "Unity Addressables Specialist",
+    "Own Unity Addressables, asset bundles, async loading, content update flows, memory budgets, and asset delivery constraints.",
+    "focused",
+    ["Addressables guidance", "Asset loading and memory risks", "Content pipeline verification"],
+    ["Addressables groups and labels are explicit", "Memory and async loading risks are named", "Verification covers Unity asset pipeline evidence"]
+  ),
+  "unity-ui-specialist": role(
+    "unity-ui-specialist",
+    "Unity UI Specialist",
+    "Own Unity UI Toolkit, UGUI, UXML, USS, canvas layout, input routing, responsive UI, and accessibility implementation guidance.",
+    "focused",
+    ["Unity UI guidance", "Input and layout risks", "UI verification notes"],
+    ["UI Toolkit or UGUI choice is explicit", "Input and accessibility risks are named", "Verification covers Unity UI files or scenes"]
+  ),
   "unreal-specialist": role(
     "unreal-specialist",
     "Unreal Specialist",
@@ -348,6 +424,38 @@ export const rolePackages: Record<StudioRoleId, CodexRolePackage> = {
     "focused",
     ["Unreal guidance", "Engine-specific risks", "Verification notes"],
     ["Unreal references are relevant", "C++, Blueprint, and module implications are clear", "Verification is engine-specific"]
+  ),
+  "ue-gas-specialist": role(
+    "ue-gas-specialist",
+    "Unreal GAS Specialist",
+    "Own Unreal Gameplay Ability System architecture, abilities, effects, attributes, gameplay tags, prediction, and replication handoff.",
+    "focused",
+    ["GAS architecture guidance", "Attribute and prediction risks", "Ability verification notes"],
+    ["Gameplay Ability System lifecycles are explicit", "Attributes and effects avoid direct mutation", "Prediction and replication risks are named"]
+  ),
+  "ue-blueprint-specialist": role(
+    "ue-blueprint-specialist",
+    "Unreal Blueprint Specialist",
+    "Own Unreal Blueprint architecture, Blueprint/C++ boundaries, graph standards, function libraries, naming, and optimization guidance.",
+    "focused",
+    ["Blueprint architecture guidance", "C++ boundary risks", "Graph verification notes"],
+    ["Blueprint/C++ ownership is explicit", "Graph complexity and naming risks are named", "Verification covers Blueprint or C++ evidence"]
+  ),
+  "ue-replication-specialist": role(
+    "ue-replication-specialist",
+    "Unreal Replication Specialist",
+    "Own Unreal replication, RPC validation, property replication, prediction, relevancy, net serialization, and bandwidth optimization guidance.",
+    "focused",
+    ["Replication guidance", "RPC and bandwidth risks", "Network verification notes"],
+    ["Authority and replication ownership are explicit", "RPC validation and prediction risks are named", "Verification covers multiplayer evidence"]
+  ),
+  "ue-umg-specialist": role(
+    "ue-umg-specialist",
+    "Unreal UMG Specialist",
+    "Own Unreal UMG, CommonUI, widget hierarchy, data binding, input routing, HUD performance, and UI accessibility guidance.",
+    "focused",
+    ["UMG and CommonUI guidance", "Widget and input risks", "UI verification notes"],
+    ["UMG or CommonUI ownership is explicit", "Widget and input routing risks are named", "Verification covers Unreal UI evidence"]
   ),
   "tools-programmer": role(
     "tools-programmer",
@@ -516,6 +624,10 @@ export const ccgsParityUpgradedRoleIds = [
   "economy-designer",
   "engine-programmer",
   "godot-specialist",
+  "godot-gdscript-specialist",
+  "godot-csharp-specialist",
+  "godot-shader-specialist",
+  "godot-gdextension-specialist",
   "level-designer",
   "live-ops-designer",
   "localization-lead",
@@ -526,7 +638,15 @@ export const ccgsParityUpgradedRoleIds = [
   "tools-programmer",
   "ui-programmer",
   "unity-specialist",
+  "unity-dots-specialist",
+  "unity-shader-specialist",
+  "unity-addressables-specialist",
+  "unity-ui-specialist",
   "unreal-specialist",
+  "ue-gas-specialist",
+  "ue-blueprint-specialist",
+  "ue-replication-specialist",
+  "ue-umg-specialist",
   "world-builder",
   "writer"
 ] as const satisfies readonly StudioRoleId[];
@@ -627,10 +747,46 @@ const ccgsParityRoleDetails: Partial<Record<(typeof ccgsParityUpgradedRoleIds)[n
     displayName: "Godot Specialist",
     domain: "Godot scenes, resources, signals, scripts, imports, and project settings",
     responsibilities: ["Apply Godot-specific guidance for GDScript or C#, scenes, nodes, resources, signals, autoloads, physics, UI, and exports.", "Identify Godot version constraints, editor/runtime checks, import implications, and engine-reference evidence."],
-    outputs: ["Godot guidance", "Scene or script implications", "Version constraints", "Engine-specific verification"],
-    gates: ["Godot references are relevant", "Scene/resource impact is clear", "Verification is Godot-specific"],
-    collaborators: ["engine-programmer", "gameplay-programmer", "technical-artist"],
-    stop: "Stop when the project is not using Godot or Godot version/project files needed for guidance are missing."
+    outputs: ["Godot guidance", "Scene or script implications", "Version or reference evidence", "Verification path"],
+    gates: ["Godot engine version and project files are considered", "Scene, node, resource, and signal implications are clear", "Verification uses Godot editor, runtime, or static project checks"],
+    collaborators: ["engine-programmer", "gameplay-programmer", "technical-artist", "devops-engineer"],
+    stop: "Stop when the project is not using Godot or Godot project/version files needed for guidance are missing."
+  }),
+  "godot-gdscript-specialist": directRoleDepthDetails({
+    displayName: "Godot GDScript Specialist",
+    domain: "typed GDScript gameplay code, signals, resources, coroutines, and node communication",
+    responsibilities: ["Implement and review GDScript code with static typing, typed arrays, class_name usage, exports, signals, and Godot naming conventions.", "Design signal, resource, coroutine, and node communication patterns that keep gameplay code maintainable and performant."],
+    outputs: ["GDScript implementation notes", "Static typing and signal review", "Changed script files", "Godot verification evidence"],
+    gates: ["GDScript static typing and signal signatures are explicit", "Node communication avoids brittle long paths and repeated connections", "Runtime or static verification is tied to Godot project files"],
+    collaborators: ["godot-specialist", "gameplay-programmer", "qa-playtester"],
+    stop: "Stop when `.gd` files, scene context, or Godot version evidence needed for GDScript guidance is missing."
+  }),
+  "godot-csharp-specialist": directRoleDepthDetails({
+    displayName: "Godot CSharp Specialist",
+    domain: "Godot C#/.NET scripts, Signal delegates, async flows, nullable types, and type-safe node access",
+    responsibilities: ["Implement and review Godot C# code using .NET idioms, typed Node access, exported properties, Signal delegates, nullable annotations, and async patterns.", "Separate C# ownership from GDScript or GDExtension handoffs while preserving Godot scene and resource conventions."],
+    outputs: ["Godot C# implementation notes", ".NET integration risks", "Signal or async contract", "Build verification evidence"],
+    gates: ["C# and .NET patterns fit Godot conventions", "Signal delegates, async cancellation, and nullable behavior are explicit", "Verification covers Godot build or project evidence"],
+    collaborators: ["godot-specialist", "engine-programmer", "gameplay-programmer"],
+    stop: "Stop when C# project files, Godot .NET version, or relevant scene/script context is missing."
+  }),
+  "godot-shader-specialist": directRoleDepthDetails({
+    displayName: "Godot Shader Specialist",
+    domain: "Godot shaders, rendering, materials, visual shaders, particles, post-processing, and VFX",
+    responsibilities: ["Implement and review Godot shader code, materials, particles, visual shader choices, post-processing, lighting, and VFX handoffs.", "Keep shader recommendations tied to visual goals, render pipeline constraints, GPU cost, and inspectable scene/material files."],
+    outputs: ["Shader or material guidance", "Rendering and VFX risks", "Performance notes", "Visual verification evidence"],
+    gates: ["Shader language and material usage match Godot constraints", "VFX and GPU performance risks are named", "Verification covers scene, material, screenshot, or profiler evidence"],
+    collaborators: ["godot-specialist", "technical-artist", "senior-game-artist", "performance-analyst"],
+    stop: "Stop when visual target, material/shader files, or rendering context is missing."
+  }),
+  "godot-gdextension-specialist": directRoleDepthDetails({
+    displayName: "Godot GDExtension Specialist",
+    domain: "Godot GDExtension native bindings, C++ or Rust integration, ABI boundaries, and custom node performance",
+    responsibilities: ["Implement and review GDExtension boundaries, native bindings, build files, C++ or Rust integration, custom nodes, and performance-critical native code paths.", "Define when native code is justified over GDScript or C# and keep build, ABI, and export risks explicit."],
+    outputs: ["GDExtension architecture", "Native binding contract", "Build or ABI risks", "Verification evidence"],
+    gates: ["Native boundaries and ownership are explicit", "Bindings, memory, ABI, and build risks are named", "Verification covers compile, load, or engine integration evidence"],
+    collaborators: ["godot-specialist", "engine-programmer", "performance-analyst", "devops-engineer"],
+    stop: "Stop when native source, binding generator, build system, or Godot extension version context is missing."
   }),
   "level-designer": directRoleDepthDetails({
     displayName: "Level Designer",
@@ -722,6 +878,42 @@ const ccgsParityRoleDetails: Partial<Record<(typeof ccgsParityUpgradedRoleIds)[n
     collaborators: ["engine-programmer", "technical-artist", "devops-engineer"],
     stop: "Stop when the project is not using Unity or Unity project/version files needed for guidance are missing."
   }),
+  "unity-dots-specialist": directRoleDepthDetails({
+    displayName: "Unity DOTS Specialist",
+    domain: "Unity DOTS, ECS, Jobs, Burst, hybrid renderer, and data-oriented performance",
+    responsibilities: ["Implement and review DOTS/ECS architecture, component data, systems, Jobs, Burst constraints, hybrid rendering, and conversion boundaries.", "Separate data-oriented performance work from ordinary MonoBehaviour code and keep profiling evidence explicit."],
+    outputs: ["DOTS/ECS architecture", "Burst and Jobs risks", "Data layout notes", "Performance verification evidence"],
+    gates: ["DOTS and ECS choices are justified", "Burst safety, scheduling, and data ownership risks are explicit", "Verification covers Unity profiler, tests, or project evidence"],
+    collaborators: ["unity-specialist", "engine-programmer", "performance-analyst"],
+    stop: "Stop when Entities package version, performance target, or relevant Unity project files are missing."
+  }),
+  "unity-shader-specialist": directRoleDepthDetails({
+    displayName: "Unity Shader Specialist",
+    domain: "Unity shaders, Shader Graph, VFX Graph, SRP rendering, materials, lighting, and GPU performance",
+    responsibilities: ["Implement and review Unity shader code, Shader Graph, VFX Graph, materials, lighting, SRP constraints, and visual effect handoffs.", "Keep shader and VFX recommendations tied to visual goals, render pipeline choice, GPU budgets, and inspectable scene/material files."],
+    outputs: ["Shader or VFX guidance", "Render pipeline risks", "Material changes", "Visual verification evidence"],
+    gates: ["Shader approach fits the active Unity render pipeline", "VFX and GPU risks are named", "Verification covers material, scene, screenshot, or profiler evidence"],
+    collaborators: ["unity-specialist", "technical-artist", "senior-game-artist", "performance-analyst"],
+    stop: "Stop when render pipeline, visual target, material/shader files, or scene context is missing."
+  }),
+  "unity-addressables-specialist": directRoleDepthDetails({
+    displayName: "Unity Addressables Specialist",
+    domain: "Unity Addressables, asset bundles, async loading, content updates, memory budgets, and asset delivery",
+    responsibilities: ["Implement and review Addressables groups, labels, async loading, release handles, content update flows, asset bundles, remote catalogs, and memory budgets.", "Surface asset ownership, CDN/package delivery, unload behavior, and runtime memory risks before asset loading changes expand."],
+    outputs: ["Addressables plan", "Asset loading contract", "Memory and content update risks", "Verification evidence"],
+    gates: ["Addressables groups, labels, and release ownership are explicit", "Memory, async loading, and content update risks are named", "Verification covers Unity asset pipeline or runtime evidence"],
+    collaborators: ["unity-specialist", "technical-artist", "devops-engineer", "performance-analyst"],
+    stop: "Stop when asset catalog, package version, memory target, or loading scenario is missing."
+  }),
+  "unity-ui-specialist": directRoleDepthDetails({
+    displayName: "Unity UI Specialist",
+    domain: "Unity UI Toolkit, UGUI, UXML, USS, canvas layout, input routing, and accessibility hooks",
+    responsibilities: ["Implement and review Unity UI Toolkit, UGUI, UXML/USS, canvas hierarchy, data binding, navigation, responsive layout, and accessibility hooks.", "Coordinate UI implementation with UX specs, localization expansion, input modality, and platform conventions."],
+    outputs: ["Unity UI implementation guidance", "Input and layout notes", "Accessibility risks", "UI verification evidence"],
+    gates: ["UI Toolkit or UGUI ownership is explicit", "Input, localization, and accessibility risks are named", "Verification covers Unity UI files, scenes, or playmode evidence"],
+    collaborators: ["unity-specialist", "ui-programmer", "ui-ux-designer", "accessibility-specialist"],
+    stop: "Stop when UI spec, target devices, Unity UI files, or scene context is missing."
+  }),
   "unreal-specialist": directRoleDepthDetails({
     displayName: "Unreal Specialist",
     domain: "Unreal C++, Blueprint, UMG, assets, modules, plugins, and packaging",
@@ -730,6 +922,42 @@ const ccgsParityRoleDetails: Partial<Record<(typeof ccgsParityUpgradedRoleIds)[n
     gates: ["Unreal references are relevant", "C++, Blueprint, and module implications are clear", "Verification is Unreal-specific"],
     collaborators: ["engine-programmer", "network-programmer", "technical-artist"],
     stop: "Stop when the project is not using Unreal or Unreal project/version files needed for guidance are missing."
+  }),
+  "ue-gas-specialist": directRoleDepthDetails({
+    displayName: "Unreal GAS Specialist",
+    domain: "Unreal Gameplay Ability System abilities, effects, attributes, tags, prediction, and replication handoff",
+    responsibilities: ["Implement and review Gameplay Ability System abilities, Gameplay Effects, Attribute Sets, Gameplay Tags, Ability Tasks, costs, cooldowns, and prediction behavior.", "Keep GAS values data-driven, lifecycle-safe, replication-aware, and coordinated with gameplay/UI/network owners."],
+    outputs: ["GAS architecture", "Ability/effect contract", "Attribute and prediction risks", "Verification evidence"],
+    gates: ["Gameplay Ability System lifecycles, costs, and cooldowns are explicit", "Attributes and effects avoid direct mutation", "Prediction and replication handoffs are named"],
+    collaborators: ["unreal-specialist", "gameplay-programmer", "systems-designer", "ue-replication-specialist", "ue-umg-specialist"],
+    stop: "Stop when GAS plugin status, ability spec, attribute data, or Unreal project evidence is missing."
+  }),
+  "ue-blueprint-specialist": directRoleDepthDetails({
+    displayName: "Unreal Blueprint Specialist",
+    domain: "Unreal Blueprint architecture, Blueprint/C++ boundaries, graph standards, naming, and optimization",
+    responsibilities: ["Implement and review Blueprint graphs, Blueprint Function Libraries, Blueprint/C++ boundaries, naming, event graphs, and optimization hotspots.", "Keep visual scripting maintainable, data-driven, reviewable, and clear about when C++ ownership is required."],
+    outputs: ["Blueprint architecture", "Blueprint/C++ boundary", "Graph risks", "Verification evidence"],
+    gates: ["Blueprint/C++ ownership is explicit", "Graph complexity, naming, and optimization risks are named", "Verification covers Blueprint, C++, or editor evidence"],
+    collaborators: ["unreal-specialist", "gameplay-programmer", "technical-director"],
+    stop: "Stop when Blueprint assets, C++ boundary context, or editor verification path is missing."
+  }),
+  "ue-replication-specialist": directRoleDepthDetails({
+    displayName: "Unreal Replication Specialist",
+    domain: "Unreal property replication, RPCs, prediction, relevancy, net serialization, and bandwidth",
+    responsibilities: ["Implement and review replicated properties, RepNotify, RPC validation, prediction/correction, relevancy, dormancy, net serialization, and bandwidth tuning.", "Separate gameplay ownership from network transport concerns and escalate GAS-specific prediction to GAS ownership when relevant."],
+    outputs: ["Replication design", "RPC validation notes", "Bandwidth or prediction risks", "Multiplayer verification evidence"],
+    gates: ["Authority and replication ownership are explicit", "RPC validation and client prediction risks are named", "Verification covers multiplayer or network profiling evidence"],
+    collaborators: ["unreal-specialist", "network-programmer", "ue-gas-specialist", "security-engineer"],
+    stop: "Stop when multiplayer requirements, replicated class context, or network test evidence is missing."
+  }),
+  "ue-umg-specialist": directRoleDepthDetails({
+    displayName: "Unreal UMG Specialist",
+    domain: "Unreal UMG, CommonUI, widget hierarchy, data binding, input routing, HUD performance, and accessibility",
+    responsibilities: ["Implement and review UMG widgets, CommonUI screen stacks, data binding, input routing, focus behavior, HUD performance, and UI accessibility hooks.", "Coordinate Unreal UI implementation with UX specs, localization text expansion, controller/keyboard input, and gameplay events."],
+    outputs: ["UMG/CommonUI guidance", "Widget hierarchy notes", "Input and binding risks", "UI verification evidence"],
+    gates: ["UMG or CommonUI ownership is explicit", "Widget hierarchy, binding, and input routing risks are named", "Verification covers Unreal UI assets or editor/runtime evidence"],
+    collaborators: ["unreal-specialist", "ui-programmer", "ui-ux-designer", "accessibility-specialist", "localization-lead"],
+    stop: "Stop when UI spec, widget assets, CommonUI status, or input context is missing."
   }),
   "world-builder": directRoleDepthDetails({
     displayName: "World Builder",
@@ -911,17 +1139,38 @@ export function isStudioRoleId(value: string): value is StudioRoleId {
   return (studioRoleIds as readonly string[]).includes(value);
 }
 
+export const engineRoleSets = {
+  godot: ["godot-specialist", "godot-gdscript-specialist", "godot-csharp-specialist", "godot-shader-specialist", "godot-gdextension-specialist"],
+  unity: ["unity-specialist", "unity-dots-specialist", "unity-shader-specialist", "unity-addressables-specialist", "unity-ui-specialist"],
+  unreal: ["unreal-specialist", "ue-gas-specialist", "ue-blueprint-specialist", "ue-replication-specialist", "ue-umg-specialist"]
+} as const satisfies Record<RoleEngineId, readonly StudioRoleId[]>;
+
 export function engineSpecialistRoleId(engine: RoleEngineId): StudioRoleId {
-  return `${engine}-specialist` as StudioRoleId;
+  return engineRoleSets[engine][0];
+}
+
+export function engineRoleIdsForEngine(engine: RoleEngineId): StudioRoleId[] {
+  return [...engineRoleSets[engine]];
+}
+
+export function engineForRole(role: StudioRoleId): RoleEngineId | undefined {
+  for (const [engine, roles] of Object.entries(engineRoleSets) as [RoleEngineId, readonly StudioRoleId[]][]) {
+    if (roles.includes(role)) return engine;
+  }
+  return undefined;
 }
 
 export function isEngineSpecialistRoleId(role: StudioRoleId): boolean {
-  return role === "godot-specialist" || role === "unity-specialist" || role === "unreal-specialist";
+  return engineForRole(role) !== undefined;
+}
+
+export function isRoleAvailableForEngine(role: StudioRoleId, engine: RoleEngineId): boolean {
+  const roleEngine = engineForRole(role);
+  return !roleEngine || roleEngine === engine;
 }
 
 export function projectRoleIdsForEngine(engine: RoleEngineId): StudioRoleId[] {
-  const activeSpecialist = engineSpecialistRoleId(engine);
-  return studioRoleIds.filter((role) => !isEngineSpecialistRoleId(role) || role === activeSpecialist);
+  return studioRoleIds.filter((role) => isRoleAvailableForEngine(role, engine));
 }
 
 export function unknownStudioRoleMessage(value: string): string {

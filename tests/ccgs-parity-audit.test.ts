@@ -166,6 +166,38 @@ Summary | Risks | Verification | Handoff
     for (const roleId of directRoleGapIds) expect(report).not.toContain(`\`${roleId}\` → role:${roleId}`);
   });
 
+  test("engine sub-specialist role gaps are closed as first-class Codex roles", () => {
+    const engineSubSpecialistIds = [
+      "godot-csharp-specialist", "godot-gdextension-specialist", "godot-gdscript-specialist", "godot-shader-specialist",
+      "ue-blueprint-specialist", "ue-gas-specialist", "ue-replication-specialist", "ue-umg-specialist",
+      "unity-addressables-specialist", "unity-dots-specialist", "unity-shader-specialist", "unity-ui-specialist"
+    ];
+    const root = fixtureRoot();
+    for (const roleId of engineSubSpecialistIds) {
+      writeFileSync(path.join(root, ".claude", "agents", `${roleId}.md`), `---
+name: ${roleId}
+description: ${roleId} upstream role
+tools: Read, Write
+---
+
+## Core Responsibilities
+
+- Own ${roleId} subsystem work
+- Produce implementation-ready findings and handoffs
+
+## Output Format
+
+Summary | Risks | Verification | Handoff
+`);
+    }
+    const matrix = generateParityMatrix(inventoryCcgsSurfaces(root), defaultProjectConfig({ name: "Engine Specialist Gap Game", engine: "godot", mode: "prototype", nonInteractive: true }));
+    const engineRows = matrix.rows.filter((row) => row.sourceType === "agent" && engineSubSpecialistIds.includes(row.sourceId));
+    expect(engineRows).toHaveLength(engineSubSpecialistIds.length);
+    expect(engineRows.every((row) => row.status === "implemented" && row.cgsTarget.kind === "role")).toBe(true);
+    const report = renderRemainingGapTasksMarkdown(matrix);
+    for (const roleId of engineSubSpecialistIds) expect(report).not.toContain(`\`${roleId}\` → role:${roleId}`);
+  });
+
   test("upgraded template skills are no longer thin wrappers", () => {
     const definitions = templateSkillDefinitions(defaultProjectConfig({ name: "Skill Depth Game", engine: "godot", mode: "prototype", nonInteractive: true }));
     expect(new Set(definitions.map((skill) => skill.name)).size).toBe(definitions.length);
