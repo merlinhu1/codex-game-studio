@@ -16,6 +16,12 @@ Choose and record the active engine in `.codex/studio.json` during project setup
 - Validate repository/template and initialized project state: `./codex-game-studio validate`
 - Run a role: `./codex-game-studio run <role> "<task>"`
 - Inspect workflow status: `./codex-game-studio status`
+- Get compact agent context before broad inspection:
+  - `npm run ctx:studio`
+  - `npm run ctx:task -- "<task>"`
+  - `npm run ctx:role -- <role-id>`
+  - `npm run ctx:workflow -- <workflow-id>`
+  - `npm run ctx:changed`
 
 ## Coding Conventions
 

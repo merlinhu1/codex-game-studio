@@ -16,6 +16,7 @@ import { freezeProject, initProject, readStudioProject, refreshContextManifestPr
 import { runValidation } from "./validation.js";
 import { executeRunLifecycle, prepareRun } from "./runner.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
+import { renderAgentContext } from "./agent-context.js";
 import { createTask, executeTaskRun, readTaskStore, resolveTaskProject } from "./tasks.js";
 import { orchestrateTasks } from "./orchestrator.js";
 import { renderWorkflowPrompt, workflowAliases, workflowRegistry, type WorkflowId } from "./workflows.js";
@@ -116,6 +117,29 @@ program
   .description("Regenerate the project context manifest and freshness metadata")
   .option("--project <path>", "project path")
   .action((opts) => console.log(refreshContextManifestProject(opts.project)));
+
+const context = program.command("context").description("Print low-token context packs for agents");
+context
+  .command("studio")
+  .description("Summarize initialized project state or template checkout state")
+  .option("--project <path>", "project path")
+  .action((opts) => console.log(renderAgentContext({ kind: "studio", projectRoot: opts.project })));
+context
+  .command("role <role-id>")
+  .description("Summarize one role without dumping the full prompt")
+  .action((roleId: string) => console.log(renderAgentContext({ kind: "role", id: roleId })));
+context
+  .command("workflow <workflow-id>")
+  .description("Summarize one workflow without dumping the full workflow file")
+  .action((workflowId: string) => console.log(renderAgentContext({ kind: "workflow", id: workflowId })));
+context
+  .command("task <query...>")
+  .description("Suggest roles, workflows, templates, and commands for a natural-language task")
+  .action((queryParts: string[]) => console.log(renderAgentContext({ kind: "task", id: queryParts.join(" ") })));
+context
+  .command("changed")
+  .description("Summarize changed files and next inspection steps")
+  .action(() => console.log(renderAgentContext({ kind: "changed", cwd: process.cwd() })));
 
 program
   .command("freeze")

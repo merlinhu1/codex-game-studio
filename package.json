@@ -28,7 +28,12 @@
     "validate": "npm run build --silent && node dist/cli.js validate",
     "init": "npm run build --silent && node dist/cli.js init",
     "manage": "npm run build --silent && node dist/cli.js status",
-    "templates": "npm run build --silent && node dist/cli.js templates"
+    "templates": "npm run build --silent && node dist/cli.js templates",
+    "ctx:studio": "tsx src/cli.ts context studio",
+    "ctx:role": "tsx src/cli.ts context role",
+    "ctx:workflow": "tsx src/cli.ts context workflow",
+    "ctx:task": "tsx src/cli.ts context task",
+    "ctx:changed": "tsx src/cli.ts context changed"
   },
   "dependencies": {
     "commander": "^12.1.0",
