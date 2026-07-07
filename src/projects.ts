@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { activeAgentsForProject, slugify, type ProjectConfig, type ProjectMode } from "./config.js";
 import { createEngineFolders, createEngineProjectFiles, loadEngineConfigs, normalizeEngine, sourceRoot, unrealProjectFileName } from "./engines.js";
@@ -29,6 +29,7 @@ export type InitProjectOptions = {
   engineVersion?: string;
   nonInteractive?: boolean;
   forceRefresh?: boolean;
+  keepTemplateAuthoring?: boolean;
 };
 
 export type StudioProjectState = {
@@ -160,6 +161,98 @@ function writeStudioProject(projectRoot: string, state: StudioProjectState): voi
   writeFileSync(path.join(projectRoot, ".codex", "studio.json"), `${JSON.stringify(state, null, 2)}\n`);
 }
 
+export const templateAuthoringArtifactPaths = [
+  ".hermes",
+  ".truthmark",
+  "eval-framework",
+  "openspec",
+  "references",
+  "research",
+  "scripts",
+  "tooling",
+  "CONTRIBUTING.md",
+  "tsconfig.build.json",
+  "tsconfig.json"
+] as const;
+
+const templateAuthoringCodeFiles = [
+  "src/agent-context.ts",
+  "src/agents.ts",
+  "src/approvals.ts",
+  "src/behavioral-evaluation.ts",
+  "src/ccgs-adaptation.ts",
+  "src/ccgs-parity.ts",
+  "src/cli.ts",
+  "src/codex-prompts.ts",
+  "src/codex-runtime.ts",
+  "src/codex-session.ts",
+  "src/config.ts",
+  "src/context-manifest.ts",
+  "src/context.ts",
+  "src/customization.ts",
+  "src/engine-reference.ts",
+  "src/engines.ts",
+  "src/generated-surfaces.ts",
+  "src/orchestrator-locks.ts",
+  "src/orchestrator.ts",
+  "src/paths.ts",
+  "src/performance-evaluation.ts",
+  "src/projects.ts",
+  "src/prompt-context.ts",
+  "src/prompt-surface-metadata.ts",
+  "src/roles.ts",
+  "src/runner.ts",
+  "src/skills.ts",
+  "src/studio-policy.ts",
+  "src/tasks.ts",
+  "src/templates.ts",
+  "src/validation.ts",
+  "src/verification.ts",
+  "src/workflow-catalog.ts",
+  "src/workflow-recipes.ts",
+  "src/workflows.ts",
+  "tests/agent-context.test.ts",
+  "tests/approval-gates.test.ts",
+  "tests/ccgs-adaptation.test.ts",
+  "tests/ccgs-parity-audit.test.ts",
+  "tests/codex-context-files.test.ts",
+  "tests/codex-prompts.test.ts",
+  "tests/codex-runtime.test.ts",
+  "tests/codex-session.test.ts",
+  "tests/engine-system.test.ts",
+  "tests/functionality-gap-pass.test.ts",
+  "tests/orchestrator.test.ts",
+  "tests/performance-evaluation-framework.test.ts",
+  "tests/project-workflow.test.ts",
+  "tests/prompt-surface-audit.test.ts",
+  "tests/prompt-surface-metadata.test.ts",
+  "tests/prompt-surface-validation.test.ts",
+  "tests/roles.test.ts",
+  "tests/runner.test.ts",
+  "tests/studio-policy.test.ts",
+  "tests/tasks.test.ts",
+  "tests/template-repository-surfaces.test.ts",
+  "tests/template-root-smoke.test.ts",
+  "tests/validation.test.ts",
+  "tests/verification.test.ts",
+  "tests/workflow-catalog.test.ts",
+  "tests/workflow-recipes.test.ts"
+] as const;
+
+function removePathIfPresent(projectRoot: string, relativePath: string, removed: string[]): void {
+  const full = path.join(projectRoot, relativePath);
+  if (!existsSync(full)) return;
+  rmSync(full, { recursive: true, force: true });
+  removed.push(relativePath);
+}
+
+export function pruneTemplateAuthoringArtifacts(projectRoot: string): string[] {
+  const removed: string[] = [];
+  for (const artifact of templateAuthoringArtifactPaths) removePathIfPresent(projectRoot, artifact, removed);
+  for (const artifact of templateAuthoringCodeFiles) removePathIfPresent(projectRoot, artifact, removed);
+  return removed.sort();
+}
+
 function workflowTitle(id: WorkflowId): string {
   return id
     .split("-")
@@ -231,7 +324,7 @@ export function workflowSourceInput(workflow: WorkflowId): unknown {
   };
 }
 
-export function initProject(options: InitProjectOptions, cwd = process.cwd()): { projectRoot: string; config: ProjectConfig } {
+export function initProject(options: InitProjectOptions, cwd = process.cwd()): { projectRoot: string; config: ProjectConfig; prunedArtifacts: string[] } {
   const config = defaultProjectConfig(options);
   const projectRoot = path.resolve(cwd, ".");
   const studioPath = path.join(projectRoot, ".codex", "studio.json");
@@ -252,7 +345,8 @@ export function initProject(options: InitProjectOptions, cwd = process.cwd()): {
   writeStarterDocs(projectRoot, config);
   materializeEngineReferences(projectRoot, packageAssetPath("."), config.project.engine);
   writeContextManifest(projectRoot, readStudioProject(projectRoot));
-  return { projectRoot, config };
+  const prunedArtifacts = options.keepTemplateAuthoring ? [] : pruneTemplateAuthoringArtifacts(projectRoot);
+  return { projectRoot, config, prunedArtifacts };
 }
 
 export function statusProject(project?: string, cwd = process.cwd()): string {

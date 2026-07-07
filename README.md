@@ -183,6 +183,8 @@ Workflow prompts live under `.codex/workflows/*.md`. They are inspection-friendl
      --concept "A compact puzzle game about routing trains through haunted switchyards"
    ```
 
+   `init` turns the checkout into a game workspace: it keeps the game-facing agents, workflows, skills, templates, engine references, and CLI runtime, then prunes maintainer-only template-authoring artifacts such as `eval-framework/`, OpenSpec/research/reference scratch files, TypeScript source files, and repository validation tests. Template maintainers can pass `--keep-template-authoring` when intentionally working on this repository itself.
+
 4. **Inspect and validate**:
 
    ```sh
@@ -211,8 +213,8 @@ engine_reference/                 # Godot, Unity, Unreal reference packs
 templates/                        # Document templates used by workflows
 production/                       # Timeline, milestones, session state
 docs/                             # Small user/docs support surface
-src/                              # TypeScript CLI source
-tests/                            # Repository validation and behavior tests
+src/                              # Game engine source root; maintainer TypeScript files are pruned by init
+tests/                            # Game tests; repository validation tests are pruned by init
 ```
 
 ## How It Works

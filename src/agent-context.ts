@@ -112,9 +112,9 @@ export function suggestAgentContext(query: string): AgentContextSuggestions {
     roles,
     templates,
     commands: [
-      workflows[0] ? `npm run ctx:workflow -- ${workflows[0].id}` : undefined,
-      primaryRole ? `npm run ctx:role -- ${primaryRole}` : undefined,
-      "npm run ctx:changed"
+      workflows[0] ? `./codex-game-studio context workflow ${workflows[0].id}` : undefined,
+      primaryRole ? `./codex-game-studio context role ${primaryRole}` : undefined,
+      "./codex-game-studio context changed"
     ].filter((command): command is string => Boolean(command))
   };
 }
@@ -168,8 +168,8 @@ function renderRolePack(id: string): string {
     ...bullet(templates.map((template) => `${template.id} — ${template.path}`), 8),
     "",
     "## Suggested agent command:",
-    `- npm run ctx:role -- ${id}`,
-    workflows[0] ? `- npm run ctx:workflow -- ${workflows[0]}` : undefined
+    `- ./codex-game-studio context role ${id}`,
+    workflows[0] ? `- ./codex-game-studio context workflow ${workflows[0]}` : undefined
   );
 }
 
@@ -200,8 +200,8 @@ function renderWorkflowPack(id: string): string {
     ...bullet(role.expectedOutputs, 5),
     "",
     "## Suggested agent command:",
-    `- npm run ctx:workflow -- ${workflow.id}`,
-    `- npm run ctx:role -- ${workflow.role}`
+    `- ./codex-game-studio context workflow ${workflow.id}`,
+    `- ./codex-game-studio context role ${workflow.role}`
   );
 }
 
@@ -213,10 +213,10 @@ function renderStudioPack(projectRoot: string): string {
       "Project state: repository template checkout; .codex/studio.json is not initialized here.",
       "",
       "## Low-token entry points",
-      "- npm run ctx:task -- \"<task>\"",
-      "- npm run ctx:workflow -- <workflow-id>",
-      "- npm run ctx:role -- <role-id>",
-      "- npm run ctx:changed"
+      "- ./codex-game-studio context task \"<task>\"",
+      "- ./codex-game-studio context workflow <workflow-id>",
+      "- ./codex-game-studio context role <role-id>",
+      "- ./codex-game-studio context changed"
     );
   }
   const studio = readStudioProject(projectRoot);
@@ -233,10 +233,10 @@ function renderStudioPack(projectRoot: string): string {
     ...bullet(studio.activeRoles, 10),
     "",
     "## Low-token entry points",
-    "- npm run ctx:task -- \"<task>\"",
-    "- npm run ctx:workflow -- <workflow-id>",
-    "- npm run ctx:role -- <role-id>",
-    "- npm run ctx:changed"
+    "- ./codex-game-studio context task \"<task>\"",
+    "- ./codex-game-studio context workflow <workflow-id>",
+    "- ./codex-game-studio context role <role-id>",
+    "- ./codex-game-studio context changed"
   );
 }
 
@@ -251,7 +251,7 @@ function renderChangedPack(cwd: string): string {
       "",
       "## Suggested follow-up",
       "- Git is unavailable or this directory is not a Git checkout.",
-      "- Continue with ctx:task, ctx:role, or ctx:workflow, then inspect explicit task targets."
+      "- Continue with context task, context role, or context workflow, then inspect explicit task targets."
     );
   }
   const files = output ? output.split("\n").slice(0, 40) : [];
