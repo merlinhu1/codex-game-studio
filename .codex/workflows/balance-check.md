@@ -64,7 +64,6 @@ CLI aliases:
 
 ## Context Contract
 
-- Context bootstrap: `npm run ctx:workflow -- balance-check`, `npm run ctx:role -- economy-designer`, and `npm run ctx:changed` before broad reads when available.
 - Load AGENTS.md, .codex/studio.json, this workflow, the primary agent, linked skills, and only task-relevant project files.
 - Avoid broad context unless the user explicitly approves it.
 

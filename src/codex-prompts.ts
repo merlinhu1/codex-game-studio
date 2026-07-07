@@ -7,17 +7,6 @@ function formatList(values: string[]): string {
   return values.length ? values.map((value) => `- ${value}`).join("\n") : "- None";
 }
 
-function contextBootstrap(roleId: string): string {
-  return [
-    "## Context Bootstrap",
-    "Before broad file reads, use deterministic context helpers when available:",
-    `- npm run ctx:role -- ${roleId}`,
-    "- npm run ctx:changed",
-    "- npm run ctx:task -- \"<task summary>\"",
-    "Then inspect only the files surfaced by the helper or required by the task."
-  ].join("\n");
-}
-
 export function renderCodexPrompt(session: CodexStudioSession): string {
   const role = rolePackages[session.role];
   const verification = session.verification ? `${session.verification.command} ${session.verification.args.join(" ")}`.trim() : "No verification command provided.";
@@ -48,8 +37,6 @@ export function renderCodexPrompt(session: CodexStudioSession): string {
     `Sandbox: ${session.sandbox}`,
     session.writePolicy ? `Write Policy: ${session.writePolicy}` : undefined,
     `File Edits: ${session.allowFileEdits ? "allowed" : "not allowed"}`,
-    "",
-    contextBootstrap(session.role),
     "",
     session.contextContract,
     session.contextContract ? "" : undefined,

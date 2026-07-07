@@ -42,7 +42,11 @@ describe("agent context helper scripts", () => {
     expect(JSON.stringify(suggestions)).not.toContain("systemPrompt");
   });
 
-  test("runtime Codex prompts tell agents to use compact context helpers before broad reads", () => {
+  test("shared context bootstrap guidance lives in AGENTS.md, not repeated prompt surfaces", () => {
+    const root = packageRoot();
+    const agentsMd = readFileSync(path.join(root, "AGENTS.md"), "utf8");
+    const agent = readFileSync(path.join(root, ".codex", "agents", "gameplay-programmer.toml"), "utf8");
+    const workflow = readFileSync(path.join(root, ".codex", "workflows", "bugfix.md"), "utf8");
     const prompt = renderCodexPrompt({
       projectRoot: "/repo/game",
       role: "gameplay-programmer",
@@ -55,23 +59,14 @@ describe("agent context helper scripts", () => {
       sandbox: "danger-full-access"
     });
 
-    expect(prompt).toContain("## Context Bootstrap");
-    expect(prompt).toContain("npm run ctx:role -- gameplay-programmer");
-    expect(prompt).toContain("npm run ctx:changed");
-  });
-
-  test("tracked agent and workflow surfaces advertise context helpers without relying only on AGENTS.md", () => {
-    const root = packageRoot();
-    const agent = readFileSync(path.join(root, ".codex", "agents", "gameplay-programmer.toml"), "utf8");
-    const workflow = readFileSync(path.join(root, ".codex", "workflows", "bugfix.md"), "utf8");
-
-    expect(agent).toContain("npm run ctx:role -- gameplay-programmer");
-    expect(agent).toContain("npm run ctx:changed");
+    expect(agentsMd).toContain("## Context Bootstrap");
+    expect(agentsMd).toContain("npm run ctx:role -- <role-id>");
+    expect(agentsMd).toContain("npm run ctx:workflow -- <workflow-id>");
+    expect(agent).not.toContain("Context bootstrap:");
+    expect(workflow).not.toContain("Context bootstrap:");
+    expect(prompt).not.toContain("## Context Bootstrap");
     expect(agent).not.toContain("Compact Context First");
-    expect(workflow).toContain("Context bootstrap:");
-    expect(workflow).toContain("npm run ctx:workflow -- bugfix");
-    expect(workflow).toContain("npm run ctx:role -- gameplay-programmer");
-    expect(workflow).not.toContain("## Compact Context First");
+    expect(workflow).not.toContain("Compact Context First");
   });
 
   test("changed context degrades gracefully outside Git checkouts", () => {

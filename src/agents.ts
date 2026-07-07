@@ -35,6 +35,7 @@ export const projectAgentsMdRequiredSections = [
   "## Project Goal",
   "## Engine",
   "## Commands",
+  "## Context Bootstrap",
   "## Coding Conventions",
   "## Asset Conventions",
   "## Studio Roles",
@@ -66,6 +67,16 @@ ${config.project.engine} ${config.project.engine_version}
 
 - Validate: \`./codex-game-studio validate\`
 - Refresh context manifest after editing selected project context: \`./codex-game-studio refresh-context\`
+
+## Context Bootstrap
+
+Before broad inspection, use compact context helpers when available, then read only surfaced files and explicit task targets:
+
+- \`npm run ctx:studio\`
+- \`npm run ctx:task -- "<task>"\`
+- \`npm run ctx:role -- <role-id>\`
+- \`npm run ctx:workflow -- <workflow-id>\`
+- \`npm run ctx:changed\`
 
 ## Coding Conventions
 
@@ -125,7 +136,6 @@ export function renderProjectCustomAgentToml(role: StudioRoleId, config: Project
       "Follow AGENTS.md, .codex/studio.json, selected skills, and task-relevant files.",
       "Keep changes bounded to the requested game-development task.",
       "Report changed files, verification evidence, and remaining risks.",
-      `Context bootstrap: run \`npm run ctx:role -- ${role}\` and \`npm run ctx:changed\` before broad reads when available; inspect only surfaced task files.`,
       "",
       pkg.systemPrompt,
       "",
@@ -151,10 +161,6 @@ export function renderProjectRolePrompt(role: StudioRoleId, config: ProjectConfi
     `Studio Mode: ${config.project.studio_mode}`,
     `Engine: ${engine.display_name} ${config.project.engine_version}`,
     `Current Milestone: ${config.project.mode === "design" ? "design" : config.project.mode === "development" ? "development" : "prototype"}`,
-    "",
-    "## Context Bootstrap",
-    "",
-    `Run \`npm run ctx:role -- ${role}\` and \`npm run ctx:changed\` before broad reads when available; inspect only surfaced task files.`,
     "",
     "## Project Summary",
     "",
