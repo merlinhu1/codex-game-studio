@@ -1,6 +1,6 @@
 # Prompt Surface Uplift Matrix
 
-Local agents: 38; workflows: 31; skills: 79.
+Local agents: 50; workflows: 61; skills: 90.
 Upstream agents: 49; skills: 73.
 Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 
@@ -18,6 +18,10 @@ Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 | agent | `.codex/agents/game-designer.toml` | `.claude/agents/game-designer.md` | adapt | complete | 90 | 241 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/game-feel-designer.toml` |  | defer | deferred | 81 |  | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/gameplay-programmer.toml` | `.claude/agents/gameplay-programmer.md` | adapt | complete | 94 | 133 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/godot-csharp-specialist.toml` | `.claude/agents/godot-csharp-specialist.md` | adapt | complete | 94 | 407 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/godot-gdextension-specialist.toml` | `.claude/agents/godot-gdextension-specialist.md` | adapt | complete | 94 | 317 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/godot-gdscript-specialist.toml` | `.claude/agents/godot-gdscript-specialist.md` | adapt | complete | 94 | 272 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/godot-shader-specialist.toml` | `.claude/agents/godot-shader-specialist.md` | adapt | complete | 94 | 265 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/godot-specialist.toml` | `.claude/agents/godot-specialist.md` | adapt | complete | 81 | 193 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/level-designer.toml` | `.claude/agents/level-designer.md` | adapt | complete | 81 | 115 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/live-ops-designer.toml` | `.claude/agents/live-ops-designer.md` | adapt | complete | 81 | 184 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
@@ -38,42 +42,80 @@ Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 | agent | `.codex/agents/technical-artist.toml` | `.claude/agents/technical-artist.md` | adapt | complete | 82 | 108 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/technical-director.toml` | `.claude/agents/technical-director.md` | adapt | complete | 90 | 159 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/tools-programmer.toml` | `.claude/agents/tools-programmer.md` | adapt | complete | 82 | 101 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/ue-blueprint-specialist.toml` | `.claude/agents/ue-blueprint-specialist.md` | adapt | complete | 94 | 151 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/ue-gas-specialist.toml` | `.claude/agents/ue-gas-specialist.md` | adapt | complete | 94 | 133 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/ue-replication-specialist.toml` | `.claude/agents/ue-replication-specialist.md` | adapt | complete | 94 | 143 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/ue-umg-specialist.toml` | `.claude/agents/ue-umg-specialist.md` | adapt | complete | 94 | 150 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/ui-programmer.toml` | `.claude/agents/ui-programmer.md` | adapt | complete | 82 | 102 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/ui-ux-designer.toml` |  | defer | deferred | 90 |  | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/unity-addressables-specialist.toml` | `.claude/agents/unity-addressables-specialist.md` | adapt | complete | 94 | 165 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/unity-dots-specialist.toml` | `.claude/agents/unity-dots-specialist.md` | adapt | complete | 94 | 148 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/unity-shader-specialist.toml` | `.claude/agents/unity-shader-specialist.md` | adapt | complete | 94 | 178 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/unity-specialist.toml` | `.claude/agents/unity-specialist.md` | adapt | complete | 81 | 184 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| agent | `.codex/agents/unity-ui-specialist.toml` | `.claude/agents/unity-ui-specialist.md` | adapt | complete | 94 | 217 | 56 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/unreal-specialist.toml` | `.claude/agents/unreal-specialist.md` | adapt | complete | 81 | 172 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/world-builder.toml` | `.claude/agents/world-builder.md` | adapt | complete | 81 | 111 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
 | agent | `.codex/agents/writer.toml` | `.claude/agents/writer.md` | adapt | complete | 80 | 104 | 50 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/roles.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/accessibility-doc.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/analytics-setup.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/architecture-decision.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/architecture-review.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/art-bible.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/art-direction.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/asset-audit.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/asset-spec.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/balance-check.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/brainstorm.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/bug-report.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/bugfix.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/changelog.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/code-review.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/consistency-check.md` |  | defer | deferred | 85 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/control-manifest.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/create-architecture.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/create-epics.md` |  | defer | deferred | 85 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/create-stories.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/design-review-concept.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/design-review.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/design-spec.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/design-system.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/engine-setup.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/entity-inventory.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/game-concept.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/game-feel-tuning.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/handoff.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/hotfix.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/implement.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/launch-checklist.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/localization-plan.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/map-systems.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/market-analysis.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/onboard.md` |  | defer | deferred | 86 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/patch-notes.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/perf-profile.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/playtest-polish.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/playtest.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/production-milestone.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/prototype.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/qa-plan.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/regression-suite.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/release-checklist.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/retrospective.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/review-all-gdds.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/review.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/scope-check.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/security-audit.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/ship-check.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/sprint-plan.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/sprint-status.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/story-done.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/story-readiness.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/team-feature.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/team-polish.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/test-setup.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/ui-ux-review.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/ux-design.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
+| workflow | `.codex/workflows/ux-review.md` |  | defer | deferred | 83 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | workflow | `.codex/workflows/vertical-slice.md` |  | defer | deferred | 84 |  | 56 | yes | pass | `tests/workflow-catalog.test.ts`<br>`tests/workflow-recipes.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-adopt/SKILL.md` | `.claude/skills/adopt/SKILL.md` | adapt | complete | 113 | 443 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-architecture-decision/SKILL.md` | `.claude/skills/architecture-decision/SKILL.md` | adapt | complete | 112 | 456 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
@@ -129,9 +171,20 @@ Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 | skill | `.agents/skills/cgs-soak-test/SKILL.md` | `.claude/skills/soak-test/SKILL.md` | adapt | complete | 114 | 284 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-sprint-plan/SKILL.md` | `.claude/skills/sprint-plan/SKILL.md` | adapt | complete | 112 | 281 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-sprint-status/SKILL.md` | `.claude/skills/sprint-status/SKILL.md` | adapt | complete | 112 | 208 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-ai-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-data-files/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-design-docs/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-engine-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-gameplay-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-standards-gameplay/SKILL.md` |  | defer | deferred | 98 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-narrative/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-network-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-prototype-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-standards-prototype/SKILL.md` |  | defer | deferred | 98 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-shader-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-test-standards/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-standards-tests/SKILL.md` |  | defer | deferred | 98 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-ui-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-standards-ui/SKILL.md` |  | defer | deferred | 98 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-start/SKILL.md` | `.claude/skills/start/SKILL.md` | adapt | complete | 113 | 245 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-story-done/SKILL.md` | `.claude/skills/story-done/SKILL.md` | adapt | complete | 112 | 459 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |

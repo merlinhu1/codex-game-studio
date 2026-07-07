@@ -35,7 +35,33 @@ export type TemplateId =
   | "economy_model"
   | "difficulty_curve"
   | "player_journey"
-  | "pitch_document";
+  | "pitch_document"
+  | "architecture-decision-record"
+  | "architecture-doc-from-code"
+  | "changelog-template"
+  | "design-agent-protocol"
+  | "implementation-agent-protocol"
+  | "leadership-agent-protocol"
+  | "concept-doc-from-prototype"
+  | "design-doc-from-implementation"
+  | "faction-design"
+  | "game-concept"
+  | "game-design-document"
+  | "game-pillars"
+  | "hud-design"
+  | "incident-response"
+  | "interaction-pattern-library"
+  | "level-design-document"
+  | "milestone-definition"
+  | "narrative-character-sheet"
+  | "post-mortem"
+  | "project-stage-report"
+  | "prototype-report"
+  | "release-checklist-template"
+  | "risk-register-entry"
+  | "skill-test-spec"
+  | "systems-index"
+  | "technical-design-document";
 
 export type TemplateInfo = {
   id: TemplateId;
@@ -58,8 +84,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "design",
     path: "templates/gdd_template.md",
     description: "Game design document scaffold for the core loop, player goals, systems, content scope, and risks.",
-    roles: ["game-designer", "creative-director"],
-    workflows: ["design-spec", "brainstorm", "create-epics"],
+    roles: ["game-designer", "creative-director", "senior-game-designer", "systems-designer"],
+    workflows: ["design-spec", "brainstorm", "create-epics", "game-concept", "design-review-concept", "map-systems", "design-review", "review-all-gdds"],
     tags: ["design", "gdd"],
     requiredSections: markdownSections
   },
@@ -68,8 +94,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "design",
     path: "templates/feature_spec_template.md",
     description: "Feature specification scaffold for rules, edge cases, acceptance criteria, and implementation slices.",
-    roles: ["senior-game-designer", "game-designer", "gameplay-programmer", "producer"],
-    workflows: ["design-spec", "create-stories", "story-readiness"],
+    roles: ["senior-game-designer", "game-designer", "gameplay-programmer", "producer", "systems-designer"],
+    workflows: ["design-spec", "create-stories", "story-readiness", "design-system"],
     tags: ["feature", "spec", "design"],
     requiredSections: markdownSections
   },
@@ -78,8 +104,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "coordination",
     path: "templates/handoff_template.md",
     description: "Contributor handoff scaffold for current state, blockers, next owners, and verification evidence.",
-    roles: ["studio-orchestrator", "creative-director", "producer"],
-    workflows: ["handoff", "sprint-status", "onboard"],
+    roles: ["studio-orchestrator", "creative-director", "producer", "senior-game-designer"],
+    workflows: ["handoff", "sprint-status", "onboard", "design-review", "review-all-gdds", "consistency-check"],
     tags: ["handoff", "coordination"],
     requiredSections: markdownSections
   },
@@ -98,8 +124,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "engine",
     path: "templates/engine_setup_template.md",
     description: "Engine setup scaffold for project structure, run commands, import rules, and validation checks.",
-    roles: ["gameplay-programmer", "engine-programmer", "technical-artist"],
-    workflows: ["prototype", "architecture-review"],
+    roles: ["gameplay-programmer", "engine-programmer", "technical-artist", "technical-director"],
+    workflows: ["prototype", "architecture-review", "engine-setup"],
     tags: ["engine", "setup"],
     requiredSections: markdownSections
   },
@@ -118,8 +144,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "config",
     path: "templates/project_config_template.json",
     description: "Canonical project configuration JSON seed used to initialize Codex Game Studio projects.",
-    roles: ["producer", "creative-director"],
-    workflows: ["onboard", "prototype"],
+    roles: ["producer", "creative-director", "technical-director"],
+    workflows: ["onboard", "prototype", "engine-setup"],
     tags: ["config", "setup"],
     requiredSections: []
   },
@@ -198,8 +224,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "architecture",
     path: "templates/technical_design_template.md",
     description: "Technical design scaffold for systems, APIs, data flow, engine constraints, risks, and test strategy.",
-    roles: ["technical-director", "engine-programmer", "tools-programmer", "producer"],
-    workflows: ["architecture-decision", "architecture-review", "prototype"],
+    roles: ["technical-director", "engine-programmer", "tools-programmer", "producer", "systems-designer"],
+    workflows: ["architecture-decision", "architecture-review", "prototype", "map-systems", "create-architecture"],
     tags: ["technical", "design", "architecture"],
     requiredSections: markdownSections
   },
@@ -208,8 +234,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "architecture",
     path: "templates/architecture_traceability_template.md",
     description: "Traceability scaffold linking design promises, architecture decisions, implementation files, and tests.",
-    roles: ["technical-director", "producer", "qa-playtester"],
-    workflows: ["architecture-decision", "architecture-review", "story-done"],
+    roles: ["technical-director", "producer", "qa-playtester", "systems-designer"],
+    workflows: ["architecture-decision", "architecture-review", "story-done", "map-systems", "create-architecture"],
     tags: ["architecture", "traceability", "evidence"],
     requiredSections: markdownSections
   },
@@ -219,7 +245,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     path: "templates/art_bible_template.md",
     description: "Art bible scaffold for style pillars, palette, asset rules, references, and production constraints.",
     roles: ["senior-game-artist", "technical-artist", "creative-director"],
-    workflows: ["art-direction", "brainstorm"],
+    workflows: ["art-direction", "brainstorm", "art-bible"],
     tags: ["art", "style", "bible"],
     requiredSections: markdownSections
   },
@@ -238,8 +264,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "ui",
     path: "templates/ux_spec_template.md",
     description: "UX specification scaffold for player flows, screens, interaction states, affordances, and errors.",
-    roles: ["ui-ux-designer", "game-designer", "localization-lead"],
-    workflows: ["ui-ux-review", "design-spec"],
+    roles: ["ui-ux-designer", "game-designer", "localization-lead", "accessibility-specialist"],
+    workflows: ["ui-ux-review", "design-spec", "control-manifest", "accessibility-doc"],
     tags: ["ux", "flows", "interface"],
     requiredSections: markdownSections
   },
@@ -249,7 +275,7 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     path: "templates/accessibility_requirements_template.md",
     description: "Accessibility requirements scaffold for input, visuals, audio, text, difficulty, and verification checks.",
     roles: ["accessibility-specialist", "ui-ux-designer", "qa-playtester", "localization-lead"],
-    workflows: ["ui-ux-review", "localization-plan", "qa-plan"],
+    workflows: ["ui-ux-review", "localization-plan", "qa-plan", "control-manifest", "accessibility-doc"],
     tags: ["accessibility", "requirements", "inclusive-design"],
     requiredSections: markdownSections
   },
@@ -258,8 +284,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "qa",
     path: "templates/test_plan_template.md",
     description: "QA test plan scaffold for scenarios, risks, manual checks, automated checks, and exit criteria.",
-    roles: ["qa-playtester", "producer", "release-manager"],
-    workflows: ["qa-plan", "regression-suite", "release-checklist"],
+    roles: ["qa-playtester", "producer", "release-manager", "accessibility-specialist"],
+    workflows: ["qa-plan", "regression-suite", "release-checklist", "accessibility-doc"],
     tags: ["qa", "test", "plan"],
     requiredSections: markdownSections
   },
@@ -318,8 +344,8 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     category: "production",
     path: "templates/risk_register_template.md",
     description: "Risk register scaffold for risks, impact, probability, mitigation, owner, trigger, and status.",
-    roles: ["producer", "technical-director", "release-manager", "gameplay-programmer"],
-    workflows: ["production-milestone", "sprint-plan", "ship-check", "release-checklist", "hotfix"],
+    roles: ["producer", "technical-director", "release-manager", "gameplay-programmer", "senior-game-designer", "senior-game-artist", "studio-orchestrator"],
+    workflows: ["production-milestone", "sprint-plan", "ship-check", "release-checklist", "hotfix", "design-review-concept", "art-bible", "design-review", "review-all-gdds", "consistency-check"],
     tags: ["risk", "mitigation", "production"],
     requiredSections: markdownSections
   },
@@ -362,8 +388,267 @@ export const templateRegistry: Record<TemplateId, TemplateInfo> = {
     workflows: ["brainstorm", "market-analysis", "onboard"],
     tags: ["pitch", "market", "concept"],
     requiredSections: markdownSections
-  }
-};
+  },
+  "architecture-decision-record": {
+    id: "architecture-decision-record",
+    category: "architecture",
+    path: "templates/architecture-decision-record_template.md",
+    description: "Architecture decision record scaffold for context, options, decision, consequences, compatibility, and verification.",
+    roles: ["technical-director", "engine-programmer"],
+    workflows: ["architecture-decision", "architecture-review"],
+    tags: ["architecture", "decision", "adr"],
+    requiredSections: markdownSections
+  },
+  "architecture-doc-from-code": {
+    id: "architecture-doc-from-code",
+    category: "architecture",
+    path: "templates/architecture-doc-from-code_template.md",
+    description: "Reverse-documentation scaffold for observed code architecture, decisions, alternatives, consequences, and evidence.",
+    roles: ["technical-director", "engine-programmer", "tools-programmer"],
+    workflows: ["architecture-review", "create-architecture"],
+    tags: ["architecture", "reverse-document", "code"],
+    requiredSections: markdownSections
+  },
+  "changelog-template": {
+    id: "changelog-template",
+    category: "release",
+    path: "templates/changelog-template_template.md",
+    description: "Developer changelog scaffold for features, fixes, balance changes, known issues, and technical notes.",
+    roles: ["release-manager", "producer", "community-manager"],
+    workflows: ["changelog", "patch-notes", "release-checklist"],
+    tags: ["changelog", "release", "notes"],
+    requiredSections: markdownSections
+  },
+  "design-agent-protocol": {
+    id: "design-agent-protocol",
+    category: "coordination",
+    path: "templates/design-agent-protocol_template.md",
+    description: "Design-agent protocol scaffold for design responsibilities, required inputs, output contracts, and gates.",
+    roles: ["creative-director", "senior-game-designer", "game-designer"],
+    workflows: ["design-review", "review-all-gdds", "consistency-check"],
+    tags: ["design", "protocol", "agent"],
+    requiredSections: markdownSections
+  },
+  "implementation-agent-protocol": {
+    id: "implementation-agent-protocol",
+    category: "coordination",
+    path: "templates/implementation-agent-protocol_template.md",
+    description: "Implementation-agent protocol scaffold for code responsibilities, allowed edits, tests, and handoff evidence.",
+    roles: ["technical-director", "engine-programmer", "gameplay-programmer"],
+    workflows: ["implement", "code-review", "bugfix"],
+    tags: ["implementation", "protocol", "agent"],
+    requiredSections: markdownSections
+  },
+  "leadership-agent-protocol": {
+    id: "leadership-agent-protocol",
+    category: "coordination",
+    path: "templates/leadership-agent-protocol_template.md",
+    description: "Leadership-agent protocol scaffold for decisions, escalation, owner handoffs, and production gates.",
+    roles: ["studio-orchestrator", "producer", "creative-director", "technical-director"],
+    workflows: ["sprint-plan", "sprint-status", "scope-check"],
+    tags: ["leadership", "protocol", "coordination"],
+    requiredSections: markdownSections
+  },
+  "concept-doc-from-prototype": {
+    id: "concept-doc-from-prototype",
+    category: "design",
+    path: "templates/concept-doc-from-prototype_template.md",
+    description: "Reverse-documented concept scaffold for prototype hypotheses, outcomes, mechanic learnings, and proceed/pivot/kill recommendation.",
+    roles: ["producer", "creative-director", "gameplay-programmer"],
+    workflows: ["prototype", "brainstorm", "game-concept"],
+    tags: ["prototype", "concept", "reverse-document"],
+    requiredSections: markdownSections
+  },
+  "design-doc-from-implementation": {
+    id: "design-doc-from-implementation",
+    category: "design",
+    path: "templates/design-doc-from-implementation_template.md",
+    description: "Reverse-documented design scaffold for implemented systems, rules, edge cases, and evidence paths.",
+    roles: ["game-designer", "systems-designer", "gameplay-programmer"],
+    workflows: ["design-system", "review-all-gdds", "story-done"],
+    tags: ["design", "implementation", "reverse-document"],
+    requiredSections: markdownSections
+  },
+  "faction-design": {
+    id: "faction-design",
+    category: "narrative",
+    path: "templates/faction-design_template.md",
+    description: "Faction design scaffold for identity, values, history, relationships, gameplay role, and content hooks.",
+    roles: ["world-builder", "narrative-designer", "writer"],
+    workflows: ["brainstorm", "design-spec"],
+    tags: ["faction", "narrative", "world"],
+    requiredSections: markdownSections
+  },
+  "game-concept": {
+    id: "game-concept",
+    category: "design",
+    path: "templates/game-concept_template.md",
+    description: "Game concept scaffold for pitch, core fantasy, pillars, audience, constraints, and risks.",
+    roles: ["creative-director", "game-designer", "market-analyst", "producer"],
+    workflows: ["game-concept", "brainstorm", "market-analysis"],
+    tags: ["concept", "pitch", "pillars"],
+    requiredSections: markdownSections
+  },
+  "game-design-document": {
+    id: "game-design-document",
+    category: "design",
+    path: "templates/game-design-document_template.md",
+    description: "Game design document scaffold for mechanics, systems, content, UX, progression, and acceptance criteria.",
+    roles: ["game-designer", "senior-game-designer", "systems-designer"],
+    workflows: ["design-spec", "design-system", "review-all-gdds"],
+    tags: ["gdd", "design", "systems"],
+    requiredSections: markdownSections
+  },
+  "game-pillars": {
+    id: "game-pillars",
+    category: "design",
+    path: "templates/game-pillars_template.md",
+    description: "Game pillars scaffold for core fantasy, pillars, non-goals, examples, and validation checks.",
+    roles: ["creative-director", "senior-game-designer", "producer"],
+    workflows: ["game-concept", "design-review-concept", "consistency-check"],
+    tags: ["pillars", "fantasy", "scope"],
+    requiredSections: markdownSections
+  },
+  "hud-design": {
+    id: "hud-design",
+    category: "ui",
+    path: "templates/hud-design_template.md",
+    description: "HUD design scaffold for information architecture, zones, element states, accessibility, and validation.",
+    roles: ["ui-ux-designer", "game-designer", "accessibility-specialist"],
+    workflows: ["ux-design", "ux-review", "ui-ux-review"],
+    tags: ["hud", "ui", "ux"],
+    requiredSections: markdownSections
+  },
+  "incident-response": {
+    id: "incident-response",
+    category: "release",
+    path: "templates/incident-response_template.md",
+    description: "Incident response scaffold for severity, timeline, root cause, mitigation, rollback, and follow-up owners.",
+    roles: ["release-manager", "devops-engineer", "producer"],
+    workflows: ["hotfix", "bug-report", "retrospective"],
+    tags: ["incident", "hotfix", "rollback"],
+    requiredSections: markdownSections
+  },
+  "interaction-pattern-library": {
+    id: "interaction-pattern-library",
+    category: "ui",
+    path: "templates/interaction-pattern-library_template.md",
+    description: "Interaction pattern library scaffold for reusable UI controls, states, navigation, and accessibility rules.",
+    roles: ["ui-ux-designer", "accessibility-specialist", "game-designer"],
+    workflows: ["ux-design", "ux-review", "design-system"],
+    tags: ["interaction", "ui", "patterns"],
+    requiredSections: markdownSections
+  },
+  "level-design-document": {
+    id: "level-design-document",
+    category: "design",
+    path: "templates/level-design-document_template.md",
+    description: "Level design document scaffold for layout, objectives, encounters, pacing, secrets, and playtest evidence.",
+    roles: ["level-designer", "game-designer", "qa-playtester"],
+    workflows: ["design-spec", "playtest", "playtest-polish"],
+    tags: ["level", "layout", "encounter"],
+    requiredSections: markdownSections
+  },
+  "milestone-definition": {
+    id: "milestone-definition",
+    category: "production",
+    path: "templates/milestone-definition_template.md",
+    description: "Milestone definition scaffold for goals, success criteria, feature tiers, cut lines, owners, and validation gates.",
+    roles: ["producer", "studio-orchestrator"],
+    workflows: ["production-milestone", "sprint-plan", "scope-check"],
+    tags: ["milestone", "scope", "production"],
+    requiredSections: markdownSections
+  },
+  "narrative-character-sheet": {
+    id: "narrative-character-sheet",
+    category: "narrative",
+    path: "templates/narrative-character-sheet_template.md",
+    description: "Character sheet scaffold for role, motivation, voice, arc, relationships, and implementation hooks.",
+    roles: ["narrative-designer", "writer", "world-builder"],
+    workflows: ["brainstorm", "design-spec"],
+    tags: ["character", "narrative", "voice"],
+    requiredSections: markdownSections
+  },
+  "post-mortem": {
+    id: "post-mortem",
+    category: "production",
+    path: "templates/post-mortem_template.md",
+    description: "Post-mortem scaffold for outcomes, what worked, what failed, root causes, actions, and owners.",
+    roles: ["producer", "studio-orchestrator", "qa-playtester"],
+    workflows: ["retrospective", "sprint-status", "release-checklist"],
+    tags: ["postmortem", "retrospective", "learning"],
+    requiredSections: markdownSections
+  },
+  "project-stage-report": {
+    id: "project-stage-report",
+    category: "production",
+    path: "templates/project-stage-report_template.md",
+    description: "Project stage report scaffold for current phase, completeness, blockers, evidence, and recommended next steps.",
+    roles: ["producer", "studio-orchestrator", "technical-director"],
+    workflows: ["onboard", "sprint-status", "scope-check"],
+    tags: ["stage", "status", "readiness"],
+    requiredSections: markdownSections
+  },
+  "prototype-report": {
+    id: "prototype-report",
+    category: "production",
+    path: "templates/prototype-report_template.md",
+    description: "Prototype report scaffold for hypothesis, scope, results, metrics, recommendation, and follow-up risks.",
+    roles: ["producer", "gameplay-programmer", "qa-playtester"],
+    workflows: ["prototype", "vertical-slice", "playtest"],
+    tags: ["prototype", "evidence", "recommendation"],
+    requiredSections: markdownSections
+  },
+  "release-checklist-template": {
+    id: "release-checklist-template",
+    category: "release",
+    path: "templates/release-checklist-template_template.md",
+    description: "Release checklist scaffold for build verification, quality gates, platform readiness, blockers, and ship verdict.",
+    roles: ["release-manager", "producer", "qa-playtester"],
+    workflows: ["release-checklist", "ship-check", "launch-checklist"],
+    tags: ["release", "checklist", "ship"],
+    requiredSections: markdownSections
+  },
+  "risk-register-entry": {
+    id: "risk-register-entry",
+    category: "production",
+    path: "templates/risk-register-entry_template.md",
+    description: "Risk entry scaffold for probability, impact, triggers, mitigation, owner, and status.",
+    roles: ["producer", "technical-director", "release-manager"],
+    workflows: ["sprint-plan", "scope-check", "production-milestone"],
+    tags: ["risk", "mitigation", "owner"],
+    requiredSections: markdownSections
+  },
+  "skill-test-spec": {
+    id: "skill-test-spec",
+    category: "qa",
+    path: "templates/skill-test-spec_template.md",
+    description: "Skill test specification scaffold for fixtures, expected behavior, protocol checks, and verification commands.",
+    roles: ["qa-playtester", "technical-director", "producer"],
+    workflows: ["test-setup", "qa-plan", "regression-suite"],
+    tags: ["skill", "test", "spec"],
+    requiredSections: markdownSections
+  },
+  "systems-index": {
+    id: "systems-index",
+    category: "design",
+    path: "templates/systems-index_template.md",
+    description: "Systems index scaffold for system inventory, priority tiers, dependency map, owners, and coverage gaps.",
+    roles: ["systems-designer", "technical-director", "producer"],
+    workflows: ["map-systems", "design-system", "create-architecture"],
+    tags: ["systems", "index", "dependencies"],
+    requiredSections: markdownSections
+  },
+  "technical-design-document": {
+    id: "technical-design-document",
+    category: "architecture",
+    path: "templates/technical-design-document_template.md",
+    description: "Technical design document scaffold for requirements, APIs, data flow, architecture, tests, and rollback.",
+    roles: ["technical-director", "engine-programmer", "tools-programmer"],
+    workflows: ["architecture-decision", "create-architecture", "implement"],
+    tags: ["technical", "design", "architecture"],
+    requiredSections: markdownSections
+  }};
 
 export function listTemplates(projectRoot?: string): AnyTemplateInfo[] {
   return projectRoot ? [...Object.values(templateRegistry), ...listCustomTemplates(projectRoot)] : Object.values(templateRegistry);

@@ -134,7 +134,18 @@ const skillProfiles: SkillProfile[] = [
   standards("gameplay", "Gameplay Standards", "mechanics, tuning, data-driven values, engine idioms, and player-facing acceptance checks", ["Data Driven Values", "Engine Boundary", "Playable Check"]),
   standards("tests", "Test Standards", "unit, integration, engine smoke, playtest, and regression coverage", ["Narrow Test", "Suite", "Evidence"]),
   standards("prototype", "Prototype Standards", "fast experiments with explicit hypotheses, throwaway boundaries, and graduation criteria", ["Hypothesis", "Throwaway Boundary", "Graduation"]),
-  standards("ui", "UI Standards", "HUD, menus, accessibility, localization, controller navigation, and input states", ["Navigation", "Localization", "Accessibility"])
+  standards("ui", "UI Standards", "HUD, menus, accessibility, localization, controller navigation, and input states", ["Navigation", "Localization", "Accessibility"]),
+  standards("ai-code", "AI Code Standards", "agent and NPC behavior code with deterministic decisions, bounded state, test seams, and debugging evidence", ["Decision Boundary", "State Guard", "Behavior Evidence"]),
+  standards("data-files", "Data File Standards", "JSON, YAML, CSV, and engine data assets with schemas, stable identifiers, validation, and migration notes", ["Schema", "Stable ID", "Migration Note"]),
+  standards("design-docs", "Design Document Standards", "design documents with player-facing intent, canonical source links, open questions, and acceptance checks", ["Player Intent", "Canonical Source", "Acceptance Check"]),
+  standards("engine-code", "Engine Code Standards", "core engine-facing code with lifecycle safety, allocation discipline, engine idioms, and smoke verification", ["Lifecycle", "Allocation", "Engine Smoke"]),
+  standards("gameplay-code", "Gameplay Code Standards", "gameplay implementation with data-driven tuning, readable state transitions, and playable verification", ["State Transition", "Tuning Data", "Playable Check"]),
+  standards("narrative", "Narrative Standards", "narrative content with voice consistency, branching context, localization readiness, and implementation hooks", ["Voice", "Branch Context", "Localization"]),
+  standards("network-code", "Network Code Standards", "networked gameplay with authority boundaries, deterministic sync, latency handling, and reproducible tests", ["Authority", "Sync", "Latency Test"]),
+  standards("prototype-code", "Prototype Code Standards", "prototype code with explicit hypothesis, throwaway boundaries, minimal safety, and graduation criteria", ["Hypothesis", "Throwaway Boundary", "Graduation"]),
+  standards("shader-code", "Shader Code Standards", "shader and material code with naming, variant control, platform budgets, and visual verification", ["Naming", "Variant Control", "Visual Evidence"]),
+  standards("test-standards", "Test Standards", "test assets and suites with clear assertions, fixtures, evidence, and regression coverage", ["Assertion", "Fixture", "Regression Evidence"]),
+  standards("ui-code", "UI Code Standards", "UI code with navigation, accessibility, localization, controller support, and responsive state handling", ["Navigation", "Accessibility", "Localization"])
 ];
 
 function profile(id: string, group: SkillGroup, title: string, objective: string, markers: string[]): SkillProfile {

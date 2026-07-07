@@ -13,7 +13,7 @@ import { stripGeneratedMetadata } from "./generated-surfaces.js";
 import { renderContextContract } from "./prompt-context.js";
 import { defaultModelPolicyForId, type CodexModelName, type ReasoningEffort } from "./prompt-surface-metadata.js";
 import { readStudioProject, type StudioProjectState } from "./projects.js";
-import { isEngineSpecialistRoleId, isStudioRoleId, projectRoleIdsForEngine, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
+import { isRoleAvailableForEngine, isStudioRoleId, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
 import { customPhaseForRun, customTemplateIdsForRole, findCustomRole, renderCustomRolePrompt } from "./customization.js";
 import { packageAssetPath, resolveProjectRoot } from "./paths.js";
 import { evaluateStudioRunEligibility, type CodexSandboxMode, type CodexStudioPhase, type StudioRunEligibility } from "./studio-policy.js";
@@ -511,8 +511,8 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   if (!isStudioRoleId(roleInput)) throw new Error(unknownStudioRoleMessage(roleInput));
   const role = roleInput as StudioRoleId;
   const studio = readStudioProject(projectRoot);
-  if (isEngineSpecialistRoleId(role) && !projectRoleIdsForEngine(studio.engine).includes(role)) {
-    throw new Error(`${role} is not available for ${studio.engine} projects; use ${studio.engine}-specialist for this project.`);
+  if (!isRoleAvailableForEngine(role, studio.engine)) {
+    throw new Error(`${role} is not available for ${studio.engine} projects; use one of ${studio.roles.join(", ")} for this project.`);
   }
   const artifactRefs = (options.includeArtifact ?? []).map((artifact) => {
     const { full, display } = safeArtifact(projectRoot, artifact);

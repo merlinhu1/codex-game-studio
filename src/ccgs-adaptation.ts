@@ -63,18 +63,18 @@ export const ccgsRoleAdaptations: CcgsRoleAdaptation[] = [
   { sourceId: "qa-tester", target: "qa-playtester", decision: "defer", notes: "Current QA playtester covers test cases and evidence; split later if needed." },
   { sourceId: "lead-programmer", target: "lead-programmer", decision: "built-in-add-candidate", notes: "Add only if technical-director is too broad for code ownership." },
   { sourceId: "prototyper", target: "prototype", decision: "workflow", notes: "Keep as workflow/recipe, not a separate role." },
-  { sourceId: "godot-gdscript-specialist", target: "engine-reference/godot", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "godot-csharp-specialist", target: "engine-reference/godot", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "godot-gdextension-specialist", target: "engine-reference/godot", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "godot-shader-specialist", target: "engine-reference/godot", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "unity-addressables-specialist", target: "engine-reference/unity", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "unity-dots-specialist", target: "engine-reference/unity", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "unity-shader-specialist", target: "engine-reference/unity", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "unity-ui-specialist", target: "engine-reference/unity", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "ue-blueprint-specialist", target: "engine-reference/unreal", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "ue-gas-specialist", target: "engine-reference/unreal", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "ue-replication-specialist", target: "engine-reference/unreal", decision: "specialty-context", notes: "Task-keyword selected engine context." },
-  { sourceId: "ue-umg-specialist", target: "engine-reference/unreal", decision: "specialty-context", notes: "Task-keyword selected engine context." }
+  { sourceId: "godot-gdscript-specialist", target: "godot-gdscript-specialist", decision: "built-in-existing", notes: "First-class Godot GDScript engine sub-specialist role." },
+  { sourceId: "godot-csharp-specialist", target: "godot-csharp-specialist", decision: "built-in-existing", notes: "First-class Godot C# engine sub-specialist role." },
+  { sourceId: "godot-gdextension-specialist", target: "godot-gdextension-specialist", decision: "built-in-existing", notes: "First-class Godot GDExtension engine sub-specialist role." },
+  { sourceId: "godot-shader-specialist", target: "godot-shader-specialist", decision: "built-in-existing", notes: "First-class Godot shader engine sub-specialist role." },
+  { sourceId: "unity-addressables-specialist", target: "unity-addressables-specialist", decision: "built-in-existing", notes: "First-class Unity Addressables engine sub-specialist role." },
+  { sourceId: "unity-dots-specialist", target: "unity-dots-specialist", decision: "built-in-existing", notes: "First-class Unity DOTS engine sub-specialist role." },
+  { sourceId: "unity-shader-specialist", target: "unity-shader-specialist", decision: "built-in-existing", notes: "First-class Unity shader engine sub-specialist role." },
+  { sourceId: "unity-ui-specialist", target: "unity-ui-specialist", decision: "built-in-existing", notes: "First-class Unity UI engine sub-specialist role." },
+  { sourceId: "ue-blueprint-specialist", target: "ue-blueprint-specialist", decision: "built-in-existing", notes: "First-class Unreal Blueprint engine sub-specialist role." },
+  { sourceId: "ue-gas-specialist", target: "ue-gas-specialist", decision: "built-in-existing", notes: "First-class Unreal GAS engine sub-specialist role." },
+  { sourceId: "ue-replication-specialist", target: "ue-replication-specialist", decision: "built-in-existing", notes: "First-class Unreal replication engine sub-specialist role." },
+  { sourceId: "ue-umg-specialist", target: "ue-umg-specialist", decision: "built-in-existing", notes: "First-class Unreal UMG engine sub-specialist role." }
 ];
 
 export const ccgsSkillAdaptations: CcgsSkillAdaptation[] = [

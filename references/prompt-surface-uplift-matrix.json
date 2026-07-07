@@ -1,8 +1,8 @@
 {
   "local": {
-    "agents": 38,
-    "workflows": 31,
-    "skills": 79
+    "agents": 50,
+    "workflows": 61,
+    "skills": 90
   },
   "upstream": {
     "agents": 49,
@@ -425,6 +425,142 @@
       },
       "discoveryMetadata": {
         "text": "Owns gameplay programmer work: Implement gameplay systems with focused file edits, engine-native idioms, deterministic behavior, and verification evidence. Produces Code changes, Verification results, Implementation notes; hand off requests outside gameplay programmer ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/godot-csharp-specialist.toml",
+      "sourcePath": ".claude/agents/godot-csharp-specialist.md",
+      "sourceHash": "b15ca77993fb986245b4ca4e9ac7822f4d74adfd3a352d4e331a0c24d08b82fb",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 407,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns godot csharp specialist work: Implement and review Godot C# code using .NET idioms, typed Node access, exported properties, Signal delegates, nullable annotations, and async patterns. Separate C# ownership from GDScript or GDExtension handoffs while preserving Godot scene and resource conventions. Produces Godot C# guidance, .NET integration risks, Typed API verification; hand off requests outside godot csharp specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/godot-gdextension-specialist.toml",
+      "sourcePath": ".claude/agents/godot-gdextension-specialist.md",
+      "sourceHash": "5781a7380ef3f90e6301e8c330cbe4f324b3e7ac0f66a91c127842e3c5a8a111",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 317,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns godot gdextension specialist work: Implement and review GDExtension boundaries, native bindings, build files, C++ or Rust integration, custom nodes, and performance-critical native code paths. Define when native code is justified over GDScript or C# and keep build, ABI, and export risks explicit. Produces GDExtension guidance, Native binding risks, Build verification notes; hand off requests outside godot gdextension specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/godot-gdscript-specialist.toml",
+      "sourcePath": ".claude/agents/godot-gdscript-specialist.md",
+      "sourceHash": "03c4d2325044ff16b55bab1e0c6412f0688704ece76513db02b7fcf352668c88",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 272,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns godot gdscript specialist work: Implement and review GDScript code with static typing, typed arrays, class_name usage, exports, signals, and Godot naming conventions. Design signal, resource, coroutine, and node communication patterns that keep gameplay code maintainable and performant. Produces GDScript implementation guidance, Signal and typing risks, Godot script verification; hand off requests outside godot gdscript specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/godot-shader-specialist.toml",
+      "sourcePath": ".claude/agents/godot-shader-specialist.md",
+      "sourceHash": "f0497d594b94ca4d0272bca8fb20ac7b8b594534060e774f64f2de143fb8a64e",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 265,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns godot shader specialist work: Implement and review Godot shader code, materials, particles, visual shader choices, post-processing, lighting, and VFX handoffs. Keep shader recommendations tied to visual goals, render pipeline constraints, GPU cost, and inspectable scene/material files. Produces Godot shader guidance, Rendering and VFX risks, Visual verification notes; hand off requests outside godot shader specialist ownership or missing verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -1090,6 +1226,143 @@
     },
     {
       "sourceType": "agent",
+      "localPath": ".codex/agents/ue-blueprint-specialist.toml",
+      "sourcePath": ".claude/agents/ue-blueprint-specialist.md",
+      "sourceHash": "f801d74b4dbcb052439e841a63c1a853ba6242dafee5d63d18b129883c95493c",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Task",
+        "disallowedTools": "Bash",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 151,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns ue blueprint specialist work: Implement and review Blueprint graphs, Blueprint Function Libraries, Blueprint/C++ boundaries, naming, event graphs, and optimization hotspots. Keep visual scripting maintainable, data-driven, reviewable, and clear about when C++ ownership is required. Produces Blueprint architecture guidance, C++ boundary risks, Graph verification notes; hand off requests outside ue blueprint specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/ue-gas-specialist.toml",
+      "sourcePath": ".claude/agents/ue-gas-specialist.md",
+      "sourceHash": "b25dc54f2ec83ca4e3790197f1b2aed5c2c1054eb6449b2dd447a1b6d4a8f9ba",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 133,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns ue gas specialist work: Implement and review Gameplay Ability System abilities, Gameplay Effects, Attribute Sets, Gameplay Tags, Ability Tasks, costs, cooldowns, and prediction behavior. Keep GAS values data-driven, lifecycle-safe, replication-aware, and coordinated with gameplay/UI/network owners. Produces GAS architecture guidance, Attribute and prediction risks, Ability verification notes; hand off requests outside ue gas specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/ue-replication-specialist.toml",
+      "sourcePath": ".claude/agents/ue-replication-specialist.md",
+      "sourceHash": "9bac007eff06a320c1559d0f81f783be689c644a217b0b4605781e39fbaa1918",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 143,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns ue replication specialist work: Implement and review replicated properties, RepNotify, RPC validation, prediction/correction, relevancy, dormancy, net serialization, and bandwidth tuning. Separate gameplay ownership from network transport concerns and escalate GAS-specific prediction to GAS ownership when relevant. Produces Replication guidance, RPC and bandwidth risks, Network verification notes; hand off requests outside ue replication specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/ue-umg-specialist.toml",
+      "sourcePath": ".claude/agents/ue-umg-specialist.md",
+      "sourceHash": "bdbda2833cc07ca389c01a40d5f608137c7711a02b7a8313a16af50f0c5d0ae3",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 150,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns ue umg specialist work: Implement and review UMG widgets, CommonUI screen stacks, data binding, input routing, focus behavior, HUD performance, and UI accessibility hooks. Coordinate Unreal UI implementation with UX specs, localization text expansion, controller/keyboard input, and gameplay events. Produces UMG and CommonUI guidance, Widget and input risks, UI verification notes; hand off requests outside ue umg specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
       "localPath": ".codex/agents/ui-programmer.toml",
       "sourcePath": ".claude/agents/ui-programmer.md",
       "sourceHash": "6cd29c2088724918b2680d3cc35c379276b7af11d6aa10ac990172280b1d5f48",
@@ -1151,6 +1424,108 @@
     },
     {
       "sourceType": "agent",
+      "localPath": ".codex/agents/unity-addressables-specialist.toml",
+      "sourcePath": ".claude/agents/unity-addressables-specialist.md",
+      "sourceHash": "29e14d428647a55baeaa9faf2adae55fcbc6e4a56ed4dfd61c534641fb0253ea",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 165,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns unity addressables specialist work: Implement and review Addressables groups, labels, async loading, release handles, content update flows, asset bundles, remote catalogs, and memory budgets. Surface asset ownership, CDN/package delivery, unload behavior, and runtime memory risks before asset loading changes expand. Produces Addressables guidance, Asset loading and memory risks, Content pipeline verification; hand off requests outside unity addressables specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/unity-dots-specialist.toml",
+      "sourcePath": ".claude/agents/unity-dots-specialist.md",
+      "sourceHash": "98c328463e1b6af0b44f46bd3cb27abce52ba7e85571c56d18118c95a8bf9273",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 148,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns unity dots specialist work: Implement and review DOTS/ECS architecture, component data, systems, Jobs, Burst constraints, hybrid rendering, and conversion boundaries. Separate data-oriented performance work from ordinary MonoBehaviour code and keep profiling evidence explicit. Produces DOTS architecture guidance, ECS and Burst risks, Performance verification notes; hand off requests outside unity dots specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/unity-shader-specialist.toml",
+      "sourcePath": ".claude/agents/unity-shader-specialist.md",
+      "sourceHash": "41bc71d8563a71ed386039819adc31593a54c3fdf747c3dc080a713d22db6d5a",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 178,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns unity shader specialist work: Implement and review Unity shader code, Shader Graph, VFX Graph, materials, lighting, SRP constraints, and visual effect handoffs. Keep shader and VFX recommendations tied to visual goals, render pipeline choice, GPU budgets, and inspectable scene/material files. Produces Unity shader guidance, VFX and rendering risks, Visual verification notes; hand off requests outside unity shader specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
       "localPath": ".codex/agents/unity-specialist.toml",
       "sourcePath": ".claude/agents/unity-specialist.md",
       "sourceHash": "81777b58e3a30f4a131025e01af6ac8fb42065214df6271e59df1aa11e5374e4",
@@ -1179,6 +1554,40 @@
       },
       "discoveryMetadata": {
         "text": "Owns unity specialist work: Apply Unity-specific implementation and review guidance using only the active project's Unity reference pack and project files. Produces Unity guidance, Engine-specific risks, Verification notes; hand off requests outside unity specialist ownership or missing verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "agent",
+      "localPath": ".codex/agents/unity-ui-specialist.toml",
+      "sourcePath": ".claude/agents/unity-ui-specialist.md",
+      "sourceHash": "62cbb003d7fdde1cd26fc03b47aeb6dbafc42afdf9bb8a5558be21991ecd231b",
+      "sourceMetadata": {
+        "model": "sonnet",
+        "tools": "Read, Glob, Grep, Write, Edit, Bash, Task",
+        "maxTurns": "20"
+      },
+      "decision": "adapt",
+      "status": "complete",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/roles.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 94,
+      "upstreamLineCount": 217,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "primarySkills": true,
+        "toolPolicy": true
+      },
+      "discoveryMetadata": {
+        "text": "Owns unity ui specialist work: Implement and review Unity UI Toolkit, UGUI, UXML/USS, canvas hierarchy, data binding, navigation, responsive layout, and accessibility hooks. Coordinate UI implementation with UX specs, localization expansion, input modality, and platform conventions. Produces Unity UI guidance, Input and layout risks, UI verification notes; hand off requests outside unity ui specialist ownership or missing verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -1291,6 +1700,34 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/accessibility-doc.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a accessibility doc request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/analytics-setup.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1375,6 +1812,34 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/art-bible.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a art bible request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/art-direction.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1397,6 +1862,90 @@
       },
       "discoveryMetadata": {
         "text": "Provide a art direction request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/asset-audit.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide an asset audit request with asset folders or specs, art direction, build evidence, production constraints, owner or handoff needs, and verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/asset-spec.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide an asset specification request with target asset set, references, constraints, source files, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/balance-check.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a balance check request with systems or economy context, target values, player goals, telemetry or evidence, owner or handoff needs, and verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -1431,6 +1980,34 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/bug-report.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a bug report request with observed behavior, expected behavior, repro context, environment, evidence files, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/bugfix.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1453,6 +2030,146 @@
       },
       "discoveryMetadata": {
         "text": "Provide a bugfix request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/changelog.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a changelog request with release or milestone diff, grouped changes, migration notes, known issues, owner or handoff needs, and verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/code-review.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a code review request with changed files or diff summary, design intent, test evidence, risk constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/consistency-check.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 85,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a consistency check request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/control-manifest.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a control manifest request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/create-architecture.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a create architecture request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -1515,6 +2232,62 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/design-review-concept.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a design review concept request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/design-review.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a design review request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/design-spec.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1537,6 +2310,118 @@
       },
       "discoveryMetadata": {
         "text": "Provide a design spec request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/design-system.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a design system request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/engine-setup.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a engine setup request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/entity-inventory.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide an entity inventory request with project state, relevant design files, entity scope, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/game-concept.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a game concept request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -1627,6 +2512,62 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/implement.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide an implementation request with accepted design context, exact target files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/launch-checklist.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a launch checklist request with release target, build/store/comms/support state, rollback needs, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/localization-plan.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1649,6 +2590,34 @@
       },
       "discoveryMetadata": {
         "text": "Provide a localization plan request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/map-systems.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a map systems request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -1711,6 +2680,34 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/patch-notes.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a patch notes request with release scope, fixes, known issues, validation evidence, audience, owner or handoff needs, and approval constraints.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/perf-profile.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1733,6 +2730,34 @@
       },
       "discoveryMetadata": {
         "text": "Provide a perf profile request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/playtest-polish.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a playtest polish request with playtest findings, current build state, player goals, affected files or assets, owner or handoff needs, and verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -1907,6 +2932,62 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/retrospective.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a retrospective request with milestone or sprint context, outcomes, evidence, team risks, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/review-all-gdds.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 84,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a review all gdds request with target project state, existing files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/review.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1929,6 +3010,34 @@
       },
       "discoveryMetadata": {
         "text": "Provide a review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/scope-check.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a scope check request with milestone goals, current work, risks, constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -2103,6 +3212,90 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/team-feature.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a team feature request with feature goal, target files or scope constraints, design context, affected disciplines, dependencies, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/team-polish.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a team polish request with milestone state, polish candidates, discipline owners, risks, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/test-setup.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a test setup request with feature scope, target engine/build state, test data, relevant files, owner or handoff needs, and verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/ui-ux-review.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -2125,6 +3318,62 @@
       },
       "discoveryMetadata": {
         "text": "Provide a ui ux review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/ux-design.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a UX design request with player journey, screens or flows, accessibility constraints, relevant files, owner or handoff needs, and verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/ux-review.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a UX review request with target screens or flows, player goals, evidence, relevant files, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -4058,6 +5307,141 @@
     },
     {
       "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-ai-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for ai code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-data-files/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for data file standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-design-docs/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for design document standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-engine-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for engine code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-gameplay-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for gameplay code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
       "localPath": ".agents/skills/cgs-standards-gameplay/SKILL.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -4079,6 +5463,87 @@
       },
       "discoveryMetadata": {
         "text": "Use for standards gameplay tasks that mechanics, tuning, data-driven values, engine idioms, and player-facing acceptance checks; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-narrative/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for narrative standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-network-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for network code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-prototype-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for prototype code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
         "valid": true,
         "diagnostics": []
       }
@@ -4112,6 +5577,60 @@
     },
     {
       "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-shader-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for shader code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-test-standards/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for test standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
       "localPath": ".agents/skills/cgs-standards-tests/SKILL.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -4133,6 +5652,33 @@
       },
       "discoveryMetadata": {
         "text": "Use for standards tests tasks that unit, integration, engine smoke, playtest, and regression coverage; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-ui-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for ui code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
         "valid": true,
         "diagnostics": []
       }

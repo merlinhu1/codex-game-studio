@@ -20,10 +20,10 @@
         "kind": "role",
         "id": "accessibility-specialist",
         "path": "src/roles.ts",
-        "hash": "9e0b866be878e48c1f3fa3e6b22246ffd0a5301c597c50717ef2f6eb54ee9693"
+        "hash": "ef9f148d32c02c2d316f2a9f17a137c9beb59be651f6997d82d95c701663608c"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -36,7 +36,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -47,10 +47,10 @@
         "kind": "role",
         "id": "ai-programmer",
         "path": "src/roles.ts",
-        "hash": "87b7c77b264157d9ad6f650e0ae59cadf41cb3c054dc723ff1133a7cc25245bd"
+        "hash": "d723985f7f7be128bc36a2a29d62cf35df943806539e14abbb1c0f07429be133"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -63,7 +63,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -128,10 +128,10 @@
         "kind": "role",
         "id": "audio-director",
         "path": "src/roles.ts",
-        "hash": "6b0e14ae270f404bcc1ccb5c22795a969ea4cc18bc535dbf9e9ab8c26e5685c7"
+        "hash": "41ce8c0c54f63b2f7e8260a0d130930ee6e6f469cdb9d2480ce5d436f34a9bc6"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -144,7 +144,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -155,10 +155,10 @@
         "kind": "role",
         "id": "community-manager",
         "path": "src/roles.ts",
-        "hash": "6729eb5bbba13782f324eb6128d1ab80ccad188cda311a57f8dcda76766e9fe8"
+        "hash": "f836b1c9979e82bd840bb63de14cdc2bbd324facdd7e778f5d2fab066bfb0a6c"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -171,7 +171,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -209,10 +209,10 @@
         "kind": "role",
         "id": "devops-engineer",
         "path": "src/roles.ts",
-        "hash": "a007fcb0c7a86e7eb9b03fb12a07d5f9327185a2b0a70b824ad71d0802c02d18"
+        "hash": "75fba81d6a3e270f52cf87743814d3ac8eda74ab56c670b30e9c0fc9950c998d"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -225,7 +225,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -236,10 +236,10 @@
         "kind": "role",
         "id": "economy-designer",
         "path": "src/roles.ts",
-        "hash": "5f492860e855ad17092469374b8697486b067e7af4c7ffbe2ea11a5948cc15d4"
+        "hash": "0db90a28978ad7d1b5ae74488441f2377146621debd578d41a9181b5a647ac76"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -252,7 +252,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -263,10 +263,10 @@
         "kind": "role",
         "id": "engine-programmer",
         "path": "src/roles.ts",
-        "hash": "654bc5b932d60452e0f768f641ff29942cd448bc3ff02a6c4f928abb4a89b442"
+        "hash": "31839ad024f8cdf1cf992c28ecdc4bbcdfb183e97690e90e305223b0c5b0c18d"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -279,7 +279,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -341,117 +341,13 @@
       "sourcePath": ".claude/agents/godot-csharp-specialist.md",
       "sourceHash": "b15ca77993fb986245b4ca4e9ac7822f4d74adfd3a352d4e331a0c24d08b82fb",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
-      },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
-      "scores": {
-        "contentDepth": 5,
-        "proceduralSpecificity": 4,
-        "contextContract": 3,
-        "outputContract": 2,
-        "roleSkillLinkage": 2,
-        "gateEscalation": 2,
-        "codexFit": 3,
-        "testability": 4
-      },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
-    },
-    {
-      "sourceType": "agent",
-      "sourceId": "godot-gdextension-specialist",
-      "sourcePath": ".claude/agents/godot-gdextension-specialist.md",
-      "sourceHash": "5781a7380ef3f90e6301e8c330cbe4f324b3e7ac0f66a91c127842e3c5a8a111",
-      "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
-      },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
-      "scores": {
-        "contentDepth": 5,
-        "proceduralSpecificity": 4,
-        "contextContract": 3,
-        "outputContract": 2,
-        "roleSkillLinkage": 2,
-        "gateEscalation": 2,
-        "codexFit": 3,
-        "testability": 4
-      },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
-    },
-    {
-      "sourceType": "agent",
-      "sourceId": "godot-gdscript-specialist",
-      "sourcePath": ".claude/agents/godot-gdscript-specialist.md",
-      "sourceHash": "03c4d2325044ff16b55bab1e0c6412f0688704ece76513db02b7fcf352668c88",
-      "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
-      },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
-      "scores": {
-        "contentDepth": 5,
-        "proceduralSpecificity": 4,
-        "contextContract": 3,
-        "outputContract": 2,
-        "roleSkillLinkage": 2,
-        "gateEscalation": 2,
-        "codexFit": 3,
-        "testability": 4
-      },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
-    },
-    {
-      "sourceType": "agent",
-      "sourceId": "godot-shader-specialist",
-      "sourcePath": ".claude/agents/godot-shader-specialist.md",
-      "sourceHash": "f0497d594b94ca4d0272bca8fb20ac7b8b594534060e774f64f2de143fb8a64e",
-      "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
-      },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
-      "scores": {
-        "contentDepth": 5,
-        "proceduralSpecificity": 4,
-        "contextContract": 3,
-        "outputContract": 2,
-        "roleSkillLinkage": 2,
-        "gateEscalation": 2,
-        "codexFit": 3,
-        "testability": 4
-      },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
-    },
-    {
-      "sourceType": "agent",
-      "sourceId": "godot-specialist",
-      "sourcePath": ".claude/agents/godot-specialist.md",
-      "sourceHash": "3156133f9bff9463a12cb48e6337f49a3ab39359550c18eabac4ac70b84b6e37",
-      "cgsTarget": {
         "kind": "role",
-        "id": "godot-specialist",
+        "id": "godot-csharp-specialist",
         "path": "src/roles.ts",
-        "hash": "57b8381189093ab38a314597d236a1b2f29bd867ad1e36efef125274b663de06"
+        "hash": "8427f40d39e4fd8681ec320c33b57613b36947ca1e74fd9d39982a1723299d7f"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -464,7 +360,115 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
+    },
+    {
+      "sourceType": "agent",
+      "sourceId": "godot-gdextension-specialist",
+      "sourcePath": ".claude/agents/godot-gdextension-specialist.md",
+      "sourceHash": "5781a7380ef3f90e6301e8c330cbe4f324b3e7ac0f66a91c127842e3c5a8a111",
+      "cgsTarget": {
+        "kind": "role",
+        "id": "godot-gdextension-specialist",
+        "path": "src/roles.ts",
+        "hash": "ef06c467e65ac28c1960dca4d9e3e48f05cda477a8d2c57bc0b4e8f2cc39f75a"
+      },
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
+      "scores": {
+        "contentDepth": 5,
+        "proceduralSpecificity": 4,
+        "contextContract": 3,
+        "outputContract": 2,
+        "roleSkillLinkage": 2,
+        "gateEscalation": 2,
+        "codexFit": 3,
+        "testability": 4
+      },
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
+    },
+    {
+      "sourceType": "agent",
+      "sourceId": "godot-gdscript-specialist",
+      "sourcePath": ".claude/agents/godot-gdscript-specialist.md",
+      "sourceHash": "03c4d2325044ff16b55bab1e0c6412f0688704ece76513db02b7fcf352668c88",
+      "cgsTarget": {
+        "kind": "role",
+        "id": "godot-gdscript-specialist",
+        "path": "src/roles.ts",
+        "hash": "bd20653180e2e4343055618f59b18bec8abee736a624d5b40c9b8a6021032fea"
+      },
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
+      "scores": {
+        "contentDepth": 5,
+        "proceduralSpecificity": 4,
+        "contextContract": 3,
+        "outputContract": 2,
+        "roleSkillLinkage": 2,
+        "gateEscalation": 2,
+        "codexFit": 3,
+        "testability": 4
+      },
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
+    },
+    {
+      "sourceType": "agent",
+      "sourceId": "godot-shader-specialist",
+      "sourcePath": ".claude/agents/godot-shader-specialist.md",
+      "sourceHash": "f0497d594b94ca4d0272bca8fb20ac7b8b594534060e774f64f2de143fb8a64e",
+      "cgsTarget": {
+        "kind": "role",
+        "id": "godot-shader-specialist",
+        "path": "src/roles.ts",
+        "hash": "35b1e29b03f3d72679dbbc92fb71fa1a25b3eedb0295ef8c1d9a09033122fb7b"
+      },
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
+      "scores": {
+        "contentDepth": 5,
+        "proceduralSpecificity": 4,
+        "contextContract": 3,
+        "outputContract": 2,
+        "roleSkillLinkage": 2,
+        "gateEscalation": 2,
+        "codexFit": 3,
+        "testability": 4
+      },
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
+    },
+    {
+      "sourceType": "agent",
+      "sourceId": "godot-specialist",
+      "sourcePath": ".claude/agents/godot-specialist.md",
+      "sourceHash": "3156133f9bff9463a12cb48e6337f49a3ab39359550c18eabac4ac70b84b6e37",
+      "cgsTarget": {
+        "kind": "role",
+        "id": "godot-specialist",
+        "path": "src/roles.ts",
+        "hash": "f0d5dae7f3bfbf78597c8078f4115d307e255af17f965ab05407b6f0391e49b0"
+      },
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
+      "scores": {
+        "contentDepth": 5,
+        "proceduralSpecificity": 4,
+        "contextContract": 3,
+        "outputContract": 2,
+        "roleSkillLinkage": 2,
+        "gateEscalation": 2,
+        "codexFit": 3,
+        "testability": 4
+      },
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -502,10 +506,10 @@
         "kind": "role",
         "id": "level-designer",
         "path": "src/roles.ts",
-        "hash": "72f099ea489d6045db16b5cf80a2a6b3e562841aeb16fe4a76e624e5932d4f72"
+        "hash": "55a13d3baef52656e9985dc1b2b4ebd3971912822d9c64ede007e2fba7085e5d"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -518,7 +522,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -529,10 +533,10 @@
         "kind": "role",
         "id": "live-ops-designer",
         "path": "src/roles.ts",
-        "hash": "bfa0eec4d1dc0db319a93701cfdc1fa6489ac6289b583fd7f9f7e2912f278180"
+        "hash": "0e16962e104716f389f08139bab08d574fc7d0542b0679fb734af75f04dc5e57"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -545,7 +549,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -556,10 +560,10 @@
         "kind": "role",
         "id": "localization-lead",
         "path": "src/roles.ts",
-        "hash": "490a225b6cecd4a3766bfe0cdb404327924ae530934710a1c00e4005bb70c4d6"
+        "hash": "f5403d89594fd6b8dccb5f6e1f09fa2358c8fa2c9a3627ef577a21625f1619c4"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -572,7 +576,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -610,10 +614,10 @@
         "kind": "role",
         "id": "network-programmer",
         "path": "src/roles.ts",
-        "hash": "c031a9578669ffc7f8565a53479d8ea411d92165f727351048efc73a8bf57afd"
+        "hash": "26c777522097084919fd4e210daa747a3bb1f643b2ac685fddd4bed26c741e01"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -626,7 +630,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -799,10 +803,10 @@
         "kind": "role",
         "id": "security-engineer",
         "path": "src/roles.ts",
-        "hash": "456efdf88cf280fe0e5b727fd90034bf8f8ca1d1e0b4feb2f6640172f8c67270"
+        "hash": "c82d1c63a9c17cd606dd797aa64cfaaa8560d99a07610a7dc515ee7ab14bda80"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -815,7 +819,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -826,10 +830,10 @@
         "kind": "role",
         "id": "sound-designer",
         "path": "src/roles.ts",
-        "hash": "e3faebb084fdf10692f043708e806f72d80347e28f2a04f6e8159b1bcb16e120"
+        "hash": "3a36273f0796973a0926e71c9d1c79772d91bdeee24dbeaf7ede96bc73de268c"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -842,7 +846,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -880,10 +884,10 @@
         "kind": "role",
         "id": "technical-artist",
         "path": "src/roles.ts",
-        "hash": "b3582c5e8dce3cf710b44c0539790727cc7f5be425ac1f9893c6d25d53be0c84"
+        "hash": "252a03a5530acca1f64d1a6dd1cbe0484e24ae9803367e615cac3928d239041e"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -896,7 +900,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -934,10 +938,10 @@
         "kind": "role",
         "id": "tools-programmer",
         "path": "src/roles.ts",
-        "hash": "ae31a7e75ad8225a861b986aabcd4337b4dbdcd463b2c48f4beaba1d71d3d5e7"
+        "hash": "c951216d347be9333b8a73260d07e84d6a18f297b80fe5582cb3abf41300cbaa"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -950,7 +954,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -958,12 +962,13 @@
       "sourcePath": ".claude/agents/ue-blueprint-specialist.md",
       "sourceHash": "f801d74b4dbcb052439e841a63c1a853ba6242dafee5d63d18b129883c95493c",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "ue-blueprint-specialist",
+        "path": "src/roles.ts",
+        "hash": "97ed3873117387d24bf72392a13f754e56c9af837225f54faa4d52c50d22118e"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -974,9 +979,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -984,12 +989,13 @@
       "sourcePath": ".claude/agents/ue-gas-specialist.md",
       "sourceHash": "b25dc54f2ec83ca4e3790197f1b2aed5c2c1054eb6449b2dd447a1b6d4a8f9ba",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "ue-gas-specialist",
+        "path": "src/roles.ts",
+        "hash": "39e21349fdc6326f76c4791a1ad9ef8bfb64c664c97b85d31d0a6050dc3feb42"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1000,9 +1006,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1010,12 +1016,13 @@
       "sourcePath": ".claude/agents/ue-replication-specialist.md",
       "sourceHash": "9bac007eff06a320c1559d0f81f783be689c644a217b0b4605781e39fbaa1918",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "ue-replication-specialist",
+        "path": "src/roles.ts",
+        "hash": "10625a6d8bf5f70d426c2e630524ab9cae9a546f2592b88dd0df4d24b5c30105"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1026,9 +1033,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1036,12 +1043,13 @@
       "sourcePath": ".claude/agents/ue-umg-specialist.md",
       "sourceHash": "bdbda2833cc07ca389c01a40d5f608137c7711a02b7a8313a16af50f0c5d0ae3",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "ue-umg-specialist",
+        "path": "src/roles.ts",
+        "hash": "c54e6a1addb89c80fffc78646f8ec75d03777bba6c364cca35975d204d6bbcfc"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1052,9 +1060,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1065,10 +1073,10 @@
         "kind": "role",
         "id": "ui-programmer",
         "path": "src/roles.ts",
-        "hash": "10c5a6301d621d62fbd46bf52fe054a070fe83f2bd07b8be68003606e861b270"
+        "hash": "864eafa8e65eb6ad69a008512f6f4e5398e33541032d8e6f5dfb1675909a492e"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -1081,7 +1089,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1089,12 +1097,13 @@
       "sourcePath": ".claude/agents/unity-addressables-specialist.md",
       "sourceHash": "29e14d428647a55baeaa9faf2adae55fcbc6e4a56ed4dfd61c534641fb0253ea",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "unity-addressables-specialist",
+        "path": "src/roles.ts",
+        "hash": "7e0bfe97604403b6527dc68b973e51468d79de336c9ba48b1e9b08bf84287808"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1105,9 +1114,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1115,12 +1124,13 @@
       "sourcePath": ".claude/agents/unity-dots-specialist.md",
       "sourceHash": "98c328463e1b6af0b44f46bd3cb27abce52ba7e85571c56d18118c95a8bf9273",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "unity-dots-specialist",
+        "path": "src/roles.ts",
+        "hash": "fe975bc5b66ba1ac3d67d5bbb5a89bd858fa9ca104fc86ea0bb1e12f983461ef"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1131,9 +1141,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1141,12 +1151,13 @@
       "sourcePath": ".claude/agents/unity-shader-specialist.md",
       "sourceHash": "41bc71d8563a71ed386039819adc31593a54c3fdf747c3dc080a713d22db6d5a",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "unity-shader-specialist",
+        "path": "src/roles.ts",
+        "hash": "a8b042ecc4c8706f24f43cff4e535fdbd22805d2a0b0e3ae6ab53a83bf37093c"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1157,9 +1168,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1170,10 +1181,10 @@
         "kind": "role",
         "id": "unity-specialist",
         "path": "src/roles.ts",
-        "hash": "2bc1f02b0a5481a272184b0ac9c45bcee5f0c7e661c51986e2b187b980b161ac"
+        "hash": "c2c7a3a8171668dec5e5b9a88e9cce3cf2d28206cda6a5cc5275eb53414eb4b0"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1186,7 +1197,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1194,12 +1205,13 @@
       "sourcePath": ".claude/agents/unity-ui-specialist.md",
       "sourceHash": "62cbb003d7fdde1cd26fc03b47aeb6dbafc42afdf9bb8a5558be21991ecd231b",
       "cgsTarget": {
-        "kind": "none",
-        "id": "",
-        "path": ""
+        "kind": "role",
+        "id": "unity-ui-specialist",
+        "path": "src/roles.ts",
+        "hash": "f16b23554b5e83d028e82dcca313dd8da5452b283a3051e00bd80f70393a625a"
       },
-      "decision": "defer",
-      "rationale": "No matching CGS surface exists yet; audit requires explicit follow-up.",
+      "decision": "adapt",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1210,9 +1222,9 @@
         "codexFit": 3,
         "testability": 4
       },
-      "ownerPath": "references/ccgs-surface-parity-matrix.json",
-      "testPath": "tests/ccgs-parity-audit.test.ts",
-      "status": "todo"
+      "ownerPath": "src/roles.ts",
+      "testPath": "tests/agents-templates.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1223,10 +1235,10 @@
         "kind": "role",
         "id": "unreal-specialist",
         "path": "src/roles.ts",
-        "hash": "07929b39c15ecfb2067dc4d28c1e6f8ac2f1b006d6b523daf17fbca892357dbf"
+        "hash": "17028b715e7d48112e0b419a3aaa6f73788c4bdfb26e50746b70d33d51189939"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -1239,7 +1251,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1277,10 +1289,10 @@
         "kind": "role",
         "id": "world-builder",
         "path": "src/roles.ts",
-        "hash": "452aa4689212820282f510992651eb8c0838d36141f670e89fae5e29312325b2"
+        "hash": "518aa658f0ee8bfd36752eab0828538bd65d81da33cc43482965b91158b797ea"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -1293,7 +1305,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "agent",
@@ -1304,10 +1316,10 @@
         "kind": "role",
         "id": "writer",
         "path": "src/roles.ts",
-        "hash": "7d9a982648ef670a28d753dffcafcaf91824a38e1fec54847ff8502e5885afeb"
+        "hash": "866c136fdba0bd5e36d82c671f3049cc38f2ee9f82effcf89acb464a8393d1d4"
       },
       "decision": "adapt",
-      "rationale": "Direct role exists; adapt CCGS depth into Codex role package and generated TOML.",
+      "rationale": "Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 5,
@@ -1320,7 +1332,7 @@
       },
       "ownerPath": "src/roles.ts",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "skill",
@@ -3302,7 +3314,7 @@
         "kind": "workflow",
         "id": "brainstorm",
         "path": "src/workflows.ts",
-        "hash": "864ae37c096eb213e72c09ff75c04532126e5831fc21be5243b5fa4541382325"
+        "hash": "f6824cd39d36965f7ec121c9ad9d643632640ea877d5f16e637926ff5cfbd8cb"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3328,10 +3340,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "engine-setup",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "526bc4b5e5154d3e45a377774558f1dcfffd3fecbf6a3d936a58f109ea9314cc"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3342,9 +3355,9 @@
         "codexFit": 3,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3354,10 +3367,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "game-concept",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "1c0eed9a07281fa0415708102150e80a00cbd1b168f8453c4c83ec6c7a645822"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3368,9 +3382,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3380,10 +3394,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "design-review-concept",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "ccd9eff697e3eb54eb0206fa1ccf07a444137c5962760868f1eb29cb8ac728f8"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -3394,9 +3409,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3406,10 +3421,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "art-bible",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "5fcfba1f71767972e52c55249a44620b5ccb199d75797607cb8c1e77d425011c"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3420,9 +3436,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3432,10 +3448,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "map-systems",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "20952b702ca8d545c6063ca4e1a7369102e1b264e4db3b6692afd71f1782d19f"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3446,9 +3463,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3458,10 +3475,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "design-system",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "9ad841cc6bd9c98437cace28f5d50af464ca38d4c40a857b7b5aff8cf4a1ec3c"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3472,9 +3490,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3484,10 +3502,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "design-review",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "27b6933fe1e8bfa8fd7b167a362513a34b4fff078d6a58adc9a038f2e2be6ef5"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -3498,9 +3517,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3510,10 +3529,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "review-all-gdds",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "05073957f2e2d981aff67d5203a20652f89e0fdc3bbc594bf05b0898806e510d"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3524,9 +3544,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3536,10 +3556,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "consistency-check",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "deefd5a7f57ef22465e49558695cbfad655c8a9e49e9b8ade8446eb70596deee"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -3550,9 +3571,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3562,10 +3583,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "create-architecture",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "606e8f5c163f386d357dbf3a241e2aad6c1b460fdcd219513900bcee62c02a33"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3576,9 +3598,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3589,7 +3611,7 @@
         "kind": "workflow",
         "id": "architecture-decision",
         "path": "src/workflows.ts",
-        "hash": "d797e83ec6f0e2ec083072699b2897f519c5b4bf24dd3dd181f0a2141655e1f2"
+        "hash": "e3764dbacf950807c66a5827521a57ca61259d355434f99dd07ba9cdf45c1e2b"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3616,7 +3638,7 @@
         "kind": "workflow",
         "id": "architecture-review",
         "path": "src/workflows.ts",
-        "hash": "31d543da1a2b1887e7b2c159b848bf8e5fec6fc915751163facfeab91d5add78"
+        "hash": "262686835e12e7f94305ef22a107b5a496262a19e1ea17fd02be9123dd9d9e90"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3642,10 +3664,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "control-manifest",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "c5995fde5910bc0c971a33ab76289f1660568d0c44eb949be8a99e0d03eea93d"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3656,9 +3679,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3668,10 +3691,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "accessibility-doc",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "3b1473372bfb24d0d2523ae457348c81324d3215aefe457a7191c1d3653d6291"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3682,9 +3706,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3694,10 +3718,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "entity-inventory",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "98b6d71ac83e94321a578c187770e062f84d92982d9a688a423b6ea04b81e9f0"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3708,9 +3733,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3720,10 +3745,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "asset-spec",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "b638c1f40a5dd85f10b981ed68fa3d4f80947906281a6821bde7e6e9c179f4d2"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3734,9 +3760,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3746,10 +3772,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "ux-design",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "9276a2ad91d284faff280eeb236b849118dc30f52c713d8dd09cc7d964f9f36c"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3760,9 +3787,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3772,10 +3799,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "ux-review",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "836bbf2210e7a561150632a55128e22f4401af1a014b473f79e249edce3704f6"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -3786,9 +3814,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3799,7 +3827,7 @@
         "kind": "workflow",
         "id": "prototype",
         "path": "src/workflows.ts",
-        "hash": "f63f00f5cd9d135a1d73b17b8f96970747683bc072a76f341b29c883ffc1ca71"
+        "hash": "661a4a17ef4fbfa411dcdd47691ada56c062d531b02c485c50111ca6680a91ed"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3826,7 +3854,7 @@
         "kind": "workflow",
         "id": "create-epics",
         "path": "src/workflows.ts",
-        "hash": "54b38673417ef0c178d0d7b8255d2e92d23bc01e9bf98a294836fe0ecf5a714b"
+        "hash": "7b863b38deb5cf29386230ca59ec6469093f0b42013ceb96628754d305afe5a5"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3853,7 +3881,7 @@
         "kind": "workflow",
         "id": "create-stories",
         "path": "src/workflows.ts",
-        "hash": "1b86588757e1b0517e7c9633023cbbaf6f02cacef5ccf339a54fc6b1a9c49fd5"
+        "hash": "5bfc452f15cb89551bfca9f662d156f9b9e57af3d922386158f52113ba7c24ef"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3879,10 +3907,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "test-setup",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "b7ca8e7ab9eeeb341ebaef87fd3b597d006396f3e34a6545e68ddff4547ad2f4"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3893,9 +3922,9 @@
         "codexFit": 5,
         "testability": 4
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3906,7 +3935,7 @@
         "kind": "workflow",
         "id": "sprint-plan",
         "path": "src/workflows.ts",
-        "hash": "394590e0b094016af62bb147b21f7c86d8e1b48a06ffbf6f76d6ee1c91a905e9"
+        "hash": "c41928a8fd5a14568dae21e3598032993893b888b13820497c5118861455ea47"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3933,7 +3962,7 @@
         "kind": "workflow",
         "id": "vertical-slice",
         "path": "src/workflows.ts",
-        "hash": "8436b8298c88e7ae02681e769bb2fd34c9c572a51bee065d5e470025de5c9402"
+        "hash": "23d4cca6a2ace3ab28c42897ec2541cc1b1cfb849846f0db911212a977682914"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3960,7 +3989,7 @@
         "kind": "workflow",
         "id": "sprint-plan",
         "path": "src/workflows.ts",
-        "hash": "394590e0b094016af62bb147b21f7c86d8e1b48a06ffbf6f76d6ee1c91a905e9"
+        "hash": "c41928a8fd5a14568dae21e3598032993893b888b13820497c5118861455ea47"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -3987,7 +4016,7 @@
         "kind": "workflow",
         "id": "story-readiness",
         "path": "src/workflows.ts",
-        "hash": "05b3ec57ad525493a0d15818d807e18c5b731ace87f5596b3490507f3b3135ec"
+        "hash": "130e1354b77cd33ff02b4cb121eeddffca54e2a2386ac5adbe03d0d320642954"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4013,10 +4042,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "implement",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "168a8836ed6e3e8de63c250a4d473925ef0c64dd4d66a8d85d3785a02617d207"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -4027,9 +4057,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4039,10 +4069,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "code-review",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "0fea498f6c5b79e4ce0f2903c51a8d30bdbd2e2079ea6ae9bbd5068bc36f7cf9"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4053,9 +4084,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4066,7 +4097,7 @@
         "kind": "workflow",
         "id": "story-done",
         "path": "src/workflows.ts",
-        "hash": "b7c8fad68317c8ff885046edf568c0b0de1d6efd8088d2b19674376ff5f7bfbc"
+        "hash": "5de2721f3f4580845abb0c021e4e855e361f7c289d9a5b44421837eb12b6f5d6"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4093,7 +4124,7 @@
         "kind": "workflow",
         "id": "qa-plan",
         "path": "src/workflows.ts",
-        "hash": "7785aa23cfaa25efc834b30390e398214c2d2e47bd1055384d9cde0f197198a0"
+        "hash": "f90bebdfb681b2dcb3d43584f0b910df71cf036a187f7d7e5fcd8857c5226f61"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4119,10 +4150,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "bug-report",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "64804dd3ee5c3cd72bbbbe3d3eec830d3c17aa04150db65e1c5c53e0d6cc0f68"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4133,9 +4165,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4145,10 +4177,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "retrospective",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "c37a5c3c4a517adbf4a960fe60e748b56a32fea38e5afbaba2933b901f03c309"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4159,9 +4192,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4171,10 +4204,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "team-feature",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "6991d85abbc63be4e5ce6eb0bb0a715a962f587d421ce10985eee409d4eeeb38"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4185,9 +4219,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4197,10 +4231,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "scope-check",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "c8e4f9eb3ec12d19b618505874d51694532335ad61676b31e1e4721eb4f34621"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -4211,9 +4246,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4224,7 +4259,7 @@
         "kind": "workflow",
         "id": "sprint-status",
         "path": "src/workflows.ts",
-        "hash": "f2f5a3e0062c068539d89a5c0e29e986350fa3857c726145057db18e898fd55e"
+        "hash": "4de395e518c93fda76c1e880d240db194129830d4db187058915bc254e821762"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4251,7 +4286,7 @@
         "kind": "workflow",
         "id": "perf-profile",
         "path": "src/workflows.ts",
-        "hash": "cadda0ad0f7456692d4448f8785dea63df3b8db9cd29abfbc1543c1aa8f9e41d"
+        "hash": "15fc4fd723ca5cc82c71e4e58591fb440a317b805c4905aa0f768506f6bce610"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4277,10 +4312,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "balance-check",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "5baa7fc4654ad2e1ca831c105f666109c6f9678549974b29e23ef1a3e89b6fea"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4291,9 +4327,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4303,10 +4339,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "asset-audit",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "75da854d9c290566f7703f326b762eec0caa01fa5989e5a9f35662e8f24a5329"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4317,9 +4354,9 @@
         "codexFit": 5,
         "testability": 4
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4329,10 +4366,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "playtest-polish",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "888900357760283f35d1145a3ed463fb26e13710965de05c24114ae2729e0edb"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -4343,9 +4381,9 @@
         "codexFit": 5,
         "testability": 4
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4355,10 +4393,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "team-polish",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "f25ad3c829eda8a13a4a8902225eec4151267cb55a357d10cb13cf5c07408c91"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4369,9 +4408,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4382,7 +4421,7 @@
         "kind": "workflow",
         "id": "release-checklist",
         "path": "src/workflows.ts",
-        "hash": "d24e9fe94d91322e4dad0ef0b446071aee46c97be35f1a6931b762a74c7e9e98"
+        "hash": "170ba6f34b7c2a4becb80ce5a761c427fc68c1b05182ff125c18bd042ba8e8fa"
       },
       "decision": "adapt",
       "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
@@ -4408,10 +4447,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "patch-notes",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "bfefbfa70fb4fbad272bc1a64610e3ac0cf42fcadbd40b6a77bd52aa1b4f4976"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4422,9 +4462,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4434,10 +4474,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "changelog",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "ecbbf00f5778fc7bd2884caed02687823b86726e5c1ba50924eb7f26238c314e"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4448,9 +4489,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4460,10 +4501,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "launch-checklist",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "5132103e0f538572a16561bf9e05d36cd5879e97c464e164970843f132cbf634"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4474,9 +4516,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4514,8 +4556,8 @@
         "id": "architecture-decision-record",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4528,7 +4570,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4540,8 +4582,8 @@
         "id": "architecture-doc-from-code",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4554,7 +4596,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4618,8 +4660,8 @@
         "id": "changelog-template",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 3,
         "proceduralSpecificity": 4,
@@ -4632,7 +4674,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4644,8 +4686,8 @@
         "id": "design-agent-protocol",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4658,7 +4700,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4670,8 +4712,8 @@
         "id": "implementation-agent-protocol",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4684,7 +4726,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4696,8 +4738,8 @@
         "id": "leadership-agent-protocol",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4710,7 +4752,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4722,8 +4764,8 @@
         "id": "concept-doc-from-prototype",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4736,7 +4778,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4748,8 +4790,8 @@
         "id": "design-doc-from-implementation",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4762,7 +4804,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4826,8 +4868,8 @@
         "id": "faction-design",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -4840,7 +4882,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4852,8 +4894,8 @@
         "id": "game-concept",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4866,7 +4908,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4878,8 +4920,8 @@
         "id": "game-design-document",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4892,7 +4934,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4904,8 +4946,8 @@
         "id": "game-pillars",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4918,7 +4960,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4930,8 +4972,8 @@
         "id": "hud-design",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4944,7 +4986,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4956,8 +4998,8 @@
         "id": "incident-response",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -4970,7 +5012,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -4982,8 +5024,8 @@
         "id": "interaction-pattern-library",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -4996,7 +5038,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5008,8 +5050,8 @@
         "id": "level-design-document",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -5022,7 +5064,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5034,8 +5076,8 @@
         "id": "milestone-definition",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 3,
         "proceduralSpecificity": 4,
@@ -5048,7 +5090,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5060,8 +5102,8 @@
         "id": "narrative-character-sheet",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -5074,7 +5116,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5138,8 +5180,8 @@
         "id": "post-mortem",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 3,
         "proceduralSpecificity": 4,
@@ -5152,7 +5194,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5164,8 +5206,8 @@
         "id": "project-stage-report",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -5178,7 +5220,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5190,8 +5232,8 @@
         "id": "prototype-report",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -5204,7 +5246,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5216,8 +5258,8 @@
         "id": "release-checklist-template",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -5230,7 +5272,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5268,8 +5310,8 @@
         "id": "risk-register-entry",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 3,
         "proceduralSpecificity": 4,
@@ -5282,7 +5324,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5294,8 +5336,8 @@
         "id": "skill-test-spec",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -5308,7 +5350,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5372,8 +5414,8 @@
         "id": "systems-index",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 5,
         "proceduralSpecificity": 4,
@@ -5386,7 +5428,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5398,8 +5440,8 @@
         "id": "technical-design-document",
         "path": "templates/"
       },
-      "decision": "adopt",
-      "rationale": "CCGS template has no CGS equivalent yet.",
+      "decision": "adapt",
+      "rationale": "Template equivalent exists; compare body quality and update if thinner.",
       "scores": {
         "contentDepth": 4,
         "proceduralSpecificity": 4,
@@ -5412,7 +5454,7 @@
       },
       "ownerPath": "templates/",
       "testPath": "tests/agents-templates.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "template",
@@ -5524,12 +5566,13 @@
       "sourcePath": ".claude/rules/ai-code.md",
       "sourceHash": "0b2ed79ed959c24262ca1b7ae353a78d574019d64eca040293753e165c5adb21",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "ai-code",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-ai-code",
+        "path": "src/skills.ts",
+        "hash": "1ed6578a3ba964ac84fa835562603b67ee43b64f0c1a2cba92bf44884057afc4"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -5542,7 +5585,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5550,12 +5593,13 @@
       "sourcePath": ".claude/rules/data-files.md",
       "sourceHash": "bbc65708e00a98e18278c8331fd4f69ad261a6fdc15cbbb3a96815d0800dab9d",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "data-files",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-data-files",
+        "path": "src/skills.ts",
+        "hash": "13e9d0e1a908869732cc1cb3a675e4720497121fa8ff20e61af1880599fcb5c6"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -5568,7 +5612,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5576,12 +5620,13 @@
       "sourcePath": ".claude/rules/design-docs.md",
       "sourceHash": "8e3ea21cd637f39b2fbca4ec1d660c97e0143f1b211466c7b03cf6447a59bfb4",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "design-docs",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-design-docs",
+        "path": "src/skills.ts",
+        "hash": "a9730c4113dbb0faa9ec70a4f4449cddb2041a6c4f1867dca1d276a7cf0da7c3"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -5594,7 +5639,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5602,12 +5647,13 @@
       "sourcePath": ".claude/rules/engine-code.md",
       "sourceHash": "24e3bc62c96ef2840843721d047ea375726fc57a5ba816faa0432007c23d98f7",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "engine-code",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-engine-code",
+        "path": "src/skills.ts",
+        "hash": "97f1cd53ca4e1ecdea5a9912b746b557e565db8c4fea6cfc074a374ae6d2a253"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -5620,7 +5666,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5628,12 +5674,13 @@
       "sourcePath": ".claude/rules/gameplay-code.md",
       "sourceHash": "94030c94f9f39c669f9292a0e1ab57a8d6fd53d1353485202713c2465098606c",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "gameplay-code",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-gameplay-code",
+        "path": "src/skills.ts",
+        "hash": "23ee2650a813994d674298549a4f929313e41e911870b476ec93f7a05f2139da"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -5646,7 +5693,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5654,12 +5701,13 @@
       "sourcePath": ".claude/rules/narrative.md",
       "sourceHash": "be8925e4d9a6242eb7db40fd918bdc94aa6f40e498f9e3aa8d7ffe27ede4a819",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "narrative",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-narrative",
+        "path": "src/skills.ts",
+        "hash": "d08a9643e2bf83a81fcc4b6addaaad001bc9458c77dc19638b3fb4c5dfd9cc85"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -5672,7 +5720,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5680,12 +5728,13 @@
       "sourcePath": ".claude/rules/network-code.md",
       "sourceHash": "e75454f6ea2e3892521ab6500865190fe74b28ce90b604e78a7d74a6c08e675e",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "network-code",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-network-code",
+        "path": "src/skills.ts",
+        "hash": "4cb12d784f19da94a0a8d256f2ab017e5f16da6c9f7ecb93ae4c841d01264297"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -5698,7 +5747,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5706,12 +5755,13 @@
       "sourcePath": ".claude/rules/prototype-code.md",
       "sourceHash": "67cf516d0febcb9829407386b4d16b773ea38cc21012fdeb03a53943cc6ed5bd",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "prototype-code",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-prototype-code",
+        "path": "src/skills.ts",
+        "hash": "07bdd0c7c26eca20a7f7ab5202c61a36f28929f4b58e6a1c8e86b52e2a97f502"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 4,
@@ -5724,7 +5774,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5732,12 +5782,13 @@
       "sourcePath": ".claude/rules/shader-code.md",
       "sourceHash": "a5e08163d84fae945bc38ef9e998d03120c14bb4f8d630e9bc44514839b3ec3c",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "shader-code",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-shader-code",
+        "path": "src/skills.ts",
+        "hash": "82a77d6e2ac725b712cdfff3ea1eb21fb1a2317e5d2643674c7a0791e898b8cc"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 3,
         "proceduralSpecificity": 4,
@@ -5750,7 +5801,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5758,12 +5809,13 @@
       "sourcePath": ".claude/rules/test-standards.md",
       "sourceHash": "78c642a6f22a815a990aca02e677d5d7f676524dff59a9a8034f1c7d69b42597",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "test-standards",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-test-standards",
+        "path": "src/skills.ts",
+        "hash": "14788e7ec3673d6913a925f88f1399c2896792eda44da364863888bb549bca5f"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -5776,7 +5828,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     },
     {
       "sourceType": "rule",
@@ -5784,12 +5836,13 @@
       "sourcePath": ".claude/rules/ui-code.md",
       "sourceHash": "be45904c33e72c717ac56ba2ee760d5a5ec1435a3b84ad4365ca513c91a7a68b",
       "cgsTarget": {
-        "kind": "rule",
-        "id": "ui-code",
-        "path": "src/skills.ts"
+        "kind": "skill",
+        "id": "cgs-standards-ui-code",
+        "path": "src/skills.ts",
+        "hash": "aaef7ba73aefa8277b6204e0a8b3ca13539971bdac290a51519ba3df3a4bd7d9"
       },
       "decision": "adapt",
-      "rationale": "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.",
+      "rationale": "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -5802,7 +5855,7 @@
       },
       "ownerPath": "src/skills.ts",
       "testPath": "tests/codex-context-files.test.ts",
-      "status": "todo"
+      "status": "implemented"
     }
   ]
 }

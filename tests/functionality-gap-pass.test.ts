@@ -43,8 +43,20 @@ const requiredRoles = [
   "ui-programmer",
   "engine-programmer",
   "godot-specialist",
+  "godot-gdscript-specialist",
+  "godot-csharp-specialist",
+  "godot-shader-specialist",
+  "godot-gdextension-specialist",
   "unity-specialist",
+  "unity-dots-specialist",
+  "unity-shader-specialist",
+  "unity-addressables-specialist",
+  "unity-ui-specialist",
   "unreal-specialist",
+  "ue-gas-specialist",
+  "ue-blueprint-specialist",
+  "ue-replication-specialist",
+  "ue-umg-specialist",
   "tools-programmer",
   "technical-director",
   "devops-engineer",
@@ -69,6 +81,36 @@ const requiredWorkflowIds = [
   "playtest",
   "market-analysis",
   "analytics-setup",
+  "engine-setup",
+  "game-concept",
+  "design-review-concept",
+  "art-bible",
+  "map-systems",
+  "design-system",
+  "design-review",
+  "review-all-gdds",
+  "consistency-check",
+  "create-architecture",
+  "control-manifest",
+  "accessibility-doc",
+  "entity-inventory",
+  "asset-spec",
+  "ux-design",
+  "ux-review",
+  "test-setup",
+  "implement",
+  "code-review",
+  "bug-report",
+  "retrospective",
+  "team-feature",
+  "scope-check",
+  "balance-check",
+  "asset-audit",
+  "playtest-polish",
+  "team-polish",
+  "patch-notes",
+  "changelog",
+  "launch-checklist",
   "design-spec",
   "game-feel-tuning",
   "art-direction",
@@ -184,7 +226,10 @@ describe("functionality gap pass", () => {
 
     const studio = JSON.parse(readFileSync(path.join(projectRoot, ".codex", "studio.json"), "utf8"));
     expect(studio.roles).toEqual(projectRoleIdsForEngine("godot"));
+    expect(studio.roles).toEqual(expect.arrayContaining(["godot-specialist", "godot-gdscript-specialist", "godot-csharp-specialist", "godot-shader-specialist", "godot-gdextension-specialist"]));
+    expect(studio.roles).not.toEqual(expect.arrayContaining(["unity-specialist", "unity-dots-specialist", "unreal-specialist", "ue-gas-specialist"]));
     expect(studio.activeRoles).toEqual(activeAgentsForProject("prototype", "godot"));
+    expect(studio.activeRoles).toContain("godot-gdscript-specialist");
     expect(studio.workflows).toEqual(Object.keys(workflowRegistry));
     expect(statusProject(projectRoot, cwd)).toContain(`active roles: ${activeAgentsForProject("prototype", "godot").join(", ")}`);
 

@@ -13,66 +13,66 @@ Reference root: `/opt/data/repos/Claude-Code-Game-Studios`
 
 ## Decision Summary
 
-- adopt: 56
-- adapt: 142
+- adopt: 0
+- adapt: 210
 - merge: 8
 - rename-alias: 0
-- defer: 12
+- defer: 0
 - out-of-scope: 0
 
 ## Rows
 
 | Type | Source | Decision | CGS target | Status | Rationale |
 | --- | --- | --- | --- | --- | --- |
-| agent | accessibility-specialist | adapt | role:accessibility-specialist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | ai-programmer | adapt | role:ai-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | accessibility-specialist | adapt | role:accessibility-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | ai-programmer | adapt | role:ai-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | analytics-engineer | merge | role:data-scientist | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
 | agent | art-director | merge | role:senior-game-artist | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
-| agent | audio-director | adapt | role:audio-director | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | community-manager | adapt | role:community-manager | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | audio-director | adapt | role:audio-director | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | community-manager | adapt | role:community-manager | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | creative-director | adapt | role:creative-director | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | devops-engineer | adapt | role:devops-engineer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | economy-designer | adapt | role:economy-designer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | engine-programmer | adapt | role:engine-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | devops-engineer | adapt | role:devops-engineer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | economy-designer | adapt | role:economy-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | engine-programmer | adapt | role:engine-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | game-designer | adapt | role:game-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | gameplay-programmer | adapt | role:gameplay-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | godot-csharp-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | godot-gdextension-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | godot-gdscript-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | godot-shader-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | godot-specialist | adapt | role:godot-specialist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | godot-csharp-specialist | adapt | role:godot-csharp-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | godot-gdextension-specialist | adapt | role:godot-gdextension-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | godot-gdscript-specialist | adapt | role:godot-gdscript-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | godot-shader-specialist | adapt | role:godot-shader-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | godot-specialist | adapt | role:godot-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | lead-programmer | merge | role:technical-director | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
-| agent | level-designer | adapt | role:level-designer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | live-ops-designer | adapt | role:live-ops-designer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | localization-lead | adapt | role:localization-lead | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | level-designer | adapt | role:level-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | live-ops-designer | adapt | role:live-ops-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | localization-lead | adapt | role:localization-lead | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | narrative-director | merge | role:narrative-designer | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
-| agent | network-programmer | adapt | role:network-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | network-programmer | adapt | role:network-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | performance-analyst | adapt | role:performance-analyst | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | producer | adapt | role:producer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | prototyper | merge | role:gameplay-programmer | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
 | agent | qa-lead | merge | role:qa-playtester | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
 | agent | qa-tester | merge | role:qa-playtester | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
 | agent | release-manager | adapt | role:release-manager | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | security-engineer | adapt | role:security-engineer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | sound-designer | adapt | role:sound-designer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | security-engineer | adapt | role:security-engineer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | sound-designer | adapt | role:sound-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | systems-designer | adapt | role:systems-designer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | technical-artist | adapt | role:technical-artist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | technical-artist | adapt | role:technical-artist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | technical-director | adapt | role:technical-director | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
-| agent | tools-programmer | adapt | role:tools-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | ue-blueprint-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | ue-gas-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | ue-replication-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | ue-umg-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | ui-programmer | adapt | role:ui-programmer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | unity-addressables-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | unity-dots-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | unity-shader-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | unity-specialist | adapt | role:unity-specialist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | unity-ui-specialist | defer | none: | todo | No matching CGS surface exists yet; audit requires explicit follow-up. |
-| agent | unreal-specialist | adapt | role:unreal-specialist | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | tools-programmer | adapt | role:tools-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | ue-blueprint-specialist | adapt | role:ue-blueprint-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | ue-gas-specialist | adapt | role:ue-gas-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | ue-replication-specialist | adapt | role:ue-replication-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | ue-umg-specialist | adapt | role:ue-umg-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | ui-programmer | adapt | role:ui-programmer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | unity-addressables-specialist | adapt | role:unity-addressables-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | unity-dots-specialist | adapt | role:unity-dots-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | unity-shader-specialist | adapt | role:unity-shader-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | unity-specialist | adapt | role:unity-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | unity-ui-specialist | adapt | role:unity-ui-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | unreal-specialist | adapt | role:unreal-specialist | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | agent | ux-designer | merge | role:ui-ux-designer | implemented | CCGS role is intentionally merged into an upgraded broader CGS role package. |
-| agent | world-builder | adapt | role:world-builder | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
-| agent | writer | adapt | role:writer | todo | Direct role exists; adapt CCGS depth into Codex role package and generated TOML. |
+| agent | world-builder | adapt | role:world-builder | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
+| agent | writer | adapt | role:writer | implemented | Direct role has an upgraded CCGS-depth Codex role package and generated TOML coverage. |
 | skill | adopt | adapt | skill:cgs-adopt | implemented | Generated Codex skill exists; adapt the CCGS workflow depth to Codex-native instructions. |
 | skill | architecture-decision | adapt | skill:cgs-architecture-decision | implemented | Generated Codex skill exists; adapt the CCGS workflow depth to Codex-native instructions. |
 | skill | architecture-review | adapt | skill:cgs-architecture-review | implemented | Generated Codex skill exists; adapt the CCGS workflow depth to Codex-native instructions. |
@@ -147,98 +147,98 @@ Reference root: `/opt/data/repos/Claude-Code-Game-Studios`
 | skill | ux-review | adapt | skill:cgs-ux-review | implemented | Generated Codex skill exists; adapt the CCGS workflow depth to Codex-native instructions. |
 | skill | vertical-slice | adapt | skill:cgs-vertical-slice | implemented | Generated Codex skill exists; adapt the CCGS workflow depth to Codex-native instructions. |
 | workflow-step | brainstorm | adapt | workflow:brainstorm | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | engine-setup | adopt | workflow:engine-setup | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | game-concept | adopt | workflow:game-concept | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | design-review-concept | adopt | workflow:design-review-concept | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | art-bible | adopt | workflow:art-bible | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | map-systems | adopt | workflow:map-systems | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | design-system | adopt | workflow:design-system | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | design-review | adopt | workflow:design-review | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | review-all-gdds | adopt | workflow:review-all-gdds | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | consistency-check | adopt | workflow:consistency-check | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | create-architecture | adopt | workflow:create-architecture | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | engine-setup | adapt | workflow:engine-setup | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | game-concept | adapt | workflow:game-concept | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | design-review-concept | adapt | workflow:design-review-concept | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | art-bible | adapt | workflow:art-bible | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | map-systems | adapt | workflow:map-systems | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | design-system | adapt | workflow:design-system | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | design-review | adapt | workflow:design-review | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | review-all-gdds | adapt | workflow:review-all-gdds | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | consistency-check | adapt | workflow:consistency-check | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | create-architecture | adapt | workflow:create-architecture | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | architecture-decision | adapt | workflow:architecture-decision | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | architecture-review | adapt | workflow:architecture-review | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | control-manifest | adopt | workflow:control-manifest | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | accessibility-doc | adopt | workflow:accessibility-doc | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | entity-inventory | adopt | workflow:entity-inventory | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | asset-spec | adopt | workflow:asset-spec | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | ux-design | adopt | workflow:ux-design | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | ux-review | adopt | workflow:ux-review | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | control-manifest | adapt | workflow:control-manifest | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | accessibility-doc | adapt | workflow:accessibility-doc | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | entity-inventory | adapt | workflow:entity-inventory | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | asset-spec | adapt | workflow:asset-spec | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | ux-design | adapt | workflow:ux-design | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | ux-review | adapt | workflow:ux-review | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | prototype | adapt | workflow:prototype | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | create-epics | adapt | workflow:create-epics | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | create-stories | adapt | workflow:create-stories | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | test-setup | adopt | workflow:test-setup | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | test-setup | adapt | workflow:test-setup | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | sprint-plan | adapt | workflow:sprint-plan | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | vertical-slice | adapt | workflow:vertical-slice | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | sprint-plan | adapt | workflow:sprint-plan | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | story-readiness | adapt | workflow:story-readiness | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | implement | adopt | workflow:implement | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | code-review | adopt | workflow:code-review | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | implement | adapt | workflow:implement | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | code-review | adapt | workflow:code-review | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | story-done | adapt | workflow:story-done | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | qa-plan | adapt | workflow:qa-plan | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | bug-report | adopt | workflow:bug-report | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | retrospective | adopt | workflow:retrospective | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | team-feature | adopt | workflow:team-feature | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | scope-check | adopt | workflow:scope-check | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | bug-report | adapt | workflow:bug-report | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | retrospective | adapt | workflow:retrospective | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | team-feature | adapt | workflow:team-feature | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | scope-check | adapt | workflow:scope-check | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | sprint-status | adapt | workflow:sprint-status | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | perf-profile | adapt | workflow:perf-profile | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | balance-check | adopt | workflow:balance-check | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | asset-audit | adopt | workflow:asset-audit | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | playtest-polish | adopt | workflow:playtest-polish | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | team-polish | adopt | workflow:team-polish | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | balance-check | adapt | workflow:balance-check | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | asset-audit | adapt | workflow:asset-audit | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | playtest-polish | adapt | workflow:playtest-polish | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | team-polish | adapt | workflow:team-polish | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | release-checklist | adapt | workflow:release-checklist | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | patch-notes | adopt | workflow:patch-notes | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | changelog | adopt | workflow:changelog | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | launch-checklist | adopt | workflow:launch-checklist | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | patch-notes | adapt | workflow:patch-notes | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | changelog | adapt | workflow:changelog | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | launch-checklist | adapt | workflow:launch-checklist | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | template | accessibility-requirements | adapt | template:accessibility-requirements | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | architecture-decision-record | adopt | template:architecture-decision-record | todo | CCGS template has no CGS equivalent yet. |
-| template | architecture-doc-from-code | adopt | template:architecture-doc-from-code | todo | CCGS template has no CGS equivalent yet. |
+| template | architecture-decision-record | adapt | template:architecture-decision-record | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | architecture-doc-from-code | adapt | template:architecture-doc-from-code | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | architecture-traceability | adapt | template:architecture-traceability | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | art-bible | adapt | template:art-bible | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | changelog-template | adopt | template:changelog-template | todo | CCGS template has no CGS equivalent yet. |
-| template | design-agent-protocol | adopt | template:design-agent-protocol | todo | CCGS template has no CGS equivalent yet. |
-| template | implementation-agent-protocol | adopt | template:implementation-agent-protocol | todo | CCGS template has no CGS equivalent yet. |
-| template | leadership-agent-protocol | adopt | template:leadership-agent-protocol | todo | CCGS template has no CGS equivalent yet. |
-| template | concept-doc-from-prototype | adopt | template:concept-doc-from-prototype | todo | CCGS template has no CGS equivalent yet. |
-| template | design-doc-from-implementation | adopt | template:design-doc-from-implementation | todo | CCGS template has no CGS equivalent yet. |
+| template | changelog-template | adapt | template:changelog-template | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | design-agent-protocol | adapt | template:design-agent-protocol | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | implementation-agent-protocol | adapt | template:implementation-agent-protocol | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | leadership-agent-protocol | adapt | template:leadership-agent-protocol | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | concept-doc-from-prototype | adapt | template:concept-doc-from-prototype | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | design-doc-from-implementation | adapt | template:design-doc-from-implementation | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | difficulty-curve | adapt | template:difficulty-curve | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | economy-model | adapt | template:economy-model | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | faction-design | adopt | template:faction-design | todo | CCGS template has no CGS equivalent yet. |
-| template | game-concept | adopt | template:game-concept | todo | CCGS template has no CGS equivalent yet. |
-| template | game-design-document | adopt | template:game-design-document | todo | CCGS template has no CGS equivalent yet. |
-| template | game-pillars | adopt | template:game-pillars | todo | CCGS template has no CGS equivalent yet. |
-| template | hud-design | adopt | template:hud-design | todo | CCGS template has no CGS equivalent yet. |
-| template | incident-response | adopt | template:incident-response | todo | CCGS template has no CGS equivalent yet. |
-| template | interaction-pattern-library | adopt | template:interaction-pattern-library | todo | CCGS template has no CGS equivalent yet. |
-| template | level-design-document | adopt | template:level-design-document | todo | CCGS template has no CGS equivalent yet. |
-| template | milestone-definition | adopt | template:milestone-definition | todo | CCGS template has no CGS equivalent yet. |
-| template | narrative-character-sheet | adopt | template:narrative-character-sheet | todo | CCGS template has no CGS equivalent yet. |
+| template | faction-design | adapt | template:faction-design | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | game-concept | adapt | template:game-concept | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | game-design-document | adapt | template:game-design-document | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | game-pillars | adapt | template:game-pillars | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | hud-design | adapt | template:hud-design | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | incident-response | adapt | template:incident-response | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | interaction-pattern-library | adapt | template:interaction-pattern-library | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | level-design-document | adapt | template:level-design-document | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | milestone-definition | adapt | template:milestone-definition | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | narrative-character-sheet | adapt | template:narrative-character-sheet | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | pitch-document | adapt | template:pitch-document | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | player-journey | adapt | template:player-journey | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | post-mortem | adopt | template:post-mortem | todo | CCGS template has no CGS equivalent yet. |
-| template | project-stage-report | adopt | template:project-stage-report | todo | CCGS template has no CGS equivalent yet. |
-| template | prototype-report | adopt | template:prototype-report | todo | CCGS template has no CGS equivalent yet. |
-| template | release-checklist-template | adopt | template:release-checklist-template | todo | CCGS template has no CGS equivalent yet. |
+| template | post-mortem | adapt | template:post-mortem | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | project-stage-report | adapt | template:project-stage-report | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | prototype-report | adapt | template:prototype-report | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | release-checklist-template | adapt | template:release-checklist-template | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | release-notes | adapt | template:release-notes | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | risk-register-entry | adopt | template:risk-register-entry | todo | CCGS template has no CGS equivalent yet. |
-| template | skill-test-spec | adopt | template:skill-test-spec | todo | CCGS template has no CGS equivalent yet. |
+| template | risk-register-entry | adapt | template:risk-register-entry | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | skill-test-spec | adapt | template:skill-test-spec | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | sound-bible | adapt | template:sound-bible | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | sprint-plan | adapt | template:sprint-plan | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | systems-index | adopt | template:systems-index | todo | CCGS template has no CGS equivalent yet. |
-| template | technical-design-document | adopt | template:technical-design-document | todo | CCGS template has no CGS equivalent yet. |
+| template | systems-index | adapt | template:systems-index | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | technical-design-document | adapt | template:technical-design-document | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | test-evidence | adapt | template:test-evidence | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | test-plan | adapt | template:test-plan | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | ux-spec | adapt | template:ux-spec | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | vertical-slice-report | adapt | template:vertical-slice-report | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| rule | ai-code | adapt | rule:ai-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | data-files | adapt | rule:data-files | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | design-docs | adapt | rule:design-docs | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | engine-code | adapt | rule:engine-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | gameplay-code | adapt | rule:gameplay-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | narrative | adapt | rule:narrative | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | network-code | adapt | rule:network-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | prototype-code | adapt | rule:prototype-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | shader-code | adapt | rule:shader-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | test-standards | adapt | rule:test-standards | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | ui-code | adapt | rule:ui-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
+| rule | ai-code | adapt | skill:cgs-standards-ai-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | data-files | adapt | skill:cgs-standards-data-files | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | design-docs | adapt | skill:cgs-standards-design-docs | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | engine-code | adapt | skill:cgs-standards-engine-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | gameplay-code | adapt | skill:cgs-standards-gameplay-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | narrative | adapt | skill:cgs-standards-narrative | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | network-code | adapt | skill:cgs-standards-network-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | prototype-code | adapt | skill:cgs-standards-prototype-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | shader-code | adapt | skill:cgs-standards-shader-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | test-standards | adapt | skill:cgs-standards-test-standards | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | ui-code | adapt | skill:cgs-standards-ui-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |

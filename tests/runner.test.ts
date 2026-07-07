@@ -113,10 +113,30 @@ describe("runner", () => {
     expect(() => prepareRun("unity-specialist", { project: projectRoot, task: "Review engine setup", printPrompt: true }, cwd)).toThrow(
       /unity-specialist is not available for godot projects/i
     );
+    expect(() => prepareRun("unity-dots-specialist", { project: projectRoot, task: "Review ECS architecture", printPrompt: true }, cwd)).toThrow(
+      /unity-dots-specialist is not available for godot projects/i
+    );
 
     const run = prepareRun("godot-specialist", { project: projectRoot, task: "Review engine setup", printPrompt: true }, cwd);
     expect(run.prompt).toContain("# Runtime Role Context: godot-specialist");
     expect(run.prompt).toContain("docs/engine-reference/godot/specialist.md");
+
+    const sub = prepareRun("godot-gdscript-specialist", { project: projectRoot, task: "Review typed GDScript signals", printPrompt: true }, cwd);
+    expect(sub.prompt).toContain("# Runtime Role Context: godot-gdscript-specialist");
+    expect(sub.prompt).toContain("docs/engine-reference/godot/specialist.md");
+    expect(sub.prompt).toContain("docs/engine-reference/godot/gameplay.md");
+  });
+
+  test("unreal GAS sub-specialist selects focused plugin context", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-runner-gas-"));
+    const { projectRoot } = initTemplateProject({ name: "Unreal GAS Run", engine: "unreal", mode: "development", nonInteractive: true }, cwd);
+
+    const run = prepareRun("ue-gas-specialist", { project: projectRoot, task: "Review Gameplay Ability System attributes", printPrompt: true }, cwd);
+    expect(run.prompt).toContain("# Runtime Role Context: ue-gas-specialist");
+    expect(run.prompt).toContain("docs/engine-reference/unreal/plugins/gas.md");
+    expect(() => prepareRun("godot-gdscript-specialist", { project: projectRoot, task: "Review script", printPrompt: true }, cwd)).toThrow(
+      /godot-gdscript-specialist is not available for unreal projects/i
+    );
   });
 
   test("fix prompt includes runtime role context", () => {
