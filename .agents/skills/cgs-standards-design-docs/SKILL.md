@@ -26,6 +26,12 @@ design documents with player-facing intent, canonical source links, open questio
 - .codex/studio.json
 - task-relevant source, tests, docs, assets, or data files
 
+## Arguments
+
+- Objective or user request.
+- Target files, scenes, assets, or docs.
+- Constraints, deadlines, acceptance criteria, and verification command when known.
+
 ## Procedure
 
 1. Read the requested files and identify the design document standards rule being applied.
@@ -46,6 +52,12 @@ design documents with player-facing intent, canonical source links, open questio
 - Acceptance Check
 - Scope remains bounded to the current task and project stage.
 - Report labels unverified assumptions separately from evidence.
+
+## Decision Gates
+
+- Continue only when the expected output can be verified or clearly labeled as a plan.
+- Escalate to producer or qa-playtester when scope, ownership, or acceptance evidence is ambiguous.
+- Stop before broad rewrites, generated prompt mirrors, or hidden lifecycle behavior.
 
 ## Handoff
 

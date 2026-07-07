@@ -28,6 +28,12 @@ Detect whether the project is in concept, design, technical setup, pre-productio
 - docs/architecture/README.md
 - production/timeline.md
 
+## Arguments
+
+- Objective or user request.
+- Target files, scenes, assets, or docs.
+- Constraints, deadlines, acceptance criteria, and verification command when known.
+
 ## Procedure
 
 1. Clarify the requested detect whether the project is in concept, design, technical setup, pre-production, production, polish, or release. and identify the current project stage.
@@ -61,6 +67,12 @@ Detect whether the project is in concept, design, technical setup, pre-productio
 - Confidence
 - Scope remains bounded to the current task and project stage.
 - Report labels unverified assumptions separately from evidence.
+
+## Decision Gates
+
+- Continue only when the expected output can be verified or clearly labeled as a plan.
+- Escalate to producer or qa-playtester when scope, ownership, or acceptance evidence is ambiguous.
+- Stop before broad rewrites, generated prompt mirrors, or hidden lifecycle behavior.
 
 ## Handoff
 

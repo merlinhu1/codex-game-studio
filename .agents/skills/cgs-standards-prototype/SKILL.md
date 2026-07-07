@@ -26,6 +26,12 @@ fast experiments with explicit hypotheses, throwaway boundaries, and graduation 
 - .codex/studio.json
 - task-relevant source, tests, docs, or assets
 
+## Arguments
+
+- Objective or user request.
+- Target files, scenes, assets, or docs.
+- Constraints, deadlines, acceptance criteria, and verification command when known.
+
 ## Procedure
 
 1. Read the requested files and identify the prototype standards rule being applied.
@@ -46,6 +52,12 @@ fast experiments with explicit hypotheses, throwaway boundaries, and graduation 
 - Graduation
 - Scope remains bounded to the current task and project stage.
 - Report labels unverified assumptions separately from evidence.
+
+## Decision Gates
+
+- Continue only when the expected output can be verified or clearly labeled as a plan.
+- Escalate to producer or qa-playtester when scope, ownership, or acceptance evidence is ambiguous.
+- Stop before broad rewrites, generated prompt mirrors, or hidden lifecycle behavior.
 
 ## Handoff
 

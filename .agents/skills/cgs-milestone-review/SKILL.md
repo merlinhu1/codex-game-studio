@@ -28,6 +28,12 @@ Review milestone readiness, completed evidence, blockers, carryover, and phase t
 - production/timeline.md
 - production/session-state/active.md
 
+## Arguments
+
+- Objective or user request.
+- Target files, scenes, assets, or docs.
+- Constraints, deadlines, acceptance criteria, and verification command when known.
+
 ## Procedure
 
 1. Clarify the requested review milestone readiness, completed evidence, blockers, carryover, and phase transition risk. and identify the current project stage.
@@ -59,6 +65,12 @@ Review milestone readiness, completed evidence, blockers, carryover, and phase t
 - Transition Verdict
 - Scope remains bounded to the current task and project stage.
 - Report labels unverified assumptions separately from evidence.
+
+## Decision Gates
+
+- Continue only when the expected output can be verified or clearly labeled as a plan.
+- Escalate to producer or qa-playtester when scope, ownership, or acceptance evidence is ambiguous.
+- Stop before broad rewrites, generated prompt mirrors, or hidden lifecycle behavior.
 
 ## Handoff
 

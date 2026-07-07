@@ -28,6 +28,12 @@ Review changes for correctness, maintainability, security, tests, engine idioms,
 - docs/architecture/README.md
 - design/gdd.md
 
+## Arguments
+
+- Objective or user request.
+- Target files, scenes, assets, or docs.
+- Constraints, deadlines, acceptance criteria, and verification command when known.
+
 ## Procedure
 
 1. Clarify the requested review changes for correctness, maintainability, security, tests, engine idioms, and scope control. and identify the current project stage.
@@ -59,6 +65,12 @@ Review changes for correctness, maintainability, security, tests, engine idioms,
 - Review Verdict
 - Scope remains bounded to the current task and project stage.
 - Report labels unverified assumptions separately from evidence.
+
+## Decision Gates
+
+- Continue only when the expected output can be verified or clearly labeled as a plan.
+- Escalate to producer or qa-playtester when scope, ownership, or acceptance evidence is ambiguous.
+- Stop before broad rewrites, generated prompt mirrors, or hidden lifecycle behavior.
 
 ## Handoff
 
