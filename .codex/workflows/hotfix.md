@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Triage a hotfix by identifying the minimal repair, risk surface, verification commands, rollback plan, and release communication notes.
 
+
 ## Inputs
 
 - AGENTS.md

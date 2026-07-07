@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create a localization plan with string scope, culturalization risks, asset dependencies, text expansion, subtitles, and verification checks.
 
+
 ## Inputs
 
 - AGENTS.md

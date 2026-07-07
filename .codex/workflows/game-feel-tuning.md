@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review moment-to-moment feel, controls, feedback, pacing, and tuning risks with actionable changes.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Coordinate polish work across design, art, audio, UI, QA, and engineering with owners, cutlines, risks, and verification gates.
 
+
 ## Inputs
 
 - AGENTS.md

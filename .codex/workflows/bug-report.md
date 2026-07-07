@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Capture a reproducible bug report with expected versus actual behavior, environment, repro steps, evidence, severity, and owner routing.
 
+
 ## Inputs
 
 - AGENTS.md

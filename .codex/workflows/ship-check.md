@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Assess milestone readiness, package risk, validation status, and release blockers.
 
+
 ## Inputs
 
 - AGENTS.md

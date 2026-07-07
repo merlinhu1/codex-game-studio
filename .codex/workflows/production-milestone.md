@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Convert current project state into milestone goals, task slices, risks, owners, and verification gates.
 
+
 ## Inputs
 
 - AGENTS.md

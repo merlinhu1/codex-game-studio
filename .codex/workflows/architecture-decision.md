@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Draft an architecture decision with context, options, selected direction, consequences, risks, and verification implications.
 
+
 ## Inputs
 
 - AGENTS.md

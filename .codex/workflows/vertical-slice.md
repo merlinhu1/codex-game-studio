@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create a bounded vertical-slice plan with tasks, risks, and verification gates.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Draft patch notes with highlights, fixes, known issues, compatibility notes, validation evidence, and approval needs.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create or update an entity inventory covering gameplay objects, actors, content items, dependencies, ownership, and verification signals.
 
+
 ## Inputs
 
 - AGENTS.md

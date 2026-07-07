@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Confirm the selected engine, version, repository structure, run commands, and first validation path before design or implementation work proceeds.
 
+
 ## Inputs
 
 - AGENTS.md

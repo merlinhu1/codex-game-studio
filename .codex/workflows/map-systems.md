@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Map core gameplay, economy, progression, content, UI, and technical systems with dependencies, owners, and validation signals.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Break an epic or feature into implementation-ready stories with role owner, files or artifacts to inspect, acceptance criteria, and verification gates.
 
+
 ## Inputs
 
 - AGENTS.md

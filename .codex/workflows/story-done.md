@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review whether a story is done by checking acceptance criteria, changed artifacts, verification evidence, risks, and follow-up ownership.
 
+
 ## Inputs
 
 - AGENTS.md

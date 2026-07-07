@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Check design, production, architecture, UI, and validation surfaces for contradictions, missing owners, and stale assumptions.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create or review a feature/design spec with rules, edge cases, implementation slices, and acceptance criteria.
 
+
 ## Inputs
 
 - AGENTS.md

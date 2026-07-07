@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Implement a bounded feature slice from accepted design context with changed files, validation evidence, risks, and handoff notes.
 
+
 ## Inputs
 
 - AGENTS.md

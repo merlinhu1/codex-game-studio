@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Prepare a developer-visible changelog with grouped changes, fixes, migration notes, known issues, and verification evidence.
 
+
 ## Inputs
 
 - AGENTS.md

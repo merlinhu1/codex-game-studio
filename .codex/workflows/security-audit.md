@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review security, secrets, dependencies, online surfaces, abuse cases, and mitigation priorities for the project or feature.
 
+
 ## Inputs
 
 - AGENTS.md

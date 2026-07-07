@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Document controls, input devices, remapping requirements, UI prompts, accessibility constraints, and verification paths.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Turn the game idea into a concise concept with player fantasy, pillars, target audience, scope tier, and initial risks.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review production scope, identify cuts or deferrals, name owner decisions, and preserve the smallest shippable milestone.
 
+
 ## Inputs
 
 - AGENTS.md

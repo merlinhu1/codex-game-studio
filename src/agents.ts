@@ -35,6 +35,7 @@ export const projectAgentsMdRequiredSections = [
   "## Project Goal",
   "## Engine",
   "## Commands",
+  "## Context Bootstrap",
   "## Coding Conventions",
   "## Asset Conventions",
   "## Studio Roles",
@@ -66,6 +67,16 @@ ${config.project.engine} ${config.project.engine_version}
 
 - Validate: \`./codex-game-studio validate\`
 - Refresh context manifest after editing selected project context: \`./codex-game-studio refresh-context\`
+
+## Context Bootstrap
+
+Before broad inspection, use compact context helpers when available, then read only surfaced files and explicit task targets:
+
+- \`npm run ctx:studio\`
+- \`npm run ctx:task -- "<task>"\`
+- \`npm run ctx:role -- <role-id>\`
+- \`npm run ctx:workflow -- <workflow-id>\`
+- \`npm run ctx:changed\`
 
 ## Coding Conventions
 

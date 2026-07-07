@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Summarize current state, route next work to the right role, identify blockers, and produce a concise handoff.
 
+
 ## Inputs
 
 - AGENTS.md

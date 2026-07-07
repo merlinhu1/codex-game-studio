@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Plan the smallest playable prototype slice with owner roles, required assets, implementation tasks, and validation checks.
 
+
 ## Inputs
 
 - AGENTS.md

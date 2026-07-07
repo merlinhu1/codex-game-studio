@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review design docs for player promise, systemic consistency, production scope, edge cases, and handoff readiness.
 
+
 ## Inputs
 
 - AGENTS.md

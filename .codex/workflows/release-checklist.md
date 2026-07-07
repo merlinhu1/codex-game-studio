@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create a release checklist with blockers, warnings, validation commands, packaging checks, rollback notes, and communication needs.
 
+
 ## Inputs
 
 - AGENTS.md

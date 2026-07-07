@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Plan a cross-discipline feature with owner roles, artifacts, dependencies, risks, implementation slices, and verification gates.
 
+
 ## Inputs
 
 - AGENTS.md

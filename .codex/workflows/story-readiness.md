@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review whether a story is ready for implementation by checking scope, owner role, context files, acceptance criteria, risks, and verification commands.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Summarize sprint status, completed work, blockers, risks, next owners, and verification evidence without mutating task state.
 
+
 ## Inputs
 
 - AGENTS.md

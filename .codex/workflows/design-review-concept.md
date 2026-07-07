@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review the concept for coherent player promise, pillars, audience fit, production scope, and design risks before deeper systems work.
 
+
 ## Inputs
 
 - AGENTS.md

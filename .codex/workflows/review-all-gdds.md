@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review all GDD and design artifacts for contradictions, missing systems, stale assumptions, and implementation blockers.
 
+
 ## Inputs
 
 - AGENTS.md

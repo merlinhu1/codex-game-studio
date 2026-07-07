@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create an implementation-ready asset specification with references, constraints, variants, file expectations, risks, and review criteria.
 
+
 ## Inputs
 
 - AGENTS.md

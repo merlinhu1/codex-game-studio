@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Define the art bible with visual pillars, references, asset constraints, style rules, production risks, and review criteria.
 
+
 ## Inputs
 
 - AGENTS.md

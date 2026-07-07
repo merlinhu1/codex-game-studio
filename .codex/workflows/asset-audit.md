@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Audit assets for completeness, style fit, technical constraints, naming, missing variants, and release-blocking production risks.
 
+
 ## Inputs
 
 - AGENTS.md

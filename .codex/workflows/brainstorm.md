@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Generate bounded game ideas, feature variations, player fantasies, and tradeoff notes from the current project constraints.
 
+
 ## Inputs
 
 - AGENTS.md

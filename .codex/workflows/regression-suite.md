@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Design or review a regression suite for changed gameplay, UI, engine, content, and release-critical behavior.
 
+
 ## Inputs
 
 - AGENTS.md

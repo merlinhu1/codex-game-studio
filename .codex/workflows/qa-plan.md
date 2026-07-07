@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create a QA plan with target scenarios, risk areas, test data, manual checks, automated checks, and exit criteria.
 
+
 ## Inputs
 
 - AGENTS.md

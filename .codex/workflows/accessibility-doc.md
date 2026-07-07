@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Document accessibility requirements across visual, audio, motor, cognitive, input, difficulty, and verification concerns.
 
+
 ## Inputs
 
 - AGENTS.md

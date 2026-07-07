@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Define the test setup for the current feature or milestone, including scenarios, data, environment assumptions, automation hooks, and exit criteria.
 
+
 ## Inputs
 
 - AGENTS.md

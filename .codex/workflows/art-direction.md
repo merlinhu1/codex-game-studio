@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Define art direction, visual constraints, asset list, production risks, and review criteria.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create technical architecture with engine modules, data flow, integration points, risk areas, and verification strategy.
 
+
 ## Inputs
 
 - AGENTS.md

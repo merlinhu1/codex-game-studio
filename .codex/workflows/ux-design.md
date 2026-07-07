@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Design player journeys, HUD, menus, interaction states, onboarding, accessibility hooks, and implementation-ready UX artifacts.
 
+
 ## Inputs
 
 - AGENTS.md

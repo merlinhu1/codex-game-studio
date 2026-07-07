@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review UX flows, HUD, menus, onboarding, interaction states, accessibility risks, and handoff readiness with concrete findings.
 
+
 ## Inputs
 
 - AGENTS.md

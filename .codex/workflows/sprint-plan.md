@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Plan the next sprint or iteration with committed goals, role assignments, risks, validation gates, and explicit non-goals.
 
+
 ## Inputs
 
 - AGENTS.md

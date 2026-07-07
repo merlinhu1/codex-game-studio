@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Plan or review performance profiling across frame time, memory, loading, asset cost, bottlenecks, and measurement evidence.
 
+
 ## Inputs
 
 - AGENTS.md

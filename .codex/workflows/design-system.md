@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Author or update a system design with player-facing rules, data model, edge cases, dependencies, tuning hooks, and acceptance criteria.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Reproduce, fix, verify, and document a defect with bounded scope.
 
+
 ## Inputs
 
 - AGENTS.md

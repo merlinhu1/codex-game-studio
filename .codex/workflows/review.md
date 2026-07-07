@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review the current project state and report blockers, warnings, and verification gaps as JSON.
 
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,7 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Analyze audience, competitors, positioning, pricing, and market risks for the current project.
 
+
 ## Inputs
 
 - AGENTS.md
