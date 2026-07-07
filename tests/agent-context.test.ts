@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, test } from "node:test";
 import { expect } from "expect";
@@ -68,6 +69,15 @@ describe("agent context helper scripts", () => {
     expect(agent).toContain("npm run ctx:changed");
     expect(workflow).toContain("npm run ctx:workflow -- bugfix");
     expect(workflow).toContain("npm run ctx:role -- gameplay-programmer");
+  });
+
+  test("changed context degrades gracefully outside Git checkouts", () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-no-git-"));
+    const pack = renderAgentContext({ kind: "changed", cwd });
+
+    expect(pack).toContain("Changed files: unavailable");
+    expect(pack).toContain("Git is unavailable or this directory is not a Git checkout");
+    expect(pack).toContain("ctx:task");
   });
 
   test("package exposes low-output npm scripts for agents", () => {

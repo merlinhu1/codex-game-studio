@@ -241,7 +241,19 @@ function renderStudioPack(projectRoot: string): string {
 }
 
 function renderChangedPack(cwd: string): string {
-  const output = execFileSync("git", ["status", "--short"], { cwd, encoding: "utf8" }).trim();
+  let output = "";
+  try {
+    output = execFileSync("git", ["status", "--short"], { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+  } catch {
+    return lines(
+      "# Agent Context Pack: changed",
+      "Changed files: unavailable",
+      "",
+      "## Suggested follow-up",
+      "- Git is unavailable or this directory is not a Git checkout.",
+      "- Continue with ctx:task, ctx:role, or ctx:workflow, then inspect explicit task targets."
+    );
+  }
   const files = output ? output.split("\n").slice(0, 40) : [];
   return lines(
     "# Agent Context Pack: changed",
