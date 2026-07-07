@@ -337,7 +337,13 @@ function skillPromptSurfaceChecks(root: string, file: string): ValidationCheck[]
   const primaryAgent = scalarMetadata(frontmatter["primary-agent"]) ?? scalarMetadata(frontmatter.primary_agent);
   checks.push(primaryAgent && existsSync(path.join(root, ".codex", "agents", `${primaryAgent}.toml`)) ? pass(`prompt_surface.skill.${id}.agent_link`, `${id} primary agent resolves`, full) : fail(`prompt_surface.skill.${id}.agent_link`, `${id} primary agent link missing or broken`, full));
   checks.push(scalarMetadata(frontmatter["argument-hint"]) ? pass(`prompt_surface.skill.${id}.argument_hint`, `${id} argument hint present`, full) : fail(`prompt_surface.skill.${id}.argument_hint`, `${id} missing argument hint`, full));
-  checks.push(promptSurfaceDepth(body, ["Purpose", "Prerequisites", "Arguments", "Phased Procedure", "Decision Gates", "Output Contract", "Quality Gates", "Failure Modes", "Verification", "Handoff"]) >= 55 ? pass(`prompt_surface.skill.${id}.depth`, `${id} prompt depth sufficient`, full) : fail(`prompt_surface.skill.${id}.depth`, `${id} prompt surface too thin`, full));
+  const requiredSections = ["Objective", "Inputs", "Procedure", "Output Contract", "Quality Gates", "Handoff"];
+  const missingSection = requiredSections.find((section) => !sectionHasContent(body, `## ${section}`));
+  checks.push(!missingSection ? pass(`prompt_surface.skill.${id}.contract`, `${id} concise skill contract sections present`, full) : fail(`prompt_surface.skill.${id}.contract`, `${id} missing concise section: ${missingSection}`, full));
+  const redundantSections = ["Prerequisites", "Arguments", "Phased Procedure", "Decision Gates", "Failure Modes", "Adaptation Rationale"];
+  const redundantSection = redundantSections.find((section) => new RegExp(`^## ${section.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}\\s*$`, "m").test(body));
+  checks.push(!redundantSection ? pass(`prompt_surface.skill.${id}.concise`, `${id} avoids duplicated generic adapter sections`, full) : fail(`prompt_surface.skill.${id}.concise`, `${id} includes redundant generic section: ${redundantSection}`, full));
+  checks.push(body.split("\n").length <= 90 ? pass(`prompt_surface.skill.${id}.length`, `${id} stays within concise skill line budget`, full) : fail(`prompt_surface.skill.${id}.length`, `${id} exceeds concise skill line budget`, full));
   return checks;
 }
 
