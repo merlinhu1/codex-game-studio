@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Run a milestone or sprint retrospective that records outcomes, misses, risks, follow-ups, and concrete process changes.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- retrospective`
+- `npm run ctx:role -- producer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

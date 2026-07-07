@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Draft patch notes with highlights, fixes, known issues, compatibility notes, validation evidence, and approval needs.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- patch-notes`
+- `npm run ctx:role -- release-manager`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

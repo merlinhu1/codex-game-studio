@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Prepare a developer-visible changelog with grouped changes, fixes, migration notes, known issues, and verification evidence.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- changelog`
+- `npm run ctx:role -- release-manager`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

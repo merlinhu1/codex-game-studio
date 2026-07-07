@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Plan the smallest playable prototype slice with owner roles, required assets, implementation tasks, and validation checks.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- prototype`
+- `npm run ctx:role -- producer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

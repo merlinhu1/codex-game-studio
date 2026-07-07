@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review whether a story is done by checking acceptance criteria, changed artifacts, verification evidence, risks, and follow-up ownership.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- story-done`
+- `npm run ctx:role -- qa-playtester`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

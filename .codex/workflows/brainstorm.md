@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Generate bounded game ideas, feature variations, player fantasies, and tradeoff notes from the current project constraints.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- brainstorm`
+- `npm run ctx:role -- creative-director`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

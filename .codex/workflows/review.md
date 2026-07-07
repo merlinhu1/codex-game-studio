@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review the current project state and report blockers, warnings, and verification gaps as JSON.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- review`
+- `npm run ctx:role -- qa-playtester`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

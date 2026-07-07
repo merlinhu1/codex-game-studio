@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Prepare launch-day readiness checks across build, store, comms, rollback, support, monitoring, and final go/no-go decisions.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- launch-checklist`
+- `npm run ctx:role -- release-manager`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

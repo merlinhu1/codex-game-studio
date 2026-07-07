@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Summarize sprint status, completed work, blockers, risks, next owners, and verification evidence without mutating task state.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- sprint-status`
+- `npm run ctx:role -- studio-orchestrator`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

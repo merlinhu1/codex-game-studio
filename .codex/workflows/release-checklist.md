@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create a release checklist with blockers, warnings, validation commands, packaging checks, rollback notes, and communication needs.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- release-checklist`
+- `npm run ctx:role -- release-manager`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

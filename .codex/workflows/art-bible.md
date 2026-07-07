@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Define the art bible with visual pillars, references, asset constraints, style rules, production risks, and review criteria.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- art-bible`
+- `npm run ctx:role -- senior-game-artist`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

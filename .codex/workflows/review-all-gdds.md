@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review all GDD and design artifacts for contradictions, missing systems, stale assumptions, and implementation blockers.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- review-all-gdds`
+- `npm run ctx:role -- senior-game-designer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

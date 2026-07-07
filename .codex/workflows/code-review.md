@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review code changes for correctness, architecture fit, engine conventions, testing evidence, risk, and release readiness.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- code-review`
+- `npm run ctx:role -- technical-director`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

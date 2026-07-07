@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Check design, production, architecture, UI, and validation surfaces for contradictions, missing owners, and stale assumptions.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- consistency-check`
+- `npm run ctx:role -- studio-orchestrator`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

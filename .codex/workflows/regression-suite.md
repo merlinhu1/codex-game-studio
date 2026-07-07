@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Design or review a regression suite for changed gameplay, UI, engine, content, and release-critical behavior.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- regression-suite`
+- `npm run ctx:role -- qa-playtester`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

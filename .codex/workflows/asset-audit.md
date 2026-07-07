@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Audit assets for completeness, style fit, technical constraints, naming, missing variants, and release-blocking production risks.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- asset-audit`
+- `npm run ctx:role -- senior-game-artist`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

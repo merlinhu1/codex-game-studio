@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review balance, resources, progression, difficulty, exploit risks, and tuning hooks against player goals and telemetry signals.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- balance-check`
+- `npm run ctx:role -- economy-designer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

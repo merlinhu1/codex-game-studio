@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review moment-to-moment feel, controls, feedback, pacing, and tuning risks with actionable changes.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- game-feel-tuning`
+- `npm run ctx:role -- game-feel-designer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

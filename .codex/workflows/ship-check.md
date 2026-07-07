@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Assess milestone readiness, package risk, validation status, and release blockers.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- ship-check`
+- `npm run ctx:role -- release-manager`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

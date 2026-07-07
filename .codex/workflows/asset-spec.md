@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create an implementation-ready asset specification with references, constraints, variants, file expectations, risks, and review criteria.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- asset-spec`
+- `npm run ctx:role -- senior-game-artist`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

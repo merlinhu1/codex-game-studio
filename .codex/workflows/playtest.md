@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Inspect the current build, report reproducible playtest issues, and separate blockers from warnings.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- playtest`
+- `npm run ctx:role -- qa-playtester`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

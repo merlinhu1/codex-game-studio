@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create a QA plan with target scenarios, risk areas, test data, manual checks, automated checks, and exit criteria.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- qa-plan`
+- `npm run ctx:role -- qa-playtester`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

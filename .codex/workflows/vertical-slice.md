@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create a bounded vertical-slice plan with tasks, risks, and verification gates.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- vertical-slice`
+- `npm run ctx:role -- producer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

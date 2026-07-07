@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review design docs for player promise, systemic consistency, production scope, edge cases, and handoff readiness.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- design-review`
+- `npm run ctx:role -- senior-game-designer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

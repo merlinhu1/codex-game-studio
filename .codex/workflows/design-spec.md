@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create or review a feature/design spec with rules, edge cases, implementation slices, and acceptance criteria.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- design-spec`
+- `npm run ctx:role -- senior-game-designer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

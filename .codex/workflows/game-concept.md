@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Turn the game idea into a concise concept with player fantasy, pillars, target audience, scope tier, and initial risks.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- game-concept`
+- `npm run ctx:role -- creative-director`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

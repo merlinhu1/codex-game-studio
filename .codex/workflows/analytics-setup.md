@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Define analytics events, success metrics, experiment plans, and evidence loops for the current project.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- analytics-setup`
+- `npm run ctx:role -- data-scientist`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

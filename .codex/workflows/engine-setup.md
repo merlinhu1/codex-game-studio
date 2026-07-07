@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Confirm the selected engine, version, repository structure, run commands, and first validation path before design or implementation work proceeds.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- engine-setup`
+- `npm run ctx:role -- technical-director`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

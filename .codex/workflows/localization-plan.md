@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create a localization plan with string scope, culturalization risks, asset dependencies, text expansion, subtitles, and verification checks.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- localization-plan`
+- `npm run ctx:role -- localization-lead`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Plan a cross-discipline feature with owner roles, artifacts, dependencies, risks, implementation slices, and verification gates.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- team-feature`
+- `npm run ctx:role -- producer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

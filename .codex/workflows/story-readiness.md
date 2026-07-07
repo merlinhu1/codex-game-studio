@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review whether a story is ready for implementation by checking scope, owner role, context files, acceptance criteria, risks, and verification commands.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- story-readiness`
+- `npm run ctx:role -- producer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

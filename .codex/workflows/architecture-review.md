@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review architecture, engine constraints, module boundaries, technical risks, and validation gaps for a proposed or existing feature.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- architecture-review`
+- `npm run ctx:role -- technical-director`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

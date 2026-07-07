@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review production scope, identify cuts or deferrals, name owner decisions, and preserve the smallest shippable milestone.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- scope-check`
+- `npm run ctx:role -- producer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

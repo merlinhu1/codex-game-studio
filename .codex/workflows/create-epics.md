@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create production epics from the project goal with scope, owners, dependencies, risks, and acceptance signals.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- create-epics`
+- `npm run ctx:role -- producer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

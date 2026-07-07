@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Author or update a system design with player-facing rules, data model, edge cases, dependencies, tuning hooks, and acceptance criteria.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- design-system`
+- `npm run ctx:role -- systems-designer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

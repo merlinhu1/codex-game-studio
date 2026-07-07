@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Document accessibility requirements across visual, audio, motor, cognitive, input, difficulty, and verification concerns.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- accessibility-doc`
+- `npm run ctx:role -- accessibility-specialist`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

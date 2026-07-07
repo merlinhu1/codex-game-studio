@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review playtest feedback and current build evidence to prioritize polish fixes, blockers, warnings, and follow-up validation.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- playtest-polish`
+- `npm run ctx:role -- qa-playtester`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

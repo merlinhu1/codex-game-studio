@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Design player journeys, HUD, menus, interaction states, onboarding, accessibility hooks, and implementation-ready UX artifacts.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- ux-design`
+- `npm run ctx:role -- ui-ux-designer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

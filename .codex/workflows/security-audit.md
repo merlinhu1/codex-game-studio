@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review security, secrets, dependencies, online surfaces, abuse cases, and mitigation priorities for the project or feature.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- security-audit`
+- `npm run ctx:role -- security-engineer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Draft an architecture decision with context, options, selected direction, consequences, risks, and verification implications.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- architecture-decision`
+- `npm run ctx:role -- technical-director`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

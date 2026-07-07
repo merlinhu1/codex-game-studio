@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Plan or review performance profiling across frame time, memory, loading, asset cost, bottlenecks, and measurement evidence.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- perf-profile`
+- `npm run ctx:role -- performance-analyst`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

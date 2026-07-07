@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Review UX flows, HUD, menus, onboarding, interaction states, accessibility risks, and handoff readiness with concrete findings.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- ux-review`
+- `npm run ctx:role -- ui-ux-designer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

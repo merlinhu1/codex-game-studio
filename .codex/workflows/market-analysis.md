@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Analyze audience, competitors, positioning, pricing, and market risks for the current project.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- market-analysis`
+- `npm run ctx:role -- market-analyst`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

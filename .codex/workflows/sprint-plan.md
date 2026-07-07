@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Plan the next sprint or iteration with committed goals, role assignments, risks, validation gates, and explicit non-goals.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- sprint-plan`
+- `npm run ctx:role -- producer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

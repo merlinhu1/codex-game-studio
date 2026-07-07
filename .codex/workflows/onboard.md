@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Orient a contributor to the project goal, current stage, key files, active roles, and safest first actions.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- onboard`
+- `npm run ctx:role -- studio-orchestrator`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

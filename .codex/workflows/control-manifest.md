@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Document controls, input devices, remapping requirements, UI prompts, accessibility constraints, and verification paths.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- control-manifest`
+- `npm run ctx:role -- ui-ux-designer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

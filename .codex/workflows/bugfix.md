@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Reproduce, fix, verify, and document a defect with bounded scope.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- bugfix`
+- `npm run ctx:role -- gameplay-programmer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md

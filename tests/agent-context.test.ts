@@ -4,6 +4,7 @@ import { describe, test } from "node:test";
 import { expect } from "expect";
 import { packageRoot } from "../src/paths.js";
 import { renderAgentContext, suggestAgentContext } from "../src/agent-context.js";
+import { renderCodexPrompt } from "../src/codex-prompts.js";
 
 describe("agent context helper scripts", () => {
   test("render a compact role context pack without dumping prompt bodies", () => {
@@ -38,6 +39,35 @@ describe("agent context helper scripts", () => {
     expect(suggestions.roles.map((role) => role.id)).toContain("gameplay-programmer");
     expect(suggestions.commands).toContain("npm run ctx:workflow -- bugfix");
     expect(JSON.stringify(suggestions)).not.toContain("systemPrompt");
+  });
+
+  test("runtime Codex prompts tell agents to use compact context helpers before broad reads", () => {
+    const prompt = renderCodexPrompt({
+      projectRoot: "/repo/game",
+      role: "gameplay-programmer",
+      objective: "Fix movement bug",
+      phase: "implement",
+      engine: "godot",
+      contextFiles: ["AGENTS.md", ".codex/studio.json"],
+      expectedOutputs: ["Code changes"],
+      allowFileEdits: true,
+      sandbox: "danger-full-access"
+    });
+
+    expect(prompt).toContain("## Compact Context First");
+    expect(prompt).toContain("npm run ctx:role -- gameplay-programmer");
+    expect(prompt).toContain("npm run ctx:changed");
+  });
+
+  test("tracked agent and workflow surfaces advertise context helpers without relying only on AGENTS.md", () => {
+    const root = packageRoot();
+    const agent = readFileSync(path.join(root, ".codex", "agents", "gameplay-programmer.toml"), "utf8");
+    const workflow = readFileSync(path.join(root, ".codex", "workflows", "bugfix.md"), "utf8");
+
+    expect(agent).toContain("npm run ctx:role -- gameplay-programmer");
+    expect(agent).toContain("npm run ctx:changed");
+    expect(workflow).toContain("npm run ctx:workflow -- bugfix");
+    expect(workflow).toContain("npm run ctx:role -- gameplay-programmer");
   });
 
   test("package exposes low-output npm scripts for agents", () => {

@@ -17,6 +17,14 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Triage a hotfix by identifying the minimal repair, risk surface, verification commands, rollback plan, and release communication notes.
 
+## Compact Context First
+
+- `npm run ctx:workflow -- hotfix`
+- `npm run ctx:role -- gameplay-programmer`
+- `npm run ctx:changed`
+
+Use these before broad inspection; then read only surfaced files and explicit task targets.
+
 ## Inputs
 
 - AGENTS.md
