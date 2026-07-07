@@ -40,6 +40,24 @@ export type WorkflowId =
   | "create-architecture"
   | "control-manifest"
   | "accessibility-doc"
+  | "entity-inventory"
+  | "asset-spec"
+  | "ux-design"
+  | "ux-review"
+  | "test-setup"
+  | "implement"
+  | "code-review"
+  | "bug-report"
+  | "retrospective"
+  | "team-feature"
+  | "scope-check"
+  | "balance-check"
+  | "asset-audit"
+  | "playtest-polish"
+  | "team-polish"
+  | "patch-notes"
+  | "changelog"
+  | "launch-checklist"
   | "design-spec"
   | "game-feel-tuning"
   | "art-direction"
@@ -272,6 +290,204 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     objective: "Document accessibility requirements across visual, audio, motor, cognitive, input, difficulty, and verification concerns.",
     templateIds: ["accessibility_requirements", "ux_spec", "test_plan"],
     cliAlias: "accessibility-doc"
+  }),
+  "entity-inventory": workflow({
+    id: "entity-inventory",
+    role: "systems-designer",
+    phase: "plan",
+    category: "design-architecture",
+    gapCoverage: ["entity inventory", "content entity taxonomy"],
+    objective: "Create or update an entity inventory covering gameplay objects, actors, content items, dependencies, ownership, and verification signals.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["gdd", "feature_spec"],
+    cliAlias: "entity-inventory"
+  }),
+  "asset-spec": workflow({
+    id: "asset-spec",
+    role: "senior-game-artist",
+    phase: "plan",
+    category: "design-architecture",
+    gapCoverage: ["asset specification", "art production handoff"],
+    objective: "Create an implementation-ready asset specification with references, constraints, variants, file expectations, risks, and review criteria.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["art_direction", "art_bible"],
+    cliAlias: "asset-spec"
+  }),
+  "ux-design": workflow({
+    id: "ux-design",
+    role: "ui-ux-designer",
+    phase: "plan",
+    category: "localization-accessibility",
+    gapCoverage: ["UX design", "player journey and interface specification"],
+    objective: "Design player journeys, HUD, menus, interaction states, onboarding, accessibility hooks, and implementation-ready UX artifacts.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["ux_spec", "accessibility_requirements", "player_journey"],
+    cliAlias: "ux-design"
+  }),
+  "ux-review": workflow({
+    id: "ux-review",
+    role: "ui-ux-designer",
+    phase: "review",
+    category: "localization-accessibility",
+    gapCoverage: ["UX review", "usability risk inspection"],
+    objective: "Review UX flows, HUD, menus, onboarding, interaction states, accessibility risks, and handoff readiness with concrete findings.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["ui_ux_review", "ux_spec", "accessibility_requirements"],
+    cliAlias: "ux-review"
+  }),
+  "test-setup": workflow({
+    id: "test-setup",
+    role: "qa-playtester",
+    phase: "plan",
+    category: "qa-testing",
+    gapCoverage: ["test setup", "QA environment readiness"],
+    objective: "Define the test setup for the current feature or milestone, including scenarios, data, environment assumptions, automation hooks, and exit criteria.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["test_plan", "test_evidence"],
+    cliAlias: "test-setup"
+  }),
+  implement: workflow({
+    id: "implement",
+    role: "gameplay-programmer",
+    phase: "implement",
+    category: "implementation-planning",
+    gapCoverage: ["implementation execution", "bounded feature delivery"],
+    objective: "Implement a bounded feature slice from accepted design context with changed files, validation evidence, risks, and handoff notes.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["feature_spec", "test_evidence", "vertical_slice_report"],
+    cliAlias: "implement"
+  }),
+  "code-review": workflow({
+    id: "code-review",
+    role: "technical-director",
+    phase: "review",
+    category: "qa-testing",
+    gapCoverage: ["code review", "implementation quality gate"],
+    objective: "Review code changes for correctness, architecture fit, engine conventions, testing evidence, risk, and release readiness.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["architecture_traceability", "technical_design"],
+    cliAlias: "code-review"
+  }),
+  "bug-report": workflow({
+    id: "bug-report",
+    role: "qa-playtester",
+    phase: "review",
+    category: "qa-testing",
+    gapCoverage: ["bug reporting", "reproducible defect capture"],
+    objective: "Capture a reproducible bug report with expected versus actual behavior, environment, repro steps, evidence, severity, and owner routing.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["playtest_report", "test_evidence"],
+    cliAlias: "bug-report"
+  }),
+  retrospective: workflow({
+    id: "retrospective",
+    role: "producer",
+    phase: "review",
+    category: "team-coordination",
+    gapCoverage: ["retrospective", "learning capture"],
+    objective: "Run a milestone or sprint retrospective that records outcomes, misses, risks, follow-ups, and concrete process changes.",
+    extraContextFiles: ["documentation/production/timeline.md"],
+    templateIds: ["postmortem", "risk_register"],
+    cliAlias: "retrospective"
+  }),
+  "team-feature": workflow({
+    id: "team-feature",
+    role: "producer",
+    phase: "plan",
+    category: "team-coordination",
+    gapCoverage: ["team feature planning", "cross-discipline coordination"],
+    objective: "Plan a cross-discipline feature with owner roles, artifacts, dependencies, risks, implementation slices, and verification gates.",
+    extraContextFiles: ["documentation/design/gdd.md", "documentation/production/timeline.md"],
+    templateIds: ["production_milestone", "feature_spec", "sprint_plan"],
+    cliAlias: "team-feature"
+  }),
+  "scope-check": workflow({
+    id: "scope-check",
+    role: "producer",
+    phase: "review",
+    category: "team-coordination",
+    gapCoverage: ["scope check", "production cutline review"],
+    objective: "Review production scope, identify cuts or deferrals, name owner decisions, and preserve the smallest shippable milestone.",
+    extraContextFiles: ["documentation/production/timeline.md"],
+    templateIds: ["production_milestone", "risk_register"],
+    cliAlias: "scope-check"
+  }),
+  "balance-check": workflow({
+    id: "balance-check",
+    role: "economy-designer",
+    phase: "review",
+    category: "design-architecture",
+    gapCoverage: ["balance check", "economy and progression risk review"],
+    objective: "Review balance, resources, progression, difficulty, exploit risks, and tuning hooks against player goals and telemetry signals.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["economy_model"],
+    cliAlias: "balance-check"
+  }),
+  "asset-audit": workflow({
+    id: "asset-audit",
+    role: "senior-game-artist",
+    phase: "review",
+    category: "design-architecture",
+    gapCoverage: ["asset audit", "content completeness review"],
+    objective: "Audit assets for completeness, style fit, technical constraints, naming, missing variants, and release-blocking production risks.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["art_direction", "art_bible"],
+    cliAlias: "asset-audit"
+  }),
+  "playtest-polish": workflow({
+    id: "playtest-polish",
+    role: "qa-playtester",
+    phase: "review",
+    category: "qa-testing",
+    gapCoverage: ["playtest polish", "player experience triage"],
+    objective: "Review playtest feedback and current build evidence to prioritize polish fixes, blockers, warnings, and follow-up validation.",
+    extraContextFiles: ["documentation/design/gdd.md"],
+    templateIds: ["playtest_report", "test_evidence"],
+    cliAlias: "playtest-polish"
+  }),
+  "team-polish": workflow({
+    id: "team-polish",
+    role: "producer",
+    phase: "plan",
+    category: "team-coordination",
+    gapCoverage: ["team polish planning", "multi-role polish coordination"],
+    objective: "Coordinate polish work across design, art, audio, UI, QA, and engineering with owners, cutlines, risks, and verification gates.",
+    extraContextFiles: ["documentation/production/timeline.md"],
+    templateIds: ["production_milestone", "risk_register"],
+    cliAlias: "team-polish"
+  }),
+  "patch-notes": workflow({
+    id: "patch-notes",
+    role: "release-manager",
+    phase: "ship",
+    category: "release-hotfix",
+    gapCoverage: ["patch notes", "player-facing release communication"],
+    objective: "Draft patch notes with highlights, fixes, known issues, compatibility notes, validation evidence, and approval needs.",
+    extraContextFiles: ["documentation/production/timeline.md"],
+    templateIds: ["release_notes"],
+    cliAlias: "patch-notes"
+  }),
+  changelog: workflow({
+    id: "changelog",
+    role: "release-manager",
+    phase: "ship",
+    category: "release-hotfix",
+    gapCoverage: ["changelog", "developer-visible change record"],
+    objective: "Prepare a developer-visible changelog with grouped changes, fixes, migration notes, known issues, and verification evidence.",
+    extraContextFiles: ["documentation/production/timeline.md"],
+    templateIds: ["release_notes"],
+    cliAlias: "changelog"
+  }),
+  "launch-checklist": workflow({
+    id: "launch-checklist",
+    role: "release-manager",
+    phase: "ship",
+    category: "release-hotfix",
+    gapCoverage: ["launch checklist", "launch readiness coordination"],
+    objective: "Prepare launch-day readiness checks across build, store, comms, rollback, support, monitoring, and final go/no-go decisions.",
+    extraContextFiles: ["documentation/production/timeline.md"],
+    templateIds: ["ship_check", "release_notes", "test_plan"],
+    cliAlias: "launch-checklist"
   }),
   "design-spec": workflow({
     id: "design-spec",

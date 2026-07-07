@@ -3718,10 +3718,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "entity-inventory",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "98b6d71ac83e94321a578c187770e062f84d92982d9a688a423b6ea04b81e9f0"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3732,9 +3733,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3744,10 +3745,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "asset-spec",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "b638c1f40a5dd85f10b981ed68fa3d4f80947906281a6821bde7e6e9c179f4d2"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3758,9 +3760,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3770,10 +3772,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "ux-design",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "9276a2ad91d284faff280eeb236b849118dc30f52c713d8dd09cc7d964f9f36c"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3784,9 +3787,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3796,10 +3799,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "ux-review",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "836bbf2210e7a561150632a55128e22f4401af1a014b473f79e249edce3704f6"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -3810,9 +3814,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -3903,10 +3907,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "test-setup",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "b7ca8e7ab9eeeb341ebaef87fd3b597d006396f3e34a6545e68ddff4547ad2f4"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -3917,9 +3922,9 @@
         "codexFit": 5,
         "testability": 4
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4037,10 +4042,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "implement",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "168a8836ed6e3e8de63c250a4d473925ef0c64dd4d66a8d85d3785a02617d207"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -4051,9 +4057,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4063,10 +4069,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "code-review",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "0fea498f6c5b79e4ce0f2903c51a8d30bdbd2e2079ea6ae9bbd5068bc36f7cf9"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4077,9 +4084,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4143,10 +4150,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "bug-report",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "64804dd3ee5c3cd72bbbbe3d3eec830d3c17aa04150db65e1c5c53e0d6cc0f68"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4157,9 +4165,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4169,10 +4177,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "retrospective",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "c37a5c3c4a517adbf4a960fe60e748b56a32fea38e5afbaba2933b901f03c309"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4183,9 +4192,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4195,10 +4204,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "team-feature",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "6991d85abbc63be4e5ce6eb0bb0a715a962f587d421ce10985eee409d4eeeb38"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4209,9 +4219,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4221,10 +4231,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "scope-check",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "c8e4f9eb3ec12d19b618505874d51694532335ad61676b31e1e4721eb4f34621"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -4235,9 +4246,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4301,10 +4312,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "balance-check",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "5baa7fc4654ad2e1ca831c105f666109c6f9678549974b29e23ef1a3e89b6fea"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4315,9 +4327,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4327,10 +4339,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "asset-audit",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "75da854d9c290566f7703f326b762eec0caa01fa5989e5a9f35662e8f24a5329"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4341,9 +4354,9 @@
         "codexFit": 5,
         "testability": 4
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4353,10 +4366,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "playtest-polish",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "888900357760283f35d1145a3ed463fb26e13710965de05c24114ae2729e0edb"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 2,
         "proceduralSpecificity": 2,
@@ -4367,9 +4381,9 @@
         "codexFit": 5,
         "testability": 4
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4379,10 +4393,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "team-polish",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "f25ad3c829eda8a13a4a8902225eec4151267cb55a357d10cb13cf5c07408c91"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4393,9 +4408,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4432,10 +4447,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "patch-notes",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "bfefbfa70fb4fbad272bc1a64610e3ac0cf42fcadbd40b6a77bd52aa1b4f4976"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4446,9 +4462,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4458,10 +4474,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "changelog",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "ecbbf00f5778fc7bd2884caed02687823b86726e5c1ba50924eb7f26238c314e"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4472,9 +4489,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "workflow-step",
@@ -4484,10 +4501,11 @@
       "cgsTarget": {
         "kind": "workflow",
         "id": "launch-checklist",
-        "path": "src/workflow-catalog.ts"
+        "path": "src/workflows.ts",
+        "hash": "5132103e0f538572a16561bf9e05d36cd5879e97c464e164970843f132cbf634"
       },
-      "decision": "adopt",
-      "rationale": "CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias.",
+      "decision": "adapt",
+      "rationale": "Workflow exists; add CCGS-style phase/artifact semantics where useful.",
       "scores": {
         "contentDepth": 1,
         "proceduralSpecificity": 2,
@@ -4498,9 +4516,9 @@
         "codexFit": 5,
         "testability": 2
       },
-      "ownerPath": "src/workflow-catalog.ts",
-      "testPath": "tests/workflow-catalog.test.ts",
-      "status": "todo"
+      "ownerPath": "src/workflows.ts",
+      "testPath": "tests/workflow-recipes.test.ts",
+      "status": "implemented"
     },
     {
       "sourceType": "template",

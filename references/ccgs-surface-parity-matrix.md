@@ -13,8 +13,8 @@ Reference root: `/opt/data/repos/Claude-Code-Game-Studios`
 
 ## Decision Summary
 
-- adopt: 44
-- adapt: 166
+- adopt: 26
+- adapt: 184
 - merge: 8
 - rename-alias: 0
 - defer: 0
@@ -161,36 +161,36 @@ Reference root: `/opt/data/repos/Claude-Code-Game-Studios`
 | workflow-step | architecture-review | adapt | workflow:architecture-review | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | control-manifest | adapt | workflow:control-manifest | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | accessibility-doc | adapt | workflow:accessibility-doc | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | entity-inventory | adopt | workflow:entity-inventory | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | asset-spec | adopt | workflow:asset-spec | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | ux-design | adopt | workflow:ux-design | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | ux-review | adopt | workflow:ux-review | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | entity-inventory | adapt | workflow:entity-inventory | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | asset-spec | adapt | workflow:asset-spec | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | ux-design | adapt | workflow:ux-design | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | ux-review | adapt | workflow:ux-review | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | prototype | adapt | workflow:prototype | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | create-epics | adapt | workflow:create-epics | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | create-stories | adapt | workflow:create-stories | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | test-setup | adopt | workflow:test-setup | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | test-setup | adapt | workflow:test-setup | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | sprint-plan | adapt | workflow:sprint-plan | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | vertical-slice | adapt | workflow:vertical-slice | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | sprint-plan | adapt | workflow:sprint-plan | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | story-readiness | adapt | workflow:story-readiness | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | implement | adopt | workflow:implement | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | code-review | adopt | workflow:code-review | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | implement | adapt | workflow:implement | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | code-review | adapt | workflow:code-review | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | story-done | adapt | workflow:story-done | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | qa-plan | adapt | workflow:qa-plan | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | bug-report | adopt | workflow:bug-report | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | retrospective | adopt | workflow:retrospective | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | team-feature | adopt | workflow:team-feature | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | scope-check | adopt | workflow:scope-check | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | bug-report | adapt | workflow:bug-report | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | retrospective | adapt | workflow:retrospective | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | team-feature | adapt | workflow:team-feature | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | scope-check | adapt | workflow:scope-check | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | sprint-status | adapt | workflow:sprint-status | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | perf-profile | adapt | workflow:perf-profile | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | balance-check | adopt | workflow:balance-check | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | asset-audit | adopt | workflow:asset-audit | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | playtest-polish | adopt | workflow:playtest-polish | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | team-polish | adopt | workflow:team-polish | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | balance-check | adapt | workflow:balance-check | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | asset-audit | adapt | workflow:asset-audit | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | playtest-polish | adapt | workflow:playtest-polish | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | team-polish | adapt | workflow:team-polish | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | release-checklist | adapt | workflow:release-checklist | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
-| workflow-step | patch-notes | adopt | workflow:patch-notes | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | changelog | adopt | workflow:changelog | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
-| workflow-step | launch-checklist | adopt | workflow:launch-checklist | todo | CCGS catalog step is missing and should be represented in the CGS phase catalog or as a workflow alias. |
+| workflow-step | patch-notes | adapt | workflow:patch-notes | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | changelog | adapt | workflow:changelog | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
+| workflow-step | launch-checklist | adapt | workflow:launch-checklist | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | template | accessibility-requirements | adapt | template:accessibility-requirements | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | architecture-decision-record | adopt | template:architecture-decision-record | todo | CCGS template has no CGS equivalent yet. |
 | template | architecture-doc-from-code | adopt | template:architecture-doc-from-code | todo | CCGS template has no CGS equivalent yet. |

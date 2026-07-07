@@ -1,7 +1,7 @@
 {
   "local": {
     "agents": 50,
-    "workflows": 43,
+    "workflows": 61,
     "skills": 79
   },
   "upstream": {
@@ -1868,6 +1868,90 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/asset-audit.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide an asset audit request with asset folders or specs, art direction, build evidence, production constraints, owner or handoff needs, and verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/asset-spec.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide an asset specification request with target asset set, references, constraints, source files, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/balance-check.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a balance check request with systems or economy context, target values, player goals, telemetry or evidence, owner or handoff needs, and verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/brainstorm.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1896,6 +1980,34 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/bug-report.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a bug report request with observed behavior, expected behavior, repro context, environment, evidence files, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/bugfix.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -1918,6 +2030,62 @@
       },
       "discoveryMetadata": {
         "text": "Provide a bugfix request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/changelog.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a changelog request with release or milestone diff, grouped changes, migration notes, known issues, owner or handoff needs, and verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/code-review.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a code review request with changed files or diff summary, design intent, test evidence, risk constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -2204,6 +2372,34 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/entity-inventory.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide an entity inventory request with project state, relevant design files, entity scope, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/game-concept.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -2310,6 +2506,62 @@
       },
       "discoveryMetadata": {
         "text": "Provide a hotfix request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/implement.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide an implementation request with accepted design context, exact target files or artifacts, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/launch-checklist.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a launch checklist request with release target, build/store/comms/support state, rollback needs, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -2428,6 +2680,34 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/patch-notes.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a patch notes request with release scope, fixes, known issues, validation evidence, audience, owner or handoff needs, and approval constraints.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/perf-profile.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -2450,6 +2730,34 @@
       },
       "discoveryMetadata": {
         "text": "Provide a perf profile request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/playtest-polish.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a playtest polish request with playtest findings, current build state, player goals, affected files or assets, owner or handoff needs, and verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -2624,6 +2932,34 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/retrospective.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a retrospective request with milestone or sprint context, outcomes, evidence, team risks, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/review-all-gdds.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -2674,6 +3010,34 @@
       },
       "discoveryMetadata": {
         "text": "Provide a review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/scope-check.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a scope check request with milestone goals, current work, risks, constraints, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }
@@ -2848,6 +3212,90 @@
     },
     {
       "sourceType": "workflow",
+      "localPath": ".codex/workflows/team-feature.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a team feature request with feature goal, target files or scope constraints, design context, affected disciplines, dependencies, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/team-polish.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a team polish request with milestone state, polish candidates, discipline owners, risks, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/test-setup.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a test setup request with feature scope, target engine/build state, test data, relevant files, owner or handoff needs, and verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
       "localPath": ".codex/workflows/ui-ux-review.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -2870,6 +3318,62 @@
       },
       "discoveryMetadata": {
         "text": "Provide a ui ux review request with the objective or decision, target files/assets/milestone, scope constraints, owner or handoff needs, and required verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/ux-design.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a UX design request with player journey, screens or flows, accessibility constraints, relevant files, owner or handoff needs, and verification evidence.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "workflow",
+      "localPath": ".codex/workflows/ux-review.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/workflow-catalog.test.ts",
+        "tests/workflow-recipes.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 83,
+      "depthScore": 56,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": true
+      },
+      "discoveryMetadata": {
+        "text": "Provide a UX review request with target screens or flows, player goals, evidence, relevant files, owner or handoff needs, and required verification evidence.",
         "valid": true,
         "diagnostics": []
       }

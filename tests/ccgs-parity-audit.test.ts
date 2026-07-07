@@ -22,7 +22,7 @@ const firstBatchWorkflowGapIds = [
   "accessibility-doc"
 ] as const;
 
-const laterWorkflowGapIds = [
+const secondBatchWorkflowGapIds = [
   "entity-inventory",
   "asset-spec",
   "ux-design",
@@ -246,17 +246,17 @@ Summary | Risks | Verification | Handoff
     for (const roleId of engineSubSpecialistIds) expect(report).not.toContain(`\`${roleId}\` → role:${roleId}`);
   });
 
-  test("first CCGS workflow-step batch is implemented while later workflow gaps remain queued", () => {
+  test("all CCGS workflow-step gaps are implemented as first-class Codex workflows", () => {
     const root = fixtureRoot();
-    writeFileSync(path.join(root, ".claude", "docs", "workflow-catalog.yaml"), workflowCatalogYaml([...firstBatchWorkflowGapIds, ...laterWorkflowGapIds]));
+    const allWorkflowGapIds = [...firstBatchWorkflowGapIds, ...secondBatchWorkflowGapIds];
+    writeFileSync(path.join(root, ".claude", "docs", "workflow-catalog.yaml"), workflowCatalogYaml(allWorkflowGapIds));
     const matrix = generateParityMatrix(inventoryCcgsSurfaces(root), defaultProjectConfig({ name: "Workflow Gap Game", engine: "godot", mode: "prototype", nonInteractive: true }));
     const workflowRows = matrix.rows.filter((row) => row.sourceType === "workflow-step");
-    const remainingWorkflowRows = workflowRows.filter((row) => row.status !== "implemented");
 
-    expect(workflowRows.filter((row) => firstBatchWorkflowGapIds.includes(row.sourceId as (typeof firstBatchWorkflowGapIds)[number])).every((row) => row.status === "implemented" && row.cgsTarget.kind === "workflow")).toBe(true);
-    expect(remainingWorkflowRows).toHaveLength(laterWorkflowGapIds.length);
-    for (const id of firstBatchWorkflowGapIds) expect(renderRemainingGapTasksMarkdown(matrix)).not.toContain(`\`${id}\` → workflow:${id}`);
-    for (const id of laterWorkflowGapIds) expect(renderRemainingGapTasksMarkdown(matrix)).toContain(`\`${id}\` → workflow:${id}`);
+    expect(workflowRows).toHaveLength(allWorkflowGapIds.length);
+    expect(workflowRows.every((row) => row.status === "implemented" && row.cgsTarget.kind === "workflow")).toBe(true);
+    for (const id of allWorkflowGapIds) expect(renderRemainingGapTasksMarkdown(matrix)).not.toContain(`\`${id}\` → workflow:${id}`);
+    expect(renderRemainingGapTasksMarkdown(matrix)).toContain("## Workflow-step gaps\n\nNo remaining rows.");
   });
 
   test("upgraded template skills are no longer thin wrappers", () => {

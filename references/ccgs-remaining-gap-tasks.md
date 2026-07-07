@@ -8,12 +8,12 @@ Source evidence:
 
 ## Current state
 
-- Implemented parity rows: 163
-- Remaining parity rows: 55
+- Implemented parity rows: 181
+- Remaining parity rows: 37
 - Deferred parity rows: 0
 - Out-of-scope parity rows: 0
 - Remaining role rows: 0
-- Remaining workflow-step rows: 18
+- Remaining workflow-step rows: 0
 - Remaining template rows: 26
 - Remaining rule rows: 11
 - Remaining skill rows: 0
@@ -26,24 +26,7 @@ No remaining rows.
 
 ## Workflow-step gaps
 
-- `entity-inventory` → workflow:entity-inventory (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `asset-spec` → workflow:asset-spec (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `ux-design` → workflow:ux-design (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `ux-review` → workflow:ux-review (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `test-setup` → workflow:test-setup (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `implement` → workflow:implement (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `code-review` → workflow:code-review (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `bug-report` → workflow:bug-report (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `retrospective` → workflow:retrospective (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `team-feature` → workflow:team-feature (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `scope-check` → workflow:scope-check (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `balance-check` → workflow:balance-check (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `asset-audit` → workflow:asset-audit (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `playtest-polish` → workflow:playtest-polish (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `team-polish` → workflow:team-polish (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `patch-notes` → workflow:patch-notes (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `changelog` → workflow:changelog (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
-- `launch-checklist` → workflow:launch-checklist (todo, adopt); owner: `src/workflow-catalog.ts`; tests: `tests/workflow-catalog.test.ts`
+No remaining rows.
 
 ## Template gaps
 

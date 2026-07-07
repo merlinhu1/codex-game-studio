@@ -22,6 +22,27 @@ const firstBatchWorkflowGapIds = [
   "accessibility-doc"
 ] as const;
 
+const secondBatchWorkflowGapIds = [
+  "entity-inventory",
+  "asset-spec",
+  "ux-design",
+  "ux-review",
+  "test-setup",
+  "implement",
+  "code-review",
+  "bug-report",
+  "retrospective",
+  "team-feature",
+  "scope-check",
+  "balance-check",
+  "asset-audit",
+  "playtest-polish",
+  "team-polish",
+  "patch-notes",
+  "changelog",
+  "launch-checklist"
+] as const;
+
 describe("workflow catalog", () => {
   test("represents CCGS-style phases with required and repeatable artifact checks", () => {
     expect(workflowCatalog.phases[0]).toEqual(expect.objectContaining({ id: "concept", nextPhase: "systems-design" }));
@@ -44,6 +65,20 @@ describe("workflow catalog", () => {
     expect(engineSetup).toEqual(expect.objectContaining({ required: true, artifact: expect.objectContaining({ path: ".codex/studio.json" }) }));
     const designSystem = workflowCatalog.phases.flatMap((phase) => phase.steps).find((step) => step.id === "design-system");
     expect(designSystem).toEqual(expect.objectContaining({ repeatable: true }));
+  });
+
+  test("second CCGS workflow-step parity batch is registry-backed and catalog-aligned", () => {
+    for (const id of secondBatchWorkflowGapIds) {
+      expect(workflowRegistry[id]).toEqual(expect.objectContaining({ id, file: `.codex/workflows/${id}.md` }));
+    }
+
+    const catalogIds = workflowCatalog.phases.flatMap((phase) => phase.steps.map((step) => step.id));
+    expect(catalogIds).toEqual(expect.arrayContaining([...secondBatchWorkflowGapIds]));
+
+    const steps = workflowCatalog.phases.flatMap((phase) => phase.steps);
+    expect(steps.find((step) => step.id === "entity-inventory")).toEqual(expect.objectContaining({ required: true, repeatable: true, artifact: expect.objectContaining({ path: "design/entities/entity-inventory.md" }) }));
+    expect(steps.find((step) => step.id === "implement")).toEqual(expect.objectContaining({ required: true, repeatable: true, artifact: expect.objectContaining({ path: "production/session-state/active.md" }) }));
+    expect(steps.find((step) => step.id === "launch-checklist")).toEqual(expect.objectContaining({ required: true, artifact: expect.objectContaining({ path: "production/launch-checklist.md" }) }));
   });
 
   test("artifact checks report complete, invalid-pattern, and missing workflow prerequisites", () => {
