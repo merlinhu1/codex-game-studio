@@ -17,13 +17,6 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Turn the game idea into a concise concept with player fantasy, pillars, target audience, scope tier, and initial risks.
 
-## Compact Context First
-
-- `npm run ctx:workflow -- game-concept`
-- `npm run ctx:role -- creative-director`
-- `npm run ctx:changed`
-
-Use these before broad inspection; then read only surfaced files and explicit task targets.
 
 ## Inputs
 
@@ -71,6 +64,7 @@ CLI aliases:
 
 ## Context Contract
 
+- Context bootstrap: `npm run ctx:workflow -- game-concept`, `npm run ctx:role -- creative-director`, and `npm run ctx:changed` before broad reads when available.
 - Load AGENTS.md, .codex/studio.json, this workflow, the primary agent, linked skills, and only task-relevant project files.
 - Avoid broad context unless the user explicitly approves it.
 

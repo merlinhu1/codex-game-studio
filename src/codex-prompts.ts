@@ -7,9 +7,9 @@ function formatList(values: string[]): string {
   return values.length ? values.map((value) => `- ${value}`).join("\n") : "- None";
 }
 
-function compactContextFirst(roleId: string): string {
+function contextBootstrap(roleId: string): string {
   return [
-    "## Compact Context First",
+    "## Context Bootstrap",
     "Before broad file reads, use deterministic context helpers when available:",
     `- npm run ctx:role -- ${roleId}`,
     "- npm run ctx:changed",
@@ -49,7 +49,7 @@ export function renderCodexPrompt(session: CodexStudioSession): string {
     session.writePolicy ? `Write Policy: ${session.writePolicy}` : undefined,
     `File Edits: ${session.allowFileEdits ? "allowed" : "not allowed"}`,
     "",
-    compactContextFirst(session.role),
+    contextBootstrap(session.role),
     "",
     session.contextContract,
     session.contextContract ? "" : undefined,

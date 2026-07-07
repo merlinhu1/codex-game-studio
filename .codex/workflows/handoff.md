@@ -17,13 +17,6 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Summarize current state, route next work to the right role, identify blockers, and produce a concise handoff.
 
-## Compact Context First
-
-- `npm run ctx:workflow -- handoff`
-- `npm run ctx:role -- studio-orchestrator`
-- `npm run ctx:changed`
-
-Use these before broad inspection; then read only surfaced files and explicit task targets.
 
 ## Inputs
 
@@ -71,6 +64,7 @@ CLI aliases:
 
 ## Context Contract
 
+- Context bootstrap: `npm run ctx:workflow -- handoff`, `npm run ctx:role -- studio-orchestrator`, and `npm run ctx:changed` before broad reads when available.
 - Load AGENTS.md, .codex/studio.json, this workflow, the primary agent, linked skills, and only task-relevant project files.
 - Avoid broad context unless the user explicitly approves it.
 

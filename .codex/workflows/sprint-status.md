@@ -17,13 +17,6 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Summarize sprint status, completed work, blockers, risks, next owners, and verification evidence without mutating task state.
 
-## Compact Context First
-
-- `npm run ctx:workflow -- sprint-status`
-- `npm run ctx:role -- studio-orchestrator`
-- `npm run ctx:changed`
-
-Use these before broad inspection; then read only surfaced files and explicit task targets.
 
 ## Inputs
 
@@ -72,6 +65,7 @@ CLI aliases:
 
 ## Context Contract
 
+- Context bootstrap: `npm run ctx:workflow -- sprint-status`, `npm run ctx:role -- studio-orchestrator`, and `npm run ctx:changed` before broad reads when available.
 - Load AGENTS.md, .codex/studio.json, this workflow, the primary agent, linked skills, and only task-relevant project files.
 - Avoid broad context unless the user explicitly approves it.
 

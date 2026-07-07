@@ -17,13 +17,6 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Create technical architecture with engine modules, data flow, integration points, risk areas, and verification strategy.
 
-## Compact Context First
-
-- `npm run ctx:workflow -- create-architecture`
-- `npm run ctx:role -- technical-director`
-- `npm run ctx:changed`
-
-Use these before broad inspection; then read only surfaced files and explicit task targets.
 
 ## Inputs
 
@@ -72,6 +65,7 @@ CLI aliases:
 
 ## Context Contract
 
+- Context bootstrap: `npm run ctx:workflow -- create-architecture`, `npm run ctx:role -- technical-director`, and `npm run ctx:changed` before broad reads when available.
 - Load AGENTS.md, .codex/studio.json, this workflow, the primary agent, linked skills, and only task-relevant project files.
 - Avoid broad context unless the user explicitly approves it.
 

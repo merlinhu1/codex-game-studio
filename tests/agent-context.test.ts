@@ -55,7 +55,7 @@ describe("agent context helper scripts", () => {
       sandbox: "danger-full-access"
     });
 
-    expect(prompt).toContain("## Compact Context First");
+    expect(prompt).toContain("## Context Bootstrap");
     expect(prompt).toContain("npm run ctx:role -- gameplay-programmer");
     expect(prompt).toContain("npm run ctx:changed");
   });
@@ -67,8 +67,11 @@ describe("agent context helper scripts", () => {
 
     expect(agent).toContain("npm run ctx:role -- gameplay-programmer");
     expect(agent).toContain("npm run ctx:changed");
+    expect(agent).not.toContain("Compact Context First");
+    expect(workflow).toContain("Context bootstrap:");
     expect(workflow).toContain("npm run ctx:workflow -- bugfix");
     expect(workflow).toContain("npm run ctx:role -- gameplay-programmer");
+    expect(workflow).not.toContain("## Compact Context First");
   });
 
   test("changed context degrades gracefully outside Git checkouts", () => {

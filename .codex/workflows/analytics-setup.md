@@ -17,13 +17,6 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Define analytics events, success metrics, experiment plans, and evidence loops for the current project.
 
-## Compact Context First
-
-- `npm run ctx:workflow -- analytics-setup`
-- `npm run ctx:role -- data-scientist`
-- `npm run ctx:changed`
-
-Use these before broad inspection; then read only surfaced files and explicit task targets.
 
 ## Inputs
 
@@ -71,6 +64,7 @@ CLI aliases:
 
 ## Context Contract
 
+- Context bootstrap: `npm run ctx:workflow -- analytics-setup`, `npm run ctx:role -- data-scientist`, and `npm run ctx:changed` before broad reads when available.
 - Load AGENTS.md, .codex/studio.json, this workflow, the primary agent, linked skills, and only task-relevant project files.
 - Avoid broad context unless the user explicitly approves it.
 

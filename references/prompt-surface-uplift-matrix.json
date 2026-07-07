@@ -1709,7 +1709,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1737,7 +1737,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1765,7 +1765,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1793,7 +1793,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1821,7 +1821,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1849,7 +1849,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1877,7 +1877,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1905,7 +1905,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1933,7 +1933,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1961,7 +1961,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -1989,7 +1989,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2017,7 +2017,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2045,7 +2045,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2073,7 +2073,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2101,7 +2101,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 93,
+      "lineCount": 87,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2129,7 +2129,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2157,7 +2157,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2185,7 +2185,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 93,
+      "lineCount": 87,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2213,7 +2213,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2241,7 +2241,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2269,7 +2269,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2297,7 +2297,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2325,7 +2325,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2353,7 +2353,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2381,7 +2381,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2409,7 +2409,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2437,7 +2437,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2465,7 +2465,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2493,7 +2493,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2521,7 +2521,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2549,7 +2549,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2577,7 +2577,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2605,7 +2605,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2633,7 +2633,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2661,7 +2661,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 88,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2689,7 +2689,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2717,7 +2717,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2745,7 +2745,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2773,7 +2773,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2801,7 +2801,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2829,7 +2829,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2857,7 +2857,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2885,7 +2885,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2913,7 +2913,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2941,7 +2941,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2969,7 +2969,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -2997,7 +2997,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3025,7 +3025,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3053,7 +3053,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3081,7 +3081,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3109,7 +3109,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3137,7 +3137,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3165,7 +3165,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3193,7 +3193,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3221,7 +3221,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3249,7 +3249,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3277,7 +3277,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3305,7 +3305,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3333,7 +3333,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3361,7 +3361,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 91,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
         "model": true,
@@ -3389,7 +3389,7 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 92,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
         "model": true,

@@ -17,13 +17,6 @@ output-artifacts: [plan, changed-files, verification-evidence, handoff]
 
 Generate bounded game ideas, feature variations, player fantasies, and tradeoff notes from the current project constraints.
 
-## Compact Context First
-
-- `npm run ctx:workflow -- brainstorm`
-- `npm run ctx:role -- creative-director`
-- `npm run ctx:changed`
-
-Use these before broad inspection; then read only surfaced files and explicit task targets.
 
 ## Inputs
 
@@ -72,6 +65,7 @@ CLI aliases:
 
 ## Context Contract
 
+- Context bootstrap: `npm run ctx:workflow -- brainstorm`, `npm run ctx:role -- creative-director`, and `npm run ctx:changed` before broad reads when available.
 - Load AGENTS.md, .codex/studio.json, this workflow, the primary agent, linked skills, and only task-relevant project files.
 - Avoid broad context unless the user explicitly approves it.
 
