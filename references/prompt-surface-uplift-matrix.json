@@ -2,7 +2,7 @@
   "local": {
     "agents": 50,
     "workflows": 61,
-    "skills": 79
+    "skills": 90
   },
   "upstream": {
     "agents": 49,
@@ -5307,6 +5307,141 @@
     },
     {
       "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-ai-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for ai code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-data-files/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for data file standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-design-docs/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for design document standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-engine-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for engine code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-gameplay-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for gameplay code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
       "localPath": ".agents/skills/cgs-standards-gameplay/SKILL.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -5328,6 +5463,87 @@
       },
       "discoveryMetadata": {
         "text": "Use for standards gameplay tasks that mechanics, tuning, data-driven values, engine idioms, and player-facing acceptance checks; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-narrative/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for narrative standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-network-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for network code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-prototype-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for prototype code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
         "valid": true,
         "diagnostics": []
       }
@@ -5361,6 +5577,60 @@
     },
     {
       "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-shader-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for shader code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-test-standards/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for test standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
       "localPath": ".agents/skills/cgs-standards-tests/SKILL.md",
       "sourceMetadata": {},
       "decision": "defer",
@@ -5382,6 +5652,33 @@
       },
       "discoveryMetadata": {
         "text": "Use for standards tests tasks that unit, integration, engine smoke, playtest, and regression coverage; produce verification evidence, changed or proposed files, and handoff boundaries.",
+        "valid": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "sourceType": "skill",
+      "localPath": ".agents/skills/cgs-standards-ui-code/SKILL.md",
+      "sourceMetadata": {},
+      "decision": "defer",
+      "status": "deferred",
+      "requiredTests": [
+        "tests/template-repository-surfaces.test.ts",
+        "tests/validation.test.ts"
+      ],
+      "lineCount": 99,
+      "depthScore": 98,
+      "metadata": {
+        "model": true,
+        "reasoning": true,
+        "argumentHint": true,
+        "sourceReference": true,
+        "sourceHash": true,
+        "agent": true,
+        "links": false
+      },
+      "discoveryMetadata": {
+        "text": "Use for ui code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.",
         "valid": true,
         "diagnostics": []
       }

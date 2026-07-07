@@ -43,6 +43,49 @@ const secondBatchWorkflowGapIds = [
   "launch-checklist"
 ] as const;
 
+const remainingTemplateGapIds = [
+  "architecture-decision-record",
+  "architecture-doc-from-code",
+  "changelog-template",
+  "design-agent-protocol",
+  "implementation-agent-protocol",
+  "leadership-agent-protocol",
+  "concept-doc-from-prototype",
+  "design-doc-from-implementation",
+  "faction-design",
+  "game-concept",
+  "game-design-document",
+  "game-pillars",
+  "hud-design",
+  "incident-response",
+  "interaction-pattern-library",
+  "level-design-document",
+  "milestone-definition",
+  "narrative-character-sheet",
+  "post-mortem",
+  "project-stage-report",
+  "prototype-report",
+  "release-checklist-template",
+  "risk-register-entry",
+  "skill-test-spec",
+  "systems-index",
+  "technical-design-document"
+] as const;
+
+const remainingRuleGapIds = [
+  "ai-code",
+  "data-files",
+  "design-docs",
+  "engine-code",
+  "gameplay-code",
+  "narrative",
+  "network-code",
+  "prototype-code",
+  "shader-code",
+  "test-standards",
+  "ui-code"
+] as const;
+
 function workflowCatalogYaml(ids: readonly string[]): string {
   return [
     "phases:",
@@ -259,10 +302,43 @@ Summary | Risks | Verification | Handoff
     expect(renderRemainingGapTasksMarkdown(matrix)).toContain("## Workflow-step gaps\n\nNo remaining rows.");
   });
 
+  test("all remaining CCGS template gaps are implemented as package templates", () => {
+    const root = fixtureRoot();
+    mkdirSync(path.join(root, ".claude", "docs", "templates"), { recursive: true });
+    for (const id of remainingTemplateGapIds) {
+      writeFileSync(path.join(root, ".claude", "docs", "templates", `${id}.md`), `# ${id}\n\n## Purpose\n\nUpstream template.\n\n## Inputs\n\n- Source artifact\n\n## Outputs\n\n- Reviewable artifact\n\n## Validation\n\n- Verification evidence\n`);
+    }
+    const matrix = generateParityMatrix(inventoryCcgsSurfaces(root), defaultProjectConfig({ name: "Template Gap Game", engine: "godot", mode: "prototype", nonInteractive: true }));
+    const templateRows = matrix.rows.filter((row) => row.sourceType === "template");
+
+    expect(templateRows).toHaveLength(remainingTemplateGapIds.length);
+    expect(templateRows.every((row) => row.status === "implemented" && row.cgsTarget.kind === "template")).toBe(true);
+    for (const id of remainingTemplateGapIds) expect(renderRemainingGapTasksMarkdown(matrix)).not.toContain(`\`${id}\` → template:${id}`);
+    expect(renderRemainingGapTasksMarkdown(matrix)).toContain("## Template gaps\n\nNo remaining rows.");
+  });
+
+  test("all remaining CCGS rule gaps are adapted as Codex standards skills", () => {
+    const root = fixtureRoot();
+    mkdirSync(path.join(root, ".claude", "rules"), { recursive: true });
+    for (const id of remainingRuleGapIds) {
+      writeFileSync(path.join(root, ".claude", "rules", `${id}.md`), `paths:\n- \"src/**\"\n\n# ${id}\n\n- Apply bounded Codex-native standards.\n- Report verification evidence.\n`);
+    }
+    const matrix = generateParityMatrix(inventoryCcgsSurfaces(root), defaultProjectConfig({ name: "Rule Gap Game", engine: "godot", mode: "prototype", nonInteractive: true }));
+    const ruleRows = matrix.rows.filter((row) => row.sourceType === "rule");
+
+    expect(ruleRows).toHaveLength(remainingRuleGapIds.length);
+    expect(ruleRows.every((row) => row.status === "implemented" && row.cgsTarget.kind === "skill")).toBe(true);
+    for (const id of remainingRuleGapIds) {
+      expect(ruleRows.find((row) => row.sourceId === id)?.cgsTarget.id).toBe(`cgs-standards-${id}`);
+      expect(renderRemainingGapTasksMarkdown(matrix)).not.toContain(`\`${id}\` → skill:cgs-standards-${id}`);
+    }
+    expect(renderRemainingGapTasksMarkdown(matrix)).toContain("## Rule adaptation gaps\n\nNo remaining rows.");
+  });
+
   test("upgraded template skills are no longer thin wrappers", () => {
     const definitions = templateSkillDefinitions(defaultProjectConfig({ name: "Skill Depth Game", engine: "godot", mode: "prototype", nonInteractive: true }));
     expect(new Set(definitions.map((skill) => skill.name)).size).toBe(definitions.length);
-    expect(definitions.map((skill) => skill.name)).toEqual(expect.arrayContaining(["cgs-brainstorm", "cgs-map-systems", "cgs-design-system", "cgs-vertical-slice", "cgs-bug-report", "cgs-qa-plan", "cgs-release-checklist", "cgs-localize", "cgs-team-ui"]));
+    expect(definitions.map((skill) => skill.name)).toEqual(expect.arrayContaining(["cgs-brainstorm", "cgs-map-systems", "cgs-design-system", "cgs-vertical-slice", "cgs-bug-report", "cgs-qa-plan", "cgs-release-checklist", "cgs-localize", "cgs-team-ui", "cgs-standards-ai-code", "cgs-standards-ui-code"]));
     expect(definitions.find((skill) => skill.name === "cgs-vertical-slice")?.body).toContain("PROCEED / PIVOT / KILL");
     expect(definitions.find((skill) => skill.name === "cgs-bug-report")?.body).toContain("Expected vs Actual");
     for (const definition of definitions) {

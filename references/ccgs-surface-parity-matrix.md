@@ -13,8 +13,8 @@ Reference root: `/opt/data/repos/Claude-Code-Game-Studios`
 
 ## Decision Summary
 
-- adopt: 26
-- adapt: 184
+- adopt: 0
+- adapt: 210
 - merge: 8
 - rename-alias: 0
 - defer: 0
@@ -192,53 +192,53 @@ Reference root: `/opt/data/repos/Claude-Code-Game-Studios`
 | workflow-step | changelog | adapt | workflow:changelog | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | workflow-step | launch-checklist | adapt | workflow:launch-checklist | implemented | Workflow exists; add CCGS-style phase/artifact semantics where useful. |
 | template | accessibility-requirements | adapt | template:accessibility-requirements | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | architecture-decision-record | adopt | template:architecture-decision-record | todo | CCGS template has no CGS equivalent yet. |
-| template | architecture-doc-from-code | adopt | template:architecture-doc-from-code | todo | CCGS template has no CGS equivalent yet. |
+| template | architecture-decision-record | adapt | template:architecture-decision-record | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | architecture-doc-from-code | adapt | template:architecture-doc-from-code | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | architecture-traceability | adapt | template:architecture-traceability | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | art-bible | adapt | template:art-bible | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | changelog-template | adopt | template:changelog-template | todo | CCGS template has no CGS equivalent yet. |
-| template | design-agent-protocol | adopt | template:design-agent-protocol | todo | CCGS template has no CGS equivalent yet. |
-| template | implementation-agent-protocol | adopt | template:implementation-agent-protocol | todo | CCGS template has no CGS equivalent yet. |
-| template | leadership-agent-protocol | adopt | template:leadership-agent-protocol | todo | CCGS template has no CGS equivalent yet. |
-| template | concept-doc-from-prototype | adopt | template:concept-doc-from-prototype | todo | CCGS template has no CGS equivalent yet. |
-| template | design-doc-from-implementation | adopt | template:design-doc-from-implementation | todo | CCGS template has no CGS equivalent yet. |
+| template | changelog-template | adapt | template:changelog-template | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | design-agent-protocol | adapt | template:design-agent-protocol | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | implementation-agent-protocol | adapt | template:implementation-agent-protocol | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | leadership-agent-protocol | adapt | template:leadership-agent-protocol | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | concept-doc-from-prototype | adapt | template:concept-doc-from-prototype | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | design-doc-from-implementation | adapt | template:design-doc-from-implementation | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | difficulty-curve | adapt | template:difficulty-curve | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | economy-model | adapt | template:economy-model | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | faction-design | adopt | template:faction-design | todo | CCGS template has no CGS equivalent yet. |
-| template | game-concept | adopt | template:game-concept | todo | CCGS template has no CGS equivalent yet. |
-| template | game-design-document | adopt | template:game-design-document | todo | CCGS template has no CGS equivalent yet. |
-| template | game-pillars | adopt | template:game-pillars | todo | CCGS template has no CGS equivalent yet. |
-| template | hud-design | adopt | template:hud-design | todo | CCGS template has no CGS equivalent yet. |
-| template | incident-response | adopt | template:incident-response | todo | CCGS template has no CGS equivalent yet. |
-| template | interaction-pattern-library | adopt | template:interaction-pattern-library | todo | CCGS template has no CGS equivalent yet. |
-| template | level-design-document | adopt | template:level-design-document | todo | CCGS template has no CGS equivalent yet. |
-| template | milestone-definition | adopt | template:milestone-definition | todo | CCGS template has no CGS equivalent yet. |
-| template | narrative-character-sheet | adopt | template:narrative-character-sheet | todo | CCGS template has no CGS equivalent yet. |
+| template | faction-design | adapt | template:faction-design | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | game-concept | adapt | template:game-concept | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | game-design-document | adapt | template:game-design-document | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | game-pillars | adapt | template:game-pillars | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | hud-design | adapt | template:hud-design | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | incident-response | adapt | template:incident-response | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | interaction-pattern-library | adapt | template:interaction-pattern-library | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | level-design-document | adapt | template:level-design-document | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | milestone-definition | adapt | template:milestone-definition | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | narrative-character-sheet | adapt | template:narrative-character-sheet | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | pitch-document | adapt | template:pitch-document | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | player-journey | adapt | template:player-journey | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | post-mortem | adopt | template:post-mortem | todo | CCGS template has no CGS equivalent yet. |
-| template | project-stage-report | adopt | template:project-stage-report | todo | CCGS template has no CGS equivalent yet. |
-| template | prototype-report | adopt | template:prototype-report | todo | CCGS template has no CGS equivalent yet. |
-| template | release-checklist-template | adopt | template:release-checklist-template | todo | CCGS template has no CGS equivalent yet. |
+| template | post-mortem | adapt | template:post-mortem | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | project-stage-report | adapt | template:project-stage-report | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | prototype-report | adapt | template:prototype-report | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | release-checklist-template | adapt | template:release-checklist-template | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | release-notes | adapt | template:release-notes | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | risk-register-entry | adopt | template:risk-register-entry | todo | CCGS template has no CGS equivalent yet. |
-| template | skill-test-spec | adopt | template:skill-test-spec | todo | CCGS template has no CGS equivalent yet. |
+| template | risk-register-entry | adapt | template:risk-register-entry | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | skill-test-spec | adapt | template:skill-test-spec | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | sound-bible | adapt | template:sound-bible | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | sprint-plan | adapt | template:sprint-plan | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| template | systems-index | adopt | template:systems-index | todo | CCGS template has no CGS equivalent yet. |
-| template | technical-design-document | adopt | template:technical-design-document | todo | CCGS template has no CGS equivalent yet. |
+| template | systems-index | adapt | template:systems-index | implemented | Template equivalent exists; compare body quality and update if thinner. |
+| template | technical-design-document | adapt | template:technical-design-document | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | test-evidence | adapt | template:test-evidence | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | test-plan | adapt | template:test-plan | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | ux-spec | adapt | template:ux-spec | implemented | Template equivalent exists; compare body quality and update if thinner. |
 | template | vertical-slice-report | adapt | template:vertical-slice-report | implemented | Template equivalent exists; compare body quality and update if thinner. |
-| rule | ai-code | adapt | rule:ai-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | data-files | adapt | rule:data-files | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | design-docs | adapt | rule:design-docs | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | engine-code | adapt | rule:engine-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | gameplay-code | adapt | rule:gameplay-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | narrative | adapt | rule:narrative | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | network-code | adapt | rule:network-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | prototype-code | adapt | rule:prototype-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | shader-code | adapt | rule:shader-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | test-standards | adapt | rule:test-standards | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
-| rule | ui-code | adapt | rule:ui-code | todo | CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`. |
+| rule | ai-code | adapt | skill:cgs-standards-ai-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | data-files | adapt | skill:cgs-standards-data-files | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | design-docs | adapt | skill:cgs-standards-design-docs | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | engine-code | adapt | skill:cgs-standards-engine-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | gameplay-code | adapt | skill:cgs-standards-gameplay-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | narrative | adapt | skill:cgs-standards-narrative | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | network-code | adapt | skill:cgs-standards-network-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | prototype-code | adapt | skill:cgs-standards-prototype-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | shader-code | adapt | skill:cgs-standards-shader-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | test-standards | adapt | skill:cgs-standards-test-standards | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |
+| rule | ui-code | adapt | skill:cgs-standards-ui-code | implemented | CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file. |

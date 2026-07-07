@@ -1,6 +1,6 @@
 # Prompt Surface Uplift Matrix
 
-Local agents: 50; workflows: 61; skills: 79.
+Local agents: 50; workflows: 61; skills: 90.
 Upstream agents: 49; skills: 73.
 Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 
@@ -171,9 +171,20 @@ Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 | skill | `.agents/skills/cgs-soak-test/SKILL.md` | `.claude/skills/soak-test/SKILL.md` | adapt | complete | 114 | 284 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-sprint-plan/SKILL.md` | `.claude/skills/sprint-plan/SKILL.md` | adapt | complete | 112 | 281 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-sprint-status/SKILL.md` | `.claude/skills/sprint-status/SKILL.md` | adapt | complete | 112 | 208 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-ai-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-data-files/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-design-docs/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-engine-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-gameplay-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-standards-gameplay/SKILL.md` |  | defer | deferred | 98 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-narrative/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-network-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-prototype-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-standards-prototype/SKILL.md` |  | defer | deferred | 98 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-shader-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-test-standards/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-standards-tests/SKILL.md` |  | defer | deferred | 98 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-standards-ui-code/SKILL.md` |  | defer | deferred | 99 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-standards-ui/SKILL.md` |  | defer | deferred | 98 |  | 98 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-start/SKILL.md` | `.claude/skills/start/SKILL.md` | adapt | complete | 113 | 245 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-story-done/SKILL.md` | `.claude/skills/story-done/SKILL.md` | adapt | complete | 112 | 459 | 99 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |

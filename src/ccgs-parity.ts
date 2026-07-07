@@ -402,9 +402,16 @@ function rowForSource(source: CcgsAgentInventory | CcgsSkillInventory | CcgsWork
       testPath = "tests/agents-templates.test.ts";
     }
   } else {
-    cgsTarget = target("rule", source.id, "src/skills.ts", config);
+    const ruleSkillId = `cgs-standards-${source.id}`;
+    if (skillNames.has(ruleSkillId)) {
+      cgsTarget = target("skill", ruleSkillId, "src/skills.ts", config);
+      status = "implemented";
+      rationale = "CCGS coding rule intent is adapted into a Codex-native standards skill instead of copied as a Claude rule file.";
+    } else {
+      cgsTarget = target("rule", source.id, "src/skills.ts", config);
+      rationale = "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.";
+    }
     decision = "adapt";
-    rationale = "CCGS coding rule intent should become skills, AGENTS guidance, or selected context, not `.codex/rules/*.rules`.";
     ownerPath = "src/skills.ts";
     testPath = "tests/codex-context-files.test.ts";
   }
