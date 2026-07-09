@@ -1,7 +1,8 @@
 ---
 name: cgs-ux-design
 description: Use for ux design tasks that design user journeys, menus, HUD, onboarding, input states, accessibility, and localization-ready UX copy; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model_tier: terra
+model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the ux-design objective, target files/assets, constraints, and verification evidence.
 primary-agent: game-designer

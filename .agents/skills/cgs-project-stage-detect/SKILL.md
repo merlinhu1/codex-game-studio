@@ -1,7 +1,8 @@
 ---
 name: cgs-project-stage-detect
 description: Use for project stage detect tasks that detect whether the project is in concept, design, technical setup, pre-production, production, polish, or release; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4-mini
+model_tier: luna
+model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the project-stage-detect objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

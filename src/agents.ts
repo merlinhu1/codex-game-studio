@@ -5,6 +5,8 @@ import type { EngineConfigRegistry } from "./engines.js";
 import { engineReferenceProjectPath, selectedEngineReferencePrompts } from "./engine-reference.js";
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { projectRoleIdsForEngine, renderRoleContractSections, rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
+import { packageAssetPath } from "./paths.js";
+import { isModelTier, modelPolicyForTier, parseTomlCommentStringField } from "./prompt-surface-metadata.js";
 
 
 export function validateBaseAgents(): string[] {
@@ -36,6 +38,7 @@ export const projectAgentsMdRequiredSections = [
   "## Engine",
   "## Commands",
   "## Context Bootstrap",
+  "## Model Routing",
   "## Coding Conventions",
   "## Asset Conventions",
   "## Studio Roles",
@@ -78,6 +81,15 @@ Before broad inspection, use compact context helpers when available, then read o
 - \`npm run ctx:workflow -- <workflow-id>\`
 - \`npm run ctx:changed\`
 
+## Model Routing
+
+- Prompt surfaces declare an explicit \`model_tier\`; runtime enforces that declaration instead of inferring importance from names.
+- Use Sol for important, high-risk, architectural, security, release, or cross-system decisions.
+- Use Terra for routine implementation, testing, QA, documentation, and other bounded work.
+- Use Luna only for trivial, mechanical, objectively verifiable work; escalate ambiguity or failed verification to Terra.
+- Explicit user or task-tier overrides take precedence; otherwise use the selected agent or workflow tier.
+- Fixed fallbacks are Sol to GPT-5.5 at xhigh reasoning, Terra to GPT-5.4 at high reasoning, and Luna to GPT-5.4-mini at low reasoning.
+
 ## Coding Conventions
 
 - Prefer engine-native idioms.
@@ -116,10 +128,18 @@ function tomlMultiline(value: string): string {
   return `"""\n${value.replace(/"""/g, '\"\"\"')}\n"""`;
 }
 
+function trackedRoleModelPolicy(role: StudioRoleId) {
+  const body = readFileSync(packageAssetPath(`.codex/agents/${role}.toml`), "utf8");
+  const tier = parseTomlCommentStringField(body, "model_tier");
+  if (!isModelTier(tier)) throw new Error(`${role} has invalid or missing model_tier metadata`);
+  return modelPolicyForTier(tier);
+}
+
 export function renderProjectCustomAgentToml(role: StudioRoleId, config: ProjectConfig, engines: EngineConfigRegistry): string {
   const pkg = rolePackages[role];
   const engine = engines[config.project.engine];
   const sourceInput = projectRolePromptSourceInput(role, config, engines);
+  const modelPolicy = trackedRoleModelPolicy(role);
   const body = [
     `# generated-by: codex-game-studio`,
     `# surface: custom-agent`,
@@ -129,7 +149,9 @@ export function renderProjectCustomAgentToml(role: StudioRoleId, config: Project
     "",
     `name = ${tomlString(role.replace(/-/g, "_"))}`,
     `description = ${tomlString(`Game development ${pkg.displayName} agent for ${role} tasks in this repository. Use for ${pkg.responsibilities.slice(0, 2).join(", ").toLowerCase()}.`)}`,
-    `model_reasoning_effort = "medium"`,
+    `# model_tier = "${modelPolicy.tier}"`,
+    `model = "${modelPolicy.primary.model}"`,
+    `model_reasoning_effort = "${modelPolicy.primary.effort}"`,
     `developer_instructions = ${tomlMultiline([
       `You are the ${pkg.displayName} role for ${config.project.name}.`,
       `Engine: ${engine.display_name} ${config.project.engine_version}.`,
@@ -217,6 +239,7 @@ export function projectRolePromptSourceInput(role: StudioRoleId, config: Project
   }));
   return {
     role,
+    modelPolicy: trackedRoleModelPolicy(role),
     displayName: pkg.displayName,
     contextStrategy: pkg.contextStrategy,
     systemPrompt: pkg.systemPrompt,

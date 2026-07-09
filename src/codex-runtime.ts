@@ -1,12 +1,13 @@
 import { spawn, spawnSync } from "node:child_process";
 import type { CodexSandboxMode } from "./codex-session.js";
-import type { CodexModelName } from "./prompt-surface-metadata.js";
+import type { CodexModelName, ReasoningEffort } from "./prompt-surface-metadata.js";
 
 export type CodexRuntimeOptions = {
   projectRoot: string;
   sandbox?: CodexSandboxMode;
   codexBin?: string;
   model?: CodexModelName;
+  reasoningEffort?: ReasoningEffort;
 };
 
 export type CodexAvailability = {
@@ -23,6 +24,15 @@ export type CodexExecutionResult = {
   stdout: string;
   stderr: string;
   error?: Error;
+  executedModel?: CodexModelName;
+  fallbackFromModel?: CodexModelName;
+};
+
+export type CodexFallbackExecution = {
+  primary: { command: string; args: string[] };
+  fallback: { command: string; args: string[] };
+  primaryModel: CodexModelName;
+  fallbackModel: CodexModelName;
 };
 
 export function resolveCodexCommand(env: NodeJS.ProcessEnv | Record<string, string | undefined> = process.env): string {
@@ -30,7 +40,16 @@ export function resolveCodexCommand(env: NodeJS.ProcessEnv | Record<string, stri
 }
 
 export function buildCodexExecArgs(options: CodexRuntimeOptions): string[] {
-  return ["exec", ...(options.model ? ["--model", options.model] : []), "--cd", options.projectRoot, "--sandbox", options.sandbox ?? "danger-full-access", "-"];
+  return [
+    "exec",
+    ...(options.model ? ["--model", options.model] : []),
+    ...(options.reasoningEffort ? ["-c", `model_reasoning_effort=${JSON.stringify(options.reasoningEffort)}`] : []),
+    "--cd",
+    options.projectRoot,
+    "--sandbox",
+    options.sandbox ?? "danger-full-access",
+    "-"
+  ];
 }
 
 export async function checkCodexAvailability(options: { codexBin?: string } = {}): Promise<CodexAvailability> {
@@ -79,6 +98,23 @@ export async function executeCodexCommand(
     child.on("close", (status, signal) => finish({ status, signal, stdout, stderr }));
     child.stdin.end(input);
   });
+}
+
+export function isModelUnavailableResult(result: CodexExecutionResult): boolean {
+  if (!result.error && result.status === 0) return false;
+  const message = `${result.error?.message ?? ""}\n${result.stderr}\n${result.stdout}`.toLowerCase();
+  return /(?:model|access).*(?:not available|unavailable|not supported|unsupported|not found|unknown|no access|does not have access)|(?:not available|unavailable|not supported|unsupported|not found|unknown).*(?:model)/.test(message);
+}
+
+export async function executeCodexCommandWithFallback(
+  route: CodexFallbackExecution,
+  input: string,
+  options: { cwd: string; timeoutMs?: number }
+): Promise<CodexExecutionResult> {
+  const primary = await executeCodexCommand(route.primary, input, options);
+  if (!isModelUnavailableResult(primary)) return { ...primary, executedModel: route.primaryModel };
+  const fallback = await executeCodexCommand(route.fallback, input, options);
+  return { ...fallback, executedModel: route.fallbackModel, fallbackFromModel: route.primaryModel };
 }
 
 export async function executeCodexPrompt(prompt: string, options: CodexRuntimeOptions): Promise<CodexExecutionResult> {

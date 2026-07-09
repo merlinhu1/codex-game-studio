@@ -1,6 +1,7 @@
 name = "world_builder"
 description = "Owns world builder work: Define factions, places, rules, environmental storytelling hooks, collectible lore, and setting constraints that support level, narrative, and content production. Produces World bible slice, Environment hooks, Consistency constraints; hand off requests outside world builder ownership or missing verification evidence."
-model = "gpt-5.5"
+# model_tier = "terra"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/world-builder.md"

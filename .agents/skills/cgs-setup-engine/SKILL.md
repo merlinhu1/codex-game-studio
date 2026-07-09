@@ -1,7 +1,8 @@
 ---
 name: cgs-setup-engine
 description: Use for setup engine tasks that pin engine version, verify project markers, document conventions, and run engine smoke checks; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model_tier: terra
+model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the setup-engine objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

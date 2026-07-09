@@ -42,4 +42,21 @@ describe("tasks", () => {
     });
     expect(result.prepared.output).toContain("Write policy: override-write");
   });
+
+  test("task and workflow tiers follow explicit deterministic precedence", async () => {
+    const cwd = mkdtempSync(path.join(tmpdir(), "ogs-task-model-tier-"));
+    const { projectRoot } = initProject({ name: "Tiered Task Game", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
+    const workflowTask = createTask(projectRoot, { title: "Format sprint status", role: "producer", workflowId: "sprint-status" });
+    const taskOverride = createTask(projectRoot, { title: "Review sprint status", role: "producer", workflowId: "sprint-status", runPolicy: { modelTier: "terra" } });
+
+    const workflowRun = await executeTaskRun(projectRoot, workflowTask.id, { dryRun: true });
+    expect(workflowRun.prepared.selectedModelTier).toBe("luna");
+    expect(workflowRun.prepared.modelSelectionSource).toBe("explicit-tier");
+
+    const taskRun = await executeTaskRun(projectRoot, taskOverride.id, { dryRun: true });
+    expect(taskRun.prepared.selectedModelTier).toBe("terra");
+
+    const userOverride = await executeTaskRun(projectRoot, taskOverride.id, { dryRun: true, modelTier: "sol" });
+    expect(userOverride.prepared.selectedModelTier).toBe("sol");
+  });
 });

@@ -1,8 +1,8 @@
-import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { explainApprovalMismatch, normalizeApprovalScope, readApprovalStore, type ApprovalMismatchDiagnostic } from "./approvals.js";
 import { renderProjectRolePrompt } from "./agents.js";
-import { buildCodexExecArgs, executeCodexCommand, resolveCodexCommand, type CodexExecutionResult } from "./codex-runtime.js";
+import { buildCodexExecArgs, executeCodexCommandWithFallback, resolveCodexCommand, type CodexExecutionResult } from "./codex-runtime.js";
 import { renderCodexPrompt } from "./codex-prompts.js";
 import { createCodexStudioSession, type VerificationCommand } from "./codex-session.js";
 import type { ProjectConfig } from "./config.js";
@@ -11,7 +11,17 @@ import { loadEngineConfigs } from "./engines.js";
 import { engineReferenceContextRequests } from "./engine-reference.js";
 import { stripGeneratedMetadata } from "./generated-surfaces.js";
 import { renderContextContract } from "./prompt-context.js";
-import { defaultModelPolicyForId, type CodexModelName, type ReasoningEffort } from "./prompt-surface-metadata.js";
+import {
+  isModelTier,
+  modelPolicyForTier,
+  parseTomlCommentStringField,
+  resolveModelRoute,
+  type CodexModelName,
+  type ModelSelectionSource,
+  type ModelTier,
+  type ReasoningEffort,
+  type ResolvedModelRoute
+} from "./prompt-surface-metadata.js";
 import { readStudioProject, type StudioProjectState } from "./projects.js";
 import { isRoleAvailableForEngine, isStudioRoleId, unknownStudioRoleMessage, type StudioRoleId } from "./roles.js";
 import { customPhaseForRun, customTemplateIdsForRole, findCustomRole, renderCustomRolePrompt } from "./customization.js";
@@ -37,7 +47,7 @@ export type RunOptions = {
   approvedByUser?: boolean;
   constrainedSandbox?: boolean;
   noWrite?: boolean;
-  model?: CodexModelName;
+  modelTier?: ModelTier;
 };
 
 export type PreparedRun = {
@@ -50,14 +60,22 @@ export type PreparedRun = {
   contextFiles: string[];
   verification?: VerificationCommand;
   codexCommand: { command: string; args: string[]; display: string };
+  fallbackCodexCommand: { command: string; args: string[]; display: string };
   reviewCodexCommand?: { command: string; args: string[]; display: string };
+  reviewFallbackCodexCommand?: { command: string; args: string[]; display: string };
+  fixCodexCommand?: { command: string; args: string[]; display: string };
+  fixFallbackCodexCommand?: { command: string; args: string[]; display: string };
   output: string;
   reviewPrompt?: string;
   fixPrompt?: string;
   maxFixPasses: number;
   eligibility: StudioRunEligibility;
+  selectedModelTier: ModelTier;
   selectedModel: CodexModelName;
   modelReasoningEffort: ReasoningEffort;
+  fallbackModel: CodexModelName;
+  fallbackReasoningEffort: ReasoningEffort;
+  modelSelectionSource: ModelSelectionSource;
 };
 
 export type ReviewResult = {
@@ -95,13 +113,61 @@ function requireTask(task: string): string {
   return task.trim();
 }
 
-export function codexExecInvocation(projectRoot: string, codexBin = resolveCodexCommand(), sandbox: CodexSandboxMode = "danger-full-access", model?: CodexModelName): { command: string; args: string[]; display: string } {
-  const args = buildCodexExecArgs({ projectRoot, sandbox, model });
+function modelFromCommand(command: { args: string[] }): CodexModelName {
+  const index = command.args.indexOf("--model");
+  const model = index >= 0 ? command.args[index + 1] : undefined;
+  const tier = modelPolicyForTier("terra");
+  const supported = [
+    modelPolicyForTier("sol").primary.model,
+    modelPolicyForTier("sol").fallback.model,
+    tier.primary.model,
+    tier.fallback.model,
+    modelPolicyForTier("luna").primary.model,
+    modelPolicyForTier("luna").fallback.model
+  ];
+  if (!model || !supported.includes(model as CodexModelName)) throw new Error("Codex command does not contain a supported model");
+  return model as CodexModelName;
+}
+
+function roleSurfaceTier(projectRoot: string, role: StudioRoleId): ModelTier {
+  const file = path.join(projectRoot, ".codex", "agents", `${role}.toml`);
+  if (!existsSync(file)) return "terra";
+  const tier = parseTomlCommentStringField(readFileSync(file, "utf8"), "model_tier");
+  if (!isModelTier(tier)) throw new Error(`${role} has invalid or missing model_tier metadata`);
+  return tier;
+}
+
+function reviewRouteFor(route: ResolvedModelRoute): ResolvedModelRoute {
+  return { ...modelPolicyForTier(route.tier === "sol" ? "sol" : "terra"), source: "surface" };
+}
+
+function fixRouteFor(route: ResolvedModelRoute): ResolvedModelRoute {
+  return route.tier === "luna" ? { ...modelPolicyForTier("terra"), source: "verification-escalation" } : route;
+}
+
+export function codexExecInvocation(
+  projectRoot: string,
+  codexBin = resolveCodexCommand(),
+  sandbox: CodexSandboxMode = "danger-full-access",
+  model?: CodexModelName,
+  reasoningEffort?: ReasoningEffort
+): { command: string; args: string[]; display: string } {
+  const args = buildCodexExecArgs({ projectRoot, sandbox, model, reasoningEffort });
   return { command: codexBin, args, display: [codexBin, ...args.map((arg) => JSON.stringify(arg))].join(" ") };
 }
 
 export async function executeCodexPromptForRun(run: PreparedRun, prompt: string, command = run.codexCommand): Promise<CodexExecutionResult> {
-  return await executeCodexCommand(command, prompt, { cwd: run.projectRoot });
+  const isReview = command === run.reviewCodexCommand;
+  const isFix = command === run.fixCodexCommand;
+  const fallback = isReview ? run.reviewFallbackCodexCommand : isFix ? run.fixFallbackCodexCommand : run.fallbackCodexCommand;
+  if (!fallback) throw new Error("Codex fallback command is missing");
+  const primaryModel = isReview || isFix ? modelFromCommand(command) : run.selectedModel;
+  const fallbackModel = isReview || isFix ? modelFromCommand(fallback) : run.fallbackModel;
+  return await executeCodexCommandWithFallback(
+    { primary: command, fallback, primaryModel, fallbackModel },
+    prompt,
+    { cwd: run.projectRoot }
+  );
 }
 
 export async function executeCodexRun(run: PreparedRun): Promise<CodexExecutionResult> {
@@ -144,11 +210,22 @@ function configFromStudio(studio: StudioProjectState): ProjectConfig {
   };
 }
 
-function renderRuntimeContextBlock(role: StudioRoleId, studio: StudioProjectState, task: string): string {
+function renderRuntimeContextBlock(role: StudioRoleId, studio: StudioProjectState, task: string, route: ResolvedModelRoute): string {
   const projectRolePrompt = stripGeneratedMetadata(renderProjectRolePrompt(role, configFromStudio(studio), loadEngineConfigs(packageAssetPath("engine_configs"))));
   const templateBodies = renderSelectedTemplates(selectTemplates(role, task));
-  const modelPolicy = defaultModelPolicyForId(role);
-  const modelBlock = ["## Runtime Model Policy", "", `- Selected model: ${modelPolicy.model}`, `- Reasoning effort: ${modelPolicy.effort}`, `- Source surface: .codex/agents/${role}.toml`, "- Output contract: summary, changed files or proposed files, verification evidence, blockers, risks, and handoff owner when needed.", "- Stop condition: do not continue when required project state, write approval, or verification evidence is missing.", ""].join("\n");
+  const modelBlock = [
+    "## Runtime Model Policy",
+    "",
+    `- Selected tier: ${route.tier}`,
+    `- Selected model: ${route.primary.model}`,
+    `- Reasoning effort: ${route.primary.effort}`,
+    `- Designated fallback: ${route.fallback.model} (${route.fallback.effort})`,
+    `- Selection source: ${route.source}`,
+    `- Source surface: .codex/agents/${role}.toml`,
+    "- Output contract: summary, changed files or proposed files, verification evidence, blockers, risks, and handoff owner when needed.",
+    "- Stop condition: do not continue when required project state, write approval, or verification evidence is missing.",
+    ""
+  ].join("\n");
   return ["", `# Runtime Role Context: ${role}`, "", modelBlock, projectRolePrompt.trim(), templateBodies, ""].join("\n");
 }
 
@@ -255,7 +332,8 @@ function reviewFailed(review: ReviewPassResult | undefined): boolean {
 }
 
 function formatCodex(label: string, result: CodexExecutionResult): string[] {
-  const lines = [`${label}: exit=${result.status ?? "null"}${result.signal ? ` signal=${result.signal}` : ""}${result.error ? ` error=${result.error.message}` : ""}`];
+  const route = result.executedModel ? ` model=${result.executedModel}${result.fallbackFromModel ? ` fallback-from=${result.fallbackFromModel}` : ""}` : "";
+  const lines = [`${label}: exit=${result.status ?? "null"}${result.signal ? ` signal=${result.signal}` : ""}${result.error ? ` error=${result.error.message}` : ""}${route}`];
   if (result.stdout.trim()) lines.push(`${label} stdout:\n${result.stdout.trim()}`);
   if (result.stderr.trim()) lines.push(`${label} stderr:\n${result.stderr.trim()}`);
   return lines;
@@ -310,7 +388,7 @@ export async function executeRunLifecycle(run: PreparedRun): Promise<RunLifecycl
   let blocked = blockedAfter(implementation, verification, review);
   while (blocked && run.fixPrompt && fixPasses.length < run.maxFixPasses) {
     const pass = fixPasses.length + 1;
-    const fixExecution = await executeCodexPromptForRun(run, `${run.fixPrompt}\n\n# Previous run summary\n\n${output.join("\n\n")}\n`);
+    const fixExecution = await executeCodexPromptForRun(run, `${run.fixPrompt}\n\n# Previous run summary\n\n${output.join("\n\n")}\n`, run.fixCodexCommand ?? run.codexCommand);
     output.push(...formatCodex(`fix pass ${pass}`, fixExecution));
     let fixVerification: VerificationResult | undefined;
     let fixReview: ReviewPassResult | undefined;
@@ -336,6 +414,9 @@ let runSequence = 0;
 
 function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer T ? NonNullable<T> : never, options: RunOptions, cwd: string, roleInput: string, task: string, projectRoot: string): PreparedRun {
   const studio = readStudioProject(projectRoot);
+  const modelRoute = resolveModelRoute({ surfaceTier: role.modelTier, requestedTier: options.modelTier });
+  const reviewRoute = reviewRouteFor(modelRoute);
+  const fixRoute = fixRouteFor(modelRoute);
   const artifactRefs = (options.includeArtifact ?? []).map((artifact) => {
     const { full, display } = safeArtifact(projectRoot, artifact);
     return { full, display };
@@ -390,6 +471,9 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
     `Sandbox: ${eligibility.codexSandbox}`,
     `Write Policy: ${eligibility.writePolicy}`,
     `File Edits: ${eligibility.allowFileEdits ? "allowed" : "not allowed"}`,
+    `Model Tier: ${modelRoute.tier}`,
+    `Model: ${modelRoute.primary.model} (${modelRoute.primary.effort})`,
+    `Fallback: ${modelRoute.fallback.model} (${modelRoute.fallback.effort})`,
     "",
     "## Context Files",
     contextFilesForRun.length ? contextFilesForRun.map((file) => `- ${file}`).join("\n") : "- None selected",
@@ -428,7 +512,7 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
           entries: reviewSelection.entries,
           readOnlyReview: true
         })
-      })}${renderRuntimeContextBlock("qa-playtester", studio, reviewObjective)}`
+      })}${renderRuntimeContextBlock("qa-playtester", studio, reviewObjective, reviewRoute)}`
     : undefined;
   const fixContract = renderContextContract({
     session: { phase: "fix", writePolicy: eligibility.writePolicy, sandbox: eligibility.codexSandbox, allowFileEdits: eligibility.allowFileEdits },
@@ -452,6 +536,10 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
           `Sandbox: ${eligibility.codexSandbox}`,
           `Write Policy: ${eligibility.writePolicy}`,
           `File Edits: ${eligibility.allowFileEdits ? "allowed" : "not allowed"}`,
+          `Model Tier: ${fixRoute.tier}`,
+          `Model: ${fixRoute.primary.model} (${fixRoute.primary.effort})`,
+          `Fallback: ${fixRoute.fallback.model} (${fixRoute.fallback.effort})`,
+          `Selection Source: ${fixRoute.source}`,
           "",
           fixContract,
           "",
@@ -470,23 +558,30 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role.id}`);
   const promptPath = path.join(runDir, "prompt.md");
   const metadataPath = path.join(runDir, "metadata.json");
-  const modelPolicy = defaultModelPolicyForId(role.id);
-  const selectedModel = options.model ?? modelPolicy.model;
-  const modelReasoningEffort = modelPolicy.effort;
+  const selectedModelTier = modelRoute.tier;
+  const selectedModel = modelRoute.primary.model;
+  const modelReasoningEffort = modelRoute.primary.effort;
+  const fallbackModel = modelRoute.fallback.model;
+  const fallbackReasoningEffort = modelRoute.fallback.effort;
+  const modelSelectionSource = modelRoute.source;
   if (!options.printPrompt && !options.dryRun && !options.noWrite) {
     mkdirSync(runDir, { recursive: true });
     writeFileSync(promptPath, prompt);
     writeFileSync(
       metadataPath,
-      `${JSON.stringify({ timestamp: new Date().toISOString(), product: "codex-game-studio", project: path.relative(cwd, projectRoot) || ".", role: role.id, task, customRole: true, prompt_chars: prompt.length, prompt_cache_path: path.relative(cwd, promptPath), selectedModel, modelReasoningEffort, review: Boolean(reviewPrompt), fix: Boolean(fixPrompt), max_fix_passes: maxFixPasses, writePolicy: eligibility.writePolicy, allowFileEdits: eligibility.allowFileEdits, codexSandbox: eligibility.codexSandbox, eligibility }, null, 2)}\n`
+      `${JSON.stringify({ timestamp: new Date().toISOString(), product: "codex-game-studio", project: path.relative(cwd, projectRoot) || ".", role: role.id, task, customRole: true, prompt_chars: prompt.length, prompt_cache_path: path.relative(cwd, promptPath), selectedModelTier, selectedModel, modelReasoningEffort, fallbackModel, fallbackReasoningEffort, modelSelectionSource, review: Boolean(reviewPrompt), fix: Boolean(fixPrompt), max_fix_passes: maxFixPasses, writePolicy: eligibility.writePolicy, allowFileEdits: eligibility.allowFileEdits, codexSandbox: eligibility.codexSandbox, eligibility }, null, 2)}\n`
     );
   }
   const codexBin = options.codexBin ?? resolveCodexCommand();
-  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, selectedModel);
-  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only", "gpt-5.4") : undefined;
+  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, selectedModel, modelReasoningEffort);
+  const fallbackCodexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, fallbackModel, fallbackReasoningEffort);
+  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only", reviewRoute.primary.model, reviewRoute.primary.effort) : undefined;
+  const reviewFallbackCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only", reviewRoute.fallback.model, reviewRoute.fallback.effort) : undefined;
+  const fixCodexCommand = fixPrompt ? codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, fixRoute.primary.model, fixRoute.primary.effort) : undefined;
+  const fixFallbackCodexCommand = fixPrompt ? codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, fixRoute.fallback.model, fixRoute.fallback.effort) : undefined;
   const dryRunExtra = [
-    reviewPrompt ? `\n\nReview Codex command: ${reviewCodexCommand?.display}\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
-    fixPrompt ? `\n\nFix prompt (max passes: ${maxFixPasses}):\n${fixPrompt}` : ""
+    reviewPrompt ? `\n\nReview Codex command: ${reviewCodexCommand?.display}\nReview fallback: ${reviewFallbackCodexCommand?.display}\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
+    fixPrompt ? `\n\nFix Codex command: ${fixCodexCommand?.display}\nFix fallback: ${fixFallbackCodexCommand?.display}\nFix prompt (max passes: ${maxFixPasses}):\n${fixPrompt}` : ""
   ].join("");
   const approvalDiagnostic =
     options.dryRun && studio.studioMode !== "fast-prototype"
@@ -495,12 +590,13 @@ function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer 
           { projectStage: studio.mode, studioMode: studio.studioMode, approvalScopes }
         )
       : "";
+  const modelSummary = `Selected tier: ${selectedModelTier}\nSelected model: ${selectedModel} (${modelReasoningEffort})\nFallback model: ${fallbackModel} (${fallbackReasoningEffort})\nSelection source: ${modelSelectionSource}`;
   const output = options.printPrompt
     ? prompt
     : options.dryRun
-      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\nSelected model: ${selectedModel} (${modelReasoningEffort})\n${formatEligibility(eligibility)}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
-      : `Prompt cache written: ${promptPath}\nSelected model: ${selectedModel} (${modelReasoningEffort})\n${formatEligibility(eligibility)}\nExecuting Codex: ${codexCommand.display}`;
-  return { prompt, promptPath, metadataPath, projectRoot, role: roleInput, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility, selectedModel, modelReasoningEffort };
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${modelSummary}\n${formatEligibility(eligibility)}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}\nFallback command: ${fallbackCodexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
+      : `Prompt cache written: ${promptPath}\n${modelSummary}\n${formatEligibility(eligibility)}\nExecuting Codex: ${codexCommand.display}`;
+  return { prompt, promptPath, metadataPath, projectRoot, role: roleInput, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, fallbackCodexCommand, reviewCodexCommand, reviewFallbackCodexCommand, fixCodexCommand, fixFallbackCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility, selectedModelTier, selectedModel, modelReasoningEffort, fallbackModel, fallbackReasoningEffort, modelSelectionSource };
 }
 
 export function prepareRun(roleInput: string, options: RunOptions, cwd = process.cwd()): PreparedRun {
@@ -511,6 +607,9 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   if (!isStudioRoleId(roleInput)) throw new Error(unknownStudioRoleMessage(roleInput));
   const role = roleInput as StudioRoleId;
   const studio = readStudioProject(projectRoot);
+  const modelRoute = resolveModelRoute({ surfaceTier: roleSurfaceTier(projectRoot, role), requestedTier: options.modelTier });
+  const reviewRoute = reviewRouteFor(modelRoute);
+  const fixRoute = fixRouteFor(modelRoute);
   if (!isRoleAvailableForEngine(role, studio.engine)) {
     throw new Error(`${role} is not available for ${studio.engine} projects; use one of ${studio.roles.join(", ")} for this project.`);
   }
@@ -569,7 +668,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
     writePolicy: eligibility.writePolicy,
     eligibility
   });
-  const runtimeContextBlock = renderRuntimeContextBlock(role, studio, task);
+  const runtimeContextBlock = renderRuntimeContextBlock(role, studio, task, modelRoute);
   const prompt = `${renderCodexPrompt({
     ...session,
     contextContract: renderContextContract({
@@ -609,7 +708,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
           entries: reviewSelection.entries,
           readOnlyReview: true
         })
-      })}${renderRuntimeContextBlock("qa-playtester", studio, reviewObjective)}`
+      })}${renderRuntimeContextBlock("qa-playtester", studio, reviewObjective, reviewRoute)}`
     : undefined;
   const fixSession = createCodexStudioSession({
     projectRoot,
@@ -636,15 +735,18 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
             entries: contextSelection.entries,
             blockers: ["Review and verification blockers will be supplied at execution time."]
           })
-        })}${runtimeContextBlock}`
+        })}${renderRuntimeContextBlock(role, studio, task, fixRoute)}`
       : undefined;
   const runId = `${new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 17)}-${process.pid}-${++runSequence}`;
   const runDir = path.join(projectRoot, ".codex", "runs", `${runId}-${role}`);
   const promptPath = path.join(runDir, "prompt.md");
   const metadataPath = path.join(runDir, "metadata.json");
-  const modelPolicy = defaultModelPolicyForId(role);
-  const selectedModel = options.model ?? modelPolicy.model;
-  const modelReasoningEffort = modelPolicy.effort;
+  const selectedModelTier = modelRoute.tier;
+  const selectedModel = modelRoute.primary.model;
+  const modelReasoningEffort = modelRoute.primary.effort;
+  const fallbackModel = modelRoute.fallback.model;
+  const fallbackReasoningEffort = modelRoute.fallback.effort;
+  const modelSelectionSource = modelRoute.source;
   if (!options.printPrompt && !options.dryRun && !options.noWrite) {
     mkdirSync(runDir, { recursive: true });
     writeFileSync(promptPath, prompt);
@@ -659,8 +761,12 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
           task,
           prompt_chars: prompt.length,
           prompt_cache_path: path.relative(cwd, promptPath),
+          selectedModelTier,
           selectedModel,
           modelReasoningEffort,
+          fallbackModel,
+          fallbackReasoningEffort,
+          modelSelectionSource,
           review: Boolean(reviewPrompt),
           fix: Boolean(fixPrompt),
           max_fix_passes: maxFixPasses,
@@ -675,11 +781,15 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
     );
   }
   const codexBin = options.codexBin ?? resolveCodexCommand();
-  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, selectedModel);
-  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only", "gpt-5.4") : undefined;
+  const codexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, selectedModel, modelReasoningEffort);
+  const fallbackCodexCommand = codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, fallbackModel, fallbackReasoningEffort);
+  const reviewCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only", reviewRoute.primary.model, reviewRoute.primary.effort) : undefined;
+  const reviewFallbackCodexCommand = reviewPrompt ? codexExecInvocation(projectRoot, codexBin, "read-only", reviewRoute.fallback.model, reviewRoute.fallback.effort) : undefined;
+  const fixCodexCommand = fixPrompt ? codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, fixRoute.primary.model, fixRoute.primary.effort) : undefined;
+  const fixFallbackCodexCommand = fixPrompt ? codexExecInvocation(projectRoot, codexBin, eligibility.codexSandbox, fixRoute.fallback.model, fixRoute.fallback.effort) : undefined;
   const dryRunExtra = [
-    reviewPrompt ? `\n\nReview Codex command: ${reviewCodexCommand?.display}\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
-    fixPrompt ? `\n\nFix prompt (max passes: ${maxFixPasses}):\n${fixPrompt}` : ""
+    reviewPrompt ? `\n\nReview Codex command: ${reviewCodexCommand?.display}\nReview fallback: ${reviewFallbackCodexCommand?.display}\n\nReview prompt:\n${reviewPrompt}\n\nExpected review JSON schema: {"blockers":[],"warnings":[],"summary":"","needsFix":false}` : "",
+    fixPrompt ? `\n\nFix Codex command: ${fixCodexCommand?.display}\nFix fallback: ${fixFallbackCodexCommand?.display}\nFix prompt (max passes: ${maxFixPasses}):\n${fixPrompt}` : ""
   ].join("");
   const approvalDiagnostic =
     options.dryRun && studio.studioMode !== "fast-prototype"
@@ -690,10 +800,11 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
       : "";
   const eligibilitySummary = formatEligibility(eligibility);
   const nativeSurfaceSummary = [`Codex custom agent: .codex/agents/${role}.toml`, "Relevant skills:", "- .agents/skills/cgs-standards-gameplay/SKILL.md", "- .agents/skills/cgs-bugfix/SKILL.md"].join("\n");
+  const modelSummary = `Selected tier: ${selectedModelTier}\nSelected model: ${selectedModel} (${modelReasoningEffort})\nFallback model: ${fallbackModel} (${fallbackReasoningEffort})\nSelection source: ${modelSelectionSource}`;
   const output = options.printPrompt
     ? prompt
     : options.dryRun
-      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\nSelected model: ${selectedModel} (${modelReasoningEffort})\n${eligibilitySummary}\n${nativeSurfaceSummary}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
-      : `Prompt cache written: ${promptPath}\nSelected model: ${selectedModel} (${modelReasoningEffort})\n${eligibilitySummary}\nExecuting Codex: ${codexCommand.display}`;
-  return { prompt, promptPath, metadataPath, projectRoot, role, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, reviewCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility, selectedModel, modelReasoningEffort };
+      ? `Prompt cache (not written): ${promptPath}\nMetadata (not written): ${metadataPath}\n${modelSummary}\n${eligibilitySummary}\n${nativeSurfaceSummary}\nContext files:\n${contextFilesForRun.map((f) => `- ${f}`).join("\n")}\nCodex command: ${codexCommand.display}\nFallback command: ${fallbackCodexCommand.display}${approvalDiagnostic ? `\n\n${approvalDiagnostic}` : ""}${dryRunExtra}`
+      : `Prompt cache written: ${promptPath}\n${modelSummary}\n${eligibilitySummary}\nExecuting Codex: ${codexCommand.display}`;
+  return { prompt, promptPath, metadataPath, projectRoot, role, task, contextFiles: contextFilesForRun, verification: options.verifyCommand, codexCommand, fallbackCodexCommand, reviewCodexCommand, reviewFallbackCodexCommand, fixCodexCommand, fixFallbackCodexCommand, output, reviewPrompt, fixPrompt, maxFixPasses, eligibility, selectedModelTier, selectedModel, modelReasoningEffort, fallbackModel, fallbackReasoningEffort, modelSelectionSource };
 }

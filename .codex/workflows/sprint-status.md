@@ -1,5 +1,6 @@
 ---
-model: gpt-5.4-mini
+model_tier: luna
+model: gpt-5.6-luna
 model_reasoning_effort: low
 primary-agent: studio-orchestrator
 linked-skills: [cgs-sprint-status, cgs-vertical-slice]

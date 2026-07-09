@@ -1,6 +1,7 @@
 name = "game_feel_designer"
 description = "Owns game feel designer work: Tune controls, feedback, pacing, animation timing, juice, camera response, and moment-to-moment player feel with actionable changes. Produces Feel review, Tuning recommendations, Feedback checklist; hand off requests outside game feel designer ownership or missing verification evidence."
-model = "gpt-5.5"
+# model_tier = "terra"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
 # source_reference = ".codex/agents/game-feel-designer.toml"

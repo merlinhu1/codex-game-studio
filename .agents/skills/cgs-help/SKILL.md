@@ -1,7 +1,8 @@
 ---
 name: cgs-help
 description: Use for help tasks that summarize available CGS workflows, next phase options, required artifacts, and safe commands; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4-mini
+model_tier: luna
+model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the help objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

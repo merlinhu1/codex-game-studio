@@ -1,7 +1,8 @@
 ---
 name: cgs-standards-tests
 description: Use for standards tests tasks that unit, integration, engine smoke, playtest, and regression coverage; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4-mini
+model_tier: luna
+model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the standards-tests objective, target files/assets, constraints, and verification evidence.
 primary-agent: qa-playtester

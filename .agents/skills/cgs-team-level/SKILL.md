@@ -1,7 +1,8 @@
 ---
 name: cgs-team-level
 description: Use for team level tasks that coordinate level design, blockout, art, scripting, lighting, optimization, and playtest handoffs; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model_tier: terra
+model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the team-level objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

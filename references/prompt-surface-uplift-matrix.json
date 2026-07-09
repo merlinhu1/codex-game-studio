@@ -34,10 +34,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 150,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -68,10 +69,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 82,
+      "lineCount": 83,
       "upstreamLineCount": 95,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -104,10 +106,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 118,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -139,10 +142,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 157,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -179,10 +183,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 90,
+      "lineCount": 91,
       "upstreamLineCount": 364,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -207,9 +212,10 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 90,
+      "lineCount": 91,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -240,10 +246,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 82,
+      "lineCount": 83,
       "upstreamLineCount": 95,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -276,10 +283,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 143,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -310,10 +318,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 82,
+      "lineCount": 83,
       "upstreamLineCount": 103,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -351,10 +360,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 90,
+      "lineCount": 91,
       "upstreamLineCount": 241,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -379,9 +389,10 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -412,10 +423,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 133,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -446,10 +458,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 407,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -480,10 +493,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 317,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -514,10 +528,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 272,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -548,10 +563,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 265,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -582,10 +598,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 193,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -618,10 +635,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 115,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -653,10 +671,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 184,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -688,10 +707,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 190,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -716,9 +736,10 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -743,9 +764,10 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 89,
+      "lineCount": 90,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -776,10 +798,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 82,
+      "lineCount": 83,
       "upstreamLineCount": 98,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -811,10 +834,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 90,
+      "lineCount": 91,
       "upstreamLineCount": 112,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -852,10 +876,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 93,
+      "lineCount": 94,
       "upstreamLineCount": 168,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -880,9 +905,10 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 95,
+      "lineCount": 96,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -918,10 +944,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 93,
+      "lineCount": 94,
       "upstreamLineCount": 180,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -952,10 +979,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 126,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -980,9 +1008,10 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 90,
+      "lineCount": 91,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1007,9 +1036,10 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1041,10 +1071,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 85,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1069,9 +1100,10 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1104,10 +1136,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 90,
+      "lineCount": 91,
       "upstreamLineCount": 157,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1138,10 +1171,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 82,
+      "lineCount": 83,
       "upstreamLineCount": 108,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1173,10 +1207,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 90,
+      "lineCount": 91,
       "upstreamLineCount": 159,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1207,10 +1242,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 82,
+      "lineCount": 83,
       "upstreamLineCount": 101,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1242,10 +1278,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 151,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1276,10 +1313,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 133,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1310,10 +1348,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 143,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1344,10 +1383,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 150,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1378,10 +1418,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 82,
+      "lineCount": 83,
       "upstreamLineCount": 102,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1406,9 +1447,10 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 90,
+      "lineCount": 91,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1439,10 +1481,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 165,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1473,10 +1516,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 148,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1507,10 +1551,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 178,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1541,10 +1586,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 184,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1575,10 +1621,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 94,
+      "lineCount": 95,
       "upstreamLineCount": 217,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1609,10 +1656,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 172,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1645,10 +1693,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 111,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1681,10 +1730,11 @@
         "tests/roles.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 104,
       "depthScore": 50,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "sourceReference": true,
@@ -1709,9 +1759,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1737,9 +1788,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1765,9 +1817,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1793,9 +1846,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1821,9 +1875,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1849,9 +1904,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1877,9 +1933,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1905,9 +1962,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1933,9 +1991,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1961,9 +2020,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -1989,9 +2049,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2017,9 +2078,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2045,9 +2107,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2073,9 +2136,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2101,9 +2165,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 86,
+      "lineCount": 87,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2129,9 +2194,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2157,9 +2223,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2185,9 +2252,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 86,
+      "lineCount": 87,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2213,9 +2281,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2241,9 +2310,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2269,9 +2339,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2297,9 +2368,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2325,9 +2397,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2353,9 +2426,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2381,9 +2455,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2409,9 +2484,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2437,9 +2513,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2465,9 +2542,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2493,9 +2571,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2521,9 +2600,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2549,9 +2629,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2577,9 +2658,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2605,9 +2687,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2633,9 +2716,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2661,9 +2745,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 87,
+      "lineCount": 88,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2689,9 +2774,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2717,9 +2803,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2745,9 +2832,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2773,9 +2861,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2801,9 +2890,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2829,9 +2919,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2857,9 +2948,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2885,9 +2977,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2913,9 +3006,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2941,9 +3035,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2969,9 +3064,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -2997,9 +3093,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3025,9 +3122,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3053,9 +3151,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3081,9 +3180,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3109,9 +3209,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3137,9 +3238,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3165,9 +3267,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3193,9 +3296,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3221,9 +3325,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3249,9 +3354,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3277,9 +3383,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3305,9 +3412,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3333,9 +3441,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3361,9 +3470,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 84,
+      "lineCount": 85,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3389,9 +3499,10 @@
         "tests/workflow-recipes.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 85,
+      "lineCount": 86,
       "depthScore": 56,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3424,10 +3535,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 443,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3459,10 +3571,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "upstreamLineCount": 456,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3495,10 +3608,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "upstreamLineCount": 665,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3530,10 +3644,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 249,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3565,10 +3680,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 95,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3600,10 +3716,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 352,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3636,10 +3753,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 123,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3671,10 +3789,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "upstreamLineCount": 359,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3706,10 +3825,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 164,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3741,10 +3861,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 244,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3769,9 +3890,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3803,10 +3925,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 177,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3839,10 +3962,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 185,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3874,10 +3998,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 308,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3910,10 +4035,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 205,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3946,10 +4072,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 468,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -3982,10 +4109,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 288,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4018,10 +4146,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "upstreamLineCount": 245,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4054,10 +4183,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "upstreamLineCount": 333,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4089,10 +4219,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 226,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4124,10 +4255,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 268,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4159,10 +4291,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 871,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4194,10 +4327,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 325,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4229,10 +4363,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 132,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4264,10 +4399,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 542,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4299,10 +4435,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 228,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4334,10 +4471,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 180,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4369,10 +4507,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 240,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4405,10 +4544,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 441,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4440,10 +4580,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 364,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4475,10 +4616,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 156,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4510,10 +4652,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 96,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4546,10 +4689,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 186,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4582,10 +4726,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 126,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4617,10 +4762,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 147,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4652,10 +4798,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 195,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4688,10 +4835,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 239,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4725,10 +4873,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 579,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4761,10 +4910,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 278,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4796,10 +4946,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 295,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4831,10 +4982,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 81,
+      "lineCount": 82,
       "upstreamLineCount": 256,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4866,10 +5018,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 182,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4901,10 +5054,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 221,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4936,10 +5090,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 263,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -4971,10 +5126,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 639,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5006,10 +5162,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 128,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5042,10 +5199,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 245,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5077,10 +5235,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 716,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5112,10 +5271,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 145,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5147,10 +5307,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 357,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5182,10 +5343,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 422,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5217,10 +5379,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 284,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5252,10 +5415,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "upstreamLineCount": 281,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5287,10 +5451,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "upstreamLineCount": 208,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5315,9 +5480,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5342,9 +5508,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5369,9 +5536,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5396,9 +5564,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5423,9 +5592,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5450,9 +5620,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5477,9 +5648,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5504,9 +5676,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5531,9 +5704,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5558,9 +5732,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5585,9 +5760,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5612,9 +5788,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5639,9 +5816,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5666,9 +5844,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5693,9 +5872,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 64,
+      "lineCount": 65,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5727,10 +5907,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 245,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5762,10 +5943,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "upstreamLineCount": 459,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5797,10 +5979,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "upstreamLineCount": 355,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5832,10 +6015,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 145,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5867,10 +6051,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 143,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5902,10 +6087,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 194,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5937,10 +6123,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 159,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -5972,10 +6159,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 126,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6007,10 +6195,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 140,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6043,10 +6232,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 244,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6078,10 +6268,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 168,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6113,10 +6304,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 186,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6148,10 +6340,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 79,
+      "lineCount": 80,
       "upstreamLineCount": 140,
-      "depthScore": 67,
+      "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6183,10 +6376,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 251,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6218,10 +6412,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 211,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6253,10 +6448,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 395,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6288,10 +6484,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 80,
+      "lineCount": 81,
       "upstreamLineCount": 426,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6316,9 +6513,10 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 78,
+      "lineCount": 79,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6351,10 +6549,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 989,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6387,10 +6586,11 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 77,
+      "lineCount": 78,
       "upstreamLineCount": 263,
       "depthScore": 67,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,
@@ -6428,6 +6628,7 @@
       "upstreamLineCount": 359,
       "depthScore": 68,
       "metadata": {
+        "tier": true,
         "model": true,
         "reasoning": true,
         "argumentHint": true,

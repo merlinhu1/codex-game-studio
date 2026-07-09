@@ -1,6 +1,7 @@
 name = "gameplay_programmer"
 description = "Owns gameplay programmer work: Implement gameplay systems with focused file edits, engine-native idioms, deterministic behavior, and verification evidence. Produces Code changes, Verification results, Implementation notes; hand off requests outside gameplay programmer ownership or missing verification evidence."
-model = "gpt-5.5"
+# model_tier = "terra"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/gameplay-programmer.md"

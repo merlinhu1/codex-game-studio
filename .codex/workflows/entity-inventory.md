@@ -1,6 +1,7 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model_tier: luna
+model: gpt-5.6-luna
+model_reasoning_effort: low
 primary-agent: systems-designer
 linked-skills: [cgs-map-systems, cgs-design-system]
 phase: plan

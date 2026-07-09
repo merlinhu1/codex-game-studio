@@ -1,5 +1,6 @@
 ---
-model: gpt-5.5
+model_tier: terra
+model: gpt-5.6-terra
 model_reasoning_effort: high
 primary-agent: gameplay-programmer
 linked-skills: [cgs-dev-story, cgs-standards-gameplay]

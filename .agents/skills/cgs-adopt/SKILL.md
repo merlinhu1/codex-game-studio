@@ -1,7 +1,8 @@
 ---
 name: cgs-adopt
 description: Use for adopt tasks that inventory existing source, assets, docs, and tests before mapping work into CGS structure; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model_tier: terra
+model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the adopt objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

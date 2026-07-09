@@ -1,7 +1,8 @@
 ---
 name: cgs-standards-prototype
 description: Use for standards prototype tasks that fast experiments with explicit hypotheses, throwaway boundaries, and graduation criteria; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4-mini
+model_tier: luna
+model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the standards-prototype objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

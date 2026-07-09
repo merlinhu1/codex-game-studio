@@ -1,8 +1,9 @@
 ---
 name: cgs-review-all-gdds
 description: Use for review all gdds tasks that cross-check all GDDs for consistency, missing systems, dependency conflicts, and production readiness; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
-model_reasoning_effort: high
+model_tier: sol
+model: gpt-5.6-sol
+model_reasoning_effort: xhigh
 argument-hint: Describe the review-all-gdds objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

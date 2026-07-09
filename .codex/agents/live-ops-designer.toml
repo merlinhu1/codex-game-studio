@@ -1,6 +1,7 @@
 name = "live_ops_designer"
 description = "Owns live ops designer work: Design live events, retention loops, update cadence, economy impacts, player messaging, operational risks, and post-launch measurement plans. Produces Live ops plan, Event loop notes, Measurement and risk summary; hand off requests outside live ops designer ownership or missing verification evidence."
-model = "gpt-5.5"
+# model_tier = "terra"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/live-ops-designer.md"

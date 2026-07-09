@@ -1,8 +1,9 @@
 ---
 name: cgs-story-done
 description: Use for story done tasks that check if a story is complete with changed files, tests, acceptance evidence, and handoff notes; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4
-model_reasoning_effort: medium
+model_tier: terra
+model: gpt-5.6-terra
+model_reasoning_effort: high
 argument-hint: Describe the story-done objective, target files/assets, constraints, and verification evidence.
 primary-agent: gameplay-programmer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

@@ -1,7 +1,8 @@
 ---
 name: cgs-retrospective
 description: Use for retrospective tasks that facilitate a retrospective with what worked, what failed, root causes, actions, and owner follow-up; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model_tier: terra
+model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the retrospective objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

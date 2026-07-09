@@ -3,7 +3,6 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  defaultModelPolicyForId,
   parsePromptSurfaceFrontmatter,
   parseTomlCommentArrayField,
   parseTomlCommentStringField,
@@ -96,6 +95,7 @@ function captureSourceMetadata(body: string): Record<string, string | string[] |
 function markdownMetadata(body: string): Record<string, boolean> {
   const parsed = parsePromptSurfaceFrontmatter(body).frontmatter;
   return {
+    tier: typeof parsed.model_tier === "string",
     model: typeof parsed.model === "string",
     reasoning: typeof parsed.model_reasoning_effort === "string" || typeof parsed["model-reasoning-effort"] === "string",
     argumentHint: typeof parsed["argument-hint"] === "string",
@@ -108,6 +108,7 @@ function markdownMetadata(body: string): Record<string, boolean> {
 
 function tomlMetadata(body: string): Record<string, boolean> {
   return {
+    tier: !!parseTomlCommentStringField(body, "model_tier"),
     model: !!parseTomlStringField(body, "model"),
     reasoning: !!parseTomlStringField(body, "model_reasoning_effort"),
     sourceReference: !!parseTomlCommentStringField(body, "source_reference"),
@@ -139,7 +140,7 @@ function requiredTestsFor(type: SurfaceRow["sourceType"]): string[] {
 
 function statusFor(source: string | undefined, depthScore: number, metadata: Record<string, boolean>): SurfaceRow["status"] {
   if (!source) return "deferred";
-  return depthScore >= 50 && metadata.model && metadata.sourceHash ? "complete" : "needs-uplift";
+  return depthScore >= 50 && metadata.tier && metadata.model && metadata.sourceHash ? "complete" : "needs-uplift";
 }
 
 function rowFor(type: SurfaceRow["sourceType"], file: string): SurfaceRow {
@@ -148,9 +149,7 @@ function rowFor(type: SurfaceRow["sourceType"], file: string): SurfaceRow {
   const source = type === "agent" ? upstreamAgentFor(localPath) : type === "skill" ? upstreamSkillFor(localPath) : undefined;
   const sourceBody = source ? readFileSync(source, "utf8") : undefined;
   const id = type === "skill" ? localPath.split("/")[2].replace(/^cgs-/, "") : path.basename(localPath).replace(/\.(toml|md)$/, "");
-  const defaultPolicy = defaultModelPolicyForId(id);
   const metadata = type === "agent" ? tomlMetadata(body) : markdownMetadata(body);
-  if (!metadata.model && defaultPolicy.model) metadata.model = false;
   const depthScore = depthScoreFor(body);
   return {
     sourceType: type,
@@ -190,9 +189,9 @@ function writeReports(report: AuditReport): void {
     `Upstream agents: ${report.upstream.agents}; skills: ${report.upstream.skills}.`,
     `Decisions: ${report.decisionLegend.join(", ")}.`,
     "",
-    "| Type | Local path | Upstream source | Decision | Status | Lines | Upstream lines | Score | Model metadata | Discovery metadata | Required tests |",
+    "| Type | Local path | Upstream source | Decision | Status | Lines | Upstream lines | Score | Tier/model metadata | Discovery metadata | Required tests |",
     "| --- | --- | --- | --- | --- | ---: | ---: | ---: | --- | --- | --- |",
-    ...report.rows.map((row) => `| ${row.sourceType} | \`${row.localPath}\` | ${row.sourcePath ? `\`${row.sourcePath}\`` : ""} | ${row.decision} | ${row.status} | ${row.lineCount} | ${row.upstreamLineCount ?? ""} | ${row.depthScore} | ${row.metadata.model ? "yes" : "no"} | ${row.discoveryMetadata.valid ? "pass" : row.discoveryMetadata.diagnostics.map((diagnostic) => diagnostic.id).join("<br>")} | ${row.requiredTests.map((test) => `\`${test}\``).join("<br>")} |`),
+    ...report.rows.map((row) => `| ${row.sourceType} | \`${row.localPath}\` | ${row.sourcePath ? `\`${row.sourcePath}\`` : ""} | ${row.decision} | ${row.status} | ${row.lineCount} | ${row.upstreamLineCount ?? ""} | ${row.depthScore} | ${row.metadata.tier && row.metadata.model ? "yes" : "no"} | ${row.discoveryMetadata.valid ? "pass" : row.discoveryMetadata.diagnostics.map((diagnostic) => diagnostic.id).join("<br>")} | ${row.requiredTests.map((test) => `\`${test}\``).join("<br>")} |`),
     ""
   ];
   writeFileSync(path.join(refDir, "prompt-surface-uplift-matrix.md"), lines.join("\n"));

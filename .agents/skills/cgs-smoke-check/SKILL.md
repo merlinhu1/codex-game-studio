@@ -1,7 +1,8 @@
 ---
 name: cgs-smoke-check
 description: Use for smoke check tasks that run the fastest useful checks proving the project opens, builds, starts, and reaches a basic playable state; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4-mini
+model_tier: luna
+model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the smoke-check objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

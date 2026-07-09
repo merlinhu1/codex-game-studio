@@ -1,7 +1,8 @@
 ---
 name: cgs-skill-improve
 description: Use for skill improve tasks that improve a skill after observed failures while preserving trigger, procedure, validation, and handoff clarity; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model_tier: terra
+model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the skill-improve objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

@@ -1,6 +1,7 @@
 ---
-model: gpt-5.4
-model_reasoning_effort: medium
+model_tier: terra
+model: gpt-5.6-terra
+model_reasoning_effort: high
 primary-agent: qa-playtester
 linked-skills: [cgs-qa-plan, cgs-bugfix]
 phase: plan

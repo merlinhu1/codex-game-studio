@@ -1,8 +1,9 @@
 ---
 name: cgs-team-qa
 description: Use for team qa tasks that coordinate QA coverage, bug triage, regression, platform checks, and release evidence; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4
-model_reasoning_effort: medium
+model_tier: terra
+model: gpt-5.6-terra
+model_reasoning_effort: high
 argument-hint: Describe the team-qa objective, target files/assets, constraints, and verification evidence.
 primary-agent: qa-playtester
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

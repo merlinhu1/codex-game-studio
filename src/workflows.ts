@@ -11,7 +11,7 @@ import { evaluateStudioRunEligibility } from "./studio-policy.js";
 import { engineReferenceContextRequests } from "./engine-reference.js";
 import { renderSelectedTemplates, type TemplateId } from "./templates.js";
 import { findCustomRole, findCustomWorkflow, projectRelativePath, renderCustomRolePrompt, type CustomWorkflowDefinition } from "./customization.js";
-import { defaultModelPolicyForId, type CodexModelName, type ReasoningEffort } from "./prompt-surface-metadata.js";
+import { modelPolicyForTier, type CodexModelName, type ModelTier, type ReasoningEffort } from "./prompt-surface-metadata.js";
 
 export type WorkflowCategory =
   | "onboarding-discovery"
@@ -97,6 +97,7 @@ export type WorkflowDefinition = {
   templateIds?: TemplateId[];
   cliAlias?: string;
   cliAliases?: string[];
+  modelTier: ModelTier;
   model: CodexModelName;
   modelReasoningEffort: ReasoningEffort;
 };
@@ -106,19 +107,20 @@ type WorkflowInput = Omit<WorkflowDefinition, "file" | "contextFiles" | "model" 
 };
 
 function workflow(input: WorkflowInput): WorkflowDefinition {
-  const modelPolicy = defaultModelPolicyForId(input.id);
+  const modelPolicy = modelPolicyForTier(input.modelTier);
   return {
     ...input,
     file: `.codex/workflows/${input.id}.md`,
     contextFiles: ["AGENTS.md", ".codex/studio.json", `.codex/workflows/${input.id}.md`, ...(input.extraContextFiles ?? [])],
-    model: modelPolicy.model,
-    modelReasoningEffort: modelPolicy.effort
+    model: modelPolicy.primary.model,
+    modelReasoningEffort: modelPolicy.primary.effort
   };
 }
 
 export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   "vertical-slice": workflow({
     id: "vertical-slice",
+    modelTier: "sol",
     role: "producer",
     phase: "plan",
     category: "implementation-planning",
@@ -128,6 +130,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   bugfix: workflow({
     id: "bugfix",
+    modelTier: "terra",
     role: "gameplay-programmer",
     phase: "implement",
     category: "release-hotfix",
@@ -136,6 +139,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   playtest: workflow({
     id: "playtest",
+    modelTier: "terra",
     role: "qa-playtester",
     phase: "review",
     category: "qa-testing",
@@ -145,6 +149,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "market-analysis": workflow({
     id: "market-analysis",
+    modelTier: "terra",
     role: "market-analyst",
     phase: "plan",
     category: "onboarding-discovery",
@@ -156,6 +161,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "analytics-setup": workflow({
     id: "analytics-setup",
+    modelTier: "terra",
     role: "data-scientist",
     phase: "plan",
     category: "onboarding-discovery",
@@ -166,6 +172,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "engine-setup": workflow({
     id: "engine-setup",
+    modelTier: "terra",
     role: "technical-director",
     phase: "plan",
     category: "onboarding-discovery",
@@ -176,6 +183,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "game-concept": workflow({
     id: "game-concept",
+    modelTier: "sol",
     role: "creative-director",
     phase: "plan",
     category: "onboarding-discovery",
@@ -186,6 +194,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "design-review-concept": workflow({
     id: "design-review-concept",
+    modelTier: "sol",
     role: "senior-game-designer",
     phase: "review",
     category: "design-architecture",
@@ -197,6 +206,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "art-bible": workflow({
     id: "art-bible",
+    modelTier: "terra",
     role: "senior-game-artist",
     phase: "plan",
     category: "design-architecture",
@@ -207,6 +217,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "map-systems": workflow({
     id: "map-systems",
+    modelTier: "terra",
     role: "systems-designer",
     phase: "plan",
     category: "design-architecture",
@@ -218,6 +229,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "design-system": workflow({
     id: "design-system",
+    modelTier: "sol",
     role: "systems-designer",
     phase: "plan",
     category: "design-architecture",
@@ -229,6 +241,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "design-review": workflow({
     id: "design-review",
+    modelTier: "sol",
     role: "senior-game-designer",
     phase: "review",
     category: "design-architecture",
@@ -240,6 +253,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "review-all-gdds": workflow({
     id: "review-all-gdds",
+    modelTier: "sol",
     role: "senior-game-designer",
     phase: "review",
     category: "design-architecture",
@@ -251,6 +265,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "consistency-check": workflow({
     id: "consistency-check",
+    modelTier: "luna",
     role: "studio-orchestrator",
     phase: "review",
     category: "team-coordination",
@@ -262,6 +277,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "create-architecture": workflow({
     id: "create-architecture",
+    modelTier: "sol",
     role: "technical-director",
     phase: "plan",
     category: "design-architecture",
@@ -273,6 +289,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "control-manifest": workflow({
     id: "control-manifest",
+    modelTier: "luna",
     role: "ui-ux-designer",
     phase: "plan",
     category: "localization-accessibility",
@@ -283,6 +300,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "accessibility-doc": workflow({
     id: "accessibility-doc",
+    modelTier: "terra",
     role: "accessibility-specialist",
     phase: "plan",
     category: "localization-accessibility",
@@ -293,6 +311,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "entity-inventory": workflow({
     id: "entity-inventory",
+    modelTier: "luna",
     role: "systems-designer",
     phase: "plan",
     category: "design-architecture",
@@ -304,6 +323,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "asset-spec": workflow({
     id: "asset-spec",
+    modelTier: "terra",
     role: "senior-game-artist",
     phase: "plan",
     category: "design-architecture",
@@ -315,6 +335,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "ux-design": workflow({
     id: "ux-design",
+    modelTier: "terra",
     role: "ui-ux-designer",
     phase: "plan",
     category: "localization-accessibility",
@@ -326,6 +347,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "ux-review": workflow({
     id: "ux-review",
+    modelTier: "terra",
     role: "ui-ux-designer",
     phase: "review",
     category: "localization-accessibility",
@@ -337,6 +359,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "test-setup": workflow({
     id: "test-setup",
+    modelTier: "terra",
     role: "qa-playtester",
     phase: "plan",
     category: "qa-testing",
@@ -348,6 +371,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   implement: workflow({
     id: "implement",
+    modelTier: "terra",
     role: "gameplay-programmer",
     phase: "implement",
     category: "implementation-planning",
@@ -359,6 +383,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "code-review": workflow({
     id: "code-review",
+    modelTier: "terra",
     role: "technical-director",
     phase: "review",
     category: "qa-testing",
@@ -370,6 +395,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "bug-report": workflow({
     id: "bug-report",
+    modelTier: "luna",
     role: "qa-playtester",
     phase: "review",
     category: "qa-testing",
@@ -381,6 +407,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   retrospective: workflow({
     id: "retrospective",
+    modelTier: "terra",
     role: "producer",
     phase: "review",
     category: "team-coordination",
@@ -392,6 +419,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "team-feature": workflow({
     id: "team-feature",
+    modelTier: "terra",
     role: "producer",
     phase: "plan",
     category: "team-coordination",
@@ -403,6 +431,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "scope-check": workflow({
     id: "scope-check",
+    modelTier: "sol",
     role: "producer",
     phase: "review",
     category: "team-coordination",
@@ -414,6 +443,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "balance-check": workflow({
     id: "balance-check",
+    modelTier: "terra",
     role: "economy-designer",
     phase: "review",
     category: "design-architecture",
@@ -425,6 +455,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "asset-audit": workflow({
     id: "asset-audit",
+    modelTier: "luna",
     role: "senior-game-artist",
     phase: "review",
     category: "design-architecture",
@@ -436,6 +467,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "playtest-polish": workflow({
     id: "playtest-polish",
+    modelTier: "terra",
     role: "qa-playtester",
     phase: "review",
     category: "qa-testing",
@@ -447,6 +479,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "team-polish": workflow({
     id: "team-polish",
+    modelTier: "terra",
     role: "producer",
     phase: "plan",
     category: "team-coordination",
@@ -458,6 +491,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "patch-notes": workflow({
     id: "patch-notes",
+    modelTier: "luna",
     role: "release-manager",
     phase: "ship",
     category: "release-hotfix",
@@ -469,6 +503,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   changelog: workflow({
     id: "changelog",
+    modelTier: "luna",
     role: "release-manager",
     phase: "ship",
     category: "release-hotfix",
@@ -480,6 +515,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "launch-checklist": workflow({
     id: "launch-checklist",
+    modelTier: "sol",
     role: "release-manager",
     phase: "ship",
     category: "release-hotfix",
@@ -491,6 +527,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "design-spec": workflow({
     id: "design-spec",
+    modelTier: "terra",
     role: "senior-game-designer",
     phase: "plan",
     category: "design-architecture",
@@ -502,6 +539,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "game-feel-tuning": workflow({
     id: "game-feel-tuning",
+    modelTier: "terra",
     role: "game-feel-designer",
     phase: "review",
     category: "design-architecture",
@@ -512,6 +550,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "art-direction": workflow({
     id: "art-direction",
+    modelTier: "sol",
     role: "senior-game-artist",
     phase: "plan",
     category: "design-architecture",
@@ -522,6 +561,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "ui-ux-review": workflow({
     id: "ui-ux-review",
+    modelTier: "terra",
     role: "ui-ux-designer",
     phase: "review",
     category: "localization-accessibility",
@@ -532,6 +572,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "production-milestone": workflow({
     id: "production-milestone",
+    modelTier: "sol",
     role: "producer",
     phase: "plan",
     category: "team-coordination",
@@ -543,6 +584,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   handoff: workflow({
     id: "handoff",
+    modelTier: "luna",
     role: "studio-orchestrator",
     phase: "plan",
     category: "team-coordination",
@@ -553,6 +595,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   review: workflow({
     id: "review",
+    modelTier: "terra",
     role: "qa-playtester",
     phase: "review",
     category: "qa-testing",
@@ -561,6 +604,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "ship-check": workflow({
     id: "ship-check",
+    modelTier: "sol",
     role: "release-manager",
     phase: "ship",
     category: "release-hotfix",
@@ -571,6 +615,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   onboard: workflow({
     id: "onboard",
+    modelTier: "terra",
     role: "studio-orchestrator",
     phase: "plan",
     category: "onboarding-discovery",
@@ -583,6 +628,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   brainstorm: workflow({
     id: "brainstorm",
+    modelTier: "terra",
     role: "creative-director",
     phase: "plan",
     category: "design-architecture",
@@ -594,6 +640,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   prototype: workflow({
     id: "prototype",
+    modelTier: "terra",
     role: "producer",
     phase: "plan",
     category: "implementation-planning",
@@ -605,6 +652,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "architecture-decision": workflow({
     id: "architecture-decision",
+    modelTier: "sol",
     role: "technical-director",
     phase: "plan",
     category: "design-architecture",
@@ -616,6 +664,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "architecture-review": workflow({
     id: "architecture-review",
+    modelTier: "sol",
     role: "technical-director",
     phase: "review",
     category: "design-architecture",
@@ -626,6 +675,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "create-epics": workflow({
     id: "create-epics",
+    modelTier: "terra",
     role: "producer",
     phase: "plan",
     category: "implementation-planning",
@@ -637,6 +687,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "create-stories": workflow({
     id: "create-stories",
+    modelTier: "terra",
     role: "producer",
     phase: "plan",
     category: "implementation-planning",
@@ -648,6 +699,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "sprint-plan": workflow({
     id: "sprint-plan",
+    modelTier: "terra",
     role: "producer",
     phase: "plan",
     category: "team-coordination",
@@ -659,6 +711,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "sprint-status": workflow({
     id: "sprint-status",
+    modelTier: "luna",
     role: "studio-orchestrator",
     phase: "review",
     category: "team-coordination",
@@ -670,6 +723,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "story-readiness": workflow({
     id: "story-readiness",
+    modelTier: "terra",
     role: "producer",
     phase: "review",
     category: "team-coordination",
@@ -680,6 +734,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "story-done": workflow({
     id: "story-done",
+    modelTier: "terra",
     role: "qa-playtester",
     phase: "review",
     category: "team-coordination",
@@ -690,6 +745,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "qa-plan": workflow({
     id: "qa-plan",
+    modelTier: "terra",
     role: "qa-playtester",
     phase: "plan",
     category: "qa-testing",
@@ -701,6 +757,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "regression-suite": workflow({
     id: "regression-suite",
+    modelTier: "terra",
     role: "qa-playtester",
     phase: "review",
     category: "qa-testing",
@@ -711,6 +768,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "security-audit": workflow({
     id: "security-audit",
+    modelTier: "sol",
     role: "security-engineer",
     phase: "review",
     category: "qa-testing",
@@ -720,6 +778,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "perf-profile": workflow({
     id: "perf-profile",
+    modelTier: "terra",
     role: "performance-analyst",
     phase: "review",
     category: "qa-testing",
@@ -730,6 +789,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "release-checklist": workflow({
     id: "release-checklist",
+    modelTier: "sol",
     role: "release-manager",
     phase: "ship",
     category: "release-hotfix",
@@ -741,6 +801,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   hotfix: workflow({
     id: "hotfix",
+    modelTier: "terra",
     role: "gameplay-programmer",
     phase: "review",
     category: "release-hotfix",
@@ -751,6 +812,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "localization-plan": workflow({
     id: "localization-plan",
+    modelTier: "terra",
     role: "localization-lead",
     phase: "plan",
     category: "localization-accessibility",
