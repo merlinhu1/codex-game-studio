@@ -1,7 +1,7 @@
 ---
 name: cgs-architecture-review
 description: Use for architecture review tasks that review architecture for layer violations, scalability risks, engine misuse, testing seams, and production readiness; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model: gpt-5.6-sol
 model_reasoning_effort: high
 argument-hint: Describe the architecture-review objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

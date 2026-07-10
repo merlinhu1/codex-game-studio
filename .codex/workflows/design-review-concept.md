@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-sol
+model_reasoning_effort: medium
 primary-agent: senior-game-designer
 linked-skills: [cgs-design-review, cgs-quick-design]
 phase: review

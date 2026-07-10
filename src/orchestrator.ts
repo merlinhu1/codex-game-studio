@@ -5,6 +5,8 @@ import { resolveProjectRoot } from "./paths.js";
 import { executeRunLifecycle, prepareRun, type PreparedRun, type RunLifecycleResult } from "./runner.js";
 import { acquireTaskLocks, releaseTaskLocks, taskLockKeys, type AcquiredTaskLock } from "./orchestrator-locks.js";
 import { getTask, readTaskStore, writeTaskStore, type StudioTask, type StudioTaskStatus, type TaskStore } from "./tasks.js";
+import type { ModelTier } from "./prompt-surface-metadata.js";
+import { workflowRegistry, type WorkflowId } from "./workflows.js";
 
 export type OrchestrateOptions = {
   project: string;
@@ -19,6 +21,7 @@ export type OrchestrateOptions = {
   constrainedSandbox?: boolean;
   approvalScope?: string[];
   codexBin?: string;
+  modelTier?: ModelTier;
 };
 
 export type OrchestrationResult = {
@@ -216,7 +219,9 @@ export async function orchestrateTasks(options: OrchestrateOptions): Promise<Orc
         maxFixPasses: options.maxFixPasses ?? task.runPolicy?.maxFixPasses,
         approvedByUser: options.approvedByUser,
         constrainedSandbox: options.constrainedSandbox ?? task.runPolicy?.constrainedSandbox,
-        approvalScope: options.approvalScope
+        approvalScope: options.approvalScope,
+        modelTier: options.modelTier ?? task.runPolicy?.modelTier,
+        surfaceModel: task.workflowId ? workflowRegistry[task.workflowId as WorkflowId]?.model : undefined
       },
       process.cwd()
     )

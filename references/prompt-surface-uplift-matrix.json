@@ -6424,7 +6424,7 @@
         "tests/template-repository-surfaces.test.ts",
         "tests/validation.test.ts"
       ],
-      "lineCount": 89,
+      "lineCount": 88,
       "upstreamLineCount": 359,
       "depthScore": 68,
       "metadata": {

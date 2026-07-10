@@ -1,5 +1,5 @@
 ---
-model: gpt-5.5
+model: gpt-5.6-sol
 model_reasoning_effort: high
 primary-agent: release-manager
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]

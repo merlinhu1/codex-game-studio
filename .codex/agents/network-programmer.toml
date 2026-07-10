@@ -1,6 +1,6 @@
 name = "network_programmer"
 description = "Owns network programmer work: Implement networked gameplay, replication, synchronization, authority boundaries, latency handling, rollback risks, and multiplayer verification notes. Produces Networking implementation, Synchronization notes, Multiplayer verification; hand off requests outside network programmer ownership or missing verification evidence."
-model = "gpt-5.5"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/network-programmer.md"

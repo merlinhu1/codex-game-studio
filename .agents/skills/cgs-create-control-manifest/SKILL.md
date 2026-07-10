@@ -1,8 +1,8 @@
 ---
 name: cgs-create-control-manifest
 description: Use for create control manifest tasks that define implementation rules, boundaries, allowed dependencies, validation commands, and review gates; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-luna
+model_reasoning_effort: medium
 argument-hint: Describe the create-control-manifest objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

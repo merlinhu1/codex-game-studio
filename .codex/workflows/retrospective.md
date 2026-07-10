@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-luna
+model_reasoning_effort: low
 primary-agent: producer
 linked-skills: [cgs-retrospective, cgs-sprint-status]
 phase: review

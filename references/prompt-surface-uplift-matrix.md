@@ -206,4 +206,4 @@ Decisions: adopt, adapt, merge, split, defer, out-of-scope.
 | skill | `.agents/skills/cgs-ui-ux-review/SKILL.md` |  | defer | deferred | 78 |  | 67 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-ux-design/SKILL.md` | `.claude/skills/ux-design/SKILL.md` | adapt | complete | 77 | 989 | 67 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
 | skill | `.agents/skills/cgs-ux-review/SKILL.md` | `.claude/skills/ux-review/SKILL.md` | adapt | complete | 77 | 263 | 67 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
-| skill | `.agents/skills/cgs-vertical-slice/SKILL.md` | `.claude/skills/vertical-slice/SKILL.md` | adapt | complete | 89 | 359 | 68 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |
+| skill | `.agents/skills/cgs-vertical-slice/SKILL.md` | `.claude/skills/vertical-slice/SKILL.md` | adapt | complete | 88 | 359 | 68 | yes | pass | `tests/template-repository-surfaces.test.ts`<br>`tests/validation.test.ts` |

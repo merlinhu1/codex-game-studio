@@ -1,7 +1,7 @@
 ---
 name: cgs-vertical-slice
 description: Use for vertical slice tasks that validate whether a full game loop can be built at representative quality before production commitment; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model: gpt-5.6-sol
 model_reasoning_effort: high
 argument-hint: Describe the vertical-slice objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer
@@ -13,7 +13,6 @@ user-invocable: true
 ---
 
 # Codex Game Studio Vertical Slice
-
 Use this skill for vertical slice work in Template Game.
 
 ## Objective

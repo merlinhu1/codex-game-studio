@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-luna
+model_reasoning_effort: medium
 primary-agent: ui-ux-designer
 linked-skills: [cgs-create-control-manifest, cgs-standards-ui]
 phase: plan

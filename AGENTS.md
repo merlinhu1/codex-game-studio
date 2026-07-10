@@ -27,6 +27,14 @@ Before broad inspection, use compact context helpers when available, then read o
 - `./codex-game-studio context workflow <workflow-id>`
 - `./codex-game-studio context changed`
 
+## Model Routing
+
+- Prompt surfaces declare both a concrete model and a reasoning effort; runtime derives only the model tier from the centralized model policy.
+- Choose the model family by capability and blast radius: Sol for difficult/high-risk architecture, security, release, or cross-system decisions; Terra for bounded implementation, QA, docs, and production work; Luna for simple, repetitive, mechanical, or objectively verifiable work.
+- Choose reasoning effort independently for each prompt surface. Valid combinations include Luna/medium for cheap-but-careful review, Terra/low for bounded routine work, Terra/high for difficult implementation, and Sol/medium when Sol capability is useful without maximum reasoning.
+- Explicit user or task-tier overrides change the model family but preserve the selected surface's reasoning effort unless an escalation policy deliberately raises it.
+- Designated fallback models are fixed by family: Sol to GPT-5.5, Terra to GPT-5.4, and Luna to GPT-5.4-mini; fallback execution keeps the selected surface effort.
+
 ## Coding Conventions
 
 - Prefer engine-native idioms and small, reviewable changes.

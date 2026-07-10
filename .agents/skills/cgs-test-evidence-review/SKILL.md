@@ -1,7 +1,7 @@
 ---
 name: cgs-test-evidence-review
 description: Use for test evidence review tasks that review validation output, logs, screenshots, recordings, and manual checks for sufficiency and gaps; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4
+model: gpt-5.6-luna
 model_reasoning_effort: medium
 argument-hint: Describe the test-evidence-review objective, target files/assets, constraints, and verification evidence.
 primary-agent: qa-playtester

@@ -1,6 +1,6 @@
 ---
-model: gpt-5.4
-model_reasoning_effort: medium
+model: gpt-5.6-terra
+model_reasoning_effort: high
 primary-agent: qa-playtester
 linked-skills: [cgs-regression-suite, cgs-bugfix]
 phase: review

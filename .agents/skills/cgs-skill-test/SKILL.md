@@ -1,7 +1,7 @@
 ---
 name: cgs-skill-test
 description: Use for skill test tasks that test a repository skill against fixtures, required sections, dry-runs, and behavioral expectations; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4
+model: gpt-5.6-luna
 model_reasoning_effort: medium
 argument-hint: Describe the skill-test objective, target files/assets, constraints, and verification evidence.
 primary-agent: qa-playtester

@@ -3,7 +3,6 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  defaultModelPolicyForId,
   parsePromptSurfaceFrontmatter,
   parseTomlCommentArrayField,
   parseTomlCommentStringField,
@@ -148,9 +147,7 @@ function rowFor(type: SurfaceRow["sourceType"], file: string): SurfaceRow {
   const source = type === "agent" ? upstreamAgentFor(localPath) : type === "skill" ? upstreamSkillFor(localPath) : undefined;
   const sourceBody = source ? readFileSync(source, "utf8") : undefined;
   const id = type === "skill" ? localPath.split("/")[2].replace(/^cgs-/, "") : path.basename(localPath).replace(/\.(toml|md)$/, "");
-  const defaultPolicy = defaultModelPolicyForId(id);
   const metadata = type === "agent" ? tomlMetadata(body) : markdownMetadata(body);
-  if (!metadata.model && defaultPolicy.model) metadata.model = false;
   const depthScore = depthScoreFor(body);
   return {
     sourceType: type,

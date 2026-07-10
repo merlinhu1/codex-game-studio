@@ -1,7 +1,7 @@
 ---
 name: cgs-standards-data-files
 description: Use for data file standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.
-model: gpt-5.4-mini
+model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Provide the standards objective, target files/assets/docs, constraints, and verification evidence.
 primary-agent: producer

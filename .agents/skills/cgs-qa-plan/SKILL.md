@@ -1,7 +1,7 @@
 ---
 name: cgs-qa-plan
 description: Use for qa plan tasks that plan focused QA coverage across features, risks, platforms, devices, regressions, and acceptance criteria; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4
+model: gpt-5.6-terra
 model_reasoning_effort: medium
 argument-hint: Describe the qa-plan objective, target files/assets, constraints, and verification evidence.
 primary-agent: qa-playtester

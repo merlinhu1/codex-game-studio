@@ -69,6 +69,24 @@ describe("agent context helper scripts", () => {
     expect(workflow).not.toContain("Compact Context First");
   });
 
+  test("shared model routing semantics live in AGENTS while surfaces avoid redundant tier metadata", () => {
+    const root = packageRoot();
+    const agentsMd = readFileSync(path.join(root, "AGENTS.md"), "utf8");
+    const agent = readFileSync(path.join(root, ".codex", "agents", "gameplay-programmer.toml"), "utf8");
+    const workflow = readFileSync(path.join(root, ".codex", "workflows", "bugfix.md"), "utf8");
+    const skill = readFileSync(path.join(root, ".agents", "skills", "cgs-bugfix", "SKILL.md"), "utf8");
+
+    expect(agentsMd).toContain("## Model Routing");
+    expect(agentsMd).toContain("Sol");
+    expect(agentsMd).toContain("Terra");
+    expect(agentsMd).toContain("Luna");
+    for (const surface of [agent, workflow, skill]) {
+      expect(surface).not.toMatch(/^#?\s*model_tier\s*[:=]/m);
+      expect(surface).toMatch(/^model\s*[:=]\s*["']?gpt-5\.6-(sol|terra|luna)/m);
+      expect(surface).not.toContain("## Model Routing");
+    }
+  });
+
   test("changed context degrades gracefully outside Git checkouts", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "ogs-context-no-git-"));
     const pack = renderAgentContext({ kind: "changed", cwd });

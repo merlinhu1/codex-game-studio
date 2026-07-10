@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-luna
+model_reasoning_effort: medium
 primary-agent: studio-orchestrator
 linked-skills: [cgs-consistency-check, cgs-propagate-design-change]
 phase: review

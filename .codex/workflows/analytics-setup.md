@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-terra
+model_reasoning_effort: low
 primary-agent: data-scientist
 linked-skills: [cgs-standards-gameplay, cgs-vertical-slice]
 phase: plan

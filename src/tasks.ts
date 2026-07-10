@@ -7,7 +7,8 @@ import { resolveProjectRoot } from "./paths.js";
 import { readStudioProject } from "./projects.js";
 import { isStudioRoleId, type StudioRoleId } from "./roles.js";
 import { executeRunLifecycle, prepareRun, type PreparedRun, type RunLifecycleResult } from "./runner.js";
-import type { CodexModelName, ReasoningEffort } from "./prompt-surface-metadata.js";
+import { isModelTier, type CodexModelName, type ModelTier, type ReasoningEffort } from "./prompt-surface-metadata.js";
+import { workflowRegistry, type WorkflowId } from "./workflows.js";
 
 export type StudioTaskStatus = "ready" | "running" | "blocked" | "done" | "cancelled" | "skipped";
 
@@ -20,6 +21,7 @@ export type StudioTaskRunPolicy = {
   maxFixPasses?: number;
   review?: boolean;
   constrainedSandbox?: boolean;
+  modelTier?: ModelTier;
 };
 
 export type StudioTask = {
@@ -40,6 +42,7 @@ export type StudioTask = {
   updatedAt: string;
   lastRunId?: string;
   lastRunModel?: CodexModelName;
+  lastRunModelTier?: ModelTier;
   lastRunReasoningEffort?: ReasoningEffort;
   lastRunSurface?: string;
 };
@@ -59,6 +62,7 @@ export type ExecuteTaskRunOptions = {
   approvedByUser?: boolean;
   constrainedSandbox?: boolean;
   approvalScope?: string[];
+  modelTier?: ModelTier;
 };
 
 export type ExecuteTaskRunResult = {
@@ -118,6 +122,8 @@ function normalizeTask(raw: RawTask, projectRoot: string, timestamp = migrationT
   const dependencies = (raw.dependencies ?? []).map(normalizeDependency);
   const notes = raw.notes ?? [];
   if (!Array.isArray(notes) || !notes.every((note) => typeof note === "string")) throw new Error(`Invalid task notes: ${raw.id}`);
+  if (raw.runPolicy?.modelTier !== undefined && !isModelTier(raw.runPolicy.modelTier)) throw new Error(`Invalid task model tier: ${raw.runPolicy.modelTier}`);
+  if (raw.lastRunModelTier !== undefined && !isModelTier(raw.lastRunModelTier)) throw new Error(`Invalid last run model tier: ${raw.lastRunModelTier}`);
   return {
     id: raw.id,
     title: raw.title,
@@ -136,6 +142,7 @@ function normalizeTask(raw: RawTask, projectRoot: string, timestamp = migrationT
     updatedAt: raw.updatedAt ?? timestamp,
     lastRunId: raw.lastRunId,
     lastRunModel: raw.lastRunModel,
+    lastRunModelTier: raw.lastRunModelTier,
     lastRunReasoningEffort: raw.lastRunReasoningEffort,
     lastRunSurface: raw.lastRunSurface
   };
@@ -237,13 +244,14 @@ export function createTask(
   return task;
 }
 
-export function updateTaskStatus(projectRoot: string, taskId: string, status: StudioTaskStatus, note?: string, updates: Partial<Pick<StudioTask, "lastRunId" | "lastRunModel" | "lastRunReasoningEffort" | "lastRunSurface">> = {}): StudioTask {
+export function updateTaskStatus(projectRoot: string, taskId: string, status: StudioTaskStatus, note?: string, updates: Partial<Pick<StudioTask, "lastRunId" | "lastRunModel" | "lastRunModelTier" | "lastRunReasoningEffort" | "lastRunSurface">> = {}): StudioTask {
   const store = readTaskStore(projectRoot);
   const task = getTask(store, taskId);
   task.status = status;
   task.updatedAt = nowIso();
   if (updates.lastRunId) task.lastRunId = updates.lastRunId;
   if (updates.lastRunModel) task.lastRunModel = updates.lastRunModel;
+  if (updates.lastRunModelTier) task.lastRunModelTier = updates.lastRunModelTier;
   if (updates.lastRunReasoningEffort) task.lastRunReasoningEffort = updates.lastRunReasoningEffort;
   if (updates.lastRunSurface) task.lastRunSurface = updates.lastRunSurface;
   if (note?.trim()) task.notes.push(`${new Date().toISOString()} ${note.trim()}`);
@@ -268,6 +276,7 @@ export function renderTaskRun(projectRoot: string, taskId: string): { task: Stud
 
 export async function executeTaskRun(projectRoot: string, taskId: string, options: ExecuteTaskRunOptions = {}): Promise<ExecuteTaskRunResult> {
   const task = getTask(readTaskStore(projectRoot), taskId);
+  const workflow = task.workflowId ? workflowRegistry[task.workflowId as WorkflowId] : undefined;
   const prepared = prepareRun(
     task.role,
     {
@@ -284,17 +293,22 @@ export async function executeTaskRun(projectRoot: string, taskId: string, option
       maxFixPasses: options.maxFixPasses ?? task.runPolicy?.maxFixPasses,
       approvedByUser: options.approvedByUser,
       constrainedSandbox: options.constrainedSandbox ?? task.runPolicy?.constrainedSandbox,
-      approvalScope: options.approvalScope
+      approvalScope: options.approvalScope,
+      modelTier: options.modelTier ?? task.runPolicy?.modelTier,
+      surfaceModel: workflow?.model,
+      surfaceEffort: workflow?.modelReasoningEffort
     },
     process.cwd()
   );
   if (options.dryRun || options.noWrite) return { task, prepared };
 
-  updateTaskStatus(projectRoot, taskId, "running", `Codex task run started with ${prepared.selectedModel} (${prepared.modelReasoningEffort})`, { lastRunModel: prepared.selectedModel, lastRunReasoningEffort: prepared.modelReasoningEffort, lastRunSurface: `.codex/agents/${task.role}.toml` });
+  updateTaskStatus(projectRoot, taskId, "running", `Codex task run started with ${prepared.selectedModel} (${prepared.modelReasoningEffort})`, { lastRunModelTier: prepared.selectedModelTier, lastRunModel: prepared.selectedModel, lastRunReasoningEffort: prepared.modelReasoningEffort, lastRunSurface: `.codex/agents/${task.role}.toml` });
   try {
     const lifecycle = await executeRunLifecycle(prepared);
     const finalStatus: StudioTaskStatus = lifecycle.finalStatus === "done" ? "done" : "blocked";
-    const updated = updateTaskStatus(projectRoot, taskId, finalStatus, `Codex task run finished: ${lifecycle.finalStatus}`);
+    const executedModel = lifecycle.implementation.executedModel ?? prepared.selectedModel;
+    const executedEffort = executedModel === prepared.fallbackModel ? prepared.fallbackReasoningEffort : prepared.modelReasoningEffort;
+    const updated = updateTaskStatus(projectRoot, taskId, finalStatus, `Codex task run finished: ${lifecycle.finalStatus}`, { lastRunModel: executedModel, lastRunReasoningEffort: executedEffort });
     return { task: updated, prepared, lifecycle };
   } catch (error) {
     const updated = updateTaskStatus(projectRoot, taskId, "blocked", `Codex task run failed uncertainly: ${(error as Error).message}`);

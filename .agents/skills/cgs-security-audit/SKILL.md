@@ -1,7 +1,7 @@
 ---
 name: cgs-security-audit
 description: Use for security audit tasks that audit secrets, network surfaces, auth, saves, platform APIs, dependencies, and exploit risks; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model: gpt-5.6-sol
 model_reasoning_effort: high
 argument-hint: Describe the security-audit objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

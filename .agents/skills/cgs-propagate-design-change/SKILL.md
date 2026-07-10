@@ -1,7 +1,7 @@
 ---
 name: cgs-propagate-design-change
 description: Use for propagate design change tasks that trace a design change through systems, docs, tasks, tests, content, and release risk; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the propagate-design-change objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

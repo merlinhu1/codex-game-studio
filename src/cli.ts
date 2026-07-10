@@ -23,6 +23,7 @@ import { renderWorkflowPrompt, workflowAliases, workflowRegistry, type WorkflowI
 import { createWorkflowTasks } from "./workflow-recipes.js";
 import { isStudioRoleId, unknownStudioRoleMessage } from "./roles.js";
 import type { ProjectStage, StudioMode } from "./studio-policy.js";
+import { isModelTier, type ModelTier } from "./prompt-surface-metadata.js";
 
 const program = new Command();
 
@@ -32,6 +33,11 @@ function collectCompetitor(value: string, previous: string[] = []): string[] {
 
 function collectScope(value: string, previous: string[] = []): string[] {
   return [...previous, value];
+}
+
+function parseModelTier(value: string): ModelTier {
+  if (!isModelTier(value)) throw new Error(`Unsupported model tier: ${value}; use sol, terra, or luna`);
+  return value;
 }
 
 program.name("codex-game-studio").description("Codex Game Studio: a Codex-native game-development workflow layer").version("0.1.0");
@@ -309,6 +315,7 @@ program
   .option("--max-fix-passes <count>", "maximum automatic fix passes", "1")
   .option("--approved-by-user", "explicitly approve a guided-studio local override")
   .option("--constrained-sandbox", "use Codex workspace-write instead of the default full-access sandbox")
+  .option("--model-tier <tier>", "override the selected surface model tier", parseModelTier)
   .action(async (role, objectiveParts: string[], opts) => {
     const verifyCommand = opts.verifyCommand ? { command: opts.verifyCommand as string, args: opts.verifyArg as string[] } : undefined;
     const result = prepareRun(role, {
@@ -324,7 +331,8 @@ program
       fix: opts.fix,
       maxFixPasses: Number(opts.maxFixPasses),
       approvedByUser: opts.approvedByUser,
-      constrainedSandbox: opts.constrainedSandbox
+      constrainedSandbox: opts.constrainedSandbox,
+      modelTier: opts.modelTier
     });
     console.log(result.output);
     if (opts.dryRun || opts.printPrompt) return;
@@ -351,6 +359,7 @@ task
   .option("--workflow <workflow-id>", "source workflow id for this task")
   .option("--group <group-id>", "task group id")
   .option("--priority <number>", "task priority; higher values run earlier", "0")
+  .option("--model-tier <tier>", "set the task's explicit model tier", parseModelTier)
   .option("--verify-command <command>", "structured verification command")
   .option("--verify-arg <arg>", "structured verification argument; repeat for multiple args", (value, previous: string[] = []) => [...previous, value], [])
   .argument("<title...>")
@@ -367,7 +376,8 @@ task
       dependencies: opts.dependsOn,
       workflowId: opts.workflow,
       groupId: opts.group,
-      priority: Number(opts.priority)
+      priority: Number(opts.priority),
+      runPolicy: opts.modelTier ? { modelTier: opts.modelTier } : undefined
     });
     console.log(created.id);
   });
@@ -382,6 +392,7 @@ task
   .option("--approval-scope <glob>", "approval diagnostic scope for task run objective hashing; repeat for multiple scopes", collectScope, [])
   .option("--approved-by-user", "explicitly approve a guided-studio local override")
   .option("--constrained-sandbox", "use Codex workspace-write instead of the default full-access sandbox")
+  .option("--model-tier <tier>", "override the task or workflow model tier", parseModelTier)
   .argument("<task-id>")
   .action(async (taskId: string, opts) => {
     const projectRoot = resolveTaskProject(opts.project);
@@ -392,7 +403,8 @@ task
       maxFixPasses: Number(opts.maxFixPasses),
       approvedByUser: opts.approvedByUser,
       constrainedSandbox: opts.constrainedSandbox,
-      approvalScope: opts.approvalScope
+      approvalScope: opts.approvalScope,
+      modelTier: opts.modelTier
     });
     console.log(opts.dryRun ? result.prepared.output : `${result.prepared.output}\n${result.lifecycle?.output ?? ""}\n${taskId} ${result.task.status}`);
     if (result.lifecycle?.finalStatus === "blocked") process.exitCode = 1;
@@ -410,6 +422,7 @@ task
   .option("--approval-scope <glob>", "approval diagnostic scope for task run objective hashing; repeat for multiple scopes", collectScope, [])
   .option("--approved-by-user", "explicitly approve a guided-studio local override")
   .option("--constrained-sandbox", "use Codex workspace-write instead of the default full-access sandbox")
+  .option("--model-tier <tier>", "override all selected task model tiers", parseModelTier)
   .argument("[task-id...]", "specific task ids to orchestrate")
   .action(async (taskIds: string[], opts) => {
     const result = await orchestrateTasks({
@@ -423,7 +436,8 @@ task
       maxFixPasses: Number(opts.maxFixPasses),
       approvedByUser: opts.approvedByUser,
       constrainedSandbox: opts.constrainedSandbox,
-      approvalScope: opts.approvalScope
+      approvalScope: opts.approvalScope,
+      modelTier: opts.modelTier
     });
     console.log(result.output);
     if (result.status === "blocked") process.exitCode = 1;

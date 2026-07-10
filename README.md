@@ -249,15 +249,15 @@ Tasks, approvals, locks, context manifests, and run metadata live under `.codex/
 
 ## Model Routing
 
-Prompt surfaces declare exact Codex model policy in tracked files:
+Prompt surfaces declare concrete Codex model and reasoning-effort policy in tracked files:
 
-| Work type | Model |
-|-----------|-------|
-| Complex design, architecture, production, and release gates | `gpt-5.5` |
-| Moderate implementation, QA, docs, bugfix, and bounded workflows | `gpt-5.4` |
-| Simple help, status, classification, checklist, and lookup work | `gpt-5.4-mini` |
+| Routing dimension | Policy |
+|-------------------|--------|
+| Model family | Use `gpt-5.6-sol` for difficult/high-risk architecture, security, release, or cross-system decisions; `gpt-5.6-terra` for bounded implementation, QA, docs, bugfix, and production work; `gpt-5.6-luna` for simple, repetitive, mechanical, checklist, status, and objectively verifiable work. |
+| Reasoning effort | Choose `low`, `medium`, or `high` per surface independently from the model family. A prompt may use Luna/medium, Terra/low, Terra/high, Sol/medium, or Sol/high when that case warrants it. |
+| Fallback model | Sol falls back to `gpt-5.5`, Terra to `gpt-5.4`, and Luna to `gpt-5.4-mini` while preserving the selected surface effort. |
 
-Runtime dry-runs and run metadata expose the selected model and reasoning effort. Codex execution receives the exact selected model instead of a generic tier name.
+Runtime dry-runs and run metadata expose the selected model and reasoning effort. Codex execution receives both values explicitly instead of a generic tier name.
 
 ## Documentation
 

@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-terra
+model_reasoning_effort: medium
 primary-agent: qa-playtester
 linked-skills: [cgs-playtest-report, cgs-smoke-check]
 phase: review
