@@ -3,15 +3,15 @@
   <p align="center">
     Turn a Codex session into a structured, local-first game studio.
     <br />
-    38 agents. 79 skills. 31 workflows. One Git-reviewable studio template.
+    50 agents. 90 skills. 61 workflows. One Git-reviewable studio template.
   </p>
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
-  <a href=".codex/agents"><img src="https://img.shields.io/badge/agents-38-blueviolet" alt="38 Agents"></a>
-  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-79-green" alt="79 Skills"></a>
-  <a href=".codex/workflows"><img src="https://img.shields.io/badge/workflows-31-orange" alt="31 Workflows"></a>
+  <a href=".codex/agents"><img src="https://img.shields.io/badge/agents-50-blueviolet" alt="50 Agents"></a>
+  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-90-green" alt="90 Skills"></a>
+  <a href=".codex/workflows"><img src="https://img.shields.io/badge/workflows-61-orange" alt="61 Workflows"></a>
   <a href="package.json"><img src="https://img.shields.io/badge/node-%3E%3D24-339933.svg" alt="Node.js >=24"></a>
   <a href="https://github.com/openai/codex"><img src="https://img.shields.io/badge/built%20for-Codex-f5f5f5" alt="Built for Codex"></a>
 </p>
@@ -67,11 +67,11 @@ The template is deliberately clone-first: the visible `AGENTS.md`, `.codex/agent
 
 | Category | Count | Description |
 |----------|-------|-------------|
-| **Agents** | 38 | Codex custom agents across production, design, programming, art, audio, narrative, QA, localization, live ops, release, and engine support |
-| **Skills** | 79 | Reusable studio actions under `.agents/skills/*/SKILL.md`, from onboarding and design through QA, release, team orchestration, and standards |
-| **Workflows** | 31 | Tracked prompt workflows for market review, specs, stories, sprints, QA, security, release, hotfixes, vertical slices, and handoffs |
+| **Agents** | 50 | Codex custom agents across production, design, programming, art, audio, narrative, QA, localization, live ops, release, and engine support |
+| **Skills** | 90 | Reusable studio actions under `.agents/skills/*/SKILL.md`, from onboarding and design through QA, release, team orchestration, and standards |
+| **Workflows** | 61 | Tracked prompt workflows for market review, specs, stories, sprints, QA, security, release, hotfixes, vertical slices, and handoffs |
 | **Engine Tracks** | 3 | Godot, Unity, and Unreal specialist context with engine references and validation checks |
-| **Templates** | 31 | Packaged document templates for GDDs, ADRs, technical designs, playtests, releases, postmortems, risk registers, pitch docs, and more |
+| **Templates** | 57 | Packaged document templates for GDDs, ADRs, technical designs, playtests, releases, postmortems, risk registers, pitch docs, and more |
 | **Validation** | built in | Hard-failing checks for package assets, template surfaces, project state, metadata, engine references, and future-only CLI drift |
 
 ## Studio Hierarchy
@@ -148,7 +148,7 @@ Skills are tracked under `.agents/skills/*/SKILL.md`. They are the reusable stud
 `cgs-team-combat` `cgs-team-narrative` `cgs-team-ui` `cgs-team-release` `cgs-team-polish` `cgs-team-audio` `cgs-team-level` `cgs-team-live-ops` `cgs-team-qa`
 
 **Path Standards**
-`cgs-standards-gameplay` `cgs-standards-prototype` `cgs-standards-tests` `cgs-standards-ui`
+`cgs-standards-ai-code` `cgs-standards-data-files` `cgs-standards-design-docs` `cgs-standards-engine-code` `cgs-standards-gameplay` `cgs-standards-gameplay-code` `cgs-standards-narrative` `cgs-standards-network-code` `cgs-standards-prototype` `cgs-standards-prototype-code` `cgs-standards-shader-code` `cgs-standards-test-standards` `cgs-standards-tests` `cgs-standards-ui` `cgs-standards-ui-code`
 
 ## Workflows
 
@@ -156,13 +156,7 @@ Workflow prompts live under `.codex/workflows/*.md`. They are inspection-friendl
 
 | Phase | Workflows |
 |-------|-----------|
-| **Discovery** | `brainstorm`, `market-analysis`, `analytics-setup`, `onboard` |
-| **Design** | `design-spec`, `game-feel-tuning`, `art-direction`, `localization-plan`, `ui-ux-review` |
-| **Architecture** | `architecture-decision`, `architecture-review`, `security-audit`, `perf-profile` |
-| **Planning** | `create-epics`, `create-stories`, `sprint-plan`, `sprint-status`, `story-readiness` |
-| **Implementation** | `vertical-slice`, `prototype`, `bugfix`, `hotfix`, `story-done` |
-| **QA & Review** | `qa-plan`, `regression-suite`, `playtest`, `review`, `handoff` |
-| **Release** | `production-milestone`, `release-checklist`, `ship-check` |
+| **Tracked Prompts (61)** | `accessibility-doc`, `analytics-setup`, `architecture-decision`, `architecture-review`, `art-bible`, `art-direction`, `asset-audit`, `asset-spec`, `balance-check`, `brainstorm`, `bug-report`, `bugfix`, `changelog`, `code-review`, `consistency-check`, `control-manifest`, `create-architecture`, `create-epics`, `create-stories`, `design-review`, `design-review-concept`, `design-spec`, `design-system`, `engine-setup`, `entity-inventory`, `game-concept`, `game-feel-tuning`, `handoff`, `hotfix`, `implement`, `launch-checklist`, `localization-plan`, `map-systems`, `market-analysis`, `onboard`, `patch-notes`, `perf-profile`, `playtest`, `playtest-polish`, `production-milestone`, `prototype`, `qa-plan`, `regression-suite`, `release-checklist`, `retrospective`, `review`, `review-all-gdds`, `scope-check`, `security-audit`, `ship-check`, `sprint-plan`, `sprint-status`, `story-done`, `story-readiness`, `team-feature`, `team-polish`, `test-setup`, `ui-ux-review`, `ux-design`, `ux-review`, `vertical-slice` |
 
 ## Getting Started
 
@@ -212,14 +206,14 @@ Workflow prompts live under `.codex/workflows/*.md`. They are inspection-friendl
 AGENTS.md                         # Game-facing Codex instructions
 codex-game-studio                 # Source-checkout CLI wrapper
 .codex/
-  agents/                         # 38 Codex custom agents
-  workflows/                      # 31 tracked workflow prompts
+  agents/                         # 50 Codex custom agents
+  workflows/                      # 61 tracked workflow prompts
   studio.json                     # Project state written by init
   tasks.json                      # File-backed task state
   runs/                           # Runtime metadata for role/task runs
   locks/                          # Local orchestration locks
 .agents/
-  skills/                         # 79 reusable studio skills
+  skills/                         # 90 reusable studio skills
 engine_configs/                   # Engine setup metadata
 engine_reference/                 # Godot, Unity, Unreal reference packs
 templates/                        # Document templates used by workflows
