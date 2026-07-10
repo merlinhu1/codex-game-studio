@@ -20,7 +20,19 @@
   <a href="README.md">🇺🇸 English</a> |
   <a href="docs/readmes/README.zh.md">🇨🇳 简体中文</a> |
   <a href="docs/readmes/README.ja.md">🇯🇵 日本語</a> |
-  <a href="docs/readmes/README.ko.md">🇰🇷 한국어</a>
+  <a href="docs/readmes/README.ko.md">🇰🇷 한국어</a> |
+  <a href="docs/readmes/README.de.md">🇩🇪 Deutsch</a> |
+  <a href="docs/readmes/README.fr.md">🇫🇷 Français</a> |
+  <a href="docs/readmes/README.es.md">🇪🇸 Español</a> |
+  <a href="docs/readmes/README.pt.md">🇧🇷 Português</a> |
+  <a href="docs/readmes/README.ru.md">🇷🇺 Русский</a> |
+  <a href="docs/readmes/README.ar.md">🇸🇦 العربية</a> |
+  <a href="docs/readmes/README.it.md">🇮🇹 Italiano</a> |
+  <a href="docs/readmes/README.pl.md">🇵🇱 Polski</a> |
+  <a href="docs/readmes/README.tr.md">🇹🇷 Türkçe</a> |
+  <a href="docs/readmes/README.vi.md">🇻🇳 Tiếng Việt</a> |
+  <a href="docs/readmes/README.id.md">🇮🇩 Bahasa Indonesia</a> |
+  <a href="docs/readmes/README.el.md">🇬🇷 Ελληνικά</a>
 </p>
 
 ---
