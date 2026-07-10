@@ -1,6 +1,5 @@
 name = "ue_umg_specialist"
 description = "Owns ue umg specialist work: Implement and review UMG widgets, CommonUI screen stacks, data binding, input routing, focus behavior, HUD performance, and UI accessibility hooks. Coordinate Unreal UI implementation with UX specs, localization text expansion, controller/keyboard input, and gameplay events. Produces UMG and CommonUI guidance, Widget and input risks, UI verification notes; hand off requests outside ue umg specialist ownership or missing verification evidence."
-# model_tier = "terra"
 model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

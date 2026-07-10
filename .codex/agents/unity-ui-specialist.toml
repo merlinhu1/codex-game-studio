@@ -1,6 +1,5 @@
 name = "unity_ui_specialist"
 description = "Owns unity ui specialist work: Implement and review Unity UI Toolkit, UGUI, UXML/USS, canvas hierarchy, data binding, navigation, responsive layout, and accessibility hooks. Coordinate UI implementation with UX specs, localization expansion, input modality, and platform conventions. Produces Unity UI guidance, Input and layout risks, UI verification notes; hand off requests outside unity ui specialist ownership or missing verification evidence."
-# model_tier = "terra"
 model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

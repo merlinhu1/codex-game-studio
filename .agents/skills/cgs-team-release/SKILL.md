@@ -1,7 +1,6 @@
 ---
 name: cgs-team-release
 description: Use for team release tasks that coordinate release management, build pipeline, store assets, QA signoff, comms, and rollback; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: sol
 model: gpt-5.6-sol
 model_reasoning_effort: xhigh
 argument-hint: Describe the team-release objective, target files/assets, constraints, and verification evidence.

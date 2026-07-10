@@ -69,7 +69,7 @@ describe("agent context helper scripts", () => {
     expect(workflow).not.toContain("Compact Context First");
   });
 
-  test("shared model routing semantics live in AGENTS while surfaces carry explicit tiers", () => {
+  test("shared model routing semantics live in AGENTS while surfaces avoid redundant tier metadata", () => {
     const root = packageRoot();
     const agentsMd = readFileSync(path.join(root, "AGENTS.md"), "utf8");
     const agent = readFileSync(path.join(root, ".codex", "agents", "gameplay-programmer.toml"), "utf8");
@@ -80,10 +80,11 @@ describe("agent context helper scripts", () => {
     expect(agentsMd).toContain("Sol");
     expect(agentsMd).toContain("Terra");
     expect(agentsMd).toContain("Luna");
-    expect(agent).toMatch(/^# model_tier = "(sol|terra|luna)"$/m);
-    expect(workflow).toMatch(/^model_tier: (sol|terra|luna)$/m);
-    expect(skill).toMatch(/^model_tier: (sol|terra|luna)$/m);
-    for (const surface of [agent, workflow, skill]) expect(surface).not.toContain("## Model Routing");
+    for (const surface of [agent, workflow, skill]) {
+      expect(surface).not.toMatch(/^#?\s*model_tier\s*[:=]/m);
+      expect(surface).toMatch(/^model\s*[:=]\s*["']?gpt-5\.6-(sol|terra|luna)/m);
+      expect(surface).not.toContain("## Model Routing");
+    }
   });
 
   test("changed context degrades gracefully outside Git checkouts", () => {

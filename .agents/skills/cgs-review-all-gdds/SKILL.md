@@ -1,7 +1,6 @@
 ---
 name: cgs-review-all-gdds
 description: Use for review all gdds tasks that cross-check all GDDs for consistency, missing systems, dependency conflicts, and production readiness; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: sol
 model: gpt-5.6-sol
 model_reasoning_effort: xhigh
 argument-hint: Describe the review-all-gdds objective, target files/assets, constraints, and verification evidence.

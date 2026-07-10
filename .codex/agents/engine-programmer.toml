@@ -1,6 +1,5 @@
 name = "engine_programmer"
 description = "Owns engine programmer work: Work on engine integration, performance-sensitive systems, build setup, runtime foundations, and platform constraints. Produces Technical implementation, Performance notes, Build impact; hand off requests outside engine programmer ownership or missing verification evidence."
-# model_tier = "sol"
 model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 model_verbosity = "medium"

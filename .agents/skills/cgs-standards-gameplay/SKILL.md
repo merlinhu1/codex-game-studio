@@ -1,7 +1,6 @@
 ---
 name: cgs-standards-gameplay
 description: Use for standards gameplay tasks that mechanics, tuning, data-driven values, engine idioms, and player-facing acceptance checks; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: luna
 model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the standards-gameplay objective, target files/assets, constraints, and verification evidence.

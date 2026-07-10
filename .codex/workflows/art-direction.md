@@ -1,5 +1,4 @@
 ---
-model_tier: sol
 model: gpt-5.6-sol
 model_reasoning_effort: xhigh
 primary-agent: senior-game-artist

@@ -1,7 +1,6 @@
 ---
 name: cgs-test-setup
 description: Use for test setup tasks that configure test harnesses, fixtures, commands, and documentation so validation is repeatable; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the test-setup objective, target files/assets, constraints, and verification evidence.

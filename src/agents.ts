@@ -6,7 +6,7 @@ import { engineReferenceProjectPath, selectedEngineReferencePrompts } from "./en
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { projectRoleIdsForEngine, renderRoleContractSections, rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
 import { packageAssetPath } from "./paths.js";
-import { isModelTier, modelPolicyForTier, parseTomlCommentStringField } from "./prompt-surface-metadata.js";
+import { modelPolicyForTier, modelTierForModel, parseTomlStringField } from "./prompt-surface-metadata.js";
 
 
 export function validateBaseAgents(): string[] {
@@ -83,7 +83,7 @@ Before broad inspection, use compact context helpers when available, then read o
 
 ## Model Routing
 
-- Prompt surfaces declare an explicit \`model_tier\`; runtime enforces that declaration instead of inferring importance from names.
+- Prompt surfaces declare a concrete model; runtime derives its tier from the centralized model policy instead of inferring importance from names.
 - Use Sol for important, high-risk, architectural, security, release, or cross-system decisions.
 - Use Terra for routine implementation, testing, QA, documentation, and other bounded work.
 - Use Luna only for trivial, mechanical, objectively verifiable work; escalate ambiguity or failed verification to Terra.
@@ -130,8 +130,9 @@ function tomlMultiline(value: string): string {
 
 function trackedRoleModelPolicy(role: StudioRoleId) {
   const body = readFileSync(packageAssetPath(`.codex/agents/${role}.toml`), "utf8");
-  const tier = parseTomlCommentStringField(body, "model_tier");
-  if (!isModelTier(tier)) throw new Error(`${role} has invalid or missing model_tier metadata`);
+  const model = parseTomlStringField(body, "model");
+  const tier = modelTierForModel(model);
+  if (!tier) throw new Error(`${role} has an invalid or unregistered model`);
   return modelPolicyForTier(tier);
 }
 
@@ -149,7 +150,6 @@ export function renderProjectCustomAgentToml(role: StudioRoleId, config: Project
     "",
     `name = ${tomlString(role.replace(/-/g, "_"))}`,
     `description = ${tomlString(`Game development ${pkg.displayName} agent for ${role} tasks in this repository. Use for ${pkg.responsibilities.slice(0, 2).join(", ").toLowerCase()}.`)}`,
-    `# model_tier = "${modelPolicy.tier}"`,
     `model = "${modelPolicy.primary.model}"`,
     `model_reasoning_effort = "${modelPolicy.primary.effort}"`,
     `developer_instructions = ${tomlMultiline([

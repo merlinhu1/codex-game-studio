@@ -1,7 +1,6 @@
 ---
 name: cgs-gate-check
 description: Use for gate check tasks that run an advisory phase or artifact gate with criteria, evidence, concerns, and user-controlled next decision; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: sol
 model: gpt-5.6-sol
 model_reasoning_effort: xhigh
 argument-hint: Describe the gate-check objective, target files/assets, constraints, and verification evidence.

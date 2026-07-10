@@ -1,7 +1,6 @@
 ---
 name: cgs-reverse-document
 description: Use for reverse document tasks that create design or technical documentation from existing implementation without inventing unverified behavior; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the reverse-document objective, target files/assets, constraints, and verification evidence.

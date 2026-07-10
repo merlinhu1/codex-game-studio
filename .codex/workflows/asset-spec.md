@@ -1,5 +1,4 @@
 ---
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 primary-agent: senior-game-artist

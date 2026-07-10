@@ -1,7 +1,6 @@
 ---
 name: cgs-playtest-report
 description: Use for playtest report tasks that capture player observations, comprehension, friction, loop completion, bugs, quotes, and design implications; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the playtest-report objective, target files/assets, constraints, and verification evidence.

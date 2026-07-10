@@ -1,7 +1,6 @@
 ---
 name: cgs-bugfix
 description: Use for bugfix tasks that fix a bounded bug with reproduction evidence, minimal change, regression coverage, and handoff notes; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the bugfix objective, target files/assets, constraints, and verification evidence.

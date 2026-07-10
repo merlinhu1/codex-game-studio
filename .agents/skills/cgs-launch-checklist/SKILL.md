@@ -1,7 +1,6 @@
 ---
 name: cgs-launch-checklist
 description: Use for launch checklist tasks that coordinate day-of-launch readiness, monitoring, community, support, rollback, and hotfix paths; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: sol
 model: gpt-5.6-sol
 model_reasoning_effort: xhigh
 argument-hint: Describe the launch-checklist objective, target files/assets, constraints, and verification evidence.

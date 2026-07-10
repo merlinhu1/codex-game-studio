@@ -1,7 +1,6 @@
 ---
 name: cgs-skill-test
 description: Use for skill test tasks that test a repository skill against fixtures, required sections, dry-runs, and behavioral expectations; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the skill-test objective, target files/assets, constraints, and verification evidence.

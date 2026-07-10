@@ -12,9 +12,9 @@ import { engineReferenceContextRequests } from "./engine-reference.js";
 import { stripGeneratedMetadata } from "./generated-surfaces.js";
 import { renderContextContract } from "./prompt-context.js";
 import {
-  isModelTier,
   modelPolicyForTier,
-  parseTomlCommentStringField,
+  modelTierForModel,
+  parseTomlStringField,
   resolveModelRoute,
   type CodexModelName,
   type ModelSelectionSource,
@@ -48,6 +48,7 @@ export type RunOptions = {
   constrainedSandbox?: boolean;
   noWrite?: boolean;
   modelTier?: ModelTier;
+  surfaceModel?: CodexModelName;
 };
 
 export type PreparedRun = {
@@ -129,12 +130,12 @@ function modelFromCommand(command: { args: string[] }): CodexModelName {
   return model as CodexModelName;
 }
 
-function roleSurfaceTier(projectRoot: string, role: StudioRoleId): ModelTier {
+function roleSurfaceModel(projectRoot: string, role: StudioRoleId): CodexModelName {
   const file = path.join(projectRoot, ".codex", "agents", `${role}.toml`);
-  if (!existsSync(file)) return "terra";
-  const tier = parseTomlCommentStringField(readFileSync(file, "utf8"), "model_tier");
-  if (!isModelTier(tier)) throw new Error(`${role} has invalid or missing model_tier metadata`);
-  return tier;
+  if (!existsSync(file)) return modelPolicyForTier("terra").primary.model;
+  const model = parseTomlStringField(readFileSync(file, "utf8"), "model");
+  if (!modelTierForModel(model)) throw new Error(`${role} has an invalid or unregistered model`);
+  return model as CodexModelName;
 }
 
 function reviewRouteFor(route: ResolvedModelRoute): ResolvedModelRoute {
@@ -414,7 +415,7 @@ let runSequence = 0;
 
 function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer T ? NonNullable<T> : never, options: RunOptions, cwd: string, roleInput: string, task: string, projectRoot: string): PreparedRun {
   const studio = readStudioProject(projectRoot);
-  const modelRoute = resolveModelRoute({ surfaceTier: role.modelTier, requestedTier: options.modelTier });
+  const modelRoute = resolveModelRoute({ surfaceModel: modelPolicyForTier(role.modelTier).primary.model, requestedTier: options.modelTier });
   const reviewRoute = reviewRouteFor(modelRoute);
   const fixRoute = fixRouteFor(modelRoute);
   const artifactRefs = (options.includeArtifact ?? []).map((artifact) => {
@@ -607,7 +608,7 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   if (!isStudioRoleId(roleInput)) throw new Error(unknownStudioRoleMessage(roleInput));
   const role = roleInput as StudioRoleId;
   const studio = readStudioProject(projectRoot);
-  const modelRoute = resolveModelRoute({ surfaceTier: roleSurfaceTier(projectRoot, role), requestedTier: options.modelTier });
+  const modelRoute = resolveModelRoute({ surfaceModel: options.surfaceModel ?? roleSurfaceModel(projectRoot, role), requestedTier: options.modelTier });
   const reviewRoute = reviewRouteFor(modelRoute);
   const fixRoute = fixRouteFor(modelRoute);
   if (!isRoleAvailableForEngine(role, studio.engine)) {

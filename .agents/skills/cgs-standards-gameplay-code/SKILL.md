@@ -1,7 +1,6 @@
 ---
 name: cgs-standards-gameplay-code
 description: Use for gameplay code standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.
-model_tier: luna
 model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Provide the standards objective, target files/assets/docs, constraints, and verification evidence.

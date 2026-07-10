@@ -96,12 +96,11 @@ describe("runner", () => {
     expect(existsSync(path.join(projectRoot, ".codex", "prompts"))).toBe(false);
   });
 
-  test("enforces the explicit agent surface tier and deterministic override precedence", () => {
+  test("infers the agent surface tier from its model and preserves override precedence", () => {
     const cwd = mkdtempSync(path.join(tmpdir(), "codex-game-studio-runner-model-tier-"));
     const { projectRoot } = initTemplateProject({ name: "Model Tier", engine: "godot", mode: "prototype", studioMode: "fast-prototype", nonInteractive: true }, cwd);
     const agentPath = path.join(projectRoot, ".codex", "agents", "gameplay-programmer.toml");
     const agent = readFileSync(agentPath, "utf8")
-      .replace(/^# model_tier = ".*"$/m, '# model_tier = "luna"')
       .replace(/^model = ".*"$/m, 'model = "gpt-5.6-luna"')
       .replace(/^model_reasoning_effort = ".*"$/m, 'model_reasoning_effort = "low"');
     writeFileSync(agentPath, agent);

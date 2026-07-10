@@ -29,7 +29,7 @@ Before broad inspection, use compact context helpers when available, then read o
 
 ## Model Routing
 
-- Prompt surfaces declare an explicit `model_tier`; runtime must enforce that declaration instead of inferring importance from role or task names.
+- Prompt surfaces declare a concrete model; runtime derives its tier from the centralized model policy instead of inferring importance from role or task names.
 - Use Sol for important, high-risk, architectural, security, release, or cross-system decisions.
 - Use Terra for routine implementation, testing, QA, documentation, and other bounded work.
 - Use Luna only for trivial, mechanical, objectively verifiable work; escalate ambiguous or failed work to Terra.

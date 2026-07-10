@@ -24,7 +24,6 @@ export type ResolvedModelRoute = ModelTierPolicy & {
 };
 
 export type ModelPolicy = {
-  model_tier?: string;
   model: string;
   model_reasoning_effort?: string;
   model_verbosity?: string;
@@ -32,7 +31,6 @@ export type ModelPolicy = {
 };
 
 export type PromptSurfaceMetadata = {
-  model_tier: ModelTier;
   model: CodexModelName;
   model_reasoning_effort: ReasoningEffort;
   model_verbosity?: "low" | "medium" | "high";
@@ -100,8 +98,10 @@ export function modelTierForModel(model: string | undefined): ModelTier | undefi
   });
 }
 
-export function resolveModelRoute(options: { surfaceTier: ModelTier; requestedTier?: ModelTier }): ResolvedModelRoute {
-  const tier = options.requestedTier ?? options.surfaceTier;
+export function resolveModelRoute(options: { surfaceModel: CodexModelName; requestedTier?: ModelTier }): ResolvedModelRoute {
+  const surfaceTier = modelTierForModel(options.surfaceModel);
+  if (!surfaceTier) throw new Error(`Codex model is not assigned to a routing tier: ${options.surfaceModel}`);
+  const tier = options.requestedTier ?? surfaceTier;
   return { ...modelPolicyForTier(tier), source: options.requestedTier ? "explicit-tier" : "surface" };
 }
 
@@ -115,13 +115,13 @@ export function isReasoningEffort(value: string | undefined): value is Reasoning
 
 export function validateModelPolicy(policy: ModelPolicy): { valid: boolean; issues: string[] } {
   const issues: string[] = [];
-  if (!isModelTier(policy.model_tier)) issues.push(`invalid model tier: ${policy.model_tier ?? "missing"}`);
   if (!isCodexModelName(policy.model)) issues.push(`invalid Codex model: ${policy.model}`);
   if (policy.model_reasoning_effort && !isReasoningEffort(policy.model_reasoning_effort)) issues.push(`invalid reasoning effort: ${policy.model_reasoning_effort}`);
-  if (isModelTier(policy.model_tier)) {
-    const expected = modelPolicyForTier(policy.model_tier).primary;
-    if (policy.model !== expected.model) issues.push(`model ${policy.model} does not match ${policy.model_tier} primary ${expected.model}`);
-    if (policy.model_reasoning_effort !== expected.effort) issues.push(`reasoning effort ${policy.model_reasoning_effort ?? "missing"} does not match ${policy.model_tier} primary ${expected.effort}`);
+  const tier = modelTierForModel(policy.model);
+  if (tier) {
+    const tierPolicy = modelPolicyForTier(tier);
+    const expected = tierPolicy.primary.model === policy.model ? tierPolicy.primary : tierPolicy.fallback;
+    if (policy.model_reasoning_effort !== expected.effort) issues.push(`reasoning effort ${policy.model_reasoning_effort ?? "missing"} does not match ${policy.model} expected ${expected.effort}`);
   }
   return { valid: issues.length === 0, issues };
 }

@@ -1,7 +1,6 @@
 ---
 name: cgs-standards-ui
 description: Use for standards ui tasks that hUD, menus, accessibility, localization, controller navigation, and input states; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: luna
 model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the standards-ui objective, target files/assets, constraints, and verification evidence.

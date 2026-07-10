@@ -1,7 +1,6 @@
 ---
 name: cgs-release-checklist
 description: Use for release checklist tasks that check build, packaging, store, QA, localization, accessibility, rollback, and ship/no-ship readiness; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: sol
 model: gpt-5.6-sol
 model_reasoning_effort: xhigh
 argument-hint: Describe the release-checklist objective, target files/assets, constraints, and verification evidence.

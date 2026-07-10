@@ -1,7 +1,6 @@
 ---
 name: cgs-bug-report
 description: Use for bug report tasks that capture a reproducible bug with environment, steps, expected/actual behavior, severity, evidence, and owner; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: luna
 model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the bug-report objective, target files/assets, constraints, and verification evidence.

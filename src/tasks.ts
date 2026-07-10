@@ -276,7 +276,7 @@ export function renderTaskRun(projectRoot: string, taskId: string): { task: Stud
 
 export async function executeTaskRun(projectRoot: string, taskId: string, options: ExecuteTaskRunOptions = {}): Promise<ExecuteTaskRunResult> {
   const task = getTask(readTaskStore(projectRoot), taskId);
-  const workflowTier = task.workflowId ? workflowRegistry[task.workflowId as WorkflowId]?.modelTier : undefined;
+  const workflowModel = task.workflowId ? workflowRegistry[task.workflowId as WorkflowId]?.model : undefined;
   const prepared = prepareRun(
     task.role,
     {
@@ -294,7 +294,8 @@ export async function executeTaskRun(projectRoot: string, taskId: string, option
       approvedByUser: options.approvedByUser,
       constrainedSandbox: options.constrainedSandbox ?? task.runPolicy?.constrainedSandbox,
       approvalScope: options.approvalScope,
-      modelTier: options.modelTier ?? task.runPolicy?.modelTier ?? workflowTier
+      modelTier: options.modelTier ?? task.runPolicy?.modelTier,
+      surfaceModel: workflowModel
     },
     process.cwd()
   );

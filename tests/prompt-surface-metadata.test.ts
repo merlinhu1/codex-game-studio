@@ -31,26 +31,26 @@ describe("prompt surface metadata", () => {
     });
   });
 
-  test("resolves explicit surface tiers deterministically without id heuristics", () => {
-    expect(resolveModelRoute({ surfaceTier: "terra" })).toMatchObject({ tier: "terra", source: "surface", primary: { model: "gpt-5.6-terra" } });
-    expect(resolveModelRoute({ surfaceTier: "terra", requestedTier: "sol" })).toMatchObject({ tier: "sol", source: "explicit-tier", primary: { model: "gpt-5.6-sol" } });
+  test("infers surface tiers from concrete models and applies explicit overrides", () => {
+    expect(resolveModelRoute({ surfaceModel: "gpt-5.6-terra" })).toMatchObject({ tier: "terra", source: "surface", primary: { model: "gpt-5.6-terra" } });
+    expect(resolveModelRoute({ surfaceModel: "gpt-5.6-terra", requestedTier: "sol" })).toMatchObject({ tier: "sol", source: "explicit-tier", primary: { model: "gpt-5.6-sol" } });
     expect(modelTierForModel("gpt-5.5")).toBe("sol");
     expect(modelTierForModel("gpt-5.4")).toBe("terra");
     expect(modelTierForModel("gpt-5.4-mini")).toBe("luna");
   });
 
-  test("rejects Claude and abstract model names and tier/model mismatches", () => {
+  test("rejects unregistered models and reasoning effort mismatches", () => {
     for (const valid of ["gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna", "gpt-5.5", "gpt-5.4", "gpt-5.4-mini"]) expect(isCodexModelName(valid)).toBe(true);
     for (const invalid of ["sonnet", "haiku", "opus", "claude-3.5-sonnet", "complex", "moderate", "simple", "gpt5.5"]) {
       expect(isCodexModelName(invalid)).toBe(false);
-      expect(validateModelPolicy({ model_tier: "terra", model: invalid, model_reasoning_effort: "high" }).valid).toBe(false);
+      expect(validateModelPolicy({ model: invalid, model_reasoning_effort: "high" }).valid).toBe(false);
     }
-    expect(validateModelPolicy({ model_tier: "terra", model: "gpt-5.6-sol", model_reasoning_effort: "xhigh" }).issues).toContain("model gpt-5.6-sol does not match terra primary gpt-5.6-terra");
+    expect(validateModelPolicy({ model: "gpt-5.6-sol", model_reasoning_effort: "high" }).issues).toContain("reasoning effort high does not match gpt-5.6-sol expected xhigh");
   });
 
   test("parses markdown frontmatter", () => {
-    const parsed = parsePromptSurfaceFrontmatter(`---\nname: cgs-prototype\nmodel_tier: sol\nmodel: gpt-5.6-sol\nmodel_reasoning_effort: xhigh\nrelated-agents: [producer, qa-playtester]\n---\n\n# Body`);
-    expect(parsed.frontmatter.model_tier).toBe("sol");
+    const parsed = parsePromptSurfaceFrontmatter(`---\nname: cgs-prototype\nmodel: gpt-5.6-sol\nmodel_reasoning_effort: xhigh\nrelated-agents: [producer, qa-playtester]\n---\n\n# Body`);
+    expect(parsed.frontmatter.model_tier).toBeUndefined();
     expect(parsed.frontmatter.model).toBe("gpt-5.6-sol");
     expect(parsed.frontmatter.model_reasoning_effort).toBe("xhigh");
     expect(parsed.body).toContain("# Body");

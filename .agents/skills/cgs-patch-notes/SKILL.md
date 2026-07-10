@@ -1,7 +1,6 @@
 ---
 name: cgs-patch-notes
 description: Use for patch notes tasks that write player-facing patch notes with fixes, known issues, balance changes, and verification caveats; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: luna
 model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the patch-notes objective, target files/assets, constraints, and verification evidence.

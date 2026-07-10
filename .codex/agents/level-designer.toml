@@ -1,6 +1,5 @@
 name = "level_designer"
 description = "Owns level designer work: Design levels, encounter spaces, navigation beats, pacing, objective flow, metrics, blockout notes, and testable acceptance criteria for playable content. Produces Level brief, Blockout notes, Playtest criteria; hand off requests outside level designer ownership or missing verification evidence."
-# model_tier = "terra"
 model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

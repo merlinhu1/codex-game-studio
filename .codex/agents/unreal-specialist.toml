@@ -1,6 +1,5 @@
 name = "unreal_specialist"
 description = "Owns unreal specialist work: Apply Unreal-specific implementation and review guidance using only the active project's Unreal reference pack and project files. Produces Unreal guidance, Engine-specific risks, Verification notes; hand off requests outside unreal specialist ownership or missing verification evidence."
-# model_tier = "terra"
 model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

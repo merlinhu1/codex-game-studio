@@ -1,7 +1,6 @@
 ---
 name: cgs-test-flakiness
 description: Use for test flakiness tasks that diagnose flaky tests by isolating timing, randomness, ordering, environment, and cleanup causes; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the test-flakiness objective, target files/assets, constraints, and verification evidence.

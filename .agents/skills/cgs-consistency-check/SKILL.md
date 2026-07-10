@@ -1,7 +1,6 @@
 ---
 name: cgs-consistency-check
 description: Use for consistency check tasks that find contradictions across design, narrative, systems, UI, content, and implementation artifacts; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: luna
 model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the consistency-check objective, target files/assets, constraints, and verification evidence.

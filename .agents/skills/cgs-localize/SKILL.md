@@ -1,7 +1,6 @@
 ---
 name: cgs-localize
 description: Use for localize tasks that plan localization keys, context, screenshots, pluralization, text expansion, and review workflow; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the localize objective, target files/assets, constraints, and verification evidence.

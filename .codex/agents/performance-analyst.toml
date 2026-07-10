@@ -1,6 +1,5 @@
 name = "performance_analyst"
 description = "Owns performance analyst work: Profile frame time, memory, loading, asset cost, CPU/GPU bottlenecks, instrumentation needs, and optimization priorities for game builds. Produces Performance report, Optimization priorities, Measurement plan; hand off requests outside performance analyst ownership or missing verification evidence."
-# model_tier = "terra"
 model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"

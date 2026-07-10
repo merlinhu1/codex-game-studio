@@ -1,7 +1,6 @@
 ---
 name: cgs-dev-story
 description: Use for dev story tasks that turn a design or bug into an implementation-ready story with owner, files, acceptance tests, and dependencies; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the dev-story objective, target files/assets, constraints, and verification evidence.

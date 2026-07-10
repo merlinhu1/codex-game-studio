@@ -220,7 +220,8 @@ export async function orchestrateTasks(options: OrchestrateOptions): Promise<Orc
         approvedByUser: options.approvedByUser,
         constrainedSandbox: options.constrainedSandbox ?? task.runPolicy?.constrainedSandbox,
         approvalScope: options.approvalScope,
-        modelTier: options.modelTier ?? task.runPolicy?.modelTier ?? (task.workflowId ? workflowRegistry[task.workflowId as WorkflowId]?.modelTier : undefined)
+        modelTier: options.modelTier ?? task.runPolicy?.modelTier,
+        surfaceModel: task.workflowId ? workflowRegistry[task.workflowId as WorkflowId]?.model : undefined
       },
       process.cwd()
     )

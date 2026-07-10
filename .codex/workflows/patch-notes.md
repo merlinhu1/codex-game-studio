@@ -1,5 +1,4 @@
 ---
-model_tier: luna
 model: gpt-5.6-luna
 model_reasoning_effort: low
 primary-agent: release-manager

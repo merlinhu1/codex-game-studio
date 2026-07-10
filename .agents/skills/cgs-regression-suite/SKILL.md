@@ -1,7 +1,6 @@
 ---
 name: cgs-regression-suite
 description: Use for regression suite tasks that define or run regression coverage for changed systems, prior bugs, critical paths, and release blockers; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the regression-suite objective, target files/assets, constraints, and verification evidence.

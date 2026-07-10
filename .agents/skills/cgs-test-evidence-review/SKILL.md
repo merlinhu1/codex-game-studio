@@ -1,7 +1,6 @@
 ---
 name: cgs-test-evidence-review
 description: Use for test evidence review tasks that review validation output, logs, screenshots, recordings, and manual checks for sufficiency and gaps; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the test-evidence-review objective, target files/assets, constraints, and verification evidence.

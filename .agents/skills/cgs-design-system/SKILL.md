@@ -1,7 +1,6 @@
 ---
 name: cgs-design-system
 description: Use for design system tasks that author a system GDD with rules, data, edge cases, progression, feedback, and implementation acceptance tests; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: sol
 model: gpt-5.6-sol
 model_reasoning_effort: xhigh
 argument-hint: Describe the design-system objective, target files/assets, constraints, and verification evidence.

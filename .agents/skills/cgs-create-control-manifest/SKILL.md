@@ -1,7 +1,6 @@
 ---
 name: cgs-create-control-manifest
 description: Use for create control manifest tasks that define implementation rules, boundaries, allowed dependencies, validation commands, and review gates; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: luna
 model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the create-control-manifest objective, target files/assets, constraints, and verification evidence.

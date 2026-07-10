@@ -1,6 +1,5 @@
 name = "senior_game_designer"
 description = "Owns senior game designer work: Own high-level systems, progression, economy, core loops, balancing direction, and design cohesion across feature slices. Produces Systems design, Progression model, Acceptance criteria; hand off requests outside senior game designer ownership or missing verification evidence."
-# model_tier = "sol"
 model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 model_verbosity = "medium"

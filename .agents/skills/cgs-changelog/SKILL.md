@@ -1,7 +1,6 @@
 ---
 name: cgs-changelog
 description: Use for changelog tasks that maintain a developer-facing changelog grouped by feature, fix, content, performance, and breaking change; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: luna
 model: gpt-5.6-luna
 model_reasoning_effort: low
 argument-hint: Describe the changelog objective, target files/assets, constraints, and verification evidence.

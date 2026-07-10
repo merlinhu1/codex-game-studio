@@ -1,7 +1,6 @@
 ---
 name: cgs-asset-spec
 description: Use for asset spec tasks that specify an individual asset with purpose, constraints, references, dimensions, states, and acceptance criteria; produce verification evidence, changed or proposed files, and handoff boundaries.
-model_tier: terra
 model: gpt-5.6-terra
 model_reasoning_effort: high
 argument-hint: Describe the asset-spec objective, target files/assets, constraints, and verification evidence.
