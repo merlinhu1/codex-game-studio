@@ -1,8 +1,8 @@
 ---
 name: cgs-playtest-report
 description: Use for playtest report tasks that capture player observations, comprehension, friction, loop completion, bugs, quotes, and design implications; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.4
-model_reasoning_effort: medium
+model: gpt-5.6-luna
+model_reasoning_effort: low
 argument-hint: Describe the playtest-report objective, target files/assets, constraints, and verification evidence.
 primary-agent: qa-playtester
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

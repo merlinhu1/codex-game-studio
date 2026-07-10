@@ -1,6 +1,6 @@
 name = "ue_replication_specialist"
 description = "Owns ue replication specialist work: Implement and review replicated properties, RepNotify, RPC validation, prediction/correction, relevancy, dormancy, net serialization, and bandwidth tuning. Separate gameplay ownership from network transport concerns and escalate GAS-specific prediction to GAS ownership when relevant. Produces Replication guidance, RPC and bandwidth risks, Network verification notes; hand off requests outside ue replication specialist ownership or missing verification evidence."
-model = "gpt-5.5"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/ue-replication-specialist.md"

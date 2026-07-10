@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-sol
+model_reasoning_effort: medium
 primary-agent: creative-director
 linked-skills: [cgs-brainstorm, cgs-quick-design]
 phase: plan

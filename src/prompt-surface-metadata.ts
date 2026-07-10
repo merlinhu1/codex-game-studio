@@ -1,11 +1,27 @@
-export const codexModelNames = ["gpt-5.5", "gpt-5.4", "gpt-5.4-mini"] as const;
+export const codexModelNames = ["gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna", "gpt-5.5", "gpt-5.4", "gpt-5.4-mini"] as const;
 export type CodexModelName = (typeof codexModelNames)[number];
 
 export const reasoningEfforts = ["minimal", "low", "medium", "high", "xhigh"] as const;
 export type ReasoningEffort = (typeof reasoningEfforts)[number];
 
-export const promptSurfaceComplexities = ["complex", "moderate", "simple"] as const;
-export type PromptSurfaceComplexity = (typeof promptSurfaceComplexities)[number];
+export const modelTiers = ["sol", "terra", "luna"] as const;
+export type ModelTier = (typeof modelTiers)[number];
+export type ModelSelectionSource = "surface" | "explicit-tier" | "verification-escalation";
+
+export type ModelTarget = {
+  model: CodexModelName;
+  effort: ReasoningEffort;
+};
+
+export type ModelTierPolicy = {
+  tier: ModelTier;
+  primary: ModelTarget;
+  fallback: ModelTarget;
+};
+
+export type ResolvedModelRoute = ModelTierPolicy & {
+  source: ModelSelectionSource;
+};
 
 export type ModelPolicy = {
   model: string;
@@ -47,14 +63,60 @@ export type PromptDiscoveryQuality = {
   diagnostics: PromptDiscoveryDiagnostic[];
 };
 
-const modelByComplexity: Record<PromptSurfaceComplexity, CodexModelName> = {
-  complex: "gpt-5.5",
-  moderate: "gpt-5.4",
-  simple: "gpt-5.4-mini"
+const policyByTier: Record<ModelTier, ModelTierPolicy> = {
+  sol: {
+    tier: "sol",
+    primary: { model: "gpt-5.6-sol", effort: "high" },
+    fallback: { model: "gpt-5.5", effort: "high" }
+  },
+  terra: {
+    tier: "terra",
+    primary: { model: "gpt-5.6-terra", effort: "medium" },
+    fallback: { model: "gpt-5.4", effort: "medium" }
+  },
+  luna: {
+    tier: "luna",
+    primary: { model: "gpt-5.6-luna", effort: "low" },
+    fallback: { model: "gpt-5.4-mini", effort: "low" }
+  }
 };
 
-export function codexModelForComplexity(complexity: PromptSurfaceComplexity): CodexModelName {
-  return modelByComplexity[complexity];
+export function isModelTier(value: string | undefined): value is ModelTier {
+  return !!value && (modelTiers as readonly string[]).includes(value);
+}
+
+export function modelPolicyForTier(tier: ModelTier): ModelTierPolicy {
+  const policy = policyByTier[tier];
+  return { tier: policy.tier, primary: { ...policy.primary }, fallback: { ...policy.fallback } };
+}
+
+export function modelTierForModel(model: string | undefined): ModelTier | undefined {
+  if (!model) return undefined;
+  return modelTiers.find((tier) => {
+    const policy = policyByTier[tier];
+    return policy.primary.model === model || policy.fallback.model === model;
+  });
+}
+
+export function resolveModelRoute(options: { surfaceModel: CodexModelName; surfaceEffort: ReasoningEffort; requestedTier?: ModelTier }): ResolvedModelRoute {
+  const surfaceTier = modelTierForModel(options.surfaceModel);
+  if (!surfaceTier) throw new Error(`Codex model is not assigned to a routing tier: ${options.surfaceModel}`);
+  const surfaceRoute = modelPolicyForTier(surfaceTier);
+  if (!options.requestedTier) {
+    return {
+      ...surfaceRoute,
+      primary: { model: options.surfaceModel, effort: options.surfaceEffort },
+      fallback: { ...surfaceRoute.fallback, effort: options.surfaceEffort },
+      source: "surface"
+    };
+  }
+  const overrideRoute = modelPolicyForTier(options.requestedTier);
+  return {
+    ...overrideRoute,
+    primary: { ...overrideRoute.primary, effort: options.surfaceEffort },
+    fallback: { ...overrideRoute.fallback, effort: options.surfaceEffort },
+    source: "explicit-tier"
+  };
 }
 
 export function isCodexModelName(value: string | undefined): value is CodexModelName {
@@ -68,7 +130,9 @@ export function isReasoningEffort(value: string | undefined): value is Reasoning
 export function validateModelPolicy(policy: ModelPolicy): { valid: boolean; issues: string[] } {
   const issues: string[] = [];
   if (!isCodexModelName(policy.model)) issues.push(`invalid Codex model: ${policy.model}`);
-  if (policy.model_reasoning_effort && !isReasoningEffort(policy.model_reasoning_effort)) issues.push(`invalid reasoning effort: ${policy.model_reasoning_effort}`);
+  if (!policy.model_reasoning_effort) issues.push("missing reasoning effort");
+  else if (!isReasoningEffort(policy.model_reasoning_effort)) issues.push(`invalid reasoning effort: ${policy.model_reasoning_effort}`);
+  if (isCodexModelName(policy.model) && !modelTierForModel(policy.model)) issues.push(`Codex model is not assigned to a routing tier: ${policy.model}`);
   return { valid: issues.length === 0, issues };
 }
 
@@ -119,19 +183,6 @@ export function parseTomlCommentArrayField(body: string, key: string): string[] 
   const match = new RegExp(`^#\\s*${key}\\s*=\\s*\\[([^\\]]*)\\]`, "m").exec(body);
   if (!match) return [];
   return match[1].split(",").map((part) => part.trim().replace(/^['\"]|['\"]$/g, "")).filter(Boolean);
-}
-
-export function inferComplexityFromId(id: string): PromptSurfaceComplexity {
-  if (/help|status|changelog|patch-notes|smoke-check|project-stage-detect|standards/.test(id)) return "simple";
-  if (/bugfix|hotfix|qa|test|regression|playtest|localize|perf|code-review|dev-story|task|story/.test(id)) return "moderate";
-  return "complex";
-}
-
-export function defaultModelPolicyForId(id: string): { model: CodexModelName; effort: ReasoningEffort } {
-  const complexity = inferComplexityFromId(id);
-  if (complexity === "complex") return { model: "gpt-5.5", effort: "high" };
-  if (complexity === "moderate") return { model: "gpt-5.4", effort: "medium" };
-  return { model: "gpt-5.4-mini", effort: "low" };
 }
 
 function discoveryQuality(diagnostics: PromptDiscoveryDiagnostic[]): PromptDiscoveryQuality {

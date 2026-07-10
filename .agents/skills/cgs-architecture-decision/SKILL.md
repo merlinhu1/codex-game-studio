@@ -1,7 +1,7 @@
 ---
 name: cgs-architecture-decision
 description: Use for architecture decision tasks that write an ADR with context, options, decision, consequences, validation, and rollback; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
+model: gpt-5.6-sol
 model_reasoning_effort: high
 argument-hint: Describe the architecture-decision objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer

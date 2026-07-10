@@ -272,7 +272,7 @@ export function validateTemplateSurfaces(root = process.cwd()): ValidationCheck[
     checks.push(fail("template.AGENTS.exists", "AGENTS.md missing", agentsMd));
   } else {
     const body = readFileSync(agentsMd, "utf8");
-    checks.push(body.includes("template") && body.includes(".codex/agents") && !body.includes("NodeNext") && !body.includes("Truthmark Workflow") ? pass("template.AGENTS.game_facing", "AGENTS.md is game-facing", agentsMd) : fail("template.AGENTS.game_facing", "AGENTS.md must be game-facing template guidance", agentsMd));
+    checks.push(body.includes("template") && body.includes(".codex/agents") && body.includes("## Model Routing") && !body.includes("NodeNext") && !body.includes("Truthmark Workflow") ? pass("template.AGENTS.game_facing", "AGENTS.md is game-facing", agentsMd) : fail("template.AGENTS.game_facing", "AGENTS.md must be game-facing template guidance with model routing", agentsMd));
   }
   return checks;
 }

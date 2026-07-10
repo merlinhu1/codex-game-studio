@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-luna
+model_reasoning_effort: medium
 primary-agent: senior-game-artist
 linked-skills: [cgs-asset-audit, cgs-content-audit]
 phase: review

@@ -1,6 +1,6 @@
 name = "unity_dots_specialist"
 description = "Owns unity dots specialist work: Implement and review DOTS/ECS architecture, component data, systems, Jobs, Burst constraints, hybrid rendering, and conversion boundaries. Separate data-oriented performance work from ordinary MonoBehaviour code and keep profiling evidence explicit. Produces DOTS architecture guidance, ECS and Burst risks, Performance verification notes; hand off requests outside unity dots specialist ownership or missing verification evidence."
-model = "gpt-5.5"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/unity-dots-specialist.md"

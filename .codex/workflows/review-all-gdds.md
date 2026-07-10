@@ -1,5 +1,5 @@
 ---
-model: gpt-5.5
+model: gpt-5.6-sol
 model_reasoning_effort: high
 primary-agent: senior-game-designer
 linked-skills: [cgs-review-all-gdds, cgs-consistency-check]

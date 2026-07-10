@@ -1,5 +1,5 @@
 ---
-model: gpt-5.4
+model: gpt-5.6-luna
 model_reasoning_effort: medium
 primary-agent: producer
 linked-skills: [cgs-story-readiness, cgs-bugfix]

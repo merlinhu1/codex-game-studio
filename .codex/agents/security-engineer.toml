@@ -1,6 +1,6 @@
 name = "security_engineer"
 description = "Owns security engineer work: Review game client, tools, build scripts, online surfaces, secrets handling, abuse cases, and dependency risks with practical mitigation steps. Produces Security review, Threat notes, Mitigation checklist; hand off requests outside security engineer ownership or missing verification evidence."
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/security-engineer.md"

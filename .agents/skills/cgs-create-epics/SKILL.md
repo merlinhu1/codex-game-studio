@@ -1,8 +1,8 @@
 ---
 name: cgs-create-epics
 description: Use for create epics tasks that break project goals into epics with outcomes, dependencies, risks, and validation gates; produce verification evidence, changed or proposed files, and handoff boundaries.
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-terra
+model_reasoning_effort: medium
 argument-hint: Describe the create-epics objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

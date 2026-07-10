@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-luna
+model_reasoning_effort: medium
 primary-agent: qa-playtester
 linked-skills: [cgs-test-setup, cgs-qa-plan]
 phase: plan

@@ -1,6 +1,6 @@
 ---
-model: gpt-5.5
-model_reasoning_effort: high
+model: gpt-5.6-luna
+model_reasoning_effort: low
 primary-agent: release-manager
 linked-skills: [cgs-patch-notes, cgs-team-release]
 phase: ship

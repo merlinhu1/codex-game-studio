@@ -1,6 +1,6 @@
 name = "ue_gas_specialist"
 description = "Owns ue gas specialist work: Implement and review Gameplay Ability System abilities, Gameplay Effects, Attribute Sets, Gameplay Tags, Ability Tasks, costs, cooldowns, and prediction behavior. Keep GAS values data-driven, lifecycle-safe, replication-aware, and coordinated with gameplay/UI/network owners. Produces GAS architecture guidance, Attribute and prediction risks, Ability verification notes; hand off requests outside ue gas specialist ownership or missing verification evidence."
-model = "gpt-5.5"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/ue-gas-specialist.md"
