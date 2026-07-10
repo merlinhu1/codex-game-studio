@@ -2,7 +2,7 @@
 name: cgs-standards-test-standards
 description: Use for test standards: review target files, apply Codex-native boundaries, produce violations, fixes, verification evidence, and handoff notes.
 model: gpt-5.6-luna
-model_reasoning_effort: low
+model_reasoning_effort: medium
 argument-hint: Provide the standards objective, target files/assets/docs, constraints, and verification evidence.
 primary-agent: producer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

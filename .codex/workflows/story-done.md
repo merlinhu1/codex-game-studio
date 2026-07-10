@@ -1,6 +1,6 @@
 ---
 model: gpt-5.6-luna
-model_reasoning_effort: low
+model_reasoning_effort: medium
 primary-agent: qa-playtester
 linked-skills: [cgs-story-done, cgs-bugfix]
 phase: review

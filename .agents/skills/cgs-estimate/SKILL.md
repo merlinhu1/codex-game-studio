@@ -2,7 +2,7 @@
 name: cgs-estimate
 description: Use for estimate tasks that estimate scope using uncertainty, dependencies, discipline handoffs, risk buffers, and confidence ranges; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-terra
-model_reasoning_effort: medium
+model_reasoning_effort: low
 argument-hint: Describe the estimate objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

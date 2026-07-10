@@ -1,6 +1,6 @@
 ---
 model: gpt-5.6-terra
-model_reasoning_effort: medium
+model_reasoning_effort: high
 primary-agent: performance-analyst
 linked-skills: [cgs-perf-profile, cgs-bugfix]
 phase: review

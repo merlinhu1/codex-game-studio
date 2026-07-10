@@ -1,6 +1,6 @@
 ---
 model: gpt-5.6-terra
-model_reasoning_effort: medium
+model_reasoning_effort: low
 primary-agent: accessibility-specialist
 linked-skills: [cgs-standards-ui, cgs-ux-design]
 phase: plan

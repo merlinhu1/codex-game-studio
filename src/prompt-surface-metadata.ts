@@ -98,11 +98,25 @@ export function modelTierForModel(model: string | undefined): ModelTier | undefi
   });
 }
 
-export function resolveModelRoute(options: { surfaceModel: CodexModelName; requestedTier?: ModelTier }): ResolvedModelRoute {
+export function resolveModelRoute(options: { surfaceModel: CodexModelName; surfaceEffort: ReasoningEffort; requestedTier?: ModelTier }): ResolvedModelRoute {
   const surfaceTier = modelTierForModel(options.surfaceModel);
   if (!surfaceTier) throw new Error(`Codex model is not assigned to a routing tier: ${options.surfaceModel}`);
-  const tier = options.requestedTier ?? surfaceTier;
-  return { ...modelPolicyForTier(tier), source: options.requestedTier ? "explicit-tier" : "surface" };
+  const surfaceRoute = modelPolicyForTier(surfaceTier);
+  if (!options.requestedTier) {
+    return {
+      ...surfaceRoute,
+      primary: { model: options.surfaceModel, effort: options.surfaceEffort },
+      fallback: { ...surfaceRoute.fallback, effort: options.surfaceEffort },
+      source: "surface"
+    };
+  }
+  const overrideRoute = modelPolicyForTier(options.requestedTier);
+  return {
+    ...overrideRoute,
+    primary: { ...overrideRoute.primary, effort: options.surfaceEffort },
+    fallback: { ...overrideRoute.fallback, effort: options.surfaceEffort },
+    source: "explicit-tier"
+  };
 }
 
 export function isCodexModelName(value: string | undefined): value is CodexModelName {
@@ -116,13 +130,9 @@ export function isReasoningEffort(value: string | undefined): value is Reasoning
 export function validateModelPolicy(policy: ModelPolicy): { valid: boolean; issues: string[] } {
   const issues: string[] = [];
   if (!isCodexModelName(policy.model)) issues.push(`invalid Codex model: ${policy.model}`);
-  if (policy.model_reasoning_effort && !isReasoningEffort(policy.model_reasoning_effort)) issues.push(`invalid reasoning effort: ${policy.model_reasoning_effort}`);
-  const tier = modelTierForModel(policy.model);
-  if (tier) {
-    const tierPolicy = modelPolicyForTier(tier);
-    const expected = tierPolicy.primary.model === policy.model ? tierPolicy.primary : tierPolicy.fallback;
-    if (policy.model_reasoning_effort !== expected.effort) issues.push(`reasoning effort ${policy.model_reasoning_effort ?? "missing"} does not match ${policy.model} expected ${expected.effort}`);
-  }
+  if (!policy.model_reasoning_effort) issues.push("missing reasoning effort");
+  else if (!isReasoningEffort(policy.model_reasoning_effort)) issues.push(`invalid reasoning effort: ${policy.model_reasoning_effort}`);
+  if (isCodexModelName(policy.model) && !modelTierForModel(policy.model)) issues.push(`Codex model is not assigned to a routing tier: ${policy.model}`);
   return { valid: issues.length === 0, issues };
 }
 

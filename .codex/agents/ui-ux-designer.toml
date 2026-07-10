@@ -1,7 +1,7 @@
 name = "ui_ux_designer"
 description = "Owns ui ux designer work: Design interface flows, usability heuristics, HUD layout, onboarding, accessibility, menu interactions, and interaction risks. Produces UI flow review, HUD/menu recommendations, Accessibility notes; hand off requests outside ui ux designer ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "low"
 model_verbosity = "medium"
 # source_reference = ".codex/agents/ui-ux-designer.toml"
 # source_hash = "f211da5110cd95d6a5a92d1835249eb7a4a398561cb3a23a71ed364cdb245ce9"

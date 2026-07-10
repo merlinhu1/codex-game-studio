@@ -6,7 +6,7 @@ import { engineReferenceProjectPath, selectedEngineReferencePrompts } from "./en
 import { renderGeneratedSurfaceMetadata } from "./generated-surfaces.js";
 import { projectRoleIdsForEngine, renderRoleContractSections, rolePackages, studioRoleIds, type StudioRoleId } from "./roles.js";
 import { packageAssetPath } from "./paths.js";
-import { modelPolicyForTier, modelTierForModel, parseTomlStringField } from "./prompt-surface-metadata.js";
+import { isReasoningEffort, modelTierForModel, parseTomlStringField, type CodexModelName, type ReasoningEffort } from "./prompt-surface-metadata.js";
 
 
 export function validateBaseAgents(): string[] {
@@ -128,19 +128,20 @@ function tomlMultiline(value: string): string {
   return `"""\n${value.replace(/"""/g, '\"\"\"')}\n"""`;
 }
 
-function trackedRoleModelPolicy(role: StudioRoleId) {
+function trackedRoleModelTarget(role: StudioRoleId): { model: CodexModelName; effort: ReasoningEffort } {
   const body = readFileSync(packageAssetPath(`.codex/agents/${role}.toml`), "utf8");
   const model = parseTomlStringField(body, "model");
-  const tier = modelTierForModel(model);
-  if (!tier) throw new Error(`${role} has an invalid or unregistered model`);
-  return modelPolicyForTier(tier);
+  const effort = parseTomlStringField(body, "model_reasoning_effort");
+  if (!modelTierForModel(model)) throw new Error(`${role} has an invalid or unregistered model`);
+  if (!isReasoningEffort(effort)) throw new Error(`${role} has an invalid or missing model reasoning effort`);
+  return { model: model as CodexModelName, effort };
 }
 
 export function renderProjectCustomAgentToml(role: StudioRoleId, config: ProjectConfig, engines: EngineConfigRegistry): string {
   const pkg = rolePackages[role];
   const engine = engines[config.project.engine];
   const sourceInput = projectRolePromptSourceInput(role, config, engines);
-  const modelPolicy = trackedRoleModelPolicy(role);
+  const modelTarget = trackedRoleModelTarget(role);
   const body = [
     `# generated-by: codex-game-studio`,
     `# surface: custom-agent`,
@@ -150,8 +151,8 @@ export function renderProjectCustomAgentToml(role: StudioRoleId, config: Project
     "",
     `name = ${tomlString(role.replace(/-/g, "_"))}`,
     `description = ${tomlString(`Game development ${pkg.displayName} agent for ${role} tasks in this repository. Use for ${pkg.responsibilities.slice(0, 2).join(", ").toLowerCase()}.`)}`,
-    `model = "${modelPolicy.primary.model}"`,
-    `model_reasoning_effort = "${modelPolicy.primary.effort}"`,
+    `model = "${modelTarget.model}"`,
+    `model_reasoning_effort = "${modelTarget.effort}"`,
     `developer_instructions = ${tomlMultiline([
       `You are the ${pkg.displayName} role for ${config.project.name}.`,
       `Engine: ${engine.display_name} ${config.project.engine_version}.`,
@@ -239,7 +240,7 @@ export function projectRolePromptSourceInput(role: StudioRoleId, config: Project
   }));
   return {
     role,
-    modelPolicy: trackedRoleModelPolicy(role),
+    modelTarget: trackedRoleModelTarget(role),
     displayName: pkg.displayName,
     contextStrategy: pkg.contextStrategy,
     systemPrompt: pkg.systemPrompt,

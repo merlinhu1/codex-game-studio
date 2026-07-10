@@ -29,13 +29,16 @@ describe("prompt surface validation", () => {
     expect(failures).toEqual(expect.arrayContaining(["prompt_surface.agent.bad.model", "prompt_surface.agent.bad.traceability", "prompt_surface.agent.bad.links", "prompt_surface.agent.bad.depth"]));
   });
 
-  test("rejects prompt surfaces whose model and reasoning effort drift", () => {
+  test("accepts independent model and reasoning-effort combinations but rejects invalid efforts", () => {
     const root = makeRoot();
     const workflow = path.join(root, ".codex", "workflows", "bugfix.md");
     writeFileSync(workflow, readFileSync(workflow, "utf8").replace("model: gpt-5.6-terra", "model: gpt-5.6-sol"));
 
-    const failures = validateTemplateSurfaces(root).filter((check) => check.status === "fail").map((check) => check.id);
+    let failures = validateTemplateSurfaces(root).filter((check) => check.status === "fail").map((check) => check.id);
+    expect(failures).not.toContain("prompt_surface.workflow.bugfix.model");
 
+    writeFileSync(workflow, readFileSync(workflow, "utf8").replace("model_reasoning_effort: medium", "model_reasoning_effort: impossible"));
+    failures = validateTemplateSurfaces(root).filter((check) => check.status === "fail").map((check) => check.id);
     expect(failures).toContain("prompt_surface.workflow.bugfix.model");
   });
 

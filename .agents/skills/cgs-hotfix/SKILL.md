@@ -2,7 +2,7 @@
 name: cgs-hotfix
 description: Use for hotfix tasks that scope and execute an urgent fix with reproduction, minimal change, verification, release notes, and rollback; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-terra
-model_reasoning_effort: medium
+model_reasoning_effort: high
 argument-hint: Describe the hotfix objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

@@ -2,7 +2,7 @@
 name: cgs-bug-triage
 description: Use for bug triage tasks that classify bugs by severity, priority, reproduction confidence, owner role, risk, and release impact; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-luna
-model_reasoning_effort: low
+model_reasoning_effort: medium
 argument-hint: Describe the bug-triage objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

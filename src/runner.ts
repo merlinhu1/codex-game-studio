@@ -14,6 +14,7 @@ import { renderContextContract } from "./prompt-context.js";
 import {
   modelPolicyForTier,
   modelTierForModel,
+  isReasoningEffort,
   parseTomlStringField,
   resolveModelRoute,
   type CodexModelName,
@@ -49,6 +50,7 @@ export type RunOptions = {
   noWrite?: boolean;
   modelTier?: ModelTier;
   surfaceModel?: CodexModelName;
+  surfaceEffort?: ReasoningEffort;
 };
 
 export type PreparedRun = {
@@ -130,20 +132,28 @@ function modelFromCommand(command: { args: string[] }): CodexModelName {
   return model as CodexModelName;
 }
 
-function roleSurfaceModel(projectRoot: string, role: StudioRoleId): CodexModelName {
+function roleSurfaceTarget(projectRoot: string, role: StudioRoleId): { model: CodexModelName; effort: ReasoningEffort } {
   const file = path.join(projectRoot, ".codex", "agents", `${role}.toml`);
-  if (!existsSync(file)) return modelPolicyForTier("terra").primary.model;
-  const model = parseTomlStringField(readFileSync(file, "utf8"), "model");
+  if (!existsSync(file)) return modelPolicyForTier("terra").primary;
+  const body = readFileSync(file, "utf8");
+  const model = parseTomlStringField(body, "model");
+  const effort = parseTomlStringField(body, "model_reasoning_effort");
   if (!modelTierForModel(model)) throw new Error(`${role} has an invalid or unregistered model`);
-  return model as CodexModelName;
+  if (!isReasoningEffort(effort)) throw new Error(`${role} has an invalid or missing model reasoning effort`);
+  return { model: model as CodexModelName, effort };
 }
 
 function reviewRouteFor(route: ResolvedModelRoute): ResolvedModelRoute {
-  return { ...modelPolicyForTier(route.tier === "sol" ? "sol" : "terra"), source: "surface" };
+  const review = modelPolicyForTier(route.tier === "sol" ? "sol" : "terra");
+  const effort = route.primary.effort === "low" || route.primary.effort === "minimal" ? "medium" : route.primary.effort;
+  return { ...review, primary: { ...review.primary, effort }, fallback: { ...review.fallback, effort }, source: "surface" };
 }
 
 function fixRouteFor(route: ResolvedModelRoute): ResolvedModelRoute {
-  return route.tier === "luna" ? { ...modelPolicyForTier("terra"), source: "verification-escalation" } : route;
+  if (route.tier !== "luna") return route;
+  const fix = modelPolicyForTier("terra");
+  const effort = route.primary.effort === "low" || route.primary.effort === "minimal" ? "medium" : route.primary.effort;
+  return { ...fix, primary: { ...fix.primary, effort }, fallback: { ...fix.fallback, effort }, source: "verification-escalation" };
 }
 
 export function codexExecInvocation(
@@ -415,7 +425,8 @@ let runSequence = 0;
 
 function prepareCustomRun(role: ReturnType<typeof findCustomRole> extends infer T ? NonNullable<T> : never, options: RunOptions, cwd: string, roleInput: string, task: string, projectRoot: string): PreparedRun {
   const studio = readStudioProject(projectRoot);
-  const modelRoute = resolveModelRoute({ surfaceModel: modelPolicyForTier(role.modelTier).primary.model, requestedTier: options.modelTier });
+  const customPolicy = modelPolicyForTier(role.modelTier);
+  const modelRoute = resolveModelRoute({ surfaceModel: customPolicy.primary.model, surfaceEffort: options.surfaceEffort ?? customPolicy.primary.effort, requestedTier: options.modelTier });
   const reviewRoute = reviewRouteFor(modelRoute);
   const fixRoute = fixRouteFor(modelRoute);
   const artifactRefs = (options.includeArtifact ?? []).map((artifact) => {
@@ -608,7 +619,8 @@ export function prepareRun(roleInput: string, options: RunOptions, cwd = process
   if (!isStudioRoleId(roleInput)) throw new Error(unknownStudioRoleMessage(roleInput));
   const role = roleInput as StudioRoleId;
   const studio = readStudioProject(projectRoot);
-  const modelRoute = resolveModelRoute({ surfaceModel: options.surfaceModel ?? roleSurfaceModel(projectRoot, role), requestedTier: options.modelTier });
+  const roleTarget = roleSurfaceTarget(projectRoot, role);
+  const modelRoute = resolveModelRoute({ surfaceModel: options.surfaceModel ?? roleTarget.model, surfaceEffort: options.surfaceEffort ?? roleTarget.effort, requestedTier: options.modelTier });
   const reviewRoute = reviewRouteFor(modelRoute);
   const fixRoute = fixRouteFor(modelRoute);
   if (!isRoleAvailableForEngine(role, studio.engine)) {

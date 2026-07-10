@@ -2,7 +2,7 @@
 name: cgs-asset-audit
 description: Use for asset audit tasks that audit game assets for completeness, naming, import settings, ownership, licensing, and production risk; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-luna
-model_reasoning_effort: low
+model_reasoning_effort: medium
 argument-hint: Describe the asset-audit objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

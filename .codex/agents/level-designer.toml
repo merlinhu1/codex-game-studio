@@ -1,7 +1,7 @@
 name = "level_designer"
 description = "Owns level designer work: Design levels, encounter spaces, navigation beats, pacing, objective flow, metrics, blockout notes, and testable acceptance criteria for playable content. Produces Level brief, Blockout notes, Playtest criteria; hand off requests outside level designer ownership or missing verification evidence."
 model = "gpt-5.6-luna"
-model_reasoning_effort = "low"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/level-designer.md"
 # source_hash = "6121007acde96a808235c4290669bb5de11f1874cd1da6c9d4f0c8c7fad7ef61"

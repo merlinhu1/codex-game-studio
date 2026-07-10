@@ -2,7 +2,7 @@
 name: cgs-story-readiness
 description: Use for story readiness tasks that check if a story is implementable with clear inputs, acceptance criteria, dependencies, and validation; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-luna
-model_reasoning_effort: low
+model_reasoning_effort: medium
 argument-hint: Describe the story-readiness objective, target files/assets, constraints, and verification evidence.
 primary-agent: gameplay-programmer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

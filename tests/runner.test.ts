@@ -108,16 +108,20 @@ describe("runner", () => {
     const surfaceRun = prepareRun("gameplay-programmer", { project: projectRoot, task: "Rename one label", dryRun: true }, cwd);
     expect(surfaceRun.selectedModelTier).toBe("luna");
     expect(surfaceRun.selectedModel).toBe("gpt-5.6-luna");
+    expect(surfaceRun.modelReasoningEffort).toBe("low");
     expect(surfaceRun.fallbackModel).toBe("gpt-5.4-mini");
+    expect(surfaceRun.fallbackReasoningEffort).toBe("low");
     expect(surfaceRun.prompt).toContain("Selected tier: luna");
 
     const lunaFixRun = prepareRun("gameplay-programmer", { project: projectRoot, task: "Format the inventory", dryRun: true, fix: true }, cwd);
     expect(lunaFixRun.fixCodexCommand?.args).toContain("gpt-5.6-terra");
+    expect(lunaFixRun.fixCodexCommand?.args).toEqual(expect.arrayContaining(["-c", 'model_reasoning_effort="medium"']));
     expect(lunaFixRun.fixFallbackCodexCommand?.args).toContain("gpt-5.4");
 
     const overrideRun = prepareRun("gameplay-programmer", { project: projectRoot, task: "Review architecture", dryRun: true, modelTier: "sol" }, cwd);
     expect(overrideRun.selectedModelTier).toBe("sol");
     expect(overrideRun.selectedModel).toBe("gpt-5.6-sol");
+    expect(overrideRun.modelReasoningEffort).toBe("low");
     expect(overrideRun.modelSelectionSource).toBe("explicit-tier");
   });
 
