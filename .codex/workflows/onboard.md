@@ -23,8 +23,8 @@ Orient a contributor to the project goal, current stage, key files, active roles
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/onboard.md
-- documentation/design/gdd.md
-- documentation/production/timeline.md
+- design/gdd.md
+- production/timeline.md
 
 ## Role
 

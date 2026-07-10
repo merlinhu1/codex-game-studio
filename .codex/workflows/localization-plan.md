@@ -23,7 +23,7 @@ Create a localization plan with string scope, culturalization risks, asset depen
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/localization-plan.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

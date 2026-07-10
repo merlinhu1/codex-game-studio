@@ -23,7 +23,7 @@ Create or review a feature/design spec with rules, edge cases, implementation sl
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/design-spec.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

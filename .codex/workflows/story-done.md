@@ -82,3 +82,9 @@ CLI aliases:
 ## Handoff
 
 Report changed files, validation evidence, residual risks, and the next owner only when ownership changes.
+
+## Documentation Impact
+
+- After functional source, engine, or asset changes, update the owning game document or record a fresh `## Documentation Impact` decision in `production/session-state/active.md`.
+- Run `./codex-game-studio docs-impact --base <review-base>` before handoff.
+- A `no-update` decision must state why no player, architecture, production, or release document changed.

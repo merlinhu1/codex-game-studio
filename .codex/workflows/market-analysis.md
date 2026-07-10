@@ -23,7 +23,7 @@ Analyze audience, competitors, positioning, pricing, and market risks for the cu
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/market-analysis.md
-- resources/market-research/market-overview.md
+- docs/market-overview.md
 
 ## Role
 

@@ -2,7 +2,7 @@
 
 This is Open Game Studio's maintainer-only framework for evaluating how skills, workflow prompts, and agent-facing surfaces perform in realistic runs.
 
-It follows the CCGS pattern of catalog → rubric → behavioral scenario, and the Truthmark pattern of manual workflow-quality runs with deterministic boundaries, semantic judging, human review, and token tracking.
+It follows the CCGS pattern of catalog → rubric → behavioral scenario, with deterministic boundaries, semantic judging, human review, and token tracking.
 
 Normal game-project users do not need this folder. It is not a hidden runtime, daemon, hosted service, or downstream requirement. If a downstream game repository only wants to build a game and not maintain Open Game Studio's prompt surfaces, users may delete `eval-framework/` and the related maintainer-only OpenSpec change files from their copy.
 

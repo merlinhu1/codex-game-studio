@@ -23,7 +23,7 @@ Create a bounded vertical-slice plan with tasks, risks, and verification gates.
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/vertical-slice.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

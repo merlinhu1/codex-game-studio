@@ -34,11 +34,11 @@ export const workflowCatalog: { phases: WorkflowCatalogPhase[] } = {
       nextPhase: "systems-design",
       steps: [
         { id: "brainstorm", label: "Brainstorm", command: "./codex-game-studio run creative-director", required: false, description: "Explore fantasy, verbs, pillars, audience, and scope tiers." },
-        { id: "engine-setup", label: "Engine Setup", command: "./codex-game-studio run engine-setup", required: true, artifact: { path: ".codex/studio.json", pattern: "\"engine\"" }, description: "Configure engine, version, project structure, and validation path." },
-        { id: "game-concept", label: "Game Concept", command: "./codex-game-studio run game-concept", required: true, artifact: { path: "design/gdd.md" }, description: "Capture concept, pillars, and initial player promise." },
-        { id: "design-review-concept", label: "Concept Design Review", command: "./codex-game-studio run design-review-concept", required: false, artifact: { path: "design/gdd.md", pattern: "Pillar|Scope|Risk" }, description: "Review the concept before deeper systems work." },
-        { id: "art-bible", label: "Art Bible", command: "./codex-game-studio run art-bible", required: false, artifact: { path: "design/art/art-bible.md" }, description: "Define visual identity and asset constraints." },
-        { id: "map-systems", label: "Systems Map", command: "./codex-game-studio run map-systems", required: true, artifact: { path: "design/gdd.md", pattern: "System" }, description: "Map systems and dependencies." }
+        { id: "engine-setup", label: "Engine Setup", command: "./codex-game-studio workflow render engine-setup", required: true, artifact: { path: ".codex/studio.json", pattern: "\"engine\"" }, description: "Configure engine, version, project structure, and validation path." },
+        { id: "game-concept", label: "Game Concept", command: "./codex-game-studio workflow render game-concept", required: true, artifact: { path: "design/gdd.md" }, description: "Capture concept, pillars, and initial player promise." },
+        { id: "design-review-concept", label: "Concept Design Review", command: "./codex-game-studio workflow render design-review-concept", required: false, artifact: { path: "design/gdd.md", pattern: "Pillar|Scope|Risk" }, description: "Review the concept before deeper systems work." },
+        { id: "art-bible", label: "Art Bible", command: "./codex-game-studio workflow render art-bible", required: false, artifact: { path: "design/art/art-bible.md" }, description: "Define visual identity and asset constraints." },
+        { id: "map-systems", label: "Systems Map", command: "./codex-game-studio workflow render map-systems", required: true, artifact: { path: "design/gdd.md", pattern: "System" }, description: "Map systems and dependencies." }
       ]
     },
     {
@@ -47,15 +47,15 @@ export const workflowCatalog: { phases: WorkflowCatalogPhase[] } = {
       description: "Turn the concept into implementable systems, UX, and architecture.",
       nextPhase: "pre-production",
       steps: [
-        { id: "design-system", label: "System GDDs", command: "./codex-game-studio run design-system", required: true, repeatable: true, artifact: { path: "design/gdd.md" }, description: "Author or update per-system GDD content." },
-        { id: "design-review", label: "Design Review", command: "./codex-game-studio run design-review", required: false, artifact: { path: "design/gdd.md", pattern: "Risk|Scope|System" }, description: "Review design consistency and scope risk." },
-        { id: "review-all-gdds", label: "Review All GDDs", command: "./codex-game-studio run review-all-gdds", required: false, artifact: { path: "design/gdd.md", pattern: "#|System" }, description: "Review all design documents for contradictions and missing ownership." },
-        { id: "consistency-check", label: "Consistency Check", command: "./codex-game-studio run consistency-check", required: false, artifact: { path: "production/session-state/active.md" }, description: "Check cross-surface consistency before implementation planning." },
-        { id: "create-architecture", label: "Architecture", command: "./codex-game-studio run create-architecture", required: true, artifact: { path: "docs/architecture/README.md" }, description: "Define technical architecture and implementation boundaries." },
-        { id: "control-manifest", label: "Control Manifest", command: "./codex-game-studio run control-manifest", required: false, artifact: { path: "design/ux/controls.md" }, description: "Document inputs, remapping, prompts, devices, and accessibility constraints." },
-        { id: "accessibility-doc", label: "Accessibility Requirements", command: "./codex-game-studio run accessibility-doc", required: false, artifact: { path: "design/ux/accessibility.md" }, description: "Document accessibility requirements and verification paths." },
-        { id: "ux-design", label: "UX Design", command: "./codex-game-studio run ux-design", required: false, artifact: { path: "design/ux/ux-spec.md" }, description: "Document player journeys, HUD, menus, and accessibility." },
-        { id: "ux-review", label: "UX Review", command: "./codex-game-studio run ux-review", required: false, artifact: { path: "design/ux/ux-review.md" }, description: "Review UX flows and usability risks before implementation." }
+        { id: "design-system", label: "System GDDs", command: "./codex-game-studio workflow render design-system", required: true, repeatable: true, artifact: { path: "design/gdd.md" }, description: "Author or update per-system GDD content." },
+        { id: "design-review", label: "Design Review", command: "./codex-game-studio workflow render design-review", required: false, artifact: { path: "design/gdd.md", pattern: "Risk|Scope|System" }, description: "Review design consistency and scope risk." },
+        { id: "review-all-gdds", label: "Review All GDDs", command: "./codex-game-studio workflow render review-all-gdds", required: false, artifact: { path: "design/gdd.md", pattern: "#|System" }, description: "Review all design documents for contradictions and missing ownership." },
+        { id: "consistency-check", label: "Consistency Check", command: "./codex-game-studio workflow render consistency-check", required: false, artifact: { path: "production/session-state/active.md" }, description: "Check cross-surface consistency before implementation planning." },
+        { id: "create-architecture", label: "Architecture", command: "./codex-game-studio workflow render create-architecture", required: true, artifact: { path: "docs/architecture/README.md" }, description: "Define technical architecture and implementation boundaries." },
+        { id: "control-manifest", label: "Control Manifest", command: "./codex-game-studio workflow render control-manifest", required: false, artifact: { path: "design/ux/controls.md" }, description: "Document inputs, remapping, prompts, devices, and accessibility constraints." },
+        { id: "accessibility-doc", label: "Accessibility Requirements", command: "./codex-game-studio workflow render accessibility-doc", required: false, artifact: { path: "design/ux/accessibility.md" }, description: "Document accessibility requirements and verification paths." },
+        { id: "ux-design", label: "UX Design", command: "./codex-game-studio workflow render ux-design", required: false, artifact: { path: "design/ux/ux-spec.md" }, description: "Document player journeys, HUD, menus, and accessibility." },
+        { id: "ux-review", label: "UX Review", command: "./codex-game-studio workflow render ux-review", required: false, artifact: { path: "design/ux/ux-review.md" }, description: "Review UX flows and usability risks before implementation." }
       ]
     },
     {
@@ -64,14 +64,14 @@ export const workflowCatalog: { phases: WorkflowCatalogPhase[] } = {
       description: "Validate build feasibility and production readiness.",
       nextPhase: "production",
       steps: [
-        { id: "entity-inventory", label: "Entity Inventory", command: "./codex-game-studio run entity-inventory", required: true, repeatable: true, artifact: { path: "design/entities/entity-inventory.md" }, description: "Catalog gameplay entities, content objects, owners, dependencies, and validation signals." },
-        { id: "asset-spec", label: "Asset Spec", command: "./codex-game-studio run asset-spec", required: false, repeatable: true, artifact: { path: "design/art/asset-spec.md" }, description: "Specify assets with references, constraints, variants, and production acceptance criteria." },
+        { id: "entity-inventory", label: "Entity Inventory", command: "./codex-game-studio workflow render entity-inventory", required: true, repeatable: true, artifact: { path: "design/entities/entity-inventory.md" }, description: "Catalog gameplay entities, content objects, owners, dependencies, and validation signals." },
+        { id: "asset-spec", label: "Asset Spec", command: "./codex-game-studio workflow render asset-spec", required: false, repeatable: true, artifact: { path: "design/art/asset-spec.md" }, description: "Specify assets with references, constraints, variants, and production acceptance criteria." },
         { id: "vertical-slice", label: "Vertical Slice", command: "use skill cgs-vertical-slice", required: true, artifact: { path: "production/session-state/active.md", pattern: "PROCEED" }, description: "Validate representative full-loop feasibility." },
-        { id: "test-setup", label: "Test Setup", command: "./codex-game-studio run test-setup", required: true, artifact: { path: "tests/qa-plan.md" }, description: "Define test environment, scenarios, data, automation hooks, and exit criteria." },
+        { id: "test-setup", label: "Test Setup", command: "./codex-game-studio workflow render test-setup", required: true, artifact: { path: "tests/qa-plan.md" }, description: "Define test environment, scenarios, data, automation hooks, and exit criteria." },
         { id: "qa-plan", label: "QA Plan", command: "use skill cgs-qa-plan", required: true, artifact: { path: "tests/qa-plan.md" }, description: "Plan QA coverage before production." },
-        { id: "scope-check", label: "Scope Check", command: "./codex-game-studio run scope-check", required: false, artifact: { path: "production/session-state/scope-check.md" }, description: "Check production scope, cutlines, owners, and deferrals." },
-        { id: "balance-check", label: "Balance Check", command: "./codex-game-studio run balance-check", required: false, artifact: { path: "design/balance/balance-check.md" }, description: "Review economy, progression, difficulty, exploit risks, and tuning hooks." },
-        { id: "asset-audit", label: "Asset Audit", command: "./codex-game-studio run asset-audit", required: false, artifact: { path: "design/art/asset-audit.md" }, description: "Audit asset completeness, style fit, naming, and technical constraints." }
+        { id: "scope-check", label: "Scope Check", command: "./codex-game-studio workflow render scope-check", required: false, artifact: { path: "production/session-state/scope-check.md" }, description: "Check production scope, cutlines, owners, and deferrals." },
+        { id: "balance-check", label: "Balance Check", command: "./codex-game-studio workflow render balance-check", required: false, artifact: { path: "design/balance/balance-check.md" }, description: "Review economy, progression, difficulty, exploit risks, and tuning hooks." },
+        { id: "asset-audit", label: "Asset Audit", command: "./codex-game-studio workflow render asset-audit", required: false, artifact: { path: "design/art/asset-audit.md" }, description: "Audit asset completeness, style fit, naming, and technical constraints." }
       ]
     },
     {
@@ -80,13 +80,13 @@ export const workflowCatalog: { phases: WorkflowCatalogPhase[] } = {
       description: "Implement, review, stabilize, and coordinate feature work.",
       nextPhase: "release",
       steps: [
-        { id: "team-feature", label: "Team Feature", command: "./codex-game-studio run team-feature", required: true, repeatable: true, artifact: { path: "production/session-state/active.md" }, description: "Plan cross-discipline feature work with owners, dependencies, risks, and verification gates." },
-        { id: "implement", label: "Implement", command: "./codex-game-studio run implement", required: true, repeatable: true, artifact: { path: "production/session-state/active.md" }, description: "Implement a bounded feature slice with validation evidence and handoff notes." },
-        { id: "code-review", label: "Code Review", command: "./codex-game-studio run code-review", required: true, repeatable: true, artifact: { path: "production/session-state/active.md", pattern: "review|Review|APPROVED|changes" }, description: "Review code changes for correctness, architecture fit, tests, and release risk." },
-        { id: "bug-report", label: "Bug Report", command: "./codex-game-studio run bug-report", required: false, repeatable: true, artifact: { path: "tests/bug-report.md" }, description: "Capture reproducible bug reports with evidence and owner routing." },
-        { id: "playtest-polish", label: "Playtest Polish", command: "./codex-game-studio run playtest-polish", required: false, artifact: { path: "production/session-state/playtest-polish.md" }, description: "Prioritize polish fixes from playtest evidence and current build risks." },
-        { id: "team-polish", label: "Team Polish", command: "./codex-game-studio run team-polish", required: false, artifact: { path: "production/session-state/team-polish.md" }, description: "Coordinate multi-role polish work, cutlines, risks, and verification gates." },
-        { id: "retrospective", label: "Retrospective", command: "./codex-game-studio run retrospective", required: false, artifact: { path: "production/session-state/retrospective.md" }, description: "Capture outcomes, misses, learnings, follow-ups, and process changes." }
+        { id: "team-feature", label: "Team Feature", command: "./codex-game-studio workflow render team-feature", required: true, repeatable: true, artifact: { path: "production/session-state/active.md" }, description: "Plan cross-discipline feature work with owners, dependencies, risks, and verification gates." },
+        { id: "implement", label: "Implement", command: "./codex-game-studio workflow render implement", required: true, repeatable: true, artifact: { path: "production/session-state/active.md" }, description: "Implement a bounded feature slice with validation evidence and handoff notes." },
+        { id: "code-review", label: "Code Review", command: "./codex-game-studio workflow render code-review", required: true, repeatable: true, artifact: { path: "production/session-state/active.md", pattern: "review|Review|APPROVED|changes" }, description: "Review code changes for correctness, architecture fit, tests, and release risk." },
+        { id: "bug-report", label: "Bug Report", command: "./codex-game-studio workflow render bug-report", required: false, repeatable: true, artifact: { path: "tests/bug-report.md" }, description: "Capture reproducible bug reports with evidence and owner routing." },
+        { id: "playtest-polish", label: "Playtest Polish", command: "./codex-game-studio workflow render playtest-polish", required: false, artifact: { path: "production/session-state/playtest-polish.md" }, description: "Prioritize polish fixes from playtest evidence and current build risks." },
+        { id: "team-polish", label: "Team Polish", command: "./codex-game-studio workflow render team-polish", required: false, artifact: { path: "production/session-state/team-polish.md" }, description: "Coordinate multi-role polish work, cutlines, risks, and verification gates." },
+        { id: "retrospective", label: "Retrospective", command: "./codex-game-studio workflow render retrospective", required: false, artifact: { path: "production/session-state/retrospective.md" }, description: "Capture outcomes, misses, learnings, follow-ups, and process changes." }
       ]
     },
     {
@@ -95,9 +95,9 @@ export const workflowCatalog: { phases: WorkflowCatalogPhase[] } = {
       description: "Validate release readiness and launch operations.",
       steps: [
         { id: "release-checklist", label: "Release Checklist", command: "use skill cgs-release-checklist", required: true, artifact: { path: "production/release-checklist.md" }, description: "Verify ship/no-ship readiness." },
-        { id: "patch-notes", label: "Patch Notes", command: "./codex-game-studio run patch-notes", required: false, artifact: { path: "docs/patch-notes.md" }, description: "Draft player-facing patch notes with fixes, known issues, and validation evidence." },
-        { id: "launch-checklist", label: "Launch Checklist", command: "./codex-game-studio run launch-checklist", required: true, artifact: { path: "production/launch-checklist.md" }, description: "Coordinate launch-day readiness." },
-        { id: "changelog", label: "Changelog", command: "./codex-game-studio run changelog", required: true, artifact: { path: "docs/changelog.md" }, description: "Prepare player/developer-visible changes." }
+        { id: "patch-notes", label: "Patch Notes", command: "./codex-game-studio workflow render patch-notes", required: false, artifact: { path: "docs/patch-notes.md" }, description: "Draft player-facing patch notes with fixes, known issues, and validation evidence." },
+        { id: "launch-checklist", label: "Launch Checklist", command: "./codex-game-studio workflow render launch-checklist", required: true, artifact: { path: "production/launch-checklist.md" }, description: "Coordinate launch-day readiness." },
+        { id: "changelog", label: "Changelog", command: "./codex-game-studio workflow render changelog", required: true, artifact: { path: "docs/changelog.md" }, description: "Prepare player/developer-visible changes." }
       ]
     }
   ]

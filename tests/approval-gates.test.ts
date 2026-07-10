@@ -23,12 +23,12 @@ const baseRecord: ApprovalRecord = {
     role: "gameplay-programmer",
     objective: "Implement jump feel",
     approvedGlobs: ["source/**/*.ts"],
-    approvedFiles: ["documentation/design/gdd.md"],
+    approvedFiles: ["design/gdd.md"],
     projectStage: "prototype",
     studioMode: "guided-studio"
   }),
   approvedGlobs: ["source/**/*.ts"],
-  approvedFiles: ["documentation/design/gdd.md"],
+  approvedFiles: ["design/gdd.md"],
   source: "draft-workflow",
   approvedBy: "designer",
   approvedAt: "2026-06-13T00:00:00.000Z",
@@ -51,7 +51,7 @@ describe("approval gates", () => {
     const first = canonicalObjectiveSha256({
       role: " Gameplay-Programmer ",
       objective: "Implement   jump\nfeel",
-      approvedGlobs: ["source/**/*.ts", "documentation/design/gdd.md"],
+      approvedGlobs: ["source/**/*.ts", "design/gdd.md"],
       approvedFiles: ["source/player.ts"],
       projectStage: "prototype",
       studioMode: "guided-studio"
@@ -59,7 +59,7 @@ describe("approval gates", () => {
     const same = canonicalObjectiveSha256({
       role: "gameplay-programmer",
       objective: "Implement jump feel",
-      approvedGlobs: ["documentation/design/gdd.md", "source/**/*.ts"],
+      approvedGlobs: ["design/gdd.md", "source/**/*.ts"],
       approvedFiles: ["source/player.ts"],
       projectStage: "prototype",
       studioMode: "guided-studio"
@@ -67,7 +67,7 @@ describe("approval gates", () => {
     const differentMode = canonicalObjectiveSha256({
       role: "gameplay-programmer",
       objective: "Implement jump feel",
-      approvedGlobs: ["documentation/design/gdd.md", "source/**/*.ts"],
+      approvedGlobs: ["design/gdd.md", "source/**/*.ts"],
       approvedFiles: ["source/player.ts"],
       projectStage: "prototype",
       studioMode: "strict-studio"
@@ -106,7 +106,7 @@ describe("approval gates", () => {
         role: "gameplay-programmer",
         objective: "Implement jump feel",
         approvedGlobs: ["source/**/*.ts"],
-        approvedFiles: ["documentation/design/gdd.md"],
+        approvedFiles: ["design/gdd.md"],
         projectStage: "prototype",
         studioMode: "guided-studio",
         now: new Date("2026-06-13T00:00:00.000Z")
@@ -136,7 +136,7 @@ describe("approval gates", () => {
       role: "gameplay-programmer",
       objective: "Implement jump feel",
       approvedGlobs: ["source/**/*.ts"],
-      approvedFiles: ["documentation/design/gdd.md"],
+      approvedFiles: ["design/gdd.md"],
       projectStage: "prototype",
       studioMode: "guided-studio",
       now: new Date("2026-06-13T02:00:00.000Z")

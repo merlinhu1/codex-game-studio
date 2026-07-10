@@ -3,7 +3,7 @@ model: gpt-5.6-luna
 model_reasoning_effort: low
 primary-agent: release-manager
 linked-skills: [cgs-patch-notes, cgs-team-release]
-phase: ship
+phase: implement
 risk: high
 argument-hint: Provide a patch notes request with release scope, fixes, known issues, validation evidence, audience, owner or handoff needs, and approval constraints.
 source-reference: .codex/workflows/patch-notes.md
@@ -82,3 +82,8 @@ CLI aliases:
 ## Handoff
 
 Report changed files, validation evidence, residual risks, and the next owner only when ownership changes.
+
+## Document Target
+
+- Write the completed release record to `docs/patch-notes.md`.
+- Confirm the document is grounded in the release diff and validation evidence.

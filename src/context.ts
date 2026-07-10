@@ -2,9 +2,9 @@ import { existsSync, realpathSync, statSync } from "node:fs";
 import path from "node:path";
 
 const broadContextCandidates = [
-  "documentation/design/gdd.md",
-  "documentation/production/timeline.md",
-  "resources/market-research/market-overview.md",
+  "design/gdd.md",
+  "production/timeline.md",
+  "docs/market-overview.md",
   "AGENTS.md",
   ".codex/studio.json"
 ] as const;

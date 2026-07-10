@@ -23,7 +23,7 @@ Convert current project state into milestone goals, task slices, risks, owners, 
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/production-milestone.md
-- documentation/production/timeline.md
+- production/timeline.md
 
 ## Role
 

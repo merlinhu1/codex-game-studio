@@ -23,7 +23,7 @@ Map core gameplay, economy, progression, content, UI, and technical systems with
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/map-systems.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

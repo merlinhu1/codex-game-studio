@@ -23,7 +23,7 @@ Review design docs for player promise, systemic consistency, production scope, e
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/design-review.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

@@ -33,10 +33,10 @@ export const workflowTaskRecipes: Partial<Record<WorkflowId, WorkflowTaskRecipe>
     workflowId: "vertical-slice",
     title: "Vertical Slice Task Graph",
     tasks: [
-      { key: "plan", title: "Plan the smallest production-quality vertical slice", role: "producer", files: ["documentation/design/gdd.md"], writeFiles: [], dependencies: [] },
-      { key: "design", title: "Define vertical-slice acceptance criteria and feature rules", role: "game-designer", files: ["documentation/design/gdd.md"], writeFiles: [], dependencies: ["plan"] },
-      { key: "implement", title: "Implement the vertical-slice core loop", role: "gameplay-programmer", files: ["documentation/design/gdd.md"], writeFiles: [], dependencies: ["design"] },
-      { key: "qa", title: "Verify vertical-slice playability and blockers", role: "qa-playtester", files: ["documentation/design/gdd.md"], writeFiles: [], dependencies: ["implement"] }
+      { key: "plan", title: "Plan the smallest production-quality vertical slice", role: "producer", files: ["design/gdd.md"], writeFiles: [], dependencies: [] },
+      { key: "design", title: "Define vertical-slice acceptance criteria and feature rules", role: "game-designer", files: ["design/gdd.md"], writeFiles: [], dependencies: ["plan"] },
+      { key: "implement", title: "Implement the vertical-slice core loop", role: "gameplay-programmer", files: ["design/gdd.md"], writeFiles: [], dependencies: ["design"] },
+      { key: "qa", title: "Verify vertical-slice playability and blockers", role: "qa-playtester", files: ["design/gdd.md"], writeFiles: [], dependencies: ["implement"] }
     ]
   },
   bugfix: {
@@ -52,19 +52,19 @@ export const workflowTaskRecipes: Partial<Record<WorkflowId, WorkflowTaskRecipe>
     workflowId: "ui-ux-review",
     title: "UI/UX Review Task Graph",
     tasks: [
-      { key: "ux", title: "Review the UI flow and interaction risks", role: "ui-ux-designer", files: ["documentation/design/gdd.md"], writeFiles: [], dependencies: [] },
-      { key: "accessibility", title: "Review accessibility gaps in the UI flow", role: "accessibility-specialist", files: ["documentation/design/gdd.md"], writeFiles: [], dependencies: ["ux"] },
-      { key: "qa", title: "Verify UI/UX review evidence and blockers", role: "qa-playtester", files: ["documentation/design/gdd.md"], writeFiles: [], dependencies: ["accessibility"] }
+      { key: "ux", title: "Review the UI flow and interaction risks", role: "ui-ux-designer", files: ["design/gdd.md"], writeFiles: [], dependencies: [] },
+      { key: "accessibility", title: "Review accessibility gaps in the UI flow", role: "accessibility-specialist", files: ["design/gdd.md"], writeFiles: [], dependencies: ["ux"] },
+      { key: "qa", title: "Verify UI/UX review evidence and blockers", role: "qa-playtester", files: ["design/gdd.md"], writeFiles: [], dependencies: ["accessibility"] }
     ]
   },
   "release-checklist": {
     workflowId: "release-checklist",
     title: "Release Checklist Task Graph",
     tasks: [
-      { key: "qa", title: "Validate release test evidence", role: "qa-playtester", files: ["documentation/production/timeline.md"], writeFiles: [], dependencies: [] },
-      { key: "perf", title: "Review release performance risks", role: "performance-analyst", files: ["documentation/production/timeline.md"], writeFiles: [], dependencies: [] },
-      { key: "security", title: "Review release security risks", role: "security-engineer", files: ["documentation/production/timeline.md"], writeFiles: [], dependencies: [] },
-      { key: "release", title: "Synthesize ship or no-ship release checklist", role: "release-manager", files: ["documentation/production/timeline.md"], writeFiles: [], dependencies: ["qa", "perf", "security"] }
+      { key: "qa", title: "Validate release test evidence", role: "qa-playtester", files: ["production/timeline.md"], writeFiles: [], dependencies: [] },
+      { key: "perf", title: "Review release performance risks", role: "performance-analyst", files: ["production/timeline.md"], writeFiles: [], dependencies: [] },
+      { key: "security", title: "Review release security risks", role: "security-engineer", files: ["production/timeline.md"], writeFiles: [], dependencies: [] },
+      { key: "release", title: "Synthesize ship or no-ship release checklist", role: "release-manager", files: ["production/timeline.md"], writeFiles: [], dependencies: ["qa", "perf", "security"] }
     ]
   }
 };

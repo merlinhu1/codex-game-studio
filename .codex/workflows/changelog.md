@@ -3,7 +3,7 @@ model: gpt-5.6-luna
 model_reasoning_effort: low
 primary-agent: release-manager
 linked-skills: [cgs-changelog, cgs-team-release]
-phase: ship
+phase: implement
 risk: high
 argument-hint: Provide a changelog request with release or milestone diff, grouped changes, migration notes, known issues, owner or handoff needs, and verification evidence.
 source-reference: .codex/workflows/changelog.md
@@ -82,3 +82,8 @@ CLI aliases:
 ## Handoff
 
 Report changed files, validation evidence, residual risks, and the next owner only when ownership changes.
+
+## Document Target
+
+- Write the completed release record to `docs/changelog.md`.
+- Confirm the document is grounded in the release diff and validation evidence.

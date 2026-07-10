@@ -23,7 +23,7 @@ Plan the next sprint or iteration with committed goals, role assignments, risks,
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/sprint-plan.md
-- documentation/production/timeline.md
+- production/timeline.md
 
 ## Role
 

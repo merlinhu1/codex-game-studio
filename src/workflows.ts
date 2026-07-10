@@ -128,7 +128,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "implementation-planning",
     gapCoverage: ["vertical-slice planning", "milestone decomposition"],
     objective: "Create a bounded vertical-slice plan with tasks, risks, and verification gates.",
-    extraContextFiles: ["documentation/design/gdd.md"]
+    extraContextFiles: ["design/gdd.md"]
   }),
   bugfix: workflow({
     id: "bugfix",
@@ -160,7 +160,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "onboarding-discovery",
     gapCoverage: ["market discovery", "competitor positioning"],
     objective: "Analyze audience, competitors, positioning, pricing, and market risks for the current project.",
-    extraContextFiles: ["resources/market-research/market-overview.md"],
+    extraContextFiles: ["docs/market-overview.md"],
     templateIds: ["market_analysis", "pitch_document"],
     cliAlias: "market"
   }),
@@ -209,7 +209,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["concept review", "pillar and scope validation"],
     objective: "Review the concept for coherent player promise, pillars, audience fit, production scope, and design risks before deeper systems work.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["gdd", "risk_register"],
     cliAlias: "design-review-concept"
   }),
@@ -234,7 +234,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["systems map", "system dependency mapping"],
     objective: "Map core gameplay, economy, progression, content, UI, and technical systems with dependencies, owners, and validation signals.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["gdd", "technical_design", "architecture_traceability"],
     cliAlias: "map-systems"
   }),
@@ -247,7 +247,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["system design", "per-system GDD"],
     objective: "Author or update a system design with player-facing rules, data model, edge cases, dependencies, tuning hooks, and acceptance criteria.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["feature_spec", "economy_model", "difficulty_curve"],
     cliAlias: "design-system"
   }),
@@ -260,7 +260,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["design review", "scope and consistency review"],
     objective: "Review design docs for player promise, systemic consistency, production scope, edge cases, and handoff readiness.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["gdd", "risk_register", "handoff"],
     cliAlias: "design-review"
   }),
@@ -273,7 +273,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["GDD review", "cross-document consistency"],
     objective: "Review all GDD and design artifacts for contradictions, missing systems, stale assumptions, and implementation blockers.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["gdd", "handoff", "risk_register"],
     cliAlias: "review-all-gdds"
   }),
@@ -286,7 +286,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "team-coordination",
     gapCoverage: ["consistency check", "cross-surface contradiction review"],
     objective: "Check design, production, architecture, UI, and validation surfaces for contradictions, missing owners, and stale assumptions.",
-    extraContextFiles: ["documentation/design/gdd.md", "documentation/production/timeline.md"],
+    extraContextFiles: ["design/gdd.md", "production/timeline.md"],
     templateIds: ["handoff", "risk_register"],
     cliAlias: "consistency-check"
   }),
@@ -299,7 +299,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["architecture creation", "technical boundaries"],
     objective: "Create technical architecture with engine modules, data flow, integration points, risk areas, and verification strategy.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["technical_design", "architecture_traceability", "adr"],
     cliAlias: "create-architecture"
   }),
@@ -336,7 +336,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["entity inventory", "content entity taxonomy"],
     objective: "Create or update an entity inventory covering gameplay objects, actors, content items, dependencies, ownership, and verification signals.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["gdd", "feature_spec"],
     cliAlias: "entity-inventory"
   }),
@@ -349,7 +349,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["asset specification", "art production handoff"],
     objective: "Create an implementation-ready asset specification with references, constraints, variants, file expectations, risks, and review criteria.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["art_direction", "art_bible"],
     cliAlias: "asset-spec"
   }),
@@ -362,7 +362,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "localization-accessibility",
     gapCoverage: ["UX design", "player journey and interface specification"],
     objective: "Design player journeys, HUD, menus, interaction states, onboarding, accessibility hooks, and implementation-ready UX artifacts.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["ux_spec", "accessibility_requirements", "player_journey"],
     cliAlias: "ux-design"
   }),
@@ -375,7 +375,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "localization-accessibility",
     gapCoverage: ["UX review", "usability risk inspection"],
     objective: "Review UX flows, HUD, menus, onboarding, interaction states, accessibility risks, and handoff readiness with concrete findings.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["ui_ux_review", "ux_spec", "accessibility_requirements"],
     cliAlias: "ux-review"
   }),
@@ -388,7 +388,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "qa-testing",
     gapCoverage: ["test setup", "QA environment readiness"],
     objective: "Define the test setup for the current feature or milestone, including scenarios, data, environment assumptions, automation hooks, and exit criteria.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["test_plan", "test_evidence"],
     cliAlias: "test-setup"
   }),
@@ -401,7 +401,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "implementation-planning",
     gapCoverage: ["implementation execution", "bounded feature delivery"],
     objective: "Implement a bounded feature slice from accepted design context with changed files, validation evidence, risks, and handoff notes.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["feature_spec", "test_evidence", "vertical_slice_report"],
     cliAlias: "implement"
   }),
@@ -414,7 +414,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "qa-testing",
     gapCoverage: ["code review", "implementation quality gate"],
     objective: "Review code changes for correctness, architecture fit, engine conventions, testing evidence, risk, and release readiness.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["architecture_traceability", "technical_design"],
     cliAlias: "code-review"
   }),
@@ -427,7 +427,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "qa-testing",
     gapCoverage: ["bug reporting", "reproducible defect capture"],
     objective: "Capture a reproducible bug report with expected versus actual behavior, environment, repro steps, evidence, severity, and owner routing.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["playtest_report", "test_evidence"],
     cliAlias: "bug-report"
   }),
@@ -440,7 +440,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "team-coordination",
     gapCoverage: ["retrospective", "learning capture"],
     objective: "Run a milestone or sprint retrospective that records outcomes, misses, risks, follow-ups, and concrete process changes.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["postmortem", "risk_register"],
     cliAlias: "retrospective"
   }),
@@ -453,7 +453,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "team-coordination",
     gapCoverage: ["team feature planning", "cross-discipline coordination"],
     objective: "Plan a cross-discipline feature with owner roles, artifacts, dependencies, risks, implementation slices, and verification gates.",
-    extraContextFiles: ["documentation/design/gdd.md", "documentation/production/timeline.md"],
+    extraContextFiles: ["design/gdd.md", "production/timeline.md"],
     templateIds: ["production_milestone", "feature_spec", "sprint_plan"],
     cliAlias: "team-feature"
   }),
@@ -466,7 +466,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "team-coordination",
     gapCoverage: ["scope check", "production cutline review"],
     objective: "Review production scope, identify cuts or deferrals, name owner decisions, and preserve the smallest shippable milestone.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["production_milestone", "risk_register"],
     cliAlias: "scope-check"
   }),
@@ -479,7 +479,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["balance check", "economy and progression risk review"],
     objective: "Review balance, resources, progression, difficulty, exploit risks, and tuning hooks against player goals and telemetry signals.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["economy_model"],
     cliAlias: "balance-check"
   }),
@@ -492,7 +492,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["asset audit", "content completeness review"],
     objective: "Audit assets for completeness, style fit, technical constraints, naming, missing variants, and release-blocking production risks.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["art_direction", "art_bible"],
     cliAlias: "asset-audit"
   }),
@@ -505,7 +505,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "qa-testing",
     gapCoverage: ["playtest polish", "player experience triage"],
     objective: "Review playtest feedback and current build evidence to prioritize polish fixes, blockers, warnings, and follow-up validation.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["playtest_report", "test_evidence"],
     cliAlias: "playtest-polish"
   }),
@@ -518,7 +518,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "team-coordination",
     gapCoverage: ["team polish planning", "multi-role polish coordination"],
     objective: "Coordinate polish work across design, art, audio, UI, QA, and engineering with owners, cutlines, risks, and verification gates.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["production_milestone", "risk_register"],
     cliAlias: "team-polish"
   }),
@@ -527,11 +527,11 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     model: "gpt-5.6-luna",
     modelReasoningEffort: "low",
     role: "release-manager",
-    phase: "ship",
+    phase: "implement",
     category: "release-hotfix",
     gapCoverage: ["patch notes", "player-facing release communication"],
-    objective: "Draft patch notes with highlights, fixes, known issues, compatibility notes, validation evidence, and approval needs.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    objective: "Draft and write docs/patch-notes.md with highlights, fixes, known issues, compatibility notes, validation evidence, and approval needs.",
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["release_notes"],
     cliAlias: "patch-notes"
   }),
@@ -540,11 +540,11 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     model: "gpt-5.6-luna",
     modelReasoningEffort: "low",
     role: "release-manager",
-    phase: "ship",
+    phase: "implement",
     category: "release-hotfix",
     gapCoverage: ["changelog", "developer-visible change record"],
-    objective: "Prepare a developer-visible changelog with grouped changes, fixes, migration notes, known issues, and verification evidence.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    objective: "Prepare and write docs/changelog.md with grouped changes, fixes, migration notes, known issues, and verification evidence.",
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["release_notes"],
     cliAlias: "changelog"
   }),
@@ -557,7 +557,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "release-hotfix",
     gapCoverage: ["launch checklist", "launch readiness coordination"],
     objective: "Prepare launch-day readiness checks across build, store, comms, rollback, support, monitoring, and final go/no-go decisions.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["ship_check", "release_notes", "test_plan"],
     cliAlias: "launch-checklist"
   }),
@@ -570,7 +570,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["feature specification", "design acceptance criteria"],
     objective: "Create or review a feature/design spec with rules, edge cases, implementation slices, and acceptance criteria.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["feature_spec", "economy_model", "difficulty_curve", "player_journey"],
     cliAlias: "design-spec"
   }),
@@ -619,7 +619,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "team-coordination",
     gapCoverage: ["milestone planning", "production risk tracking"],
     objective: "Convert current project state into milestone goals, task slices, risks, owners, and verification gates.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["production_milestone", "risk_register"],
     cliAlias: "milestone"
   }),
@@ -654,7 +654,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "release-hotfix",
     gapCoverage: ["ship readiness", "release blocker review"],
     objective: "Assess milestone readiness, package risk, validation status, and release blockers.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["ship_check", "release_notes", "risk_register"]
   }),
   onboard: workflow({
@@ -666,7 +666,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "onboarding-discovery",
     gapCoverage: ["project onboarding", "repository orientation"],
     objective: "Orient a contributor to the project goal, current stage, key files, active roles, and safest first actions.",
-    extraContextFiles: ["documentation/design/gdd.md", "documentation/production/timeline.md"],
+    extraContextFiles: ["design/gdd.md", "production/timeline.md"],
     templateIds: ["handoff", "pitch_document"],
     cliAlias: "start",
     cliAliases: ["onboard"]
@@ -680,7 +680,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["concept ideation", "creative option generation"],
     objective: "Generate bounded game ideas, feature variations, player fantasies, and tradeoff notes from the current project constraints.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["pitch_document", "player_journey", "art_bible", "sound_bible"],
     cliAlias: "brainstorm"
   }),
@@ -693,7 +693,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "implementation-planning",
     gapCoverage: ["prototype planning", "playable-loop slicing"],
     objective: "Plan the smallest playable prototype slice with owner roles, required assets, implementation tasks, and validation checks.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["vertical_slice_report", "technical_design", "risk_register"],
     cliAlias: "prototype"
   }),
@@ -706,7 +706,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "design-architecture",
     gapCoverage: ["architecture decision records", "technical tradeoff capture"],
     objective: "Draft an architecture decision with context, options, selected direction, consequences, risks, and verification implications.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["adr", "technical_design", "architecture_traceability"],
     cliAlias: "architecture-decision"
   }),
@@ -731,7 +731,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "implementation-planning",
     gapCoverage: ["epic creation", "roadmap decomposition"],
     objective: "Create production epics from the project goal with scope, owners, dependencies, risks, and acceptance signals.",
-    extraContextFiles: ["documentation/design/gdd.md", "documentation/production/timeline.md"],
+    extraContextFiles: ["design/gdd.md", "production/timeline.md"],
     templateIds: ["production_milestone", "risk_register"],
     cliAlias: "create-epics"
   }),
@@ -744,7 +744,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "implementation-planning",
     gapCoverage: ["story breakdown", "implementation-ready task slicing"],
     objective: "Break an epic or feature into implementation-ready stories with role owner, files or artifacts to inspect, acceptance criteria, and verification gates.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["feature_spec"],
     cliAlias: "create-stories"
   }),
@@ -757,7 +757,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "team-coordination",
     gapCoverage: ["sprint planning", "iteration commitment"],
     objective: "Plan the next sprint or iteration with committed goals, role assignments, risks, validation gates, and explicit non-goals.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["sprint_plan", "risk_register"],
     cliAlias: "sprint-plan"
   }),
@@ -770,7 +770,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "team-coordination",
     gapCoverage: ["sprint status", "blocker visibility"],
     objective: "Summarize sprint status, completed work, blockers, risks, next owners, and verification evidence without mutating task state.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["sprint_plan", "postmortem"],
     cliAlias: "sprint-status"
   }),
@@ -807,7 +807,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "qa-testing",
     gapCoverage: ["test planning", "QA strategy"],
     objective: "Create a QA plan with target scenarios, risk areas, test data, manual checks, automated checks, and exit criteria.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["test_plan", "test_evidence", "accessibility_requirements"],
     cliAlias: "qa-plan"
   }),
@@ -855,7 +855,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "release-hotfix",
     gapCoverage: ["release checklist", "ship gate verification"],
     objective: "Create a release checklist with blockers, warnings, validation commands, packaging checks, rollback notes, and communication needs.",
-    extraContextFiles: ["documentation/production/timeline.md"],
+    extraContextFiles: ["production/timeline.md"],
     templateIds: ["release_notes", "risk_register", "test_plan"],
     cliAlias: "release-checklist"
   }),
@@ -880,7 +880,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
     category: "localization-accessibility",
     gapCoverage: ["localization planning", "culturalization readiness"],
     objective: "Create a localization plan with string scope, culturalization risks, asset dependencies, text expansion, subtitles, and verification checks.",
-    extraContextFiles: ["documentation/design/gdd.md"],
+    extraContextFiles: ["design/gdd.md"],
     templateIds: ["accessibility_requirements", "ux_spec"],
     cliAlias: "localization-plan"
   })
