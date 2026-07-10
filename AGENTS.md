@@ -21,11 +21,11 @@ Choose and record the active engine in `.codex/studio.json` during project setup
 
 Before broad inspection, use compact context helpers when available, then read only surfaced files and explicit task targets:
 
-- `npm run ctx:studio`
-- `npm run ctx:task -- "<task>"`
-- `npm run ctx:role -- <role-id>`
-- `npm run ctx:workflow -- <workflow-id>`
-- `npm run ctx:changed`
+- `./codex-game-studio context studio`
+- `./codex-game-studio context task "<task>"`
+- `./codex-game-studio context role <role-id>`
+- `./codex-game-studio context workflow <workflow-id>`
+- `./codex-game-studio context changed`
 
 ## Model Routing
 

@@ -2,7 +2,7 @@
 
 **Codex セッションを、構造化されたローカル優先のゲームスタジオに変える CLI。**
 
-[🇺🇸 English](../../README.md) | [🇨🇳 简体中文](README.zh.md) | [🇯🇵 日本語](README.ja.md) | [🇰🇷 한국어](README.ko.md)
+[🇺🇸 English](../../README.md) | [🇨🇳 简体中文](README.zh.md) | [🇯🇵 日本語](README.ja.md) | [🇰🇷 한국어](README.ko.md) | [🇩🇪 Deutsch](README.de.md) | [🇫🇷 Français](README.fr.md) | [🇪🇸 Español](README.es.md) | [🇧🇷 Português](README.pt.md) | [🇷🇺 Русский](README.ru.md) | [🇸🇦 العربية](README.ar.md) | [🇮🇹 Italiano](README.it.md) | [🇵🇱 Polski](README.pl.md) | [🇹🇷 Türkçe](README.tr.md) | [🇻🇳 Tiếng Việt](README.vi.md) | [🇮🇩 Bahasa Indonesia](README.id.md) | [🇬🇷 Ελληνικά](README.el.md)
 
 Codex Game Studio は TypeScript 製の CLI です。ゲームプロジェクト用に、Codex が使いやすいワークスペースを作成します。ロールプロンプト、ワークフロープロンプト、プロジェクトファイル、タスク状態、検証情報は、Git でレビューできる通常のファイルとして保存されます。
 
@@ -13,22 +13,22 @@ Codex Game Studio は TypeScript 製の CLI です。ゲームプロジェクト
 Node.js 24 以上が必要です。`run <role>` には Codex CLI が必要です。
 
 ```sh
-git clone git@github.com:merlinhu1/codex-game-studio.git
-cd codex-game-studio
+git clone git@github.com:merlinhu1/codex-game-studio.git signal-cartographer
+cd signal-cartographer
 npm install
 npm run build
 
 ./codex-game-studio init --name "Signal Cartographer" --engine godot --mode prototype --non-interactive \
   --concept "A compact puzzle game about routing trains through haunted switchyards"
 
-./codex-game-studio status --project projects/signal-cartographer
-./codex-game-studio validate --project projects/signal-cartographer
+./codex-game-studio status
+./codex-game-studio validate
 ```
 
 Codex を起動する前に、ロールプロンプトを確認できます：
 
 ```sh
-./codex-game-studio run producer --project projects/signal-cartographer \
+./codex-game-studio run producer \
   "Create the initial market overview." --print-prompt
 ```
 
@@ -44,14 +44,14 @@ Codex を起動する前に、ロールプロンプトを確認できます：
 - アート、QA、オーディオ、ローカライズ、ライブ運用にはそれぞれ専用の文脈が必要です。
 - レビュー担当者には、チャット履歴ではなく Git で確認できるファイルが必要です。
 
-Codex Game Studio は、その構造をローカルなプロジェクト成果物に変換します。
+Codex Game Studio は、その構造を Codex が読めて人間がレビューできるローカルなプロジェクト成果物に変換します。
 
 ## 得られるもの
 
 | 機能 | 意味 |
 | --- | --- |
 | ローカルプロジェクト生成 | 現在のリポジトリルートに決定的なゲームワークスペースを作成します。 |
-| Codex ネイティブなスタジオロール | 制作、デザイン、エンジニアリング、アート、QA、ローカライズ、リリース用のロールプロンプトを生成します。 |
+| Codex ネイティブなスタジオロール | 制作、デザイン、エンジニアリング、アート、QA、ローカライズ、リリース用のロールプロンプトを提供します。 |
 | ワークフロープロンプト | 市場調査、分析、仕様、引き継ぎ、出荷確認、UI レビューなどの再利用可能なプロンプトを提供します。 |
 | エンジンオーバーレイ | Godot、Unity、Unreal の文脈を追加しますが、エンジンラッパーにはなりません。 |
 | ファイルベースのタスク状態 | `.codex/**` にタスク、ロック、実行メタデータを保存します。 |

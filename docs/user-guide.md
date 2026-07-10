@@ -37,6 +37,8 @@ Create a project:
 ./codex-game-studio validate
 ```
 
+By default, `init` converts a cloned template checkout into a game workspace. It preserves the game-facing studio surfaces and runtime assets, then removes maintainer-only authoring artifacts such as `eval-framework/`, stale research/reference folders, OpenSpec change files, repository TypeScript source files, and repository validation tests. Use `--keep-template-authoring` only when you are maintaining Codex Game Studio itself.
+
 ## Package-bin usage
 
 After publishing, installing, or linking the package:

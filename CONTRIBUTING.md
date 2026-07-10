@@ -12,5 +12,3 @@ npm run validate
 ```
 
 Do not add Python compatibility files, duplicate script-wrapper logic, telemetry, direct Codex execution, planner behavior, hosted/background orchestration, unbounded parallelism, or ownership enforcement without a new design. Explicit local task orchestration is allowed only under the product boundary and must include tests and docs.
-
-Do not edit `research/*` as part of implementation changes unless the task explicitly asks for research updates.

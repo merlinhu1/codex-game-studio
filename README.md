@@ -20,7 +20,19 @@
   <a href="README.md">🇺🇸 English</a> |
   <a href="docs/readmes/README.zh.md">🇨🇳 简体中文</a> |
   <a href="docs/readmes/README.ja.md">🇯🇵 日本語</a> |
-  <a href="docs/readmes/README.ko.md">🇰🇷 한국어</a>
+  <a href="docs/readmes/README.ko.md">🇰🇷 한국어</a> |
+  <a href="docs/readmes/README.de.md">🇩🇪 Deutsch</a> |
+  <a href="docs/readmes/README.fr.md">🇫🇷 Français</a> |
+  <a href="docs/readmes/README.es.md">🇪🇸 Español</a> |
+  <a href="docs/readmes/README.pt.md">🇧🇷 Português</a> |
+  <a href="docs/readmes/README.ru.md">🇷🇺 Русский</a> |
+  <a href="docs/readmes/README.ar.md">🇸🇦 العربية</a> |
+  <a href="docs/readmes/README.it.md">🇮🇹 Italiano</a> |
+  <a href="docs/readmes/README.pl.md">🇵🇱 Polski</a> |
+  <a href="docs/readmes/README.tr.md">🇹🇷 Türkçe</a> |
+  <a href="docs/readmes/README.vi.md">🇻🇳 Tiếng Việt</a> |
+  <a href="docs/readmes/README.id.md">🇮🇩 Bahasa Indonesia</a> |
+  <a href="docs/readmes/README.el.md">🇬🇷 Ελληνικά</a>
 </p>
 
 ---
@@ -183,6 +195,8 @@ Workflow prompts live under `.codex/workflows/*.md`. They are inspection-friendl
      --concept "A compact puzzle game about routing trains through haunted switchyards"
    ```
 
+   `init` turns the checkout into a game workspace: it keeps the game-facing agents, workflows, skills, templates, engine references, and CLI runtime, then prunes maintainer-only template-authoring artifacts such as `eval-framework/`, OpenSpec/research/reference scratch files, TypeScript source files, and repository validation tests. Template maintainers can pass `--keep-template-authoring` when intentionally working on this repository itself.
+
 4. **Inspect and validate**:
 
    ```sh
@@ -211,8 +225,8 @@ engine_reference/                 # Godot, Unity, Unreal reference packs
 templates/                        # Document templates used by workflows
 production/                       # Timeline, milestones, session state
 docs/                             # Small user/docs support surface
-src/                              # TypeScript CLI source
-tests/                            # Repository validation and behavior tests
+src/                              # Game engine source root; maintainer TypeScript files are pruned by init
+tests/                            # Game tests; repository validation tests are pruned by init
 ```
 
 ## How It Works

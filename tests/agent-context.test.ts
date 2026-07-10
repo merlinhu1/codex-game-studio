@@ -16,7 +16,7 @@ describe("agent context helper scripts", () => {
     expect(pack).toContain("Context strategy:");
     expect(pack).toContain("Related workflows:");
     expect(pack).toContain("Suggested agent command:");
-    expect(pack).toContain("npm run ctx:role -- gameplay-programmer");
+    expect(pack).toContain("./codex-game-studio context role gameplay-programmer");
     expect(pack).not.toContain("## Responsibilities");
     expect(pack.split("\n").length).toBeLessThan(90);
   });
@@ -38,7 +38,7 @@ describe("agent context helper scripts", () => {
 
     expect(suggestions.workflows[0]?.id).toBe("bugfix");
     expect(suggestions.roles.map((role) => role.id)).toContain("gameplay-programmer");
-    expect(suggestions.commands).toContain("npm run ctx:workflow -- bugfix");
+    expect(suggestions.commands).toContain("./codex-game-studio context workflow bugfix");
     expect(JSON.stringify(suggestions)).not.toContain("systemPrompt");
   });
 
@@ -60,8 +60,8 @@ describe("agent context helper scripts", () => {
     });
 
     expect(agentsMd).toContain("## Context Bootstrap");
-    expect(agentsMd).toContain("npm run ctx:role -- <role-id>");
-    expect(agentsMd).toContain("npm run ctx:workflow -- <workflow-id>");
+    expect(agentsMd).toContain("./codex-game-studio context role <role-id>");
+    expect(agentsMd).toContain("./codex-game-studio context workflow <workflow-id>");
     expect(agent).not.toContain("Context bootstrap:");
     expect(workflow).not.toContain("Context bootstrap:");
     expect(prompt).not.toContain("## Context Bootstrap");
@@ -93,7 +93,7 @@ describe("agent context helper scripts", () => {
 
     expect(pack).toContain("Changed files: unavailable");
     expect(pack).toContain("Git is unavailable or this directory is not a Git checkout");
-    expect(pack).toContain("ctx:task");
+    expect(pack).toContain("context task");
   });
 
   test("package exposes low-output npm scripts for agents", () => {

@@ -1,4 +1,4 @@
-import { cpSync, existsSync, readFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -18,6 +18,25 @@ function templateRoot(prefix: string): string {
     cpSync(path.join(process.cwd(), entry), path.join(root, entry), { recursive: true });
   }
   return root;
+}
+
+function writeAuthoringArtifacts(root: string): void {
+  for (const dir of ["eval-framework", "references", "openspec", "scripts", "tooling", "research", ".truthmark", ".hermes", "src", "tests"]) {
+    mkdirSync(path.join(root, dir), { recursive: true });
+  }
+  writeFileSync(path.join(root, "eval-framework", "README.md"), "maintainer evals\n");
+  writeFileSync(path.join(root, "references", "matrix.md"), "maintainer matrix\n");
+  writeFileSync(path.join(root, "openspec", "change.md"), "maintainer spec\n");
+  writeFileSync(path.join(root, "scripts", "refresh.mjs"), "console.log('authoring');\n");
+  writeFileSync(path.join(root, "tooling", "audit.ts"), "export {};\n");
+  writeFileSync(path.join(root, "research", "stale.md"), "old research\n");
+  writeFileSync(path.join(root, ".truthmark", "config.json"), "{}\n");
+  writeFileSync(path.join(root, ".hermes", "plan.md"), "local agent plan\n");
+  writeFileSync(path.join(root, "src", "cli.ts"), "export {};\n");
+  writeFileSync(path.join(root, "tests", "validation.test.ts"), "export {};\n");
+  writeFileSync(path.join(root, "CONTRIBUTING.md"), "maintainer notes\n");
+  writeFileSync(path.join(root, "tsconfig.json"), "{}\n");
+  writeFileSync(path.join(root, "tsconfig.build.json"), "{}\n");
 }
 
 describe("project workflow", () => {
@@ -65,6 +84,52 @@ describe("project workflow", () => {
     expect(config.project.platform).toBe("PC");
     expect(config.project.audience).toBe("General players");
     expect(config.project.competitors).toEqual([]);
+  });
+
+  test("init prunes maintainer-only template authoring artifacts from game workspaces", () => {
+    const cwd = templateRoot("ogs-prune-authoring-");
+    writeAuthoringArtifacts(cwd);
+    const { projectRoot, prunedArtifacts } = initProject({ name: "Clean Game", engine: "godot", mode: "prototype", nonInteractive: true }, cwd);
+
+    expect(prunedArtifacts).toEqual(
+      expect.arrayContaining([
+        "eval-framework",
+        "references",
+        "openspec",
+        "scripts",
+        "tooling",
+        "research",
+        ".truthmark",
+        ".hermes",
+        "CONTRIBUTING.md",
+        "tsconfig.json",
+        "tsconfig.build.json",
+        path.join("src", "cli.ts"),
+        path.join("tests", "validation.test.ts")
+      ])
+    );
+    for (const removed of ["eval-framework", "references", "openspec", "scripts", "tooling", "research", ".truthmark", ".hermes", "CONTRIBUTING.md", "tsconfig.json", "tsconfig.build.json"]) {
+      expect(existsSync(path.join(projectRoot, removed))).toBe(false);
+    }
+    expect(existsSync(path.join(projectRoot, "src", "cli.ts"))).toBe(false);
+    expect(existsSync(path.join(projectRoot, "tests", "validation.test.ts"))).toBe(false);
+    expect(existsSync(path.join(projectRoot, "src", "project.godot"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "tests", ".gitkeep"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".codex", "agents", "gameplay-programmer.toml"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, ".agents", "skills", "cgs-start", "SKILL.md"))).toBe(true);
+  });
+
+  test("init can keep template authoring artifacts for maintainers", () => {
+    const cwd = templateRoot("ogs-keep-authoring-");
+    writeAuthoringArtifacts(cwd);
+    const { projectRoot, prunedArtifacts } = initProject({ name: "Maintainer Game", engine: "godot", mode: "prototype", nonInteractive: true, keepTemplateAuthoring: true }, cwd);
+
+    expect(prunedArtifacts).toEqual([]);
+    expect(existsSync(path.join(projectRoot, "eval-framework", "README.md"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "src", "cli.ts"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "src", "project.godot"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "tests", "validation.test.ts"))).toBe(true);
+    expect(existsSync(path.join(projectRoot, "tests", ".gitkeep"))).toBe(true);
   });
 
   test("init preserves clone-visible Codex-native custom agents and repository skills", () => {

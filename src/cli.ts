@@ -96,10 +96,12 @@ function addInitCommand(name: "init" | "new"): void {
     .option("--timeline <text>", "timeline")
     .option("--engine-version <version>", "engine version override")
     .option("--force-refresh", "refresh an existing root project with matching intent")
+    .option("--keep-template-authoring", "keep maintainer-only template authoring files after init")
     .requiredOption("--non-interactive", "use deterministic defaults")
     .action((opts) => {
       const result = initProject({ ...opts, competitors: opts.competitor, studioMode: readApprovalStudioMode(opts.studioMode) });
       console.log(`Created ${result.config.project.name} at ${path.relative(process.cwd(), result.projectRoot)}`);
+      if (result.prunedArtifacts.length > 0) console.log(`Pruned template authoring artifacts: ${result.prunedArtifacts.length}`);
     });
 }
 
