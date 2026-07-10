@@ -1,7 +1,7 @@
 ---
 status: active
 doc_type: standard
-last_reviewed: 2026-05-30
+last_reviewed: 2026-07-10
 source_of_truth:
   - README.md
 ---
@@ -10,17 +10,19 @@ source_of_truth:
 
 ## Core Rules
 
-- Each document should have one primary responsibility.
-- Each class of fact should have one canonical source.
-- Current implementation, reusable standards, and future proposals should be stored separately.
+- Each document has one primary responsibility.
+- Each class of fact has one canonical source.
+- Current implementation, reusable standards, and future proposals stay separate.
 - Generated helper output is never canonical truth.
 - The root README is the concise human storefront; command reference, role catalog, generated-file detail, and contributor workflow detail belong in linked subdocs.
-- Material root README changes should update localized README storefronts under `docs/readmes/` in the same change or state why they intentionally differ.
-- Architecture docs describe structure, ownership, and runtime views; truth docs describe current product behavior and remain the canonical behavior reference.
-- Architecture flow guides may explain branching logic and failure paths, but they must trace back to the owning truth docs rather than becoming a competing source of behavior truth.
+- Material root README changes update localized README storefronts under `docs/readmes/` in the same change or state why they intentionally differ.
+- Architecture docs describe structure, ownership, and runtime views; design and production records describe the current game.
 
-## Truthmark Implications
+## Initialized Game Documentation
 
-- Truth Sync should extend mapped docs first, create an area-local doc second, and create a new area only as a last resort.
-- Weak routing produces weak truth maintenance.
-- Missing, stale, broad, overloaded, or unrouteable routing should trigger Truth Structure before more generic truth docs are created.
+- `design/` owns player-facing rules, systems, controls, and content intent.
+- `docs/architecture/` owns technical boundaries and durable architecture decisions.
+- `production/` owns milestone, ownership, handoff, and documentation-impact records.
+- `docs/changelog.md` and `docs/patch-notes.md` own release-visible communications.
+- Functional source, engine, or asset changes require an updated owner document or an explicit `no-update` decision in `production/session-state/active.md`.
+- `./codex-game-studio docs-impact --base <review-base>` validates the record against the changed paths; it checks evidence, not prose semantics.

@@ -56,7 +56,7 @@ External tools, reference workflows, and comparison projects may inspire improve
 8. **Mutation is policy-gated and visible.** Any design that lets Codex or the CLI mutate files must specify write policy, approval/override behavior, sandbox selection, dry-run diagnostics, and where provenance is recorded.
 9. **Future-only surfaces must remain absent until built.** Planner/next, telemetry, hard output-ownership enforcement, hosted orchestration, background autonomous loops, and unbounded parallelism must not appear as user-facing behavior before they have implementation, tests, and docs.
 10. **Validation is part of the product.** New generated surfaces, package assets, CLI commands, orchestration behavior, and behavior-bearing docs need repo-native validation and tests before readiness or parity claims.
-11. **Truthmark is repository workflow tooling here, not the product.** Truthmark-backed docs may guard Codex Game Studio's repository truth, but Codex Game Studio should not present Truthmark workflow mechanics as game-studio product features.
+11. **Documentation impact is part of the game workflow.** Functional game changes require a bounded documentation-impact decision with reviewable evidence; the template does not present repository-maintenance tooling as a game-studio product feature.
 
 ## In Scope
 

@@ -65,7 +65,7 @@ export const behavioralEvaluationScenarios: BehavioralEvaluationScenario[] = [
       role: "qa-playtester",
       phase: "review",
       objective: "Review current playtest blockers and warnings.",
-      contextFiles: ["AGENTS.md", ".codex/studio.json", "documentation/design/gdd.md"]
+      contextFiles: ["AGENTS.md", ".codex/studio.json", "design/gdd.md"]
     },
     requiredPhrases: ["Role: QA Playtester", "Issue ID", "Severity", "Reproduction steps", "Expected result", "Actual result", "File Edits: not allowed"],
     forbiddenPhrases: withDefaultForbidden(["danger-full-access", "Template: release_notes"]),
@@ -80,7 +80,7 @@ export const behavioralEvaluationScenarios: BehavioralEvaluationScenario[] = [
       role: "release-manager",
       phase: "ship",
       objective: "Assess whether the milestone is ready to ship.",
-      contextFiles: ["AGENTS.md", ".codex/studio.json", "documentation/production/timeline.md"]
+      contextFiles: ["AGENTS.md", ".codex/studio.json", "production/timeline.md"]
     },
     requiredPhrases: ["Role: Release Manager", "Release decision", "Blocking issues", "Validation evidence", "Rollback notes", "release blockers"],
     forbiddenPhrases: withDefaultForbidden(["Template: analytics_setup"]),
@@ -91,7 +91,7 @@ export const behavioralEvaluationScenarios: BehavioralEvaluationScenario[] = [
     id: "workflow.ship-check.release-readiness",
     description: "Ship-check workflow prompts must select release templates, timeline context, and release-manager evidence without pulling unrelated market or analytics templates.",
     target: { kind: "workflow", workflow: "ship-check" },
-    requiredPhrases: ["Role: Release Manager", workflowRegistry["ship-check"].objective, "Blocking issues", "Validation evidence", "documentation/production/timeline.md"],
+    requiredPhrases: ["Role: Release Manager", workflowRegistry["ship-check"].objective, "Blocking issues", "Validation evidence", "production/timeline.md"],
     forbiddenPhrases: withDefaultForbidden(["Template: market_analysis", "Template: analytics_setup"]),
     expectedContextCategories: ["project-instructions", "studio-state", "workflow-file", "project-docs", "templates", "role-contract", "output-contract"],
     requiredTemplateIds: ["ship_check", "release_notes", "risk_register"],
@@ -113,7 +113,7 @@ export const behavioralEvaluationScenarios: BehavioralEvaluationScenario[] = [
     id: "workflow.market-analysis.positioning",
     description: "Market-analysis workflow prompts must select market and pitch material while avoiding analytics-only and release-only templates.",
     target: { kind: "workflow", workflow: "market-analysis" },
-    requiredPhrases: ["Role: Market Analyst", workflowRegistry["market-analysis"].objective, "resources/market-research/market-overview.md", "Expected Outputs"],
+    requiredPhrases: ["Role: Market Analyst", workflowRegistry["market-analysis"].objective, "docs/market-overview.md", "Expected Outputs"],
     forbiddenPhrases: withDefaultForbidden(["Template: analytics_setup", "Template: release_notes"]),
     expectedContextCategories: ["project-instructions", "studio-state", "workflow-file", "project-docs", "templates", "role-contract"],
     requiredTemplateIds: ["market_analysis", "pitch_document"],
@@ -159,7 +159,7 @@ export const behavioralEvaluationScenarios: BehavioralEvaluationScenario[] = [
   {
     id: "role.game-designer.design-system-uplift",
     description: "Design-system prompts require game-designer output structure, quality gates, and handoff evidence.",
-    target: { kind: "role", role: "game-designer", phase: "plan", objective: "Create a design-system update for player-facing ability rules.", contextFiles: ["AGENTS.md", ".codex/studio.json", "documentation/design/gdd.md"] },
+    target: { kind: "role", role: "game-designer", phase: "plan", objective: "Create a design-system update for player-facing ability rules.", contextFiles: ["AGENTS.md", ".codex/studio.json", "design/gdd.md"] },
     requiredPhrases: ["Role: Game Designer", "## Responsibilities", "Quality Gates", "Acceptance criteria", "## Verification"],
     forbiddenPhrases: withDefaultForbidden(["Template: release_notes"]),
     expectedContextCategories: ["project-instructions", "studio-state", "project-docs", "role-contract", "output-contract"],
@@ -202,8 +202,8 @@ function actualContextCategories(scenario: BehavioralEvaluationScenario, prompt:
   if (prompt.includes("AGENTS.md")) categories.add("project-instructions");
   if (prompt.includes(".codex/studio.json")) categories.add("studio-state");
   if (prompt.includes(".codex/workflows/")) categories.add("workflow-file");
-  if (/documentation\/|resources\//.test(prompt)) categories.add("project-docs");
-  if (/source\//.test(prompt)) categories.add("source-artifact");
+  if (/(?:design\/|docs\/|production\/)/.test(prompt)) categories.add("project-docs");
+  if (/(?:src\/|source\/)/.test(prompt)) categories.add("source-artifact");
   if (prompt.includes("docs/engine-reference/")) categories.add("engine-reference");
   if (prompt.includes("## Workflow Templates") || (scenario.target.kind === "workflow" && (workflowRegistry[scenario.target.workflow].templateIds?.length ?? 0) > 0)) categories.add("templates");
   if (prompt.includes("## Responsibilities") && prompt.includes("## Quality Gates")) categories.add("role-contract");

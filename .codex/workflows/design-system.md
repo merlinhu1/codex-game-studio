@@ -23,7 +23,7 @@ Author or update a system design with player-facing rules, data model, edge case
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/design-system.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

@@ -23,7 +23,7 @@ Break an epic or feature into implementation-ready stories with role owner, file
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/create-stories.md
-- documentation/production/timeline.md
+- production/timeline.md
 
 ## Role
 

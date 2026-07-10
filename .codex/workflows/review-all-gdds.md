@@ -23,7 +23,7 @@ Review all GDD and design artifacts for contradictions, missing systems, stale a
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/review-all-gdds.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

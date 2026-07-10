@@ -23,7 +23,7 @@ Create a release checklist with blockers, warnings, validation commands, packagi
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/release-checklist.md
-- documentation/production/timeline.md
+- production/timeline.md
 
 ## Role
 

@@ -23,7 +23,7 @@ Draft an architecture decision with context, options, selected direction, conseq
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/architecture-decision.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

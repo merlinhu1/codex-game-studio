@@ -23,7 +23,7 @@ Review the concept for coherent player promise, pillars, audience fit, productio
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/design-review-concept.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

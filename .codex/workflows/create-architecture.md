@@ -23,7 +23,7 @@ Create technical architecture with engine modules, data flow, integration points
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/create-architecture.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

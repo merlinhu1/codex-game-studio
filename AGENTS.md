@@ -47,6 +47,14 @@ Before broad inspection, use compact context helpers when available, then read o
 - Describe scene, prefab, material, animation, audio, and UI changes in handoff notes.
 - Do not modify binary assets without recording purpose and verification evidence.
 
+## Documentation Impact
+
+After functional changes to game source, engine configuration, or assets, make a fresh documentation-impact decision before handoff:
+
+- Update the owning `design/`, `docs/`, or `production/` document when player-visible behavior, architecture, production commitments, or release communication changed.
+- Otherwise record `Decision: no-update`, `Documents: none`, and a specific reason under `## Documentation Impact` in `production/session-state/active.md`.
+- Run `./codex-game-studio docs-impact --base <review-base>` and include its evidence in the handoff. Reviewers report unresolved documentation impact; writable implementation or fix work performs the update.
+
 ## Studio Roles
 
 - Codex custom agents live in `.codex/agents/*.toml`.

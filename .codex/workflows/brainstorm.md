@@ -23,7 +23,7 @@ Generate bounded game ideas, feature variations, player fantasies, and tradeoff 
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/brainstorm.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

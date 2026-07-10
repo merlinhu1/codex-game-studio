@@ -112,7 +112,8 @@ Project validation checks project state, tracked template surfaces, context meta
 | `resume` | Print a read-only continuation summary. |
 | `refresh-context` | Regenerate `.codex/context-manifest.json` after selected context files change. |
 | `freeze` | Mark a project as frozen. |
-| `validate` | Run hard-failing repository or project validation. |
+| `validate` | Run hard-failing repository or project validation; pass `--base <ref>` to include documentation-impact checks. |
+| `docs-impact --base <ref>` | Verify an active-session documentation-impact decision against functional changes from a Git base. |
 | `templates list` | List packaged template IDs. |
 | `templates show <template-id>` | Print a packaged template. |
 | `run <role>` | Prepare one bounded Codex prompt packet and invoke `codex exec`. |

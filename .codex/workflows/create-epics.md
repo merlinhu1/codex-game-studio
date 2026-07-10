@@ -23,8 +23,8 @@ Create production epics from the project goal with scope, owners, dependencies, 
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/create-epics.md
-- documentation/design/gdd.md
-- documentation/production/timeline.md
+- design/gdd.md
+- production/timeline.md
 
 ## Role
 

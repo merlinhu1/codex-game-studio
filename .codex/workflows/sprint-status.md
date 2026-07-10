@@ -23,7 +23,7 @@ Summarize sprint status, completed work, blockers, risks, next owners, and verif
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/sprint-status.md
-- documentation/production/timeline.md
+- production/timeline.md
 
 ## Role
 

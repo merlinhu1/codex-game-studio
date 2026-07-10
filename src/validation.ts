@@ -22,6 +22,7 @@ import { isEngineSpecialistRoleId, projectRoleIdsForEngine, rolePackages, studio
 import { templateRegistry, validateTemplateFiles } from "./templates.js";
 import { renderWorkflowPrompt, workflowIds, workflowRegistry } from "./workflows.js";
 import { templateSkillDefinitions } from "./skills.js";
+import { documentationImpactChecks } from "./documentation-impact.js";
 import {
   isCodexModelName,
   isReasoningEffort,
@@ -255,6 +256,9 @@ export function validateTemplateSurfaces(root = process.cwd()): ValidationCheck[
   checks.push(...openAiSkillMetadataChecks(root));
 
   for (const forbidden of [
+    ".truthmark",
+    path.join("docs", "truthmark"),
+    path.join("tooling", "truthmark"),
     ".codex/agents/truth-claim-verifier.toml",
     ".codex/agents/truth-doc-reviewer.toml",
     ".codex/agents/truth-doc-writer.toml",
@@ -537,7 +541,7 @@ export async function validateRepo(root = process.cwd()): Promise<ValidationChec
   return checks;
 }
 
-export function validateProject(projectRoot: string): ValidationCheck[] {
+export function validateProject(projectRoot: string, options: { documentationBase?: string } = {}): ValidationCheck[] {
   const checks: ValidationCheck[] = [];
   const studioPath = path.join(projectRoot, ".codex", "studio.json");
   let studio: ReturnType<typeof readStudioProject>;
@@ -624,8 +628,9 @@ export function validateProject(projectRoot: string): ValidationCheck[] {
       checks.push(sectionHasContent(body, section) ? pass(`project.timeline.${section}`, `${section} exists`, timeline) : fail(`project.timeline.${section}`, `${section} missing non-empty content`, timeline));
     }
   }
+  if (options.documentationBase) checks.push(...documentationImpactChecks(projectRoot, { base: options.documentationBase }));
 
-  for (const forbidden of ["project_orchestrator.md", "CODEX.md", path.join(".gamestudio", "runs"), path.join(".codex", "hooks.json"), path.join(".codex", "agents", "truth-claim-verifier.toml"), path.join(".codex", "agents", "truth-doc-reviewer.toml"), path.join(".codex", "agents", "truth-doc-writer.toml"), path.join(".codex", "agents", "truth-route-auditor.toml")]) {
+  for (const forbidden of ["project_orchestrator.md", "CODEX.md", path.join(".gamestudio", "runs"), ".truthmark", path.join("docs", "truthmark"), path.join("tooling", "truthmark"), path.join(".codex", "hooks.json"), path.join(".codex", "agents", "truth-claim-verifier.toml"), path.join(".codex", "agents", "truth-doc-reviewer.toml"), path.join(".codex", "agents", "truth-doc-writer.toml"), path.join(".codex", "agents", "truth-route-auditor.toml")]) {
     const file = path.join(projectRoot, forbidden);
     checks.push(existsSync(file) ? fail(`project.forbidden.${forbidden}`, `${forbidden} must not exist`, file) : pass(`project.forbidden.${forbidden}`, `${forbidden} absent`));
   }
@@ -638,9 +643,9 @@ export function validateProject(projectRoot: string): ValidationCheck[] {
   return checks;
 }
 
-export async function runValidation(options: { project?: string; root?: string } = {}): Promise<{ checks: ValidationCheck[]; failed: boolean }> {
+export async function runValidation(options: { project?: string; root?: string; base?: string } = {}): Promise<{ checks: ValidationCheck[]; failed: boolean }> {
   const root = options.root ?? process.cwd();
   const projectPath = options.project ? path.resolve(root, options.project) : existsSync(path.join(root, ".codex", "studio.json")) ? root : undefined;
-  const checks = projectPath ? validateProject(projectPath) : await validateRepo(root);
+  const checks = projectPath ? validateProject(projectPath, { documentationBase: options.base }) : await validateRepo(root);
   return { checks, failed: checks.some((check) => check.status === "fail") };
 }

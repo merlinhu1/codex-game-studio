@@ -23,8 +23,8 @@ Check design, production, architecture, UI, and validation surfaces for contradi
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/consistency-check.md
-- documentation/design/gdd.md
-- documentation/production/timeline.md
+- design/gdd.md
+- production/timeline.md
 
 ## Role
 

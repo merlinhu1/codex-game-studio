@@ -14,6 +14,7 @@ import {
 import { formatTemplateShow, listTemplates, templateRegistry, type TemplateId } from "./templates.js";
 import { freezeProject, initProject, readStudioProject, refreshContextManifestProject, resumeProject, statusProject } from "./projects.js";
 import { runValidation } from "./validation.js";
+import { documentationImpactChecks } from "./documentation-impact.js";
 import { executeRunLifecycle, prepareRun } from "./runner.js";
 import { checkCodexAvailability } from "./codex-runtime.js";
 import { renderAgentContext } from "./agent-context.js";
@@ -155,16 +156,31 @@ program
   .option("--project <path>", "project path")
   .action((opts) => console.log(freezeProject(opts.project)));
 
+function printChecks(checks: readonly { status: string; id: string; message: string; path?: string }[]): boolean {
+  for (const check of checks) {
+    console.log(`${check.status.toUpperCase()} ${check.id}: ${check.message}${check.path ? ` (${check.path})` : ""}`);
+  }
+  return checks.some((check) => check.status === "fail");
+}
+
 program
   .command("validate")
   .description("Run hard-failing repo or project validation")
   .option("--project <path>", "project path")
+  .option("--base <ref>", "Git base used for documentation-impact validation")
   .action(async (opts) => {
-    const result = await runValidation({ project: opts.project });
-    for (const check of result.checks) {
-      console.log(`${check.status.toUpperCase()} ${check.id}: ${check.message}${check.path ? ` (${check.path})` : ""}`);
-    }
-    if (result.failed) process.exitCode = 1;
+    const result = await runValidation({ project: opts.project, base: opts.base });
+    if (printChecks(result.checks)) process.exitCode = 1;
+  });
+
+program
+  .command("docs-impact")
+  .description("Check documentation-impact evidence for functional game changes")
+  .option("--project <path>", "project path")
+  .option("--base <ref>", "Git base to compare against", "HEAD")
+  .action((opts) => {
+    const projectRoot = resolveTaskProject(opts.project);
+    if (printChecks(documentationImpactChecks(projectRoot, { base: opts.base }))) process.exitCode = 1;
   });
 
 const templates = program.command("templates").description("Discover templates");

@@ -23,7 +23,7 @@ Assess milestone readiness, package risk, validation status, and release blocker
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/ship-check.md
-- documentation/production/timeline.md
+- production/timeline.md
 
 ## Role
 

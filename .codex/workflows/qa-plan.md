@@ -23,7 +23,7 @@ Create a QA plan with target scenarios, risk areas, test data, manual checks, au
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/qa-plan.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

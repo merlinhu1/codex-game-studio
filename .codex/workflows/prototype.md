@@ -23,7 +23,7 @@ Plan the smallest playable prototype slice with owner roles, required assets, im
 - AGENTS.md
 - .codex/studio.json
 - .codex/workflows/prototype.md
-- documentation/design/gdd.md
+- design/gdd.md
 
 ## Role
 

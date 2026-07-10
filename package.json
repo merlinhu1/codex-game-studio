@@ -42,7 +42,6 @@
   "devDependencies": {
     "@types/node": "^24.13.2",
     "expect": "^30.4.1",
-    "truthmark": "^2.2.6",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   }
