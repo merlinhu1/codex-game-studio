@@ -2,7 +2,7 @@
 name: cgs-art-bible
 description: Use for art bible tasks that define visual identity, shape language, palette, camera, animation, UI style, and asset constraints; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-terra
-model_reasoning_effort: high
+model_reasoning_effort: medium
 argument-hint: Describe the art-bible objective, target files/assets, constraints, and verification evidence.
 primary-agent: game-designer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

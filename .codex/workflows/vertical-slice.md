@@ -1,6 +1,6 @@
 ---
 model: gpt-5.6-sol
-model_reasoning_effort: xhigh
+model_reasoning_effort: high
 primary-agent: producer
 linked-skills: [cgs-vertical-slice]
 phase: plan

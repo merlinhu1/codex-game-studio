@@ -2,7 +2,7 @@
 name: cgs-dev-story
 description: Use for dev story tasks that turn a design or bug into an implementation-ready story with owner, files, acceptance tests, and dependencies; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-terra
-model_reasoning_effort: high
+model_reasoning_effort: medium
 argument-hint: Describe the dev-story objective, target files/assets, constraints, and verification evidence.
 primary-agent: gameplay-programmer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

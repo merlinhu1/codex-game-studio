@@ -1,6 +1,6 @@
 ---
 model: gpt-5.6-sol
-model_reasoning_effort: xhigh
+model_reasoning_effort: high
 primary-agent: technical-director
 linked-skills: [cgs-architecture-decision, cgs-vertical-slice]
 phase: plan

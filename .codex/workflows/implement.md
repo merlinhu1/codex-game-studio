@@ -1,6 +1,6 @@
 ---
 model: gpt-5.6-terra
-model_reasoning_effort: high
+model_reasoning_effort: medium
 primary-agent: gameplay-programmer
 linked-skills: [cgs-dev-story, cgs-standards-gameplay]
 phase: implement

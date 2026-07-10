@@ -1,6 +1,6 @@
 ---
 model: gpt-5.6-terra
-model_reasoning_effort: high
+model_reasoning_effort: medium
 primary-agent: technical-director
 linked-skills: [cgs-code-review, cgs-tech-debt]
 phase: review

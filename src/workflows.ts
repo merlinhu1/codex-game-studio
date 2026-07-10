@@ -175,7 +175,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "engine-setup": workflow({
     id: "engine-setup",
-    model: "gpt-5.6-terra",
+    model: "gpt-5.6-luna",
     role: "technical-director",
     phase: "plan",
     category: "onboarding-discovery",
@@ -232,7 +232,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "design-system": workflow({
     id: "design-system",
-    model: "gpt-5.6-sol",
+    model: "gpt-5.6-terra",
     role: "systems-designer",
     phase: "plan",
     category: "design-architecture",
@@ -326,7 +326,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "asset-spec": workflow({
     id: "asset-spec",
-    model: "gpt-5.6-terra",
+    model: "gpt-5.6-luna",
     role: "senior-game-artist",
     phase: "plan",
     category: "design-architecture",
@@ -362,7 +362,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "test-setup": workflow({
     id: "test-setup",
-    model: "gpt-5.6-terra",
+    model: "gpt-5.6-luna",
     role: "qa-playtester",
     phase: "plan",
     category: "qa-testing",
@@ -410,7 +410,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   retrospective: workflow({
     id: "retrospective",
-    model: "gpt-5.6-terra",
+    model: "gpt-5.6-luna",
     role: "producer",
     phase: "review",
     category: "team-coordination",
@@ -434,7 +434,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "scope-check": workflow({
     id: "scope-check",
-    model: "gpt-5.6-sol",
+    model: "gpt-5.6-terra",
     role: "producer",
     phase: "review",
     category: "team-coordination",
@@ -553,7 +553,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "art-direction": workflow({
     id: "art-direction",
-    model: "gpt-5.6-sol",
+    model: "gpt-5.6-terra",
     role: "senior-game-artist",
     phase: "plan",
     category: "design-architecture",
@@ -575,7 +575,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "production-milestone": workflow({
     id: "production-milestone",
-    model: "gpt-5.6-sol",
+    model: "gpt-5.6-terra",
     role: "producer",
     phase: "plan",
     category: "team-coordination",
@@ -598,7 +598,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   review: workflow({
     id: "review",
-    model: "gpt-5.6-terra",
+    model: "gpt-5.6-luna",
     role: "qa-playtester",
     phase: "review",
     category: "qa-testing",
@@ -618,7 +618,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   onboard: workflow({
     id: "onboard",
-    model: "gpt-5.6-terra",
+    model: "gpt-5.6-luna",
     role: "studio-orchestrator",
     phase: "plan",
     category: "onboarding-discovery",
@@ -726,7 +726,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "story-readiness": workflow({
     id: "story-readiness",
-    model: "gpt-5.6-terra",
+    model: "gpt-5.6-luna",
     role: "producer",
     phase: "review",
     category: "team-coordination",
@@ -737,7 +737,7 @@ export const workflowRegistry: Record<WorkflowId, WorkflowDefinition> = {
   }),
   "story-done": workflow({
     id: "story-done",
-    model: "gpt-5.6-terra",
+    model: "gpt-5.6-luna",
     role: "qa-playtester",
     phase: "review",
     category: "team-coordination",

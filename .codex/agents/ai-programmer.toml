@@ -1,7 +1,7 @@
 name = "ai_programmer"
 description = "Owns ai programmer work: Implement game AI behavior, decision logic, navigation, perception, tuning hooks, debug visibility, and deterministic verification for NPC or systemic agents. Produces AI implementation, Behavior tuning notes, Debug and test evidence; hand off requests outside ai programmer ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/ai-programmer.md"
 # source_hash = "f9decba41651b4c225f1c4d4bf3f3bcf0eca088caf9cb3a0b3cb28f43e392b56"

@@ -30,11 +30,11 @@ Before broad inspection, use compact context helpers when available, then read o
 ## Model Routing
 
 - Prompt surfaces declare a concrete model; runtime derives its tier from the centralized model policy instead of inferring importance from role or task names.
-- Use Sol for important, high-risk, architectural, security, release, or cross-system decisions.
-- Use Terra for routine implementation, testing, QA, documentation, and other bounded work.
-- Use Luna only for trivial, mechanical, objectively verifiable work; escalate ambiguous or failed work to Terra.
+- Use Sol/high only for difficult, high-risk architectural, security, release, or cross-system decisions.
+- Use Terra/medium for moderate implementation, testing, QA, documentation, and other bounded work.
+- Use Luna/low for simple, repetitive, mechanical, objectively verifiable work; escalate ambiguous or failed work to Terra.
 - Explicit user or task-tier overrides take precedence over the selected surface; otherwise the selected agent or workflow tier applies.
-- Designated fallbacks are fixed: Sol to GPT-5.5 at xhigh reasoning, Terra to GPT-5.4 at high reasoning, and Luna to GPT-5.4-mini at low reasoning.
+- Designated fallbacks are fixed: Sol to GPT-5.5 at high reasoning, Terra to GPT-5.4 at medium reasoning, and Luna to GPT-5.4-mini at low reasoning.
 
 ## Coding Conventions
 

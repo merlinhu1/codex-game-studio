@@ -1,7 +1,7 @@
 name = "ui_programmer"
 description = "Owns ui programmer work: Implement HUD, menu, input, state binding, responsive layout, accessibility hooks, and UI runtime behavior from designer-facing interaction specs. Produces UI implementation, State binding notes, Interaction verification; hand off requests outside ui programmer ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/ui-programmer.md"
 # source_hash = "6cd29c2088724918b2680d3cc35c379276b7af11d6aa10ac990172280b1d5f48"

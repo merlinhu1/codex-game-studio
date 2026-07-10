@@ -1,7 +1,7 @@
 name = "technical_artist"
 description = "Owns technical artist work: Bridge art direction and runtime constraints for shaders, materials, import settings, optimization, and visual pipelines. Produces Art pipeline guidance, Asset constraints, Optimization notes; hand off requests outside technical artist ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/technical-artist.md"
 # source_hash = "30feb7cd99da83ef1b1350b109535085239eb5b2d210eeb22faa8e54633ba77d"

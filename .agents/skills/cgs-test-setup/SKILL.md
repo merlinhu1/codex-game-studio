@@ -2,7 +2,7 @@
 name: cgs-test-setup
 description: Use for test setup tasks that configure test harnesses, fixtures, commands, and documentation so validation is repeatable; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-terra
-model_reasoning_effort: high
+model_reasoning_effort: medium
 argument-hint: Describe the test-setup objective, target files/assets, constraints, and verification evidence.
 primary-agent: qa-playtester
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

@@ -1,7 +1,7 @@
 name = "ue_blueprint_specialist"
 description = "Owns ue blueprint specialist work: Implement and review Blueprint graphs, Blueprint Function Libraries, Blueprint/C++ boundaries, naming, event graphs, and optimization hotspots. Keep visual scripting maintainable, data-driven, reviewable, and clear about when C++ ownership is required. Produces Blueprint architecture guidance, C++ boundary risks, Graph verification notes; hand off requests outside ue blueprint specialist ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/ue-blueprint-specialist.md"
 # source_hash = "0b5a78bf73a5131eae52cc3d9154f684ad2a8f6fb926d5b769eafa56a4471c40"

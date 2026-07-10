@@ -2,7 +2,7 @@
 name: cgs-team-live-ops
 description: Use for team live ops tasks that coordinate events, telemetry, economy, content cadence, support, and incident readiness; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-terra
-model_reasoning_effort: high
+model_reasoning_effort: medium
 argument-hint: Describe the team-live-ops objective, target files/assets, constraints, and verification evidence.
 primary-agent: producer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

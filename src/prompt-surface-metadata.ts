@@ -66,13 +66,13 @@ export type PromptDiscoveryQuality = {
 const policyByTier: Record<ModelTier, ModelTierPolicy> = {
   sol: {
     tier: "sol",
-    primary: { model: "gpt-5.6-sol", effort: "xhigh" },
-    fallback: { model: "gpt-5.5", effort: "xhigh" }
+    primary: { model: "gpt-5.6-sol", effort: "high" },
+    fallback: { model: "gpt-5.5", effort: "high" }
   },
   terra: {
     tier: "terra",
-    primary: { model: "gpt-5.6-terra", effort: "high" },
-    fallback: { model: "gpt-5.4", effort: "high" }
+    primary: { model: "gpt-5.6-terra", effort: "medium" },
+    fallback: { model: "gpt-5.4", effort: "medium" }
   },
   luna: {
     tier: "luna",

@@ -1,6 +1,6 @@
 ---
 model: gpt-5.6-terra
-model_reasoning_effort: high
+model_reasoning_effort: medium
 primary-agent: senior-game-artist
 linked-skills: [cgs-art-bible, cgs-standards-gameplay]
 phase: plan

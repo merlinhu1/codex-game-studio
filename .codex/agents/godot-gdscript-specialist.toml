@@ -1,7 +1,7 @@
 name = "godot_gdscript_specialist"
 description = "Owns godot gdscript specialist work: Implement and review GDScript code with static typing, typed arrays, class_name usage, exports, signals, and Godot naming conventions. Design signal, resource, coroutine, and node communication patterns that keep gameplay code maintainable and performant. Produces GDScript implementation guidance, Signal and typing risks, Godot script verification; hand off requests outside godot gdscript specialist ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/godot-gdscript-specialist.md"
 # source_hash = "29ca22d29e9d3f4884f6bb1911aca4642013d7d5a58b2758efa43c4f0c130fcf"

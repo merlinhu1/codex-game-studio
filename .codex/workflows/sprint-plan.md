@@ -1,6 +1,6 @@
 ---
 model: gpt-5.6-terra
-model_reasoning_effort: high
+model_reasoning_effort: medium
 primary-agent: producer
 linked-skills: [cgs-sprint-plan, cgs-vertical-slice]
 phase: plan

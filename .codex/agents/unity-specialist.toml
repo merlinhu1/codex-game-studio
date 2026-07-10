@@ -1,7 +1,7 @@
 name = "unity_specialist"
 description = "Owns unity specialist work: Apply Unity-specific implementation and review guidance using only the active project's Unity reference pack and project files. Produces Unity guidance, Engine-specific risks, Verification notes; hand off requests outside unity specialist ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/unity-specialist.md"
 # source_hash = "81777b58e3a30f4a131025e01af6ac8fb42065214df6271e59df1aa11e5374e4"

@@ -2,7 +2,7 @@
 name: cgs-ui-ux-review
 description: Use for ui ux review tasks that review UI and UX implementation for clarity, accessibility, localization, controller support, and player comprehension; produce verification evidence, changed or proposed files, and handoff boundaries.
 model: gpt-5.6-terra
-model_reasoning_effort: high
+model_reasoning_effort: medium
 argument-hint: Describe the ui-ux-review objective, target files/assets, constraints, and verification evidence.
 primary-agent: game-designer
 tool-policy: read/edit/shell/tests/git as needed within the repository write policy

@@ -14,11 +14,11 @@ describe("codex runtime", () => {
   });
 
   test("builds structured codex exec args with cwd, sandbox, model, reasoning, and stdin prompt", () => {
-    const args = buildCodexExecArgs({ projectRoot: "/repo", sandbox: "read-only", model: "gpt-5.6-sol", reasoningEffort: "xhigh" });
+    const args = buildCodexExecArgs({ projectRoot: "/repo", sandbox: "read-only", model: "gpt-5.6-sol", reasoningEffort: "high" });
     expect(args).toContain("exec");
     expect(args).toContain("--model");
     expect(args).toContain("gpt-5.6-sol");
-    expect(args).toEqual(expect.arrayContaining(["-c", 'model_reasoning_effort="xhigh"']));
+    expect(args).toEqual(expect.arrayContaining(["-c", 'model_reasoning_effort="high"']));
     expect(args).toContain("--cd");
     expect(args).toContain("/repo");
     expect(args).toContain("--sandbox");
@@ -48,8 +48,8 @@ describe("codex runtime", () => {
     const stub = path.join(cwd, "codex-stub.mjs");
     writeFileSync(stub, `#!/usr/bin/env node\nconst model = process.argv[process.argv.indexOf('--model') + 1];\nif (model === 'gpt-5.6-sol') { console.error('model gpt-5.6-sol is not available for this account'); process.exit(1); }\nconsole.log(model);\n`);
     chmodSync(stub, 0o755);
-    const primary = { command: stub, args: buildCodexExecArgs({ projectRoot: cwd, model: "gpt-5.6-sol", reasoningEffort: "xhigh" }) };
-    const fallback = { command: stub, args: buildCodexExecArgs({ projectRoot: cwd, model: "gpt-5.5", reasoningEffort: "xhigh" }) };
+    const primary = { command: stub, args: buildCodexExecArgs({ projectRoot: cwd, model: "gpt-5.6-sol", reasoningEffort: "high" }) };
+    const fallback = { command: stub, args: buildCodexExecArgs({ projectRoot: cwd, model: "gpt-5.5", reasoningEffort: "high" }) };
 
     const result = await executeCodexCommandWithFallback({ primary, fallback, primaryModel: "gpt-5.6-sol", fallbackModel: "gpt-5.5" }, "prompt", { cwd });
 
@@ -64,8 +64,8 @@ describe("codex runtime", () => {
     const stub = path.join(cwd, "codex-stub.mjs");
     writeFileSync(stub, "#!/usr/bin/env node\nconsole.error('tests failed'); process.exit(2);\n");
     chmodSync(stub, 0o755);
-    const primary = { command: stub, args: buildCodexExecArgs({ projectRoot: cwd, model: "gpt-5.6-terra", reasoningEffort: "high" }) };
-    const fallback = { command: stub, args: buildCodexExecArgs({ projectRoot: cwd, model: "gpt-5.4", reasoningEffort: "high" }) };
+    const primary = { command: stub, args: buildCodexExecArgs({ projectRoot: cwd, model: "gpt-5.6-terra", reasoningEffort: "medium" }) };
+    const fallback = { command: stub, args: buildCodexExecArgs({ projectRoot: cwd, model: "gpt-5.4", reasoningEffort: "medium" }) };
 
     const result = await executeCodexCommandWithFallback({ primary, fallback, primaryModel: "gpt-5.6-terra", fallbackModel: "gpt-5.4" }, "prompt", { cwd });
 

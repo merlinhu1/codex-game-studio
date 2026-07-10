@@ -16,13 +16,13 @@ describe("prompt surface metadata", () => {
   test("maps stable model tiers to primary and safe fallback policies", () => {
     expect(modelPolicyForTier("sol")).toEqual({
       tier: "sol",
-      primary: { model: "gpt-5.6-sol", effort: "xhigh" },
-      fallback: { model: "gpt-5.5", effort: "xhigh" }
+      primary: { model: "gpt-5.6-sol", effort: "high" },
+      fallback: { model: "gpt-5.5", effort: "high" }
     });
     expect(modelPolicyForTier("terra")).toEqual({
       tier: "terra",
-      primary: { model: "gpt-5.6-terra", effort: "high" },
-      fallback: { model: "gpt-5.4", effort: "high" }
+      primary: { model: "gpt-5.6-terra", effort: "medium" },
+      fallback: { model: "gpt-5.4", effort: "medium" }
     });
     expect(modelPolicyForTier("luna")).toEqual({
       tier: "luna",
@@ -45,14 +45,14 @@ describe("prompt surface metadata", () => {
       expect(isCodexModelName(invalid)).toBe(false);
       expect(validateModelPolicy({ model: invalid, model_reasoning_effort: "high" }).valid).toBe(false);
     }
-    expect(validateModelPolicy({ model: "gpt-5.6-sol", model_reasoning_effort: "high" }).issues).toContain("reasoning effort high does not match gpt-5.6-sol expected xhigh");
+    expect(validateModelPolicy({ model: "gpt-5.6-sol", model_reasoning_effort: "xhigh" }).issues).toContain("reasoning effort xhigh does not match gpt-5.6-sol expected high");
   });
 
   test("parses markdown frontmatter", () => {
-    const parsed = parsePromptSurfaceFrontmatter(`---\nname: cgs-prototype\nmodel: gpt-5.6-sol\nmodel_reasoning_effort: xhigh\nrelated-agents: [producer, qa-playtester]\n---\n\n# Body`);
+    const parsed = parsePromptSurfaceFrontmatter(`---\nname: cgs-prototype\nmodel: gpt-5.6-sol\nmodel_reasoning_effort: high\nrelated-agents: [producer, qa-playtester]\n---\n\n# Body`);
     expect(parsed.frontmatter.model_tier).toBeUndefined();
     expect(parsed.frontmatter.model).toBe("gpt-5.6-sol");
-    expect(parsed.frontmatter.model_reasoning_effort).toBe("xhigh");
+    expect(parsed.frontmatter.model_reasoning_effort).toBe("high");
     expect(parsed.body).toContain("# Body");
   });
 

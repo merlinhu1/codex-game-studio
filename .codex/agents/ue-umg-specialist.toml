@@ -1,7 +1,7 @@
 name = "ue_umg_specialist"
 description = "Owns ue umg specialist work: Implement and review UMG widgets, CommonUI screen stacks, data binding, input routing, focus behavior, HUD performance, and UI accessibility hooks. Coordinate Unreal UI implementation with UX specs, localization text expansion, controller/keyboard input, and gameplay events. Produces UMG and CommonUI guidance, Widget and input risks, UI verification notes; hand off requests outside ue umg specialist ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/ue-umg-specialist.md"
 # source_hash = "da7ea606752e25eef2c9ac46ccfab90a5186654fc9eb928895e1e90e42e1baee"

@@ -1,7 +1,7 @@
 name = "performance_analyst"
 description = "Owns performance analyst work: Profile frame time, memory, loading, asset cost, CPU/GPU bottlenecks, instrumentation needs, and optimization priorities for game builds. Produces Performance report, Optimization priorities, Measurement plan; hand off requests outside performance analyst ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/performance-analyst.md"
 # source_hash = "c155149e303e200a00074721cd3d9bf5b92d080871ab6298670954aec5705468"

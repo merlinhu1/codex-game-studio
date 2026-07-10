@@ -1,7 +1,7 @@
 name = "godot_gdextension_specialist"
 description = "Owns godot gdextension specialist work: Implement and review GDExtension boundaries, native bindings, build files, C++ or Rust integration, custom nodes, and performance-critical native code paths. Define when native code is justified over GDScript or C# and keep build, ABI, and export risks explicit. Produces GDExtension guidance, Native binding risks, Build verification notes; hand off requests outside godot gdextension specialist ownership or missing verification evidence."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 model_verbosity = "medium"
 # source_reference = ".claude/agents/godot-gdextension-specialist.md"
 # source_hash = "b7ef534b50a9b79c21b47c5136a51aa1c853dc5d337691059a3a4dc2e12d70da"
