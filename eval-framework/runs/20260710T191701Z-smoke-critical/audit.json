@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "cgs-prompt-eval-audit/v1",
+  "runId": "20260710T191701Z-smoke-critical",
+  "stage": "smoke-critical",
+  "status": "infrastructure-blocked",
+  "sourceCommit": "1c3761fdc4a20d7e0e71efb254314b6d5a2545a2",
+  "selectedModel": "gpt-5.3-codex-spark",
+  "runner": {
+    "host": "codex",
+    "sandbox": "workspace-write",
+    "isolation": "Each scenario used a disposable detached Git worktree and an isolated CODEX_HOME."
+  },
+  "blocker": "Codex shell and file-write operations failed with 'bwrap: No permissions to create a new namespace, likely because the kernel does not allow non-privileged user namespaces.'",
+  "tokenUsage": {
+    "inputTokens": 2689065,
+    "cachedInputTokens": 2491392,
+    "outputTokens": 39740,
+    "reasoningOutputTokens": 31827,
+    "reportedFieldSum": 5252024,
+    "notes": "Raw fields were collected from Codex turn.completed events. reportedFieldSum is a mechanical sum of reported fields, not a pricing or billing claim."
+  },
+  "scenarios": [
+    {
+      "id": "workflow.vertical-slice.behavior",
+      "verdict": "blocked",
+      "rawTokenUsage": {"inputTokens": 1334419, "cachedInputTokens": 1262720, "outputTokens": 12499, "reasoningOutputTokens": 9603, "reportedFieldSum": 2619241},
+      "failureLabels": ["missing-required-context", "missing-required-artifact", "judge-not-evaluable"],
+      "trace": "traces/vertical-slice.jsonl",
+      "finalResponse": "final/vertical-slice.md"
+    },
+    {
+      "id": "workflow.bugfix.behavior",
+      "verdict": "blocked",
+      "rawTokenUsage": {"inputTokens": 393028, "cachedInputTokens": 346368, "outputTokens": 7426, "reasoningOutputTokens": 6145, "reportedFieldSum": 752967},
+      "failureLabels": ["missing-required-context", "missing-required-artifact", "judge-not-evaluable"],
+      "trace": "traces/bugfix.jsonl",
+      "finalResponse": "final/bugfix.md"
+    },
+    {
+      "id": "skill.cgs-skill-test.behavioral-spec",
+      "verdict": "blocked",
+      "rawTokenUsage": {"inputTokens": 440357, "cachedInputTokens": 411392, "outputTokens": 10513, "reasoningOutputTokens": 8066, "reportedFieldSum": 870328},
+      "failureLabels": ["missing-required-context", "missing-required-artifact", "judge-not-evaluable"],
+      "trace": "traces/skill-test.jsonl",
+      "finalResponse": "final/skill-test.md"
+    },
+    {
+      "id": "skill.cgs-gate-check.mode-boundary",
+      "verdict": "blocked",
+      "rawTokenUsage": {"inputTokens": 521261, "cachedInputTokens": 470912, "outputTokens": 9302, "reasoningOutputTokens": 8013, "reportedFieldSum": 1009488},
+      "failureLabels": ["missing-required-context", "missing-required-artifact", "judge-not-evaluable"],
+      "trace": "traces/gate-check.jsonl",
+      "finalResponse": "final/gate-check.md"
+    }
+  ],
+  "supersededBy": "20260710T192217Z-smoke-critical",
+  "followUpRecommendations": [
+    "Do not use this run for prompt-quality conclusions.",
+    "Use an externally isolated/containerized runner when workspace-write cannot create a Bubblewrap namespace.",
+    "Record the native fallback separately rather than merging it with this failed condition."
+  ]
+}

@@ -1,0 +1,1519 @@
+{
+  "schemaVersion": "cgs-prompt-eval-audit/v1",
+  "runId": "20260710T194320Z-full-regression-remaining",
+  "stage": "full-regression-remaining",
+  "status": "completed-deterministic-only",
+  "sourceCommit": "1c3761fdc4a20d7e0e71efb254314b6d5a2545a2",
+  "selectedModel": "gpt-5.3-codex-spark",
+  "runner": {
+    "host": "codex",
+    "sandbox": "danger-full-access",
+    "isolation": "Dedicated disposable detached Git worktree plus isolated CODEX_HOME per scenario; native danger-full-access used because this host cannot create Bubblewrap namespaces for workspace-write."
+  },
+  "tokenUsage": {
+    "inputTokens": 4258018,
+    "cachedInputTokens": 3512064,
+    "outputTokens": 132865,
+    "reasoningOutputTokens": 90244,
+    "reportedFieldSum": 7993191,
+    "notes": "Raw fields were collected from Codex turn.completed events. reportedFieldSum is a mechanical sum of reported fields, not a pricing or provider-billing claim."
+  },
+  "scenarioCounts": {
+    "total": 27,
+    "passedDeterministic": 27,
+    "failedDeterministic": 0
+  },
+  "scenarios": [
+    {
+      "id": "workflow.playtest.behavior",
+      "target": "workflow.playtest",
+      "priority": "critical",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 81798,
+        "cachedInputTokens": 61184,
+        "outputTokens": 3865,
+        "reasoningOutputTokens": 2351,
+        "reportedFieldSum": 149198
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-playtest-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/playtest-eval-report.md",
+          "capturedReport": "reports/workflow-playtest-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-playtest-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "**Status: PASS with one medium-priority routing gap.**"
+      },
+      "changedFiles": [
+        "production/session-state/playtest-eval-report.md"
+      ],
+      "trace": "traces/workflow-playtest-behavior.jsonl",
+      "finalResponse": "final/workflow-playtest-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-playtest-behavior.validate.log",
+        "status/workflow-playtest-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.market-analysis.behavior",
+      "target": "workflow.market-analysis",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 81625,
+        "cachedInputTokens": 60800,
+        "outputTokens": 4620,
+        "reasoningOutputTokens": 3337,
+        "reportedFieldSum": 150382
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-market-analysis-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/market-analysis-eval-report.md",
+          "capturedReport": "reports/workflow-market-analysis-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-market-analysis-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "Conditional FAIL due to incomplete template routing and output-positioning coverage."
+      },
+      "changedFiles": [
+        "production/session-state/market-analysis-eval-report.md"
+      ],
+      "trace": "traces/workflow-market-analysis-behavior.jsonl",
+      "finalResponse": "final/workflow-market-analysis-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-market-analysis-behavior.validate.log",
+        "status/workflow-market-analysis-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.release-checklist.behavior",
+      "target": "workflow.release-checklist",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 113297,
+        "cachedInputTokens": 91904,
+        "outputTokens": 5012,
+        "reasoningOutputTokens": 2892,
+        "reportedFieldSum": 213105
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-release-checklist-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/release-checklist-eval-report.md",
+          "capturedReport": "reports/workflow-release-checklist-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-release-checklist-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "- Outcome: **PASS (no blockers)** for this scenario."
+      },
+      "changedFiles": [
+        "production/session-state/release-checklist-eval-report.md"
+      ],
+      "trace": "traces/workflow-release-checklist-behavior.jsonl",
+      "finalResponse": "final/workflow-release-checklist-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-release-checklist-behavior.validate.log",
+        "status/workflow-release-checklist-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.ship-check.behavior",
+      "target": "workflow.ship-check",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 368407,
+        "cachedInputTokens": 342272,
+        "outputTokens": 6807,
+        "reasoningOutputTokens": 4237,
+        "reportedFieldSum": 721723
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-ship-check-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/ship-check-eval-report.md",
+          "capturedReport": "reports/workflow-ship-check-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-ship-check-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "PASS with caveat."
+      },
+      "changedFiles": [
+        "production/session-state/ship-check-eval-report.md"
+      ],
+      "trace": "traces/workflow-ship-check-behavior.jsonl",
+      "finalResponse": "final/workflow-ship-check-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-ship-check-behavior.validate.log",
+        "status/workflow-ship-check-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.prototype.behavior",
+      "target": "workflow.prototype",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 80851,
+        "cachedInputTokens": 60160,
+        "outputTokens": 4303,
+        "reasoningOutputTokens": 3120,
+        "reportedFieldSum": 148434
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-prototype-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/prototype-eval-report.md",
+          "capturedReport": "reports/workflow-prototype-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-prototype-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "PASS (with one quality gap)"
+      },
+      "changedFiles": [
+        "production/session-state/prototype-eval-report.md"
+      ],
+      "trace": "traces/workflow-prototype-behavior.jsonl",
+      "finalResponse": "final/workflow-prototype-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-prototype-behavior.validate.log",
+        "status/workflow-prototype-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.design-spec.behavior",
+      "target": "workflow.design-spec",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 309525,
+        "cachedInputTokens": 278656,
+        "outputTokens": 6646,
+        "reasoningOutputTokens": 5136,
+        "reportedFieldSum": 599963
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-design-spec-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/design-spec-eval-report.md",
+          "capturedReport": "reports/workflow-design-spec-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-design-spec-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "PASS (minor non-blocking clarity gaps)."
+      },
+      "changedFiles": [
+        "production/session-state/design-spec-eval-report.md"
+      ],
+      "trace": "traces/workflow-design-spec-behavior.jsonl",
+      "finalResponse": "final/workflow-design-spec-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-design-spec-behavior.validate.log",
+        "status/workflow-design-spec-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.game-feel-tuning.behavior",
+      "target": "workflow.game-feel-tuning",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 82749,
+        "cachedInputTokens": 43264,
+        "outputTokens": 4654,
+        "reasoningOutputTokens": 2958,
+        "reportedFieldSum": 133625
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-game-feel-tuning-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/game-feel-tuning-eval-report.md",
+          "capturedReport": "reports/workflow-game-feel-tuning-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-game-feel-tuning-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "- **Overall:** **PASS (with constraints)**"
+      },
+      "changedFiles": [
+        "production/session-state/game-feel-tuning-eval-report.md"
+      ],
+      "trace": "traces/workflow-game-feel-tuning-behavior.jsonl",
+      "finalResponse": "final/workflow-game-feel-tuning-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-game-feel-tuning-behavior.validate.log",
+        "status/workflow-game-feel-tuning-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.ui-ux-review.behavior",
+      "target": "workflow.ui-ux-review",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 101203,
+        "cachedInputTokens": 78976,
+        "outputTokens": 5341,
+        "reasoningOutputTokens": 3834,
+        "reportedFieldSum": 189354
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-ui-ux-review-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/ui-ux-review-eval-report.md",
+          "capturedReport": "reports/workflow-ui-ux-review-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-ui-ux-review-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "Status: **Partial Pass**"
+      },
+      "changedFiles": [
+        "production/session-state/ui-ux-review-eval-report.md"
+      ],
+      "trace": "traces/workflow-ui-ux-review-behavior.jsonl",
+      "finalResponse": "final/workflow-ui-ux-review-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-ui-ux-review-behavior.validate.log",
+        "status/workflow-ui-ux-review-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.architecture-review.behavior",
+      "target": "workflow.architecture-review",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 83225,
+        "cachedInputTokens": 57600,
+        "outputTokens": 5872,
+        "reasoningOutputTokens": 4112,
+        "reportedFieldSum": 150809
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-architecture-review-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/architecture-review-eval-report.md",
+          "capturedReport": "reports/workflow-architecture-review-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-architecture-review-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "Gate outcome: **Conditional PASS**."
+      },
+      "changedFiles": [
+        "production/session-state/architecture-review-eval-report.md"
+      ],
+      "trace": "traces/workflow-architecture-review-behavior.jsonl",
+      "finalResponse": "final/workflow-architecture-review-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-architecture-review-behavior.validate.log",
+        "status/workflow-architecture-review-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.sprint-plan.behavior",
+      "target": "workflow.sprint-plan",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 81135,
+        "cachedInputTokens": 53504,
+        "outputTokens": 4060,
+        "reasoningOutputTokens": 2738,
+        "reportedFieldSum": 141437
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/workflow-sprint-plan-behavior.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/sprint-plan-eval-report.md",
+          "capturedReport": "reports/workflow-sprint-plan-behavior.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/workflow-sprint-plan-behavior.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "- Overall: **PASS (with bounded risks)**"
+      },
+      "changedFiles": [
+        "production/session-state/sprint-plan-eval-report.md"
+      ],
+      "trace": "traces/workflow-sprint-plan-behavior.jsonl",
+      "finalResponse": "final/workflow-sprint-plan-behavior.md",
+      "verificationEvidence": [
+        "verification/workflow-sprint-plan-behavior.validate.log",
+        "status/workflow-sprint-plan-behavior.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-skill-improve.failure-loop",
+      "target": "cgs-skill-improve",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 206984,
+        "cachedInputTokens": 171392,
+        "outputTokens": 5375,
+        "reasoningOutputTokens": 3432,
+        "reportedFieldSum": 387183
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-skill-improve-failure-loop.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/skill-improvement-plan.md",
+          "capturedReport": "reports/skill-cgs-skill-improve-failure-loop.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-skill-improve-failure-loop.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "Partially accepted."
+      },
+      "changedFiles": [
+        "production/session-state/skill-improvement-plan.md"
+      ],
+      "trace": "traces/skill-cgs-skill-improve-failure-loop.jsonl",
+      "finalResponse": "final/skill-cgs-skill-improve-failure-loop.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-skill-improve-failure-loop.validate.log",
+        "status/skill-cgs-skill-improve-failure-loop.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-design-review.read-only-verdict",
+      "target": "cgs-design-review",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 183550,
+        "cachedInputTokens": 139136,
+        "outputTokens": 5187,
+        "reasoningOutputTokens": 3531,
+        "reportedFieldSum": 331404
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-design-review-read-only-verdict.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/design-review-eval-report.md",
+          "capturedReport": "reports/skill-cgs-design-review-read-only-verdict.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-design-review-read-only-verdict.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "**PASS** \u2014 the `cgs-design-review` skill is fit for a read-only, bounded review workflow, with strong structure for evidence-backed verdicts and bounded scope."
+      },
+      "changedFiles": [
+        "production/session-state/design-review-eval-report.md"
+      ],
+      "trace": "traces/skill-cgs-design-review-read-only-verdict.jsonl",
+      "finalResponse": "final/skill-cgs-design-review-read-only-verdict.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-design-review-read-only-verdict.validate.log",
+        "status/skill-cgs-design-review-read-only-verdict.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-architecture-review.risk-verdict",
+      "target": "cgs-architecture-review",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 224169,
+        "cachedInputTokens": 177024,
+        "outputTokens": 5594,
+        "reasoningOutputTokens": 3909,
+        "reportedFieldSum": 410696
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-architecture-review-risk-verdict.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/architecture-review-skill-eval-report.md",
+          "capturedReport": "reports/skill-cgs-architecture-review-risk-verdict.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-architecture-review-risk-verdict.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "PASS (with one bounded risk)"
+      },
+      "changedFiles": [
+        "production/session-state/architecture-review-skill-eval-report.md"
+      ],
+      "trace": "traces/skill-cgs-architecture-review-risk-verdict.jsonl",
+      "finalResponse": "final/skill-cgs-architecture-review-risk-verdict.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-architecture-review-risk-verdict.validate.log",
+        "status/skill-cgs-architecture-review-risk-verdict.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-story-readiness.readiness-verdict",
+      "target": "cgs-story-readiness",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 179768,
+        "cachedInputTokens": 154624,
+        "outputTokens": 4716,
+        "reasoningOutputTokens": 3132,
+        "reportedFieldSum": 342240
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-story-readiness-readiness-verdict.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/story-readiness-eval-report.md",
+          "capturedReport": "reports/skill-cgs-story-readiness-readiness-verdict.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-story-readiness-readiness-verdict.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "- **Level:** Dependency"
+      },
+      "changedFiles": [
+        "production/session-state/story-readiness-eval-report.md"
+      ],
+      "trace": "traces/skill-cgs-story-readiness-readiness-verdict.jsonl",
+      "finalResponse": "final/skill-cgs-story-readiness-readiness-verdict.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-story-readiness-readiness-verdict.validate.log",
+        "status/skill-cgs-story-readiness-readiness-verdict.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-story-done.done-verdict",
+      "target": "cgs-story-done",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 290749,
+        "cachedInputTokens": 264704,
+        "outputTokens": 5641,
+        "reasoningOutputTokens": 3958,
+        "reportedFieldSum": 565052
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-story-done-done-verdict.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/story-done-eval-report.md",
+          "capturedReport": "reports/skill-cgs-story-done-done-verdict.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-story-done-done-verdict.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "NOT DONE \u2014 acceptance and handoff evidence are missing for a bounded story-completion determination."
+      },
+      "changedFiles": [
+        "production/session-state/story-done-eval-report.md"
+      ],
+      "trace": "traces/skill-cgs-story-done-done-verdict.jsonl",
+      "finalResponse": "final/skill-cgs-story-done-done-verdict.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-story-done-done-verdict.validate.log",
+        "status/skill-cgs-story-done-done-verdict.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-qa-plan.coverage-plan",
+      "target": "cgs-qa-plan",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 109796,
+        "cachedInputTokens": 89344,
+        "outputTokens": 4110,
+        "reasoningOutputTokens": 2575,
+        "reportedFieldSum": 205825
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-qa-plan-coverage-plan.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/qa-plan-eval-report.md",
+          "capturedReport": "reports/skill-cgs-qa-plan-coverage-plan.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-qa-plan-coverage-plan.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "**Partially passing / not fully actionable without additional task inputs.**"
+      },
+      "changedFiles": [
+        "production/session-state/qa-plan-eval-report.md"
+      ],
+      "trace": "traces/skill-cgs-qa-plan-coverage-plan.jsonl",
+      "finalResponse": "final/skill-cgs-qa-plan-coverage-plan.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-qa-plan-coverage-plan.validate.log",
+        "status/skill-cgs-qa-plan-coverage-plan.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-regression-suite.repeatability",
+      "target": "cgs-regression-suite",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 172211,
+        "cachedInputTokens": 147840,
+        "outputTokens": 5289,
+        "reasoningOutputTokens": 3560,
+        "reportedFieldSum": 328900
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-regression-suite-repeatability.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/regression-suite-eval-report.md",
+          "capturedReport": "reports/skill-cgs-regression-suite-repeatability.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-regression-suite-repeatability.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "- **PASS (with a bounded-context warning).**"
+      },
+      "changedFiles": [
+        "production/session-state/regression-suite-eval-report.md"
+      ],
+      "trace": "traces/skill-cgs-regression-suite-repeatability.jsonl",
+      "finalResponse": "final/skill-cgs-regression-suite-repeatability.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-regression-suite-repeatability.validate.log",
+        "status/skill-cgs-regression-suite-repeatability.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-test-evidence-review.evidence-review",
+      "target": "cgs-test-evidence-review",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 325940,
+        "cachedInputTokens": 273024,
+        "outputTokens": 5339,
+        "reasoningOutputTokens": 3703,
+        "reportedFieldSum": 608006
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-test-evidence-review-evidence-review.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/test-evidence-review-eval-report.md",
+          "capturedReport": "reports/skill-cgs-test-evidence-review-evidence-review.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-test-evidence-review-evidence-review.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "Not ready. The required review target artifact is missing, so evidence sufficiency cannot be fully judged."
+      },
+      "changedFiles": [
+        "production/session-state/test-evidence-review-eval-report.md"
+      ],
+      "trace": "traces/skill-cgs-test-evidence-review-evidence-review.jsonl",
+      "finalResponse": "final/skill-cgs-test-evidence-review-evidence-review.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-test-evidence-review-evidence-review.validate.log",
+        "status/skill-cgs-test-evidence-review-evidence-review.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-test-flakiness.flakiness-diagnosis",
+      "target": "cgs-test-flakiness",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 177493,
+        "cachedInputTokens": 154496,
+        "outputTokens": 4961,
+        "reasoningOutputTokens": 3483,
+        "reportedFieldSum": 340433
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-test-flakiness-flakiness-diagnosis.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/test-flakiness-eval-report.md",
+          "capturedReport": "reports/skill-cgs-test-flakiness-flakiness-diagnosis.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-test-flakiness-flakiness-diagnosis.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "- `PASS` with one non-blocking observation."
+      },
+      "changedFiles": [
+        "production/session-state/test-flakiness-eval-report.md"
+      ],
+      "trace": "traces/skill-cgs-test-flakiness-flakiness-diagnosis.jsonl",
+      "finalResponse": "final/skill-cgs-test-flakiness-flakiness-diagnosis.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-test-flakiness-flakiness-diagnosis.validate.log",
+        "status/skill-cgs-test-flakiness-flakiness-diagnosis.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-code-review.review-findings",
+      "target": "cgs-code-review",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 219854,
+        "cachedInputTokens": 196224,
+        "outputTokens": 5023,
+        "reasoningOutputTokens": 3624,
+        "reportedFieldSum": 424725
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/skill-cgs-code-review-review-findings.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/code-review-eval-report.md",
+          "capturedReport": "reports/skill-cgs-code-review-review-findings.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/skill-cgs-code-review-review-findings.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "- Verdict: PASS"
+      },
+      "changedFiles": [
+        "production/session-state/code-review-eval-report.md"
+      ],
+      "trace": "traces/skill-cgs-code-review-review-findings.jsonl",
+      "finalResponse": "final/skill-cgs-code-review-review-findings.md",
+      "verificationEvidence": [
+        "verification/skill-cgs-code-review-review-findings.validate.log",
+        "status/skill-cgs-code-review-review-findings.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "role.producer.domain-boundary",
+      "target": "role.producer",
+      "priority": "critical",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 79319,
+        "cachedInputTokens": 59648,
+        "outputTokens": 3782,
+        "reasoningOutputTokens": 2504,
+        "reportedFieldSum": 145253
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/role-producer-domain-boundary.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/producer-role-eval-report.md",
+          "capturedReport": "reports/role-producer-domain-boundary.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/role-producer-domain-boundary.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "**Overall:** PASS (conditional)"
+      },
+      "changedFiles": [
+        "production/session-state/producer-role-eval-report.md"
+      ],
+      "trace": "traces/role-producer-domain-boundary.jsonl",
+      "finalResponse": "final/role-producer-domain-boundary.md",
+      "verificationEvidence": [
+        "verification/role-producer-domain-boundary.validate.log",
+        "status/role-producer-domain-boundary.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "role.qa-playtester.domain-boundary",
+      "target": "role.qa-playtester",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 164589,
+        "cachedInputTokens": 121984,
+        "outputTokens": 5612,
+        "reasoningOutputTokens": 3970,
+        "reportedFieldSum": 296155
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/role-qa-playtester-domain-boundary.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/qa-playtester-role-eval-report.md",
+          "capturedReport": "reports/role-qa-playtester-domain-boundary.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/role-qa-playtester-domain-boundary.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "PASS with a minor advisory."
+      },
+      "changedFiles": [
+        "production/session-state/qa-playtester-role-eval-report.md"
+      ],
+      "trace": "traces/role-qa-playtester-domain-boundary.jsonl",
+      "finalResponse": "final/role-qa-playtester-domain-boundary.md",
+      "verificationEvidence": [
+        "verification/role-qa-playtester-domain-boundary.validate.log",
+        "status/role-qa-playtester-domain-boundary.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "role.gameplay-programmer.domain-boundary",
+      "target": "role.gameplay-programmer",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 123623,
+        "cachedInputTokens": 102912,
+        "outputTokens": 4417,
+        "reasoningOutputTokens": 3135,
+        "reportedFieldSum": 234087
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/role-gameplay-programmer-domain-boundary.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/gameplay-programmer-role-eval-report.md",
+          "capturedReport": "reports/role-gameplay-programmer-domain-boundary.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/role-gameplay-programmer-domain-boundary.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "**PARTIAL_FAIL**"
+      },
+      "changedFiles": [
+        "production/session-state/gameplay-programmer-role-eval-report.md"
+      ],
+      "trace": "traces/role-gameplay-programmer-domain-boundary.jsonl",
+      "finalResponse": "final/role-gameplay-programmer-domain-boundary.md",
+      "verificationEvidence": [
+        "verification/role-gameplay-programmer-domain-boundary.validate.log",
+        "status/role-gameplay-programmer-domain-boundary.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "role.game-designer.domain-boundary",
+      "target": "role.game-designer",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 132101,
+        "cachedInputTokens": 111616,
+        "outputTokens": 4384,
+        "reasoningOutputTokens": 2923,
+        "reportedFieldSum": 251024
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/role-game-designer-domain-boundary.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/game-designer-role-eval-report.md",
+          "capturedReport": "reports/role-game-designer-domain-boundary.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/role-game-designer-domain-boundary.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "**Conditional Pass** (usable, but with two follow-up improvements)."
+      },
+      "changedFiles": [
+        "production/session-state/game-designer-role-eval-report.md"
+      ],
+      "trace": "traces/role-game-designer-domain-boundary.jsonl",
+      "finalResponse": "final/role-game-designer-domain-boundary.md",
+      "verificationEvidence": [
+        "verification/role-game-designer-domain-boundary.validate.log",
+        "status/role-game-designer-domain-boundary.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "role.market-analyst.domain-boundary",
+      "target": "role.market-analyst",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 96576,
+        "cachedInputTokens": 72576,
+        "outputTokens": 4261,
+        "reasoningOutputTokens": 2922,
+        "reportedFieldSum": 176335
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/role-market-analyst-domain-boundary.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/market-analyst-role-eval-report.md",
+          "capturedReport": "reports/role-market-analyst-domain-boundary.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/role-market-analyst-domain-boundary.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "**PASS (with caveats)**. The role prompt and behavior expectations are well bounded to market-analysis work and include required safety/ownership signals, but competitor and evidence-separation conventions depend on downstream execution discipline rather than template-enforced structure."
+      },
+      "changedFiles": [
+        "production/session-state/market-analyst-role-eval-report.md"
+      ],
+      "trace": "traces/role-market-analyst-domain-boundary.jsonl",
+      "finalResponse": "final/role-market-analyst-domain-boundary.md",
+      "verificationEvidence": [
+        "verification/role-market-analyst-domain-boundary.validate.log",
+        "status/role-market-analyst-domain-boundary.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "role.technical-artist.domain-boundary",
+      "target": "role.technical-artist",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 107756,
+        "cachedInputTokens": 86912,
+        "outputTokens": 4120,
+        "reasoningOutputTokens": 2648,
+        "reportedFieldSum": 201436
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/role-technical-artist-domain-boundary.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/technical-artist-role-eval-report.md",
+          "capturedReport": "reports/role-technical-artist-domain-boundary.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/role-technical-artist-domain-boundary.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "**PASS (conditional)**"
+      },
+      "changedFiles": [
+        "production/session-state/technical-artist-role-eval-report.md"
+      ],
+      "trace": "traces/role-technical-artist-domain-boundary.jsonl",
+      "finalResponse": "final/role-technical-artist-domain-boundary.md",
+      "verificationEvidence": [
+        "verification/role-technical-artist-domain-boundary.validate.log",
+        "status/role-technical-artist-domain-boundary.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    },
+    {
+      "id": "role.release-manager.domain-boundary",
+      "target": "role.release-manager",
+      "priority": "high",
+      "verdict": "pass",
+      "rawTokenUsage": {
+        "inputTokens": 79725,
+        "cachedInputTokens": 60288,
+        "outputTokens": 3874,
+        "reasoningOutputTokens": 2520,
+        "reportedFieldSum": 146407
+      },
+      "deterministic": {
+        "requiredRead": {
+          "status": "pass",
+          "missing": [],
+          "note": "The scenario prompt itself was supplied to Codex on stdin."
+        },
+        "writeBoundary": {
+          "status": "pass",
+          "forbiddenChanges": [],
+          "fixtureStatusDelta": "diffs/role-release-manager-domain-boundary.changed-files.txt"
+        },
+        "requiredChange": {
+          "status": "pass",
+          "expectedReport": "production/session-state/release-manager-role-eval-report.md",
+          "capturedReport": "reports/role-release-manager-domain-boundary.md"
+        },
+        "verificationEvidence": {
+          "status": "pass",
+          "agentTraceContains": "npm run validate",
+          "controllerVerifierExitCode": 0,
+          "log": "verification/role-release-manager-domain-boundary.validate.log"
+        },
+        "reportPresence": {
+          "status": "pass",
+          "missingFields": []
+        }
+      },
+      "semanticReview": {
+        "status": "not-independently-scored",
+        "method": "The executing agent supplied the report verdict. A controller verified deterministic gates; no separate human or LLM semantic judge was run for this 27-scenario batch.",
+        "agentReportedVerdict": "- Decision: **SHIP**"
+      },
+      "changedFiles": [
+        "production/session-state/release-manager-role-eval-report.md"
+      ],
+      "trace": "traces/role-release-manager-domain-boundary.jsonl",
+      "finalResponse": "final/role-release-manager-domain-boundary.md",
+      "verificationEvidence": [
+        "verification/role-release-manager-domain-boundary.validate.log",
+        "status/role-release-manager-domain-boundary.verifier-exit-code.txt"
+      ],
+      "failureLabels": []
+    }
+  ],
+  "followUpRecommendations": [
+    "Run independent semantic judging or structured human review before treating the batch as full prompt-quality evidence.",
+    "Make the runner capture untracked expected-report changes as first-class fixture deltas; this batch uses the corrected baseline-status comparison.",
+    "Use a containerized externally isolated runner on hosts that cannot create Bubblewrap namespaces for workspace-write.",
+    "Review the per-scenario agent-reported cautions before changing prompt surfaces."
+  ]
+}

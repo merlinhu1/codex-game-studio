@@ -1,0 +1,1 @@
+Raw Codex JSONL traces, final messages, copied expected reports, fixture-status deltas, tracked diffs, and independent validation logs are preserved here. Fixture worktrees and isolated auth homes were removed after capture.

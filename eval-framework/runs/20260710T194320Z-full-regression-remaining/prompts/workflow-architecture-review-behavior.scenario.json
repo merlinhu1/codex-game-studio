@@ -1,0 +1,53 @@
+{
+  "id": "workflow.architecture-review.behavior",
+  "target": "workflow.architecture-review",
+  "kind": "workflow",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-architecture-review/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/architecture-review.md",
+      ".agents/skills/cgs-architecture-review/SKILL.md",
+      "templates/technical_design_template.md",
+      "templates/architecture_traceability_template.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-architecture-review/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/architecture-review-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}

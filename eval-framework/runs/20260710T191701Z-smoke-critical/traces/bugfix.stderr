@@ -1,0 +1,15 @@
+2026-07-10T19:18:42.448690Z ERROR codex_core::tools::router: error=Exit code: 1
+Wall time: 0.1 seconds
+Output:
+Failed to write file /opt/data/cgs-20260710T191701Z-smoke-critical-9jsi2T/fixture-bugfix/production/session-state/bugfix-eval-report.md
+
+2026-07-10T19:18:43.507932Z ERROR codex_core::tools::router: error=Exit code: 1
+Wall time: 0.1 seconds
+Output:
+Failed to write file /tmp/bugfix-eval-report.md
+
+2026-07-10T19:18:59.792492Z ERROR codex_core::tools::router: error=Exit code: 1
+Wall time: 0 seconds
+Output:
+Failed to write file /opt/data/cgs-20260710T191701Z-smoke-critical-9jsi2T/fixture-bugfix/bugfix-test-write.md
+

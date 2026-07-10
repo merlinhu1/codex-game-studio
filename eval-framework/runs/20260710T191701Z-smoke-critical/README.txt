@@ -1,0 +1,1 @@
+Raw Codex JSONL traces, final messages, bounded diffs, expected reports, and post-run validation output are saved in this run directory. Fixture worktrees and isolated auth homes were removed after capture.

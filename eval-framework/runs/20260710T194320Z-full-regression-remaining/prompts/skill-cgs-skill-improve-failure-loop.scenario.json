@@ -1,0 +1,52 @@
+{
+  "id": "skill.cgs-skill-improve.failure-loop",
+  "target": "cgs-skill-improve",
+  "kind": "skill",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/cgs-skill-improve/failure-loop/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".agents/skills/cgs-skill-improve/SKILL.md",
+      "eval-framework/failure-taxonomy.md",
+      "eval-framework/improvement-loop.md",
+      "eval-framework/rubrics/skill-behavior.json",
+      "eval-framework/scenarios/cgs-skill-improve/failure-loop/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/skill-improvement-plan.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "task-framing",
+      "output-quality",
+      "verification-discipline",
+      "failure-handling",
+      "human-review-quality",
+      "token-discipline"
+    ]
+  }
+}

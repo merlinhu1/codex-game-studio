@@ -1,0 +1,50 @@
+{
+  "id": "skill.cgs-test-flakiness.flakiness-diagnosis",
+  "target": "cgs-test-flakiness",
+  "kind": "skill",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/cgs-test-flakiness/flakiness-diagnosis/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".agents/skills/cgs-test-flakiness/SKILL.md",
+      "eval-framework/rubrics/skill-behavior.json",
+      "eval-framework/scenarios/cgs-test-flakiness/flakiness-diagnosis/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/test-flakiness-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "task-framing",
+      "output-quality",
+      "verification-discipline",
+      "failure-handling",
+      "human-review-quality",
+      "token-discipline"
+    ]
+  }
+}

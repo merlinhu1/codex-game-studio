@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "cgs-prompt-eval-audit/v1",
+  "runId": "20260710T192217Z-smoke-critical",
+  "stage": "smoke-critical",
+  "status": "completed-with-cautions",
+  "sourceCommit": "1c3761fdc4a20d7e0e71efb254314b6d5a2545a2",
+  "selectedModel": "gpt-5.3-codex-spark",
+  "runner": {
+    "host": "codex",
+    "sandbox": "danger-full-access",
+    "isolation": "Each scenario used a disposable detached Git worktree and an isolated CODEX_HOME. The native sandbox fallback was required because workspace-write could not create a bubblewrap namespace on this host."
+  },
+  "tokenUsage": {
+    "inputTokens": 426609,
+    "cachedInputTokens": 299136,
+    "outputTokens": 16992,
+    "reasoningOutputTokens": 11689,
+    "reportedFieldSum": 754426,
+    "notes": "Raw fields were collected from each Codex turn.completed event. reportedFieldSum is a mechanical sum of reported fields, not a pricing or billing claim."
+  },
+  "scenarios": [
+    {
+      "id": "workflow.vertical-slice.behavior",
+      "target": "workflow.vertical-slice",
+      "verdict": "pass-with-cautions",
+      "rawTokenUsage": {
+        "inputTokens": 81415,
+        "cachedInputTokens": 60672,
+        "outputTokens": 3976,
+        "reasoningOutputTokens": 2451,
+        "reportedFieldSum": 148514
+      },
+      "deterministic": {
+        "requiredRead": "pass; trace records reads of the workflow, linked skill, and rubric; the scenario prompt was supplied as stdin",
+        "writeBoundary": "pass; trace records only the allowed report write and the tracked diff was empty",
+        "requiredChange": "pass; reports/vertical-slice.md preserves the expected report",
+        "verificationEvidence": "pass; trace and independent post-run verification both show npm run validate exited 0",
+        "reportPresence": "pass"
+      },
+      "semanticReview": {
+        "method": "manual maintainer review of trace, final response, and captured report; no independent LLM judge was run",
+        "verdict": "pass-with-cautions",
+        "findings": [
+          "Bounded context, Producer routing, evidence-before-handoff, and explicit stop conditions were demonstrated.",
+          "Triggering confidence is only medium because the manual workflow has no canonical trigger phrase.",
+          "The captured report identifies weak explicit token-discipline guardrails."
+        ]
+      },
+      "changedFiles": ["production/session-state/vertical-slice-eval-report.md"],
+      "verificationEvidence": ["verification/vertical-slice.validate.log", "status/vertical-slice.verifier-exit-code.txt"],
+      "trace": "traces/vertical-slice.jsonl",
+      "finalResponse": "final/vertical-slice.md",
+      "failureLabels": []
+    },
+    {
+      "id": "workflow.bugfix.behavior",
+      "target": "workflow.bugfix",
+      "verdict": "pass-with-cautions",
+      "rawTokenUsage": {
+        "inputTokens": 122111,
+        "cachedInputTokens": 77056,
+        "outputTokens": 5026,
+        "reasoningOutputTokens": 3708,
+        "reportedFieldSum": 207901
+      },
+      "deterministic": {
+        "requiredRead": "pass; trace records reads of the workflow, linked skill, and rubric; the scenario prompt was supplied as stdin",
+        "writeBoundary": "pass; trace records only the allowed report write and the tracked diff was empty",
+        "requiredChange": "pass; reports/bugfix.md preserves the expected report",
+        "verificationEvidence": "pass; trace and independent post-run verification both show npm run validate exited 0",
+        "reportPresence": "pass"
+      },
+      "semanticReview": {
+        "method": "manual maintainer review of trace, final response, and captured report; no independent LLM judge was run",
+        "verdict": "pass-with-cautions",
+        "findings": [
+          "The agent selected bugfix-specific context and routed work to the gameplay-programmer surface.",
+          "The scenario did not supply a concrete defect, so this measures process/reporting behavior rather than reproduction-and-fix quality.",
+          "The captured report notes missing active-session state in the initialized fixture."
+        ]
+      },
+      "changedFiles": ["production/session-state/bugfix-eval-report.md"],
+      "verificationEvidence": ["verification/bugfix.validate.log", "status/bugfix.verifier-exit-code.txt"],
+      "trace": "traces/bugfix.jsonl",
+      "finalResponse": "final/bugfix.md",
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-skill-test.behavioral-spec",
+      "target": "cgs-skill-test",
+      "verdict": "pass-with-cautions",
+      "rawTokenUsage": {
+        "inputTokens": 78355,
+        "cachedInputTokens": 58880,
+        "outputTokens": 3242,
+        "reasoningOutputTokens": 2377,
+        "reportedFieldSum": 142854
+      },
+      "deterministic": {
+        "requiredRead": "pass; trace records reads of the skill and rubric; the scenario prompt was supplied as stdin",
+        "writeBoundary": "pass; trace records only the allowed report write and the tracked diff was empty",
+        "requiredChange": "pass; reports/skill-test.md preserves the expected report",
+        "verificationEvidence": "pass; trace and independent post-run verification both show npm run validate exited 0",
+        "reportPresence": "pass"
+      },
+      "semanticReview": {
+        "method": "manual maintainer review of trace, final response, and captured report; no independent LLM judge was run",
+        "verdict": "pass-with-cautions",
+        "findings": [
+          "The response evaluated behavioral fixtures, markers, and dry runs rather than mere skill existence.",
+          "The captured report identifies the main gap: no explicit rubric-level anti-existence acceptance statement.",
+          "The manual-only rubric leaves consistency dependent on the evaluator."
+        ]
+      },
+      "changedFiles": ["production/session-state/eval-report.md"],
+      "verificationEvidence": ["verification/skill-test.validate.log", "status/skill-test.verifier-exit-code.txt"],
+      "trace": "traces/skill-test.jsonl",
+      "finalResponse": "final/skill-test.md",
+      "failureLabels": []
+    },
+    {
+      "id": "skill.cgs-gate-check.mode-boundary",
+      "target": "cgs-gate-check",
+      "verdict": "pass-with-cautions",
+      "rawTokenUsage": {
+        "inputTokens": 144728,
+        "cachedInputTokens": 102528,
+        "outputTokens": 4748,
+        "reasoningOutputTokens": 3153,
+        "reportedFieldSum": 255157
+      },
+      "deterministic": {
+        "requiredRead": "pass; trace records reads of the skill and rubric; the scenario prompt was supplied as stdin",
+        "writeBoundary": "pass; trace records only the allowed report write and the tracked diff was empty",
+        "requiredChange": "pass; reports/gate-check.md preserves the expected report",
+        "verificationEvidence": "pass; trace and independent post-run verification both show npm run validate exited 0",
+        "reportPresence": "pass"
+      },
+      "semanticReview": {
+        "method": "manual maintainer review of trace, final response, and captured report; no independent LLM judge was run",
+        "verdict": "pass-with-cautions",
+        "findings": [
+          "The response remained advisory and did not advance project state.",
+          "It used gate-specific context and produced an audit-ready report.",
+          "The captured report notes that active session-state is absent in the initialized fixture, limiting parity with a populated project."
+        ]
+      },
+      "changedFiles": ["production/session-state/gate-check-eval-report.md"],
+      "verificationEvidence": ["verification/gate-check.validate.log", "status/gate-check.verifier-exit-code.txt"],
+      "trace": "traces/gate-check.jsonl",
+      "finalResponse": "final/gate-check.md",
+      "failureLabels": []
+    }
+  ],
+  "followUpRecommendations": [
+    "Add an executable prompt-evaluation runner so report discovery includes untracked allowed artifacts and deterministic gates do not rely on manual trace review.",
+    "Add an explicit anti-existence acceptance rule to the cgs-skill-test rubric or scenario contract.",
+    "Add a concrete seeded defect fixture before treating the bugfix scenario as evidence of reproduction-and-fix quality.",
+    "Decide whether token-discipline should have enforceable length or budget guardrails rather than an advisory semantic dimension.",
+    "Use a containerized or otherwise externally isolated runner on hosts where workspace-write sandboxing cannot create a user namespace."
+  ]
+}

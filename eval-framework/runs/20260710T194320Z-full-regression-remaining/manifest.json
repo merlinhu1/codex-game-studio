@@ -1,0 +1,10 @@
+{
+  "runId": "20260710T194320Z-full-regression-remaining",
+  "stage": "full-regression-remaining",
+  "model": "gpt-5.3-codex-spark",
+  "sourceCommit": "1c3761fdc4a20d7e0e71efb254314b6d5a2545a2",
+  "scenarioCount": 27,
+  "sandbox": "danger-full-access",
+  "isolation": "Dedicated disposable detached Git worktree plus isolated CODEX_HOME per scenario; native danger-full-access used because this host cannot create Bubblewrap namespaces for workspace-write.",
+  "records": "status/records.jsonl"
+}

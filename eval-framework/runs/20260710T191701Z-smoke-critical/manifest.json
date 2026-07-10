@@ -1,0 +1,12 @@
+{
+  "runId": "20260710T191701Z-smoke-critical",
+  "stage": "smoke-critical",
+  "model": "gpt-5.3-codex-spark",
+  "sourceCommit": "1c3761fdc4a20d7e0e71efb254314b6d5a2545a2",
+  "scenarios": [
+    {"slug":"vertical-slice","scenarioId":"workflow.vertical-slice.behavior","scenario":"eval-framework/scenarios/workflow-vertical-slice/behavior/scenario.json","prompt":"eval-framework/scenarios/workflow-vertical-slice/behavior/prompt.md","expectedReport":"production/session-state/vertical-slice-eval-report.md","codexExitCode":0,"verifierExitCode":0,"reportPresent":false},
+    {"slug":"bugfix","scenarioId":"workflow.bugfix.behavior","scenario":"eval-framework/scenarios/workflow-bugfix/behavior/scenario.json","prompt":"eval-framework/scenarios/workflow-bugfix/behavior/prompt.md","expectedReport":"production/session-state/bugfix-eval-report.md","codexExitCode":0,"verifierExitCode":0,"reportPresent":false},
+    {"slug":"skill-test","scenarioId":"skill.cgs-skill-test.behavioral-spec","scenario":"eval-framework/scenarios/cgs-skill-test/behavioral-spec/scenario.json","prompt":"eval-framework/scenarios/cgs-skill-test/behavioral-spec/prompt.md","expectedReport":"production/session-state/eval-report.md","codexExitCode":0,"verifierExitCode":0,"reportPresent":false},
+    {"slug":"gate-check","scenarioId":"skill.cgs-gate-check.mode-boundary","scenario":"eval-framework/scenarios/cgs-gate-check/mode-boundary/scenario.json","prompt":"eval-framework/scenarios/cgs-gate-check/mode-boundary/prompt.md","expectedReport":"production/session-state/gate-check-eval-report.md","codexExitCode":0,"verifierExitCode":0,"reportPresent":false}
+  ]
+}

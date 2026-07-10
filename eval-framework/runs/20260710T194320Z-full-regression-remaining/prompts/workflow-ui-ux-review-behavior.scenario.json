@@ -1,0 +1,53 @@
+{
+  "id": "workflow.ui-ux-review.behavior",
+  "target": "workflow.ui-ux-review",
+  "kind": "workflow",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-ui-ux-review/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/ui-ux-review.md",
+      ".agents/skills/cgs-ui-ux-review/SKILL.md",
+      "templates/ui_ux_review_template.md",
+      "templates/accessibility_requirements_template.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-ui-ux-review/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/ui-ux-review-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}

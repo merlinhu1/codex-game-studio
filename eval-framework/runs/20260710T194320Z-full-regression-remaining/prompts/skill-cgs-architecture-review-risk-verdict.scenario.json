@@ -1,0 +1,50 @@
+{
+  "id": "skill.cgs-architecture-review.risk-verdict",
+  "target": "cgs-architecture-review",
+  "kind": "skill",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/cgs-architecture-review/risk-verdict/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".agents/skills/cgs-architecture-review/SKILL.md",
+      "eval-framework/rubrics/skill-behavior.json",
+      "eval-framework/scenarios/cgs-architecture-review/risk-verdict/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/architecture-review-skill-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "task-framing",
+      "output-quality",
+      "verification-discipline",
+      "failure-handling",
+      "human-review-quality",
+      "token-discipline"
+    ]
+  }
+}

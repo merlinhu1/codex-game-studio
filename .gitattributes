@@ -1,0 +1,2 @@
+# Evaluation captures are raw evidence. Preserve original whitespace in logs, traces, reports, and agent output.
+eval-framework/runs/** -whitespace

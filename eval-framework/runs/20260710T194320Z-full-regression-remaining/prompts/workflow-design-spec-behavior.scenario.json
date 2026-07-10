@@ -1,0 +1,53 @@
+{
+  "id": "workflow.design-spec.behavior",
+  "target": "workflow.design-spec",
+  "kind": "workflow",
+  "priority": "high",
+  "manualOnly": true,
+  "prompt": "eval-framework/scenarios/workflow-design-spec/behavior/prompt.md",
+  "expected": {
+    "mustRead": [
+      ".codex/workflows/design-spec.md",
+      ".agents/skills/cgs-design-system/SKILL.md",
+      "templates/gdd_template.md",
+      "templates/feature_spec_template.md",
+      "eval-framework/rubrics/prompt-workflow-behavior.json",
+      "eval-framework/scenarios/workflow-design-spec/behavior/prompt.md"
+    ],
+    "mustChange": [
+      "production/session-state/design-spec-eval-report.md"
+    ],
+    "mustNotChange": [
+      "src/**",
+      ".agents/skills/**",
+      ".codex/workflows/**",
+      ".codex/agents/**",
+      "templates/**"
+    ],
+    "mustRunOrExplain": [
+      "npm run validate"
+    ],
+    "report": {
+      "required": true
+    }
+  },
+  "grading": {
+    "deterministic": [
+      "required-read",
+      "write-boundary",
+      "required-change",
+      "verification-evidence",
+      "report-presence"
+    ],
+    "semanticDimensions": [
+      "triggering",
+      "context-selection",
+      "role-routing",
+      "template-selection",
+      "output-quality",
+      "verification-discipline",
+      "stop-condition-quality",
+      "token-discipline"
+    ]
+  }
+}

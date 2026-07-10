@@ -1,0 +1,11 @@
+2026-07-10T19:20:00.536497Z ERROR codex_core::tools::router: error=Exit code: 1
+Wall time: 0.1 seconds
+Output:
+Failed to write file /tmp/cgs_gate_check_probe.txt
+
+2026-07-10T19:20:02.860100Z ERROR codex_core::tools::router: error=resources/list failed: unknown MCP server 'file'
+2026-07-10T19:20:13.983587Z ERROR codex_core::tools::router: error=Exit code: 1
+Wall time: 0.1 seconds
+Output:
+Failed to write file /opt/data/cgs-20260710T191701Z-smoke-critical-9jsi2T/fixture-gate-check/probe_local.txt
+
