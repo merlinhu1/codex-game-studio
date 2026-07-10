@@ -1,6 +1,6 @@
 {
   "name": "codex-game-studio",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "description": "Codex-native CLI workflow layer for game projects.",
   "author": "MerlinH",
   "license": "MIT",
